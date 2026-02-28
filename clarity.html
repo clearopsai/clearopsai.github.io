@@ -240,7 +240,7 @@ body::before {
     </div>
     <div class="metric-card">
       <div class="metric-value" id="metricResolution">--</div>
-      <div class="metric-label">Avg Resolution Time</div>
+      <div class="metric-label">Avg Resolution (hours)</div>
       <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkResolution"></canvas></div>
     </div>
     <div class="metric-card">
@@ -305,42 +305,42 @@ body::before {
 // ══════════════════════════════════════════════════════════════════
 const DEMO_DATA = {
   hero: {
-    total_ops: 3092,
-    avg_resolution_s: 8.4,
+    total_ops: 4218,
+    avg_resolution_s: 3.2,
     success_rate: 91.2,
     bottlenecks: 14
   },
   sparklines: {
-    ops: [85,92,110,98,105,120,88,95,130,115,102,108,125,140,135,112,98,105,115,128,118,142,130,110,105,120,135,128,115,108],
-    resolution: [9.2,8.8,8.5,9.1,8.3,7.9,8.6,9.0,8.2,7.8,8.4,8.1,7.6,8.0,8.5,8.8,8.2,7.9,8.3,7.7,8.1,7.5,8.0,8.6,8.3,7.8,8.1,7.9,8.4,8.2],
+    ops: [120,135,142,128,155,160,118,125,170,148,138,152,165,180,172,145,132,148,158,168,152,178,170,142,138,155,172,165,150,140],
+    resolution: [3.8,3.5,3.2,3.6,3.1,2.9,3.4,3.5,3.0,2.8,3.2,3.0,2.7,2.9,3.3,3.5,3.0,2.8,3.1,2.6,2.9,2.5,2.8,3.3,3.1,2.7,2.9,2.8,3.2,3.0],
     success: [88,89,90,87,91,93,90,92,91,94,92,89,93,91,95,92,90,93,91,90,92,93,91,92,94,91,90,92,91,93],
     bottlenecks: [2,1,0,1,2,1,0,0,1,2,1,0,1,0,0,1,2,1,0,1,0,0,1,1,0,0,1,0,0,1]
   },
   flow: {
     stages: [
-      { name: 'Incoming\nQueries', count: 3092, color: '#3d7eff' },
-      { name: 'Arena\nProcessing', count: 2800, color: '#00c9a0' },
-      { name: 'Agent\nTasks', count: 520, color: '#a78bfa' },
-      { name: 'Tool\nExecution', count: 2040, color: '#f59e0b' },
-      { name: 'Resolved', count: 2820, color: '#22c55e', success: 2720, fail: 100 }
+      { name: 'Incoming\nRequests', count: 4218, color: '#3d7eff' },
+      { name: 'Auto-Routed\n& Triaged', count: 3840, color: '#00c9a0' },
+      { name: 'Escalated\nto Team', count: 620, color: '#a78bfa' },
+      { name: 'In\nProgress', count: 2940, color: '#f59e0b' },
+      { name: 'Resolved', count: 3780, color: '#22c55e', success: 3640, fail: 140 }
     ]
   },
   clusters: [
-    { label: 'Chat / Q&A',      x: 3.2, y: 95, r: 40, count: 1800 },
-    { label: 'Code Edits',      x: 8.5, y: 82, r: 28, count: 320  },
-    { label: 'Research',         x: 6.1, y: 88, r: 22, count: 180  },
-    { label: 'File Navigation',  x: 5.4, y: 90, r: 18, count: 120  },
-    { label: 'System Admin',     x: 7.8, y: 76, r: 15, count: 95   },
-    { label: 'RAG / Vault',      x: 4.2, y: 92, r: 20, count: 150  },
-    { label: 'Probes',           x: 4.8, y: 97, r: 16, count: 110  }
+    { label: 'Client Onboarding',  x: 4.2, y: 94, r: 35, count: 860  },
+    { label: 'Support Tickets',    x: 2.8, y: 96, r: 45, count: 1420 },
+    { label: 'Contract Renewals',  x: 5.5, y: 88, r: 22, count: 310  },
+    { label: 'Billing Inquiries',  x: 2.1, y: 97, r: 28, count: 580  },
+    { label: 'Internal Requests',  x: 6.8, y: 78, r: 18, count: 240  },
+    { label: 'Compliance Reviews', x: 7.2, y: 85, r: 15, count: 165  },
+    { label: 'Scheduling',         x: 1.8, y: 98, r: 20, count: 380  }
   ],
   bottlenecks: [
-    { issue: 'Provider cascade timeout (DeepSeek)', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
-    { issue: 'Max steps exhausted on code edits', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
-    { issue: 'RAG context retrieval > 5s', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-    { issue: 'Edit rejected — AST pre-check fail', count: 8, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
-    { issue: 'Arena judge fallback to heuristic', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
-    { issue: 'Groq rate limit (30 RPM)', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
+    { issue: 'Client onboarding handoff delayed (Slack \u2192 CRM)', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
+    { issue: 'Support tickets missing context from email thread', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
+    { issue: 'Contract renewal reminders sent after deadline', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+    { issue: 'Duplicate entries across Zendesk and HubSpot', count: 9, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
+    { issue: 'Weekly report assembly taking 3+ hours manually', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
+    { issue: 'Slack approval requests going unseen in channels', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
   ],
   trends: {
     labels: [],
@@ -351,28 +351,28 @@ const DEMO_DATA = {
   insights: [
     {
       icon: '\u26A1',
-      title: 'Provider Cascade Optimization Opportunity',
-      text: 'DeepSeek timeouts account for 41% of all provider failures. Moving Grok ahead of DeepSeek in the STRONG stack during peak hours (9am-5pm EST) could reduce average resolution time by 1.2s.'
+      title: 'Onboarding Handoff Is Your Biggest Bottleneck',
+      text: 'Client onboarding tasks take 4.2 steps on average to resolve \u2014 42% longer than support tickets. The gap is the Slack-to-CRM handoff: new client info sits in Slack for 6+ hours before someone manually enters it into HubSpot.'
     },
     {
       icon: '\uD83D\uDCC9',
-      title: 'Code Edit Success Rate Trending Down',
-      text: 'EXECUTE mode tasks involving multi-file edits dropped from 89% to 76% success rate this week. Root cause: complexity gate not triggering on tasks with 2+ edit targets. Consider lowering the threshold.'
+      title: 'Thursday Support Volume Spikes 35%',
+      text: 'Thursdays consistently see 35% more inbound support requests than other weekdays, but staffing levels stay flat. Consider shifting one team member\'s flex day to cover Thursday afternoons.'
     },
     {
       icon: '\u2705',
-      title: 'Arena Latency at All-Time Low',
-      text: 'Arena P95 latency is 2.4s, down from 14s two weeks ago. The consultant timeout reduction and judge optimization are working. No action needed — maintain current configuration.'
+      title: 'Billing Inquiry Resolution at All-Time Best',
+      text: 'Average resolution time for billing questions dropped from 4.1 hours to 47 minutes after the self-service invoice portal launched. 97% resolution rate with zero escalations this week.'
     },
     {
       icon: '\uD83D\uDD04',
-      title: 'Recurring Pattern: Read-Loop Stalls',
-      text: '12% of EXECUTE sessions exceed 15 steps due to repeated file reads without action. The trajectory monitor catches this at step 5, but earlier intervention at step 3 could save ~40% of wasted compute.'
+      title: '12 Contract Renewals at Risk of Lapsing',
+      text: '12 contracts expiring in the next 30 days have had zero touchpoints in the last 60 days. 4 of these are in the top 20% by revenue. Automated renewal reminders are firing but going to outdated email addresses.'
     },
     {
       icon: '\uD83D\uDCB0',
-      title: 'Cost Efficiency: 73% Below Claude-Only Baseline',
-      text: 'Multi-provider routing saved $47.20 this week vs. all-Claude baseline. Groq handles 62% of ASSESS tasks, Gemini Flash handles 45% of arena judging. Sonnet budget utilization is at 68%.'
+      title: 'Manual Reporting Costs ~18 Hours/Week',
+      text: 'Three team members spend a combined 18 hours weekly assembling reports from Zendesk, HubSpot, and Google Sheets. Automating the data pull alone would recover 12 of those hours \u2014 equivalent to $2,400/month in labor.'
     }
   ]
 };
@@ -486,7 +486,7 @@ function updateMode(mode, text) {
   const badge = document.getElementById('modeBadge');
   const modeText = document.getElementById('modeText');
   badge.className = 'mode-badge ' + (mode === 'live' ? 'live' : 'demo');
-  modeText.textContent = text || (mode === 'live' ? 'Connected to Jarvis API' : 'Demo Mode');
+  modeText.textContent = text || (mode === 'live' ? 'Connected — Live Data' : 'Demo Mode — Sample Data');
 }
 
 function updateTimestamp() {
@@ -496,7 +496,8 @@ function updateTimestamp() {
 
 function renderHeroMetrics(data) {
   document.getElementById('metricOps').textContent = data.hero.total_ops.toLocaleString();
-  document.getElementById('metricResolution').textContent = data.hero.avg_resolution_s.toFixed(1) + 's';
+  const res = data.hero.avg_resolution_s;
+  document.getElementById('metricResolution').textContent = MODE === 'live' ? res.toFixed(1) + 's' : res.toFixed(1) + 'h';
   document.getElementById('metricSuccess').textContent = data.hero.success_rate.toFixed(1) + '%';
   document.getElementById('metricBottlenecks').textContent = data.hero.bottlenecks;
 }
@@ -640,15 +641,15 @@ function renderBubbleChart(data) {
           callbacks: {
             label: (ctx) => {
               const c = data.clusters[ctx.datasetIndex];
-              return `${c.label}: ${c.count} ops, ${c.y}% success, ~${c.x} avg steps`;
+              return `${c.label}: ${c.count} requests, ${c.y}% resolved, ~${c.x} avg touchpoints`;
             }
           }
         }
       },
       scales: {
-        x: { title: { display: true, text: 'Avg Steps', color: '#7e8ea8', font: { size: 12 } },
-             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 0, max: 12 },
-        y: { title: { display: true, text: 'Success Rate %', color: '#7e8ea8', font: { size: 12 } },
+        x: { title: { display: true, text: 'Avg Touchpoints to Resolve', color: '#7e8ea8', font: { size: 12 } },
+             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 0, max: 10 },
+        y: { title: { display: true, text: 'Resolution Rate %', color: '#7e8ea8', font: { size: 12 } },
              grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 60, max: 100 }
       }
     }
