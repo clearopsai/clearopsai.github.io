@@ -105,6 +105,67 @@ body::before {
 }
 .panel-title .icon { font-size: 18px; }
 
+/* ─── Config Bar ─── */
+.config-bar {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex; align-items: flex-start; gap: 32px; flex-wrap: wrap;
+}
+.config-section { display: flex; flex-direction: column; gap: 8px; }
+.config-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); font-weight: 500; }
+.config-select {
+  background: var(--bg3); border: 1px solid var(--line2); border-radius: 8px;
+  color: var(--text); font-family: var(--sans); font-size: 14px;
+  padding: 8px 32px 8px 12px; cursor: pointer; outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237e8ea8'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+}
+.config-select:hover { border-color: var(--teal); }
+.tool-chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 600px; }
+.tool-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+  background: var(--bg3); border: 1px solid var(--line2);
+  color: var(--soft); cursor: pointer; transition: all .2s;
+  user-select: none;
+}
+.tool-chip:hover { border-color: var(--teal); color: var(--text); }
+.tool-chip.active { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+.tool-chip .check { display: none; }
+.tool-chip.active .check { display: inline; }
+
+/* ─── Connect Modal ─── */
+.connect-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,.7); z-index: 200; align-items: center; justify-content: center;
+}
+.connect-overlay.show { display: flex; }
+.connect-modal {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 16px;
+  padding: 40px; text-align: center; max-width: 420px; width: 90%;
+}
+.connect-modal h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 16px; }
+.connect-spinner {
+  width: 36px; height: 36px; border: 3px solid var(--line);
+  border-top-color: var(--teal); border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 16px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.connect-progress {
+  width: 100%; height: 6px; background: var(--bg3); border-radius: 3px;
+  margin: 16px 0; overflow: hidden;
+}
+.connect-progress-fill {
+  height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--blue));
+  border-radius: 3px; transition: width .3s;
+}
+.connect-status { font-size: 13px; color: var(--soft); min-height: 20px; }
+.connect-done { color: var(--teal); font-weight: 600; font-size: 15px; }
+
 /* ─── Hero Metrics ─── */
 .hero-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
@@ -139,7 +200,7 @@ body::before {
 
 /* ─── Flow Visualization ─── */
 .flow-canvas-wrap { width: 100%; overflow-x: auto; }
-#flowCanvas { width: 100%; height: 120px; }
+#flowCanvas { width: 100%; height: 140px; }
 
 /* ─── Bubble Chart ─── */
 .chart-wrap { position: relative; height: 320px; }
@@ -196,13 +257,28 @@ body::before {
   border-radius: 8px;
 }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-.skeleton-line { height: 16px; margin-bottom: 8px; }
 .skeleton-block { height: 200px; }
+
+/* ─── CTA Banner ─── */
+.cta-banner {
+  background: linear-gradient(135deg, rgba(0,201,160,.08), rgba(61,126,255,.08));
+  border: 1px solid var(--teal-dim);
+  border-radius: 14px; padding: 28px 32px; text-align: center; margin-bottom: 20px;
+}
+.cta-banner h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
+.cta-banner p { color: var(--soft); font-size: 14px; margin-bottom: 16px; }
+.cta-btn {
+  display: inline-block; padding: 12px 28px; background: var(--teal);
+  color: var(--bg); font-weight: 600; font-size: 14px; border-radius: 8px;
+  text-decoration: none; transition: opacity .2s;
+}
+.cta-btn:hover { opacity: .85; }
 
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: repeat(2, 1fr); }
   .grid-2col { grid-template-columns: 1fr; }
+  .config-bar { flex-direction: column; gap: 16px; }
 }
 @media (max-width: 600px) {
   .hero-grid { grid-template-columns: 1fr; }
@@ -231,31 +307,58 @@ body::before {
 
 <div class="dashboard">
 
-  <!-- Panel 1: Hero Metrics -->
+  <!-- Config Bar: Industry + Tools (demo only) -->
+  <div class="config-bar" id="configBar">
+    <div class="config-section">
+      <div class="config-label">Your Industry</div>
+      <select class="config-select" id="industrySelect">
+        <option value="professional_services">Professional Services</option>
+        <option value="law_firm">Law Firm</option>
+        <option value="trade_association">Trade Association</option>
+        <option value="accounting">Accounting / CPA Firm</option>
+      </select>
+    </div>
+    <div class="config-section" style="flex:1">
+      <div class="config-label">Your Tools (click to connect)</div>
+      <div class="tool-chips" id="toolChips">
+        <span class="tool-chip active" data-tool="email">&#x2709; Email / Gmail</span>
+        <span class="tool-chip active" data-tool="slack">&#x1F4AC; Slack</span>
+        <span class="tool-chip" data-tool="zendesk">&#x1F3AB; Zendesk</span>
+        <span class="tool-chip" data-tool="hubspot">&#x1F4CA; HubSpot</span>
+        <span class="tool-chip" data-tool="salesforce">&#x2601; Salesforce</span>
+        <span class="tool-chip" data-tool="quickbooks">&#x1F4B2; QuickBooks</span>
+        <span class="tool-chip" data-tool="monday">&#x1F4CB; Monday.com</span>
+        <span class="tool-chip" data-tool="asana">&#x2705; Asana</span>
+        <span class="tool-chip" data-tool="sheets">&#x1F4D7; Google Sheets</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Metrics -->
   <div class="hero-grid" id="heroGrid">
     <div class="metric-card">
       <div class="metric-value" id="metricOps">--</div>
-      <div class="metric-label">Total Operations (30d)</div>
+      <div class="metric-label" id="labelOps">Total Operations (30d)</div>
       <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkOps"></canvas></div>
     </div>
     <div class="metric-card">
       <div class="metric-value" id="metricResolution">--</div>
-      <div class="metric-label">Avg Resolution (hours)</div>
+      <div class="metric-label" id="labelResolution">Avg Resolution (hours)</div>
       <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkResolution"></canvas></div>
     </div>
     <div class="metric-card">
       <div class="metric-value" id="metricSuccess">--</div>
-      <div class="metric-label">Success Rate</div>
+      <div class="metric-label" id="labelSuccess">Resolution Rate</div>
       <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkSuccess"></canvas></div>
     </div>
     <div class="metric-card">
       <div class="metric-value" id="metricBottlenecks">--</div>
-      <div class="metric-label">Bottlenecks Detected</div>
+      <div class="metric-label" id="labelBottlenecks">Bottlenecks Detected</div>
       <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkBottlenecks"></canvas></div>
     </div>
   </div>
 
-  <!-- Panel 2: Cross-Channel Flow -->
+  <!-- Cross-Channel Flow -->
   <div class="panel">
     <div class="panel-title"><span class="icon">&#x2192;</span> Cross-Channel Operations Flow</div>
     <div class="flow-canvas-wrap">
@@ -263,15 +366,12 @@ body::before {
     </div>
   </div>
 
-  <!-- Panel 3 & 4: Two columns -->
+  <!-- Two columns -->
   <div class="grid-2col">
-    <!-- Panel 3: Topic Clusters -->
     <div class="panel">
       <div class="panel-title"><span class="icon">&#x25CF;</span> Topic Clusters</div>
       <div class="chart-wrap"><canvas id="bubbleChart"></canvas></div>
     </div>
-
-    <!-- Panel 4: Bottleneck Detection -->
     <div class="panel">
       <div class="panel-title"><span class="icon">&#x26A0;</span> Bottleneck Detection</div>
       <div id="bottleneckTableWrap">
@@ -283,13 +383,13 @@ body::before {
     </div>
   </div>
 
-  <!-- Panel 5: Trend Analysis -->
+  <!-- Trend Analysis -->
   <div class="panel">
     <div class="panel-title"><span class="icon">&#x1F4C8;</span> Trend Analysis (30 Days)</div>
     <div class="trend-wrap"><canvas id="trendChart"></canvas></div>
   </div>
 
-  <!-- Panel 6: AI Insights -->
+  <!-- AI Insights -->
   <div class="panel">
     <div class="panel-title"><span class="icon">&#x2728;</span> AI-Generated Insights</div>
     <div class="insights-list" id="insightsList">
@@ -297,99 +397,222 @@ body::before {
     </div>
   </div>
 
+  <!-- CTA -->
+  <div class="cta-banner" id="ctaBanner">
+    <h3>This is sample data. Imagine your real operations here.</h3>
+    <p>ClearOps connects your actual tools and builds this dashboard with your live data — setup takes under a week.</p>
+    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Demo &rarr;</a>
+  </div>
+
+</div>
+
+<!-- Connect Modal -->
+<div class="connect-overlay" id="connectOverlay">
+  <div class="connect-modal">
+    <h3 id="connectTitle">Connecting to HubSpot...</h3>
+    <div class="connect-spinner" id="connectSpinner"></div>
+    <div class="connect-progress"><div class="connect-progress-fill" id="connectFill"></div></div>
+    <div class="connect-status" id="connectStatus">Authenticating...</div>
+  </div>
 </div>
 
 <script>
 // ══════════════════════════════════════════════════════════════════
-// DEMO DATA — realistic sample data for demonstration
+// INDUSTRY PRESETS
 // ══════════════════════════════════════════════════════════════════
-const DEMO_DATA = {
-  hero: {
-    total_ops: 4218,
-    avg_resolution_s: 3.2,
-    success_rate: 91.2,
-    bottlenecks: 14
-  },
-  sparklines: {
-    ops: [120,135,142,128,155,160,118,125,170,148,138,152,165,180,172,145,132,148,158,168,152,178,170,142,138,155,172,165,150,140],
-    resolution: [3.8,3.5,3.2,3.6,3.1,2.9,3.4,3.5,3.0,2.8,3.2,3.0,2.7,2.9,3.3,3.5,3.0,2.8,3.1,2.6,2.9,2.5,2.8,3.3,3.1,2.7,2.9,2.8,3.2,3.0],
-    success: [88,89,90,87,91,93,90,92,91,94,92,89,93,91,95,92,90,93,91,90,92,93,91,92,94,91,90,92,91,93],
-    bottlenecks: [2,1,0,1,2,1,0,0,1,2,1,0,1,0,0,1,2,1,0,1,0,0,1,1,0,0,1,0,0,1]
-  },
-  flow: {
-    stages: [
+const INDUSTRY_PRESETS = {
+  professional_services: {
+    label: 'Professional Services Firm',
+    hero: { total_ops: 4218, avg_resolution_s: 3.2, success_rate: 91.2, bottlenecks: 14 },
+    metricLabels: { ops: 'Total Requests (30d)', resolution: 'Avg Resolution (hours)', success: 'Resolution Rate', bottlenecks: 'Bottlenecks Detected' },
+    sparklines: {
+      ops: [120,135,142,128,155,160,118,125,170,148,138,152,165,180,172,145,132,148,158,168,152,178,170,142,138,155,172,165,150,140],
+      resolution: [3.8,3.5,3.2,3.6,3.1,2.9,3.4,3.5,3.0,2.8,3.2,3.0,2.7,2.9,3.3,3.5,3.0,2.8,3.1,2.6,2.9,2.5,2.8,3.3,3.1,2.7,2.9,2.8,3.2,3.0],
+      success: [88,89,90,87,91,93,90,92,91,94,92,89,93,91,95,92,90,93,91,90,92,93,91,92,94,91,90,92,91,93],
+      bottlenecks: [2,1,0,1,2,1,0,0,1,2,1,0,1,0,0,1,2,1,0,1,0,0,1,1,0,0,1,0,0,1]
+    },
+    flow: [
       { name: 'Incoming\nRequests', count: 4218, color: '#3d7eff' },
       { name: 'Auto-Routed\n& Triaged', count: 3840, color: '#00c9a0' },
       { name: 'Escalated\nto Team', count: 620, color: '#a78bfa' },
       { name: 'In\nProgress', count: 2940, color: '#f59e0b' },
       { name: 'Resolved', count: 3780, color: '#22c55e', success: 3640, fail: 140 }
+    ],
+    clusters: [
+      { label: 'Client Onboarding',  x: 4.2, y: 94, r: 35, count: 860  },
+      { label: 'Support Tickets',    x: 2.8, y: 96, r: 45, count: 1420 },
+      { label: 'Contract Renewals',  x: 5.5, y: 88, r: 22, count: 310  },
+      { label: 'Billing Inquiries',  x: 2.1, y: 97, r: 28, count: 580  },
+      { label: 'Internal Requests',  x: 6.8, y: 78, r: 18, count: 240  },
+      { label: 'Compliance Reviews', x: 7.2, y: 85, r: 15, count: 165  },
+      { label: 'Scheduling',         x: 1.8, y: 98, r: 20, count: 380  }
+    ],
+    bottlenecks: [
+      { issue: 'Client onboarding handoff delayed between Slack and CRM', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
+      { issue: 'Support tickets missing context from email thread', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
+      { issue: 'Contract renewal reminders sent after deadline', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+      { issue: 'Duplicate entries across ticketing and CRM', count: 9, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
+      { issue: 'Weekly report assembly taking 3+ hours manually', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
+      { issue: 'Approval requests going unseen in Slack channels', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
+    ],
+    insights: [
+      { icon: '\u26A1', title: 'Onboarding Handoff Is Your Biggest Bottleneck', text: 'Client onboarding takes 4.2 touchpoints on average to resolve \u2014 42% more than support tickets. New client info sits in Slack for 6+ hours before someone manually enters it into the CRM.' },
+      { icon: '\uD83D\uDCC9', title: 'Thursday Support Volume Spikes 35%', text: 'Thursdays consistently see 35% more inbound support requests than other weekdays, but staffing levels stay flat. Consider shifting one team member\'s flex day to cover Thursday afternoons.' },
+      { icon: '\u2705', title: 'Billing Inquiry Resolution at All-Time Best', text: 'Average resolution time for billing questions dropped from 4.1 hours to 47 minutes after the self-service portal launched. 97% resolution rate with zero escalations this week.' },
+      { icon: '\uD83D\uDD04', title: '12 Contract Renewals at Risk of Lapsing', text: '12 contracts expiring in the next 30 days have had zero touchpoints in 60 days. 4 are in the top 20% by revenue. Renewal reminders are firing to outdated email addresses.' },
+      { icon: '\uD83D\uDCB0', title: 'Manual Reporting Costs ~18 Hours/Week', text: 'Three team members spend 18 hours weekly assembling reports across spreadsheets and tools. Automating the data pull alone would recover 12 hours \u2014 equivalent to $2,400/month.' }
     ]
   },
-  clusters: [
-    { label: 'Client Onboarding',  x: 4.2, y: 94, r: 35, count: 860  },
-    { label: 'Support Tickets',    x: 2.8, y: 96, r: 45, count: 1420 },
-    { label: 'Contract Renewals',  x: 5.5, y: 88, r: 22, count: 310  },
-    { label: 'Billing Inquiries',  x: 2.1, y: 97, r: 28, count: 580  },
-    { label: 'Internal Requests',  x: 6.8, y: 78, r: 18, count: 240  },
-    { label: 'Compliance Reviews', x: 7.2, y: 85, r: 15, count: 165  },
-    { label: 'Scheduling',         x: 1.8, y: 98, r: 20, count: 380  }
-  ],
-  bottlenecks: [
-    { issue: 'Client onboarding handoff delayed (Slack \u2192 CRM)', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
-    { issue: 'Support tickets missing context from email thread', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
-    { issue: 'Contract renewal reminders sent after deadline', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-    { issue: 'Duplicate entries across Zendesk and HubSpot', count: 9, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
-    { issue: 'Weekly report assembly taking 3+ hours manually', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
-    { issue: 'Slack approval requests going unseen in channels', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
-  ],
-  trends: {
-    labels: [],
-    volume: [],
-    latency: [],
-    error_rate: []
+
+  law_firm: {
+    label: 'Law Firm',
+    hero: { total_ops: 3640, avg_resolution_s: 4.8, success_rate: 88.5, bottlenecks: 18 },
+    metricLabels: { ops: 'Total Matters Tracked (30d)', resolution: 'Avg Time to Close (hours)', success: 'On-Time Completion', bottlenecks: 'Bottlenecks Detected' },
+    sparklines: {
+      ops: [105,112,118,108,125,130,98,108,138,122,115,128,135,148,140,118,110,125,132,142,128,150,142,118,112,128,140,135,122,115],
+      resolution: [5.2,5.0,4.8,5.1,4.6,4.4,4.9,5.0,4.5,4.3,4.7,4.5,4.2,4.4,4.8,5.0,4.5,4.3,4.6,4.1,4.4,4.0,4.3,4.8,4.6,4.2,4.4,4.3,4.7,4.5],
+      success: [85,86,87,84,88,90,87,89,88,91,89,86,90,88,92,89,87,90,88,87,89,90,88,89,91,88,87,89,88,90],
+      bottlenecks: [3,2,1,2,3,2,1,1,2,3,2,1,2,1,1,2,3,2,1,2,1,1,2,2,1,1,2,1,1,2]
+    },
+    flow: [
+      { name: 'New\nMatters', count: 3640, color: '#3d7eff' },
+      { name: 'Conflict\nCheck', count: 3520, color: '#00c9a0' },
+      { name: 'Attorney\nAssigned', count: 3380, color: '#a78bfa' },
+      { name: 'Active\nWork', count: 2860, color: '#f59e0b' },
+      { name: 'Closed', count: 3220, color: '#22c55e', success: 2850, fail: 370 }
+    ],
+    clusters: [
+      { label: 'New Case Intake',     x: 3.8, y: 92, r: 38, count: 920  },
+      { label: 'Document Review',     x: 6.2, y: 84, r: 32, count: 680  },
+      { label: 'Client Communication', x: 2.4, y: 95, r: 28, count: 540 },
+      { label: 'Court Filings',       x: 5.8, y: 91, r: 22, count: 380  },
+      { label: 'Billing / Time Entry', x: 3.1, y: 88, r: 25, count: 460 },
+      { label: 'Compliance / Ethics',  x: 7.5, y: 82, r: 14, count: 180 },
+      { label: 'Internal Admin',       x: 4.5, y: 79, r: 16, count: 220 }
+    ],
+    bottlenecks: [
+      { issue: 'Conflict checks delayed \u2014 partner approval bottleneck', count: 28, severity: 'high', last_seen: '1h ago', status: 'active' },
+      { issue: 'Time entries submitted 48+ hours after work performed', count: 22, severity: 'high', last_seen: '3h ago', status: 'active' },
+      { issue: 'Client emails unanswered for 24+ hours', count: 15, severity: 'medium', last_seen: '8h ago', status: 'monitoring' },
+      { issue: 'Document versions out of sync across DMS and email', count: 11, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+      { issue: 'Court filing deadlines tracked in personal calendars only', count: 7, severity: 'high', last_seen: '2d ago', status: 'monitoring' },
+      { issue: 'Realization rate dropping on flat-fee matters', count: 4, severity: 'low', last_seen: '5d ago', status: 'resolved' }
+    ],
+    insights: [
+      { icon: '\u26A1', title: 'Conflict Checks Are Your Biggest Delay', text: '28 new matters waited 6+ hours for conflict clearance this month. The bottleneck is partner sign-off \u2014 85% of delays happen when the reviewing partner has 3+ matters in queue.' },
+      { icon: '\uD83D\uDCC9', title: 'Billable Time Leakage: ~$32K/Month', text: 'Associates are entering time 48+ hours after work is performed, leading to an estimated 12% under-billing. Real-time time capture could recover $32K monthly in missed billable hours.' },
+      { icon: '\u2705', title: 'Client Responsiveness Up 40%', text: 'Average client email response time dropped from 18 hours to 11 hours after implementing the triage queue. Client satisfaction scores are up for the third consecutive month.' },
+      { icon: '\uD83D\uDD04', title: '7 Filing Deadlines at Risk This Month', text: '7 upcoming court deadlines are tracked only in individual attorney calendars with no backup notification. If one person is out sick, these deadlines could be missed.' },
+      { icon: '\uD83D\uDCB0', title: 'Document Version Chaos Costs 6 Hours/Week', text: 'Paralegals spend ~6 hours weekly reconciling document versions between the DMS, email attachments, and shared drives. A single source of truth would eliminate this entirely.' }
+    ]
   },
-  insights: [
-    {
-      icon: '\u26A1',
-      title: 'Onboarding Handoff Is Your Biggest Bottleneck',
-      text: 'Client onboarding tasks take 4.2 steps on average to resolve \u2014 42% longer than support tickets. The gap is the Slack-to-CRM handoff: new client info sits in Slack for 6+ hours before someone manually enters it into HubSpot.'
+
+  trade_association: {
+    label: 'Trade Association',
+    hero: { total_ops: 5820, avg_resolution_s: 2.1, success_rate: 93.8, bottlenecks: 11 },
+    metricLabels: { ops: 'Member Interactions (30d)', resolution: 'Avg Response Time (hours)', success: 'Member Satisfaction', bottlenecks: 'Bottlenecks Detected' },
+    sparklines: {
+      ops: [165,178,185,172,198,205,155,168,218,195,182,200,210,230,220,190,175,195,205,218,198,228,218,185,178,200,218,210,195,182],
+      resolution: [2.5,2.3,2.1,2.4,2.0,1.8,2.2,2.3,1.9,1.7,2.1,1.9,1.6,1.8,2.2,2.4,1.9,1.7,2.0,1.5,1.8,1.4,1.7,2.2,2.0,1.6,1.8,1.7,2.1,1.9],
+      success: [91,92,93,90,94,95,93,94,93,96,94,91,95,93,97,94,92,95,93,92,94,95,93,94,96,93,92,94,93,95],
+      bottlenecks: [1,1,0,1,2,1,0,0,1,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,0,0,1]
     },
-    {
-      icon: '\uD83D\uDCC9',
-      title: 'Thursday Support Volume Spikes 35%',
-      text: 'Thursdays consistently see 35% more inbound support requests than other weekdays, but staffing levels stay flat. Consider shifting one team member\'s flex day to cover Thursday afternoons.'
+    flow: [
+      { name: 'Member\nInquiries', count: 5820, color: '#3d7eff' },
+      { name: 'Auto-\nCategorized', count: 5400, color: '#00c9a0' },
+      { name: 'Staff\nAssigned', count: 1240, color: '#a78bfa' },
+      { name: 'In\nProgress', count: 4100, color: '#f59e0b' },
+      { name: 'Resolved', count: 5460, color: '#22c55e', success: 5120, fail: 340 }
+    ],
+    clusters: [
+      { label: 'Membership Renewals',  x: 3.5, y: 96, r: 42, count: 1580 },
+      { label: 'Event Registration',   x: 1.8, y: 98, r: 38, count: 1320 },
+      { label: 'Advocacy / Policy',     x: 5.2, y: 90, r: 20, count: 380  },
+      { label: 'Sponsorship Mgmt',     x: 4.8, y: 87, r: 18, count: 290  },
+      { label: 'Committee Coordination', x: 6.1, y: 82, r: 22, count: 420 },
+      { label: 'Member Benefits',       x: 2.5, y: 95, r: 30, count: 860  },
+      { label: 'Communications',        x: 2.2, y: 97, r: 26, count: 680  }
+    ],
+    bottlenecks: [
+      { issue: 'Renewal notices not synced between AMS and email platform', count: 19, severity: 'high', last_seen: '3h ago', status: 'active' },
+      { issue: 'Event registrations requiring manual data entry into AMS', count: 14, severity: 'high', last_seen: '5h ago', status: 'active' },
+      { issue: 'Committee meeting notes not reaching all members', count: 10, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+      { issue: 'Sponsor deliverables tracked in spreadsheets only', count: 8, severity: 'medium', last_seen: '2d ago', status: 'monitoring' },
+      { issue: 'New member welcome sequence delayed 5+ days', count: 6, severity: 'low', last_seen: '4d ago', status: 'resolved' },
+      { issue: 'Advocacy alerts sent to lapsed members', count: 3, severity: 'low', last_seen: '6d ago', status: 'resolved' }
+    ],
+    insights: [
+      { icon: '\u26A1', title: 'Renewal Sync Gap Costing You Members', text: '19 renewal notices failed to reach members because the AMS and email platform are out of sync. At your $450 average dues, that\u2019s up to $8,550 in at-risk revenue this quarter alone.' },
+      { icon: '\uD83D\uDCC9', title: 'Event Registration Is Still Manual', text: 'Staff spend 8 hours per event manually entering registrations from the event platform into the AMS. With 4 events/month, that\u2019s 32 hours of data entry that should be automated.' },
+      { icon: '\u2705', title: 'Member Satisfaction Trending to All-Time High', text: 'Response time dropped from 3.4 hours to 2.1 hours over 30 days. Members who get a response within 2 hours are 3x more likely to renew \u2014 you\u2019re now hitting that mark 68% of the time.' },
+      { icon: '\uD83D\uDD04', title: 'Committee Engagement Dropping Off', text: 'Only 34% of committee members opened the last 3 meeting recaps. The notes go out as PDF attachments via email \u2014 switching to a digest format could increase engagement significantly.' },
+      { icon: '\uD83D\uDCB0', title: 'Sponsorship Tracking Is a Risk', text: 'Sponsor deliverables are tracked across 6 separate spreadsheets with no single owner. Two sponsors received late reports last quarter. A unified tracker would take 2 hours to set up and prevent churn.' }
+    ]
+  },
+
+  accounting: {
+    label: 'Accounting / CPA Firm',
+    hero: { total_ops: 2940, avg_resolution_s: 5.6, success_rate: 89.3, bottlenecks: 16 },
+    metricLabels: { ops: 'Client Engagements (30d)', resolution: 'Avg Turnaround (hours)', success: 'On-Time Delivery', bottlenecks: 'Bottlenecks Detected' },
+    sparklines: {
+      ops: [80,88,95,85,102,108,78,85,115,100,92,105,112,125,118,95,88,100,108,115,102,122,115,92,88,102,115,108,98,90],
+      resolution: [6.2,5.8,5.5,6.0,5.3,5.0,5.7,5.8,5.2,4.8,5.4,5.1,4.8,5.0,5.5,5.8,5.2,4.9,5.3,4.6,5.0,4.4,4.8,5.5,5.2,4.8,5.0,4.9,5.4,5.1],
+      success: [86,87,88,85,89,91,88,90,89,92,90,87,91,89,93,90,88,91,89,88,90,91,89,90,92,89,88,90,89,91],
+      bottlenecks: [3,2,1,2,3,2,1,1,2,3,2,1,2,1,1,2,3,2,1,2,1,1,2,2,1,1,2,1,1,2]
     },
-    {
-      icon: '\u2705',
-      title: 'Billing Inquiry Resolution at All-Time Best',
-      text: 'Average resolution time for billing questions dropped from 4.1 hours to 47 minutes after the self-service invoice portal launched. 97% resolution rate with zero escalations this week.'
-    },
-    {
-      icon: '\uD83D\uDD04',
-      title: '12 Contract Renewals at Risk of Lapsing',
-      text: '12 contracts expiring in the next 30 days have had zero touchpoints in the last 60 days. 4 of these are in the top 20% by revenue. Automated renewal reminders are firing but going to outdated email addresses.'
-    },
-    {
-      icon: '\uD83D\uDCB0',
-      title: 'Manual Reporting Costs ~18 Hours/Week',
-      text: 'Three team members spend a combined 18 hours weekly assembling reports from Zendesk, HubSpot, and Google Sheets. Automating the data pull alone would recover 12 of those hours \u2014 equivalent to $2,400/month in labor.'
-    }
-  ]
+    flow: [
+      { name: 'Client\nRequests', count: 2940, color: '#3d7eff' },
+      { name: 'Document\nCollection', count: 2680, color: '#00c9a0' },
+      { name: 'Staff\nAssigned', count: 2520, color: '#a78bfa' },
+      { name: 'In\nReview', count: 2180, color: '#f59e0b' },
+      { name: 'Delivered', count: 2625, color: '#22c55e', success: 2340, fail: 285 }
+    ],
+    clusters: [
+      { label: 'Tax Preparation',      x: 5.8, y: 91, r: 40, count: 980  },
+      { label: 'Bookkeeping',          x: 2.5, y: 96, r: 32, count: 640  },
+      { label: 'Audit Engagements',    x: 8.2, y: 82, r: 18, count: 185  },
+      { label: 'Advisory / Consulting', x: 6.5, y: 86, r: 22, count: 280 },
+      { label: 'Payroll',              x: 2.0, y: 97, r: 25, count: 420  },
+      { label: 'Client Onboarding',    x: 4.8, y: 88, r: 16, count: 195  },
+      { label: 'Compliance Filings',   x: 5.2, y: 90, r: 20, count: 310  }
+    ],
+    bottlenecks: [
+      { issue: 'Client document requests unanswered for 7+ days', count: 32, severity: 'high', last_seen: '1h ago', status: 'active' },
+      { issue: 'Tax returns queued behind missing client docs', count: 24, severity: 'high', last_seen: '2h ago', status: 'active' },
+      { issue: 'Workpaper review cycle taking 3+ rounds', count: 14, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+      { issue: 'Client portal uploads not triggering staff notifications', count: 10, severity: 'medium', last_seen: '8h ago', status: 'monitoring' },
+      { issue: 'Fee estimates sent without current year rate card', count: 6, severity: 'low', last_seen: '3d ago', status: 'resolved' },
+      { issue: 'Engagement letters expiring without follow-up', count: 5, severity: 'low', last_seen: '5d ago', status: 'resolved' }
+    ],
+    insights: [
+      { icon: '\u26A1', title: 'Missing Client Docs Are Your #1 Bottleneck', text: '32 client document requests are outstanding for 7+ days. These are blocking 24 tax returns from moving to preparation. An automated reminder sequence at days 3, 5, and 7 would cut this backlog in half.' },
+      { icon: '\uD83D\uDCC9', title: 'Review Cycles Are Too Long', text: 'Workpapers are averaging 3.2 review rounds before sign-off. Industry benchmark is 1.8. The root cause: reviewers are catching formatting issues that a checklist or template would prevent upfront.' },
+      { icon: '\u2705', title: 'Payroll Processing Is Your Smoothest Operation', text: 'Payroll has a 97% on-time rate with only 2.0 touchpoints per cycle. This is your best-run process \u2014 use it as the model for standardizing other workflows.' },
+      { icon: '\uD83D\uDD04', title: 'Client Portal Notifications Are Broken', text: '10 client uploads this month didn\u2019t trigger staff notifications. Staff discovered the documents days later during manual checks. This is a configuration issue, not a process issue \u2014 fixable in hours.' },
+      { icon: '\uD83D\uDCB0', title: 'Tax Season Capacity Planning Gap', text: 'Current trajectory shows 340 returns in queue for March with capacity for 280. You\u2019ll need either 2 seasonal staff or to shift 60 returns to February with early-filing incentives.' }
+    ]
+  }
 };
 
-// Generate 30-day trend labels and data
-(function() {
-  const d = DEMO_DATA.trends;
-  const now = new Date();
-  for (let i = 29; i >= 0; i--) {
-    const dt = new Date(now); dt.setDate(dt.getDate() - i);
-    d.labels.push(dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-    d.volume.push(80 + Math.floor(Math.random() * 60) + (i < 10 ? 15 : 0));
-    d.latency.push(+(7 + Math.random() * 4 - (i < 10 ? 1.5 : 0)).toFixed(1));
-    d.error_rate.push(+(3 + Math.random() * 6).toFixed(1));
-  }
-})();
+// Tool-specific bottleneck overlays — injected when tools are "connected"
+const TOOL_BOTTLENECKS = {
+  zendesk: { issue: 'Zendesk tickets auto-closed before client confirmation', count: 11, severity: 'medium', last_seen: '5h ago', status: 'monitoring' },
+  hubspot: { issue: 'HubSpot contacts missing lifecycle stage updates', count: 15, severity: 'high', last_seen: '2h ago', status: 'active' },
+  salesforce: { issue: 'Salesforce opportunities stale for 30+ days', count: 9, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+  quickbooks: { issue: 'QuickBooks invoices not synced to CRM records', count: 7, severity: 'medium', last_seen: '12h ago', status: 'monitoring' },
+  monday: { issue: 'Monday.com tasks assigned but never started', count: 13, severity: 'high', last_seen: '4h ago', status: 'active' },
+  asana: { issue: 'Asana project milestones overdue with no status update', count: 8, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
+  sheets: { issue: 'Google Sheets reporting data 2+ weeks stale', count: 6, severity: 'low', last_seen: '3d ago', status: 'monitoring' }
+};
 
+
+// ══════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════
+let currentIndustry = 'professional_services';
+let activeTools = new Set(['email', 'slack']);
+let chartInstances = {};
+let flowAnimFrame = null;
 
 // ══════════════════════════════════════════════════════════════════
 // MODE DETECTION
@@ -402,136 +625,160 @@ function detectMode() {
   if (['localhost','127.0.0.1','192.168.1.154'].includes(host) || host.endsWith('.ts.net')) return 'live';
   return 'demo';
 }
-
 const MODE = detectMode();
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '192.168.1.154' || window.location.hostname.endsWith('.ts.net'))
-  ? `${window.location.protocol}//${window.location.host}`
-  : 'http://192.168.1.154:8000';
+  ? `${window.location.protocol}//${window.location.host}` : 'http://192.168.1.154:8000';
 const API_KEY = 'jarvis';
 
 // ══════════════════════════════════════════════════════════════════
 // DATA LOADER
 // ══════════════════════════════════════════════════════════════════
+function getDemoData() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const data = {
+    hero: { ...preset.hero },
+    metricLabels: preset.metricLabels,
+    sparklines: preset.sparklines,
+    flow: { stages: [...preset.flow] },
+    clusters: preset.clusters,
+    bottlenecks: [...preset.bottlenecks],
+    insights: preset.insights,
+    trends: { labels: [], volume: [], latency: [], error_rate: [] }
+  };
+  // Add tool-specific bottlenecks
+  activeTools.forEach(t => {
+    if (TOOL_BOTTLENECKS[t]) {
+      data.bottlenecks.splice(2, 0, { ...TOOL_BOTTLENECKS[t] });
+    }
+  });
+  data.bottlenecks = data.bottlenecks.slice(0, 8);
+  // Scale hero ops by connected tools
+  const toolBoost = Math.max(0, activeTools.size - 2) * 0.12;
+  data.hero.total_ops = Math.round(preset.hero.total_ops * (1 + toolBoost));
+  // Generate trends
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const dt = new Date(now); dt.setDate(dt.getDate() - i);
+    data.trends.labels.push(dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+    const base = preset.hero.total_ops / 30;
+    data.trends.volume.push(Math.round(base * (0.7 + Math.random() * 0.6)));
+    data.trends.latency.push(+(preset.hero.avg_resolution_s * (0.8 + Math.random() * 0.4)).toFixed(1));
+    data.trends.error_rate.push(+((100 - preset.hero.success_rate) * (0.5 + Math.random())).toFixed(1));
+  }
+  return data;
+}
+
 class ClarityDataLoader {
   constructor(mode) { this.mode = mode; }
-
   async load() {
-    if (this.mode === 'demo') return DEMO_DATA;
+    if (this.mode === 'demo') return getDemoData();
     try {
-      const resp = await fetch(`${API_BASE}/api/clarity/data`, {
-        headers: { 'Authorization': `Bearer ${API_KEY}` }
-      });
+      const resp = await fetch(`${API_BASE}/api/clarity/data`, { headers: { 'Authorization': `Bearer ${API_KEY}` } });
       if (!resp.ok) throw new Error(`API ${resp.status}`);
       const raw = await resp.json();
       return this.transformLive(raw);
     } catch (e) {
       console.warn('Live data fetch failed, falling back to demo:', e);
-      updateMode('demo', 'Live unavailable — showing demo data');
-      return DEMO_DATA;
+      updateMode('demo', 'Live unavailable \u2014 showing demo data');
+      return getDemoData();
     }
   }
-
   transformLive(raw) {
-    const ss = raw.session_summary || {};
-    const dt = raw.daily_trends || {};
-    const bn = raw.bottlenecks || [];
-    const fl = raw.flow || {};
-
-    const total = (ss.success || 0) + (ss.max_steps || 0) + (ss.provider_failed || 0) + (ss.assess || 0);
-    const successRate = total > 0 ? ((ss.success || 0) / total * 100) : 0;
-
+    const ss = raw.session_summary || {}, dt = raw.daily_trends || {}, bn = raw.bottlenecks || [], fl = raw.flow || {};
+    const total = (ss.success||0) + (ss.max_steps||0) + (ss.provider_failed||0) + (ss.assess||0);
+    const successRate = total > 0 ? ((ss.success||0) / total * 100) : 0;
     return {
-      hero: {
-        total_ops: dt.total_requests || total,
-        avg_resolution_s: ss.avg_duration_s || 0,
-        success_rate: +successRate.toFixed(1),
-        bottlenecks: bn.length
-      },
-      sparklines: {
-        ops: (dt.daily_volume || []).slice(-30),
-        resolution: (dt.daily_latency || []).slice(-30),
-        success: (dt.daily_success_rate || []).slice(-30),
-        bottlenecks: (dt.daily_bottlenecks || []).slice(-30)
-      },
-      flow: fl,
-      clusters: this.buildClusters(raw.topic_clusters || []),
-      bottlenecks: bn.map(b => ({
-        issue: b.issue || b.goal || 'Unknown',
-        count: b.count || 1,
-        severity: b.severity || 'low',
-        last_seen: b.last_seen || 'Unknown',
-        status: b.status || 'monitoring'
-      })),
-      trends: {
-        labels: dt.labels || [],
-        volume: dt.daily_volume || [],
-        latency: dt.daily_latency || [],
-        error_rate: dt.daily_error_rate || []
-      },
-      insights: raw.insights || DEMO_DATA.insights
+      hero: { total_ops: dt.total_requests || total, avg_resolution_s: ss.avg_duration_s || 0, success_rate: +successRate.toFixed(1), bottlenecks: bn.length },
+      metricLabels: INDUSTRY_PRESETS.professional_services.metricLabels,
+      sparklines: { ops: (dt.daily_volume||[]).slice(-30), resolution: (dt.daily_latency||[]).slice(-30), success: (dt.daily_success_rate||[]).slice(-30), bottlenecks: (dt.daily_bottlenecks||[]).slice(-30) },
+      flow: fl, clusters: (raw.topic_clusters||[]).length ? raw.topic_clusters : INDUSTRY_PRESETS.professional_services.clusters,
+      bottlenecks: bn.map(b => ({ issue: b.issue||b.goal||'Unknown', count: b.count||1, severity: b.severity||'low', last_seen: b.last_seen||'Unknown', status: b.status||'monitoring' })),
+      trends: { labels: dt.labels||[], volume: dt.daily_volume||[], latency: dt.daily_latency||[], error_rate: dt.daily_error_rate||[] },
+      insights: raw.insights || INDUSTRY_PRESETS.professional_services.insights
     };
-  }
-
-  buildClusters(raw) {
-    if (raw.length) return raw;
-    return DEMO_DATA.clusters;
   }
 }
 
 // ══════════════════════════════════════════════════════════════════
 // RENDERING
 // ══════════════════════════════════════════════════════════════════
-
 function updateMode(mode, text) {
   const badge = document.getElementById('modeBadge');
-  const modeText = document.getElementById('modeText');
   badge.className = 'mode-badge ' + (mode === 'live' ? 'live' : 'demo');
-  modeText.textContent = text || (mode === 'live' ? 'Connected — Live Data' : 'Demo Mode — Sample Data');
+  document.getElementById('modeText').textContent = text || (mode === 'live' ? 'Connected \u2014 Live Data' : 'Demo Mode \u2014 Sample Data');
 }
-
 function updateTimestamp() {
-  document.getElementById('lastRefreshed').textContent =
-    'Updated ' + new Date().toLocaleTimeString();
+  document.getElementById('lastRefreshed').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
-function renderHeroMetrics(data) {
-  document.getElementById('metricOps').textContent = data.hero.total_ops.toLocaleString();
-  const res = data.hero.avg_resolution_s;
-  document.getElementById('metricResolution').textContent = MODE === 'live' ? res.toFixed(1) + 's' : res.toFixed(1) + 'h';
-  document.getElementById('metricSuccess').textContent = data.hero.success_rate.toFixed(1) + '%';
-  document.getElementById('metricBottlenecks').textContent = data.hero.bottlenecks;
+// ─── Animated number counter ───
+function animateValue(el, target, suffix, duration) {
+  const start = 0;
+  const startTime = performance.now();
+  const isFloat = String(target).includes('.');
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = start + (target - start) * eased;
+    if (isFloat) {
+      el.textContent = current.toFixed(1) + suffix;
+    } else {
+      el.textContent = Math.round(current).toLocaleString() + suffix;
+    }
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderHeroMetrics(data, animate) {
+  const labels = data.metricLabels || {};
+  if (labels.ops) document.getElementById('labelOps').textContent = labels.ops;
+  if (labels.resolution) document.getElementById('labelResolution').textContent = labels.resolution;
+  if (labels.success) document.getElementById('labelSuccess').textContent = labels.success;
+  if (labels.bottlenecks) document.getElementById('labelBottlenecks').textContent = labels.bottlenecks;
+
+  const dur = animate ? 1200 : 0;
+  const elOps = document.getElementById('metricOps');
+  const elRes = document.getElementById('metricResolution');
+  const elSuc = document.getElementById('metricSuccess');
+  const elBot = document.getElementById('metricBottlenecks');
+
+  if (animate) {
+    animateValue(elOps, data.hero.total_ops, '', dur);
+    animateValue(elRes, data.hero.avg_resolution_s, 'h', dur);
+    animateValue(elSuc, data.hero.success_rate, '%', dur);
+    animateValue(elBot, data.hero.bottlenecks, '', dur);
+  } else {
+    elOps.textContent = data.hero.total_ops.toLocaleString();
+    elRes.textContent = data.hero.avg_resolution_s.toFixed(1) + (MODE === 'live' ? 's' : 'h');
+    elSuc.textContent = data.hero.success_rate.toFixed(1) + '%';
+    elBot.textContent = data.hero.bottlenecks;
+  }
+}
+
+function destroyChart(key) {
+  if (chartInstances[key]) { chartInstances[key].destroy(); chartInstances[key] = null; }
 }
 
 function createSparkline(canvasId, dataPoints, color) {
   const canvas = document.getElementById(canvasId);
   if (!canvas || !dataPoints.length) return;
-  const ctx = canvas.getContext('2d');
-  new Chart(ctx, {
+  destroyChart(canvasId);
+  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
     type: 'line',
     data: {
       labels: dataPoints.map((_, i) => i),
-      datasets: [{
-        data: dataPoints,
-        borderColor: color || '#00c9a0',
-        borderWidth: 1.5,
-        fill: true,
-        backgroundColor: (color || 'rgba(0,201,160,') === '#ef4444'
-          ? 'rgba(239,68,68,.08)' : 'rgba(0,201,160,.08)',
-        pointRadius: 0,
-        tension: 0.4
-      }]
+      datasets: [{ data: dataPoints, borderColor: color || '#00c9a0', borderWidth: 1.5, fill: true,
+        backgroundColor: color === '#ef4444' ? 'rgba(239,68,68,.08)' : 'rgba(0,201,160,.08)',
+        pointRadius: 0, tension: 0.4 }]
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
+    options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { enabled: false } },
-      scales: {
-        x: { display: false },
-        y: { display: false }
-      }
+      scales: { x: { display: false }, y: { display: false } }
     }
   });
 }
-
 function renderSparklines(data) {
   createSparkline('sparkOps', data.sparklines.ops, '#00c9a0');
   createSparkline('sparkResolution', data.sparklines.resolution, '#3d7eff');
@@ -539,112 +786,104 @@ function renderSparklines(data) {
   createSparkline('sparkBottlenecks', data.sparklines.bottlenecks, '#ef4444');
 }
 
-// ─── Flow Visualization ───
+// ─── Flow Visualization with animated dots ───
 function renderFlow(data) {
+  if (flowAnimFrame) { cancelAnimationFrame(flowAnimFrame); flowAnimFrame = null; }
   const canvas = document.getElementById('flowCanvas');
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.parentElement.getBoundingClientRect();
   canvas.width = rect.width * dpr;
-  canvas.height = 120 * dpr;
-  canvas.style.height = '120px';
+  canvas.height = 140 * dpr;
+  canvas.style.height = '140px';
   const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
+  const w = rect.width;
   const stages = data.flow.stages || [];
   if (!stages.length) return;
-
-  const w = rect.width;
   const stageW = Math.min(140, (w - 40) / stages.length - 20);
   const gap = (w - stages.length * stageW) / (stages.length + 1);
-  const cy = 55;
+  const cy = 60;
 
-  stages.forEach((stage, i) => {
-    const x = gap + i * (stageW + gap);
-
-    // Draw connector
-    if (i > 0) {
-      const prevX = gap + (i - 1) * (stageW + gap) + stageW;
-      ctx.beginPath();
-      ctx.moveTo(prevX + 4, cy);
-      ctx.lineTo(x - 4, cy);
-      ctx.strokeStyle = 'rgba(255,255,255,.12)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      // Arrow
-      ctx.beginPath();
-      ctx.moveTo(x - 10, cy - 5);
-      ctx.lineTo(x - 4, cy);
-      ctx.lineTo(x - 10, cy + 5);
-      ctx.strokeStyle = 'rgba(255,255,255,.2)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+  // Dots state
+  const dots = [];
+  for (let i = 0; i < stages.length - 1; i++) {
+    const fromX = gap + i * (stageW + gap) + stageW;
+    const toX = gap + (i + 1) * (stageW + gap);
+    for (let d = 0; d < 3; d++) {
+      dots.push({ fromX: fromX + 4, toX: toX - 4, progress: d * 0.33, speed: 0.003 + Math.random() * 0.002, color: stages[i].color });
     }
+  }
 
-    // Rounded rectangle
-    const rh = 60;
-    const ry = cy - rh / 2;
-    const radius = 10;
-    ctx.beginPath();
-    ctx.roundRect(x, ry, stageW, rh, radius);
-    ctx.fillStyle = stage.color + '18';
-    ctx.fill();
-    ctx.strokeStyle = stage.color + '60';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+  function drawFrame() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, 140);
 
-    // Stage name
-    ctx.fillStyle = '#dde3f0';
-    ctx.font = '500 11px "DM Sans", sans-serif';
-    ctx.textAlign = 'center';
-    const lines = stage.name.split('\n');
-    lines.forEach((line, li) => {
-      ctx.fillText(line, x + stageW / 2, ry + 20 + li * 14);
+    // Draw stages
+    stages.forEach((stage, i) => {
+      const x = gap + i * (stageW + gap);
+      // Connector
+      if (i > 0) {
+        const prevX = gap + (i - 1) * (stageW + gap) + stageW;
+        ctx.beginPath(); ctx.moveTo(prevX + 4, cy); ctx.lineTo(x - 4, cy);
+        ctx.strokeStyle = 'rgba(255,255,255,.08)'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x - 10, cy - 5); ctx.lineTo(x - 4, cy); ctx.lineTo(x - 10, cy + 5);
+        ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      // Box
+      const rh = 62, ry = cy - rh / 2;
+      ctx.beginPath(); ctx.roundRect(x, ry, stageW, rh, 10);
+      ctx.fillStyle = stage.color + '15'; ctx.fill();
+      ctx.strokeStyle = stage.color + '50'; ctx.lineWidth = 1; ctx.stroke();
+      // Name
+      ctx.fillStyle = '#dde3f0'; ctx.font = '500 11px "DM Sans", sans-serif'; ctx.textAlign = 'center';
+      stage.name.split('\n').forEach((line, li) => { ctx.fillText(line, x + stageW / 2, ry + 20 + li * 14); });
+      // Count
+      ctx.fillStyle = stage.color; ctx.font = '700 15px "Fraunces", serif';
+      ctx.fillText(stage.count.toLocaleString(), x + stageW / 2, ry + rh - 8);
+      // Success/fail
+      if (stage.success !== undefined) {
+        ctx.font = '11px "DM Sans", sans-serif';
+        ctx.fillStyle = '#22c55e'; ctx.fillText(stage.success.toLocaleString() + ' \u2713', x + stageW / 2 - 22, ry + rh + 16);
+        ctx.fillStyle = '#ef4444'; ctx.fillText(stage.fail.toLocaleString() + ' \u2717', x + stageW / 2 + 25, ry + rh + 16);
+      }
     });
 
-    // Count
-    ctx.fillStyle = stage.color;
-    ctx.font = '700 15px "Fraunces", serif';
-    ctx.fillText(stage.count.toLocaleString(), x + stageW / 2, ry + rh - 8);
+    // Animate dots
+    dots.forEach(d => {
+      d.progress += d.speed;
+      if (d.progress > 1) d.progress -= 1;
+      const x = d.fromX + (d.toX - d.fromX) * d.progress;
+      ctx.beginPath(); ctx.arc(x, cy, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = d.color + 'AA'; ctx.fill();
+    });
 
-    // Success/fail indicator for last stage
-    if (stage.success !== undefined) {
-      ctx.font = '11px "DM Sans", sans-serif';
-      ctx.fillStyle = '#22c55e';
-      ctx.fillText(stage.success + ' \u2713', x + stageW / 2 - 20, ry + rh + 14);
-      ctx.fillStyle = '#ef4444';
-      ctx.fillText(stage.fail + ' \u2717', x + stageW / 2 + 25, ry + rh + 14);
-    }
-  });
+    flowAnimFrame = requestAnimationFrame(drawFrame);
+  }
+  drawFrame();
 }
 
 // ─── Bubble Chart ───
 function renderBubbleChart(data) {
+  destroyChart('bubble');
   const ctx = document.getElementById('bubbleChart').getContext('2d');
   const colors = ['#00c9a0','#3d7eff','#a78bfa','#f59e0b','#ef4444','#22c55e','#ec4899'];
-
-  new Chart(ctx, {
+  chartInstances['bubble'] = new Chart(ctx, {
     type: 'bubble',
     data: {
       datasets: data.clusters.map((c, i) => ({
         label: c.label,
         data: [{ x: c.x, y: c.y, r: c.r / 2.5 }],
         backgroundColor: colors[i % colors.length] + '40',
-        borderColor: colors[i % colors.length],
-        borderWidth: 1.5
+        borderColor: colors[i % colors.length], borderWidth: 1.5
       }))
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: true, position: 'bottom', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 12, usePointStyle: true } },
-        tooltip: {
-          callbacks: {
-            label: (ctx) => {
-              const c = data.clusters[ctx.datasetIndex];
-              return `${c.label}: ${c.count} requests, ${c.y}% resolved, ~${c.x} avg touchpoints`;
-            }
-          }
-        }
+        tooltip: { callbacks: { label: (ctx) => {
+          const c = data.clusters[ctx.datasetIndex];
+          return `${c.label}: ${c.count} items, ${c.y}% resolved, ~${c.x} avg touchpoints`;
+        }}}
       },
       scales: {
         x: { title: { display: true, text: 'Avg Touchpoints to Resolve', color: '#7e8ea8', font: { size: 12 } },
@@ -658,49 +897,29 @@ function renderBubbleChart(data) {
 
 // ─── Bottleneck Table ───
 function renderBottlenecks(data) {
-  const tbody = document.getElementById('bottleneckBody');
-  tbody.innerHTML = data.bottlenecks.map(b => {
+  document.getElementById('bottleneckBody').innerHTML = data.bottlenecks.map(b => {
     const sevClass = b.severity === 'high' ? 'severity-high' : b.severity === 'medium' ? 'severity-medium' : 'severity-low';
     const statusClass = b.status === 'active' ? 'status-active' : b.status === 'monitoring' ? 'status-monitoring' : 'status-resolved';
-    return `<tr>
-      <td><span class="severity-bar ${sevClass}"></span></td>
-      <td>${b.issue}</td>
-      <td>${b.count}</td>
-      <td style="text-transform:capitalize">${b.severity}</td>
-      <td style="color:var(--soft)">${b.last_seen}</td>
-      <td><span class="status-chip ${statusClass}">${b.status}</span></td>
-    </tr>`;
+    return `<tr><td><span class="severity-bar ${sevClass}"></span></td><td>${b.issue}</td><td>${b.count}</td>
+      <td style="text-transform:capitalize">${b.severity}</td><td style="color:var(--soft)">${b.last_seen}</td>
+      <td><span class="status-chip ${statusClass}">${b.status}</span></td></tr>`;
   }).join('');
 }
 
 // ─── Trend Chart ───
 function renderTrendChart(data) {
-  const ctx = document.getElementById('trendChart').getContext('2d');
-  new Chart(ctx, {
+  destroyChart('trend');
+  chartInstances['trend'] = new Chart(document.getElementById('trendChart').getContext('2d'), {
     type: 'line',
     data: {
       labels: data.trends.labels,
       datasets: [
-        {
-          label: 'Daily Volume',
-          data: data.trends.volume,
-          borderColor: '#00c9a0',
-          backgroundColor: 'rgba(0,201,160,.08)',
-          fill: true, tension: 0.3, borderWidth: 2, pointRadius: 2, yAxisID: 'y'
-        },
-        {
-          label: 'Avg Latency (s)',
-          data: data.trends.latency,
-          borderColor: '#3d7eff',
-          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1'
-        },
-        {
-          label: 'Error Rate %',
-          data: data.trends.error_rate,
-          borderColor: '#f59e0b',
-          borderDash: [6, 3],
-          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1'
-        }
+        { label: 'Daily Volume', data: data.trends.volume, borderColor: '#00c9a0', backgroundColor: 'rgba(0,201,160,.08)',
+          fill: true, tension: 0.3, borderWidth: 2, pointRadius: 2, yAxisID: 'y' },
+        { label: 'Avg Resolution (h)', data: data.trends.latency, borderColor: '#3d7eff',
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' },
+        { label: 'Missed Rate %', data: data.trends.error_rate, borderColor: '#f59e0b', borderDash: [6, 3],
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' }
       ]
     },
     options: {
@@ -714,7 +933,7 @@ function renderTrendChart(data) {
         x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#4a566e', maxRotation: 45, font: { size: 10 } } },
         y: { position: 'left', title: { display: true, text: 'Volume', color: '#7e8ea8' },
              grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' } },
-        y1: { position: 'right', title: { display: true, text: 'Latency / Error %', color: '#7e8ea8' },
+        y1: { position: 'right', title: { display: true, text: 'Hours / %', color: '#7e8ea8' },
               grid: { drawOnChartArea: false }, ticks: { color: '#4a566e' } }
       }
     }
@@ -723,54 +942,90 @@ function renderTrendChart(data) {
 
 // ─── AI Insights ───
 function renderInsights(data) {
-  const el = document.getElementById('insightsList');
-  el.innerHTML = data.insights.map(i => `
-    <div class="insight-card">
-      <div class="insight-icon">${i.icon}</div>
-      <div class="insight-body">
-        <div class="insight-title">${i.title}</div>
-        <div class="insight-text">${i.text}</div>
-      </div>
-    </div>
-  `).join('');
+  document.getElementById('insightsList').innerHTML = data.insights.map(i => `
+    <div class="insight-card"><div class="insight-icon">${i.icon}</div>
+    <div class="insight-body"><div class="insight-title">${i.title}</div>
+    <div class="insight-text">${i.text}</div></div></div>`).join('');
 }
 
 async function loadAIInsights(data) {
   if (MODE !== 'live') return;
-  const el = document.getElementById('insightsList');
-  el.innerHTML = '<div class="skeleton skeleton-block" style="height:180px"></div>';
+  document.getElementById('insightsList').innerHTML = '<div class="skeleton skeleton-block" style="height:180px"></div>';
   try {
-    const summary = `Operations data summary:
-- Total ops: ${data.hero.total_ops}, Success rate: ${data.hero.success_rate}%
-- Avg resolution: ${data.hero.avg_resolution_s}s
-- Bottlenecks: ${data.hero.bottlenecks}
-- Top issues: ${data.bottlenecks.slice(0,3).map(b => b.issue).join('; ')}
-- Volume trend: ${data.trends.volume.slice(-7).join(',')}`;
-
+    const summary = `Operations data summary:\n- Total ops: ${data.hero.total_ops}, Success rate: ${data.hero.success_rate}%\n- Avg resolution: ${data.hero.avg_resolution_s}s\n- Bottlenecks: ${data.hero.bottlenecks}\n- Top issues: ${data.bottlenecks.slice(0,3).map(b=>b.issue).join('; ')}\n- Volume trend: ${data.trends.volume.slice(-7).join(',')}`;
     const resp = await fetch(`${API_BASE}/v1/chat/completions`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'jarvis-arena',
-        messages: [
-          { role: 'system', content: 'You are an operations analyst. Given metrics, produce exactly 5 insights as JSON array: [{icon: "emoji", title: "short title", text: "1-2 sentence actionable insight"}]. Return ONLY the JSON array, no markdown.' },
-          { role: 'user', content: summary }
-        ],
-        max_tokens: 1000
-      })
+      method: 'POST', headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'jarvis-arena', messages: [
+        { role: 'system', content: 'You are an operations analyst. Given metrics, produce exactly 5 insights as JSON array: [{icon: "emoji", title: "short title", text: "1-2 sentence actionable insight"}]. Return ONLY the JSON array, no markdown.' },
+        { role: 'user', content: summary }
+      ], max_tokens: 1000 })
     });
     const result = await resp.json();
-    const content = result.choices?.[0]?.message?.content || '';
-    const match = content.match(/\[[\s\S]*\]/);
-    if (match) {
-      const insights = JSON.parse(match[0]);
-      renderInsights({ insights });
-      return;
-    }
-  } catch (e) {
-    console.warn('AI insights generation failed:', e);
-  }
+    const match = (result.choices?.[0]?.message?.content || '').match(/\[[\s\S]*\]/);
+    if (match) { renderInsights({ insights: JSON.parse(match[0]) }); return; }
+  } catch (e) { console.warn('AI insights failed:', e); }
   renderInsights(data);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CONNECT TOOL ANIMATION
+// ══════════════════════════════════════════════════════════════════
+function showConnectAnimation(toolName) {
+  const overlay = document.getElementById('connectOverlay');
+  const title = document.getElementById('connectTitle');
+  const fill = document.getElementById('connectFill');
+  const status = document.getElementById('connectStatus');
+  const spinner = document.getElementById('connectSpinner');
+
+  const displayName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+  const scanMessages = [
+    `Authenticating with ${displayName}...`,
+    `Scanning ${displayName} data...`,
+    `Found ${(800 + Math.floor(Math.random() * 3000)).toLocaleString()} records...`,
+    `Analyzing patterns and bottlenecks...`,
+    `Building operational map...`
+  ];
+
+  title.textContent = `Connecting to ${displayName}`;
+  fill.style.width = '0%';
+  status.textContent = scanMessages[0];
+  status.className = 'connect-status';
+  spinner.style.display = 'block';
+  overlay.classList.add('show');
+
+  let step = 0;
+  const interval = setInterval(() => {
+    step++;
+    if (step < scanMessages.length) {
+      fill.style.width = (step * 20) + '%';
+      status.textContent = scanMessages[step];
+    } else {
+      clearInterval(interval);
+      fill.style.width = '100%';
+      spinner.style.display = 'none';
+      status.className = 'connect-status connect-done';
+      status.textContent = `\u2713 ${displayName} connected \u2014 dashboard updated`;
+      setTimeout(() => {
+        overlay.classList.remove('show');
+        refreshDashboard(true);
+      }, 1200);
+    }
+  }, 800);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DASHBOARD REFRESH
+// ══════════════════════════════════════════════════════════════════
+function refreshDashboard(animate) {
+  const data = getDemoData();
+  renderHeroMetrics(data, animate);
+  renderSparklines(data);
+  renderFlow(data);
+  renderBubbleChart(data);
+  renderBottlenecks(data);
+  renderTrendChart(data);
+  renderInsights(data);
+  updateTimestamp();
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -780,36 +1035,60 @@ async function init() {
   updateMode(MODE);
   updateTimestamp();
 
-  const loader = new ClarityDataLoader(MODE);
-  const data = await loader.load();
-
-  renderHeroMetrics(data);
-  renderSparklines(data);
-  renderFlow(data);
-  renderBubbleChart(data);
-  renderBottlenecks(data);
-  renderTrendChart(data);
-  renderInsights(data);
-
-  // In live mode, try AI-generated insights
+  // Hide config bar in live mode
   if (MODE === 'live') {
+    document.getElementById('configBar').style.display = 'none';
+    document.getElementById('ctaBanner').style.display = 'none';
+  }
+
+  // Industry selector
+  document.getElementById('industrySelect').addEventListener('change', (e) => {
+    currentIndustry = e.target.value;
+    gtag('event', 'clarity_industry', { event_label: currentIndustry });
+    refreshDashboard(true);
+  });
+
+  // Tool chips
+  document.getElementById('toolChips').addEventListener('click', (e) => {
+    const chip = e.target.closest('.tool-chip');
+    if (!chip) return;
+    const tool = chip.dataset.tool;
+    if (tool === 'email' || tool === 'slack') return; // always on
+
+    if (chip.classList.contains('active')) {
+      chip.classList.remove('active');
+      activeTools.delete(tool);
+      refreshDashboard(false);
+    } else {
+      chip.classList.add('active');
+      activeTools.add(tool);
+      gtag('event', 'clarity_tool_connect', { event_label: tool });
+      showConnectAnimation(tool);
+    }
+  });
+
+  if (MODE === 'live') {
+    const loader = new ClarityDataLoader(MODE);
+    const data = await loader.load();
+    renderHeroMetrics(data, true);
+    renderSparklines(data);
+    renderFlow(data);
+    renderBubbleChart(data);
+    renderBottlenecks(data);
+    renderTrendChart(data);
+    renderInsights(data);
     loadAIInsights(data);
-  }
-
-  // Auto-refresh in live mode
-  if (MODE === 'live') {
     setInterval(async () => {
-      try {
-        const fresh = await loader.load();
-        renderHeroMetrics(fresh);
-        renderBottlenecks(fresh);
-        updateTimestamp();
-      } catch (e) { console.warn('Refresh failed:', e); }
+      try { const fresh = await loader.load(); renderHeroMetrics(fresh, false); renderBottlenecks(fresh); updateTimestamp(); } catch(e) {}
     }, 5 * 60 * 1000);
+  } else {
+    refreshDashboard(true);
   }
 
-  // Resize handler for flow canvas
-  window.addEventListener('resize', () => renderFlow(data));
+  window.addEventListener('resize', () => {
+    const data = MODE === 'live' ? null : getDemoData();
+    if (data) renderFlow(data);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
