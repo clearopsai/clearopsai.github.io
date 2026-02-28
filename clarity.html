@@ -307,7 +307,7 @@ body::before {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-bottom: 16px;
 }
-.ap-roi-label { font-size: 13px; color: var(--amber); }
+.ap-roi-label { font-size: 13px; color: var(--teal); }
 .ap-roi-value { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--teal); }
 .ap-roi-sub { font-size: 11px; color: var(--muted); }
 .ap-cta {
@@ -564,20 +564,20 @@ body::before {
   <div class="ap-footer">
     <div class="ap-roi-total">
       <div>
-        <div class="ap-roi-label">Monthly Risk Exposure</div>
-        <div class="ap-roi-sub">Revenue at risk from these gaps</div>
+        <div class="ap-roi-label">Time You'd Get Back</div>
+        <div class="ap-roi-sub">Hours/week your team stops chasing things</div>
       </div>
-      <div class="ap-roi-value" id="apTotal">$0</div>
+      <div class="ap-roi-value" id="apTotal">0h</div>
     </div>
-    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get Your Risk Assessment</button>
+    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get Your Clarity Roadmap</button>
   </div>
 </div>
 
 <!-- Checkout Modal -->
 <div class="checkout-overlay" id="checkoutOverlay">
   <div class="checkout-modal">
-    <h3>Get Your Risk Assessment</h3>
-    <div class="checkout-sub">We'll send you a detailed breakdown of your operational blind spots and a prioritized fix plan.</div>
+    <h3>Get Your Clarity Roadmap</h3>
+    <div class="checkout-sub">We'll send you a clear breakdown of what's falling through the cracks and a step-by-step plan to fix it.</div>
     <div class="checkout-preview" id="checkoutPreview"></div>
     <form id="checkoutForm" onsubmit="submitActionPlan(event)">
       <div class="checkout-field">
@@ -588,7 +588,7 @@ body::before {
         <label>Organization Name</label>
         <input type="text" id="checkoutOrg" placeholder="Your company or organization" required>
       </div>
-      <button type="submit" class="checkout-submit">Get My Risk Assessment &rarr;</button>
+      <button type="submit" class="checkout-submit">Get My Clarity Roadmap &rarr;</button>
     </form>
     <button class="checkout-cancel" onclick="hideCheckout()">Back to dashboard</button>
   </div>
@@ -597,19 +597,19 @@ body::before {
 <!-- Summary View (shown after checkout) -->
 <div class="summary-view" id="summaryView">
   <div class="summary-header">
-    <h2>Your Operational Risk Assessment</h2>
+    <h2>Your Clarity Roadmap</h2>
     <p id="summarySubtitle">Prepared for your organization</p>
     <div class="summary-meta" id="summaryMeta"></div>
   </div>
   <div id="summaryItems"></div>
   <div class="summary-total">
-    <div class="summary-total-label">Total Monthly Risk Exposure</div>
-    <div class="summary-total-value" id="summaryTotal">$0</div>
-    <div class="summary-total-sub">Revenue and productivity at risk from these operational blind spots</div>
+    <div class="summary-total-label">Total Time Your Team Gets Back</div>
+    <div class="summary-total-value" id="summaryTotal">0h</div>
+    <div class="summary-total-sub">Every week — less chasing, less rework, less "wait, where is that?"</div>
   </div>
   <div class="summary-next">
-    <h3>Stop the bleeding.</h3>
-    <p>We close 2-3 of these gaps in the first week. No long implementation. No ramp-up. Book a call and we'll walk through your risk map live.</p>
+    <h3>Get your team's time back.</h3>
+    <p>We close 2-3 of these gaps in the first week. No long implementation. No learning curve. Book a call and we'll walk through exactly how this gets done.</p>
     <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Call &rarr;</a>
   </div>
 </div>
@@ -1259,23 +1259,24 @@ function renderActionPlan() {
   badge.textContent = actionPlan.length;
 
   if (actionPlan.length === 0) {
-    items.innerHTML = '<div class="ap-empty">Click <strong>+ Add to Plan</strong> on any bottleneck or insight to start building your action plan.</div>';
-    total.textContent = '$0';
+    items.innerHTML = '<div class="ap-empty">Click <strong>+ Add to Plan</strong> on any bottleneck or insight to start building your clarity roadmap.</div>';
+    total.textContent = '0h';
     cta.disabled = true;
     return;
   }
 
-  let totalROI = 0;
+  let totalHrs = 0;
   items.innerHTML = actionPlan.map((item, i) => {
-    totalROI += item.roi.monthly;
+    totalHrs += item.roi.hrs;
     return `<div class="ap-item">
       <button class="ap-item-remove" onclick="removeFromPlan(${i})">&times;</button>
       <div class="ap-item-title">${item.title}</div>
-      <div class="ap-item-roi">~${item.roi.hrs}h/week untracked &middot; $${Math.round(item.roi.monthly).toLocaleString()}/mo at risk</div>
+      <div class="ap-item-roi">${item.roi.label}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">~${item.roi.hrs}h/week your team spends on this</div>
     </div>`;
   }).join('');
 
-  total.textContent = '$' + Math.round(totalROI).toLocaleString();
+  total.textContent = totalHrs + 'h/wk';
   cta.disabled = false;
 }
 
@@ -1285,11 +1286,11 @@ function toggleSidebar() {
 
 function showCheckout() {
   const preview = document.getElementById('checkoutPreview');
-  let totalROI = 0;
+  let totalHrs = 0;
   preview.innerHTML = actionPlan.map(item => {
-    totalROI += item.roi.monthly;
-    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>$${Math.round(item.roi.monthly).toLocaleString()}/mo at risk</span></div>`;
-  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Total Monthly Exposure</span><span>$${Math.round(totalROI).toLocaleString()}/mo</span></div>`;
+    totalHrs += item.roi.hrs;
+    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>~${item.roi.hrs}h/wk</span></div>`;
+  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Total time reclaimed</span><span>${totalHrs}h/week</span></div>`;
   document.getElementById('checkoutOverlay').classList.add('show');
   document.getElementById('apSidebar').classList.remove('open');
   gtag('event', 'clarity_checkout_open', { event_label: actionPlan.length + ' items' });
@@ -1305,11 +1306,11 @@ function submitActionPlan(e) {
   const org = document.getElementById('checkoutOrg').value;
   const preset = INDUSTRY_PRESETS[currentIndustry];
   const tools = Array.from(activeTools);
-  let totalROI = 0;
-  actionPlan.forEach(i => totalROI += i.roi.monthly);
+  let totalHrsSubmit = 0;
+  actionPlan.forEach(i => totalHrsSubmit += i.roi.hrs);
 
   gtag('event', 'clarity_plan_submitted', {
-    event_label: `${org} | ${email} | ${currentIndustry} | ${actionPlan.length} items | $${Math.round(totalROI)}/mo`
+    event_label: `${org} | ${email} | ${currentIndustry} | ${actionPlan.length} items | ${totalHrsSubmit}h/wk`
   });
 
   // Send via Formspree
@@ -1317,13 +1318,13 @@ function submitActionPlan(e) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      _subject: `Clarity Risk Assessment: ${org}`,
+      _subject: `Clarity Roadmap: ${org}`,
       email: email,
       organization: org,
       industry: preset.label,
       tools: tools.join(', '),
-      items: actionPlan.map(i => `${i.title} — ${i.roi.label} ($${Math.round(i.roi.monthly)}/mo at risk)`).join('\n'),
-      total_exposure: '$' + Math.round(totalROI).toLocaleString() + '/mo at risk',
+      items: actionPlan.map(i => `${i.title} — ${i.roi.label} (~${i.roi.hrs}h/wk)`).join('\n'),
+      total_hours_reclaimed: totalHrsSubmit + 'h/week',
       submitted_at: new Date().toISOString()
     })
   }).catch(() => {});
@@ -1342,15 +1343,18 @@ function submitActionPlan(e) {
     `<span class="summary-meta-item"><strong>Tools:</strong> ${tools.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}</span>` +
     `<span class="summary-meta-item"><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>`;
 
-  document.getElementById('summaryItems').innerHTML = actionPlan.map((item, i) => `
-    <div class="summary-card">
-      <div class="summary-card-num">Risk ${i + 1}</div>
+  let totalHrs = 0;
+  document.getElementById('summaryItems').innerHTML = actionPlan.map((item, i) => {
+    totalHrs += item.roi.hrs;
+    return `<div class="summary-card">
+      <div class="summary-card-num">Gap ${i + 1}</div>
       <div class="summary-card-title">${item.title}</div>
-      <div class="summary-card-detail">${item.roi.label}. This gap costs your team ~${item.roi.hrs} hours/week in workarounds, rework, or missed items. ClearOps closes this gap within 1-2 weeks.</div>
-      <div class="summary-card-roi">Exposure: $${Math.round(item.roi.monthly).toLocaleString()}/month at risk</div>
-    </div>`).join('');
+      <div class="summary-card-detail">${item.roi.label}. Your team currently spends ~${item.roi.hrs} hours/week working around this. ClearOps automates this so your team can focus on actual work — not chasing things down.</div>
+      <div class="summary-card-roi">${item.roi.hrs}h/week reclaimed</div>
+    </div>`;
+  }).join('');
 
-  document.getElementById('summaryTotal').textContent = '$' + Math.round(totalROI).toLocaleString();
+  document.getElementById('summaryTotal').textContent = totalHrs + 'h/week';
   sv.classList.add('show');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
