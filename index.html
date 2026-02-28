@@ -565,6 +565,33 @@ footer p { font-size: 12px; color: var(--muted); margin: 0; }
 footer a { color: var(--teal); text-decoration: none; opacity: .8; transition: opacity .2s; }
 footer a:hover { opacity: 1; }
 
+/* ─── Systems Strip ─── */
+.sys-strip {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 16px;
+}
+.sys-chip {
+  font-size: 12px; font-weight: 500; color: var(--soft);
+  padding: 5px 14px; border-radius: 6px;
+  background: var(--bg2); border: 1px solid var(--line2);
+  transition: border-color .2s;
+}
+.sys-chip:hover { border-color: rgba(0,201,160,.25); }
+
+/* ─── Low-friction CTA ─── */
+.alt-cta {
+  margin-top: 24px; padding: 24px 28px;
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 12px; text-align: center;
+}
+.alt-cta p {
+  font-size: 14px; color: var(--soft); margin-bottom: 8px;
+}
+.alt-cta a {
+  color: var(--teal); text-decoration: none; font-weight: 500;
+}
+.alt-cta a:hover { text-decoration: underline; }
+
 /* ─── Scroll Reveal ─── */
 .reveal {
   opacity: 0; transform: translateY(18px);
@@ -610,7 +637,7 @@ footer a:hover { opacity: 1; }
   <div class="hero">
     <div class="tag"><div class="tag-dot"></div><span class="tag-text">Tech-Driven Ops Clarity &middot; DC &ndash; Baltimore &ndash; Richmond</span></div>
     <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
-    <p class="hero-body">ClearOps AI helps associations, law firms, and professional services organizations in the DC metro corridor get operational clarity out of their fragmented technology — so leadership can see what's actually happening and act on it.</p>
+    <p class="hero-body">The average 150-person organization wastes 20+ hours per week on manual reporting across disconnected systems. ClearOps AI fixes that — connecting your tools, automating your reporting, and building the dashboards your leadership actually needs.</p>
     <div class="credbar">
       <span class="credbar-label">12+ years in enterprise ops at</span>
       <div class="credbar-pills">
@@ -631,17 +658,17 @@ footer a:hover { opacity: 1; }
       <div class="ba-panel ba-before">
         <div class="ba-label">Before ClearOps</div>
         <div class="ba-tools">
-          <div class="ba-tool">CRM</div>
-          <div class="ba-tool">Sheets</div>
-          <div class="ba-tool">Email</div>
-          <div class="ba-tool">PM Tool</div>
-          <div class="ba-tool">LMS</div>
+          <div class="ba-tool">Salesforce</div>
+          <div class="ba-tool">Google Sheets</div>
+          <div class="ba-tool">Mailchimp</div>
+          <div class="ba-tool">Asana</div>
+          <div class="ba-tool">Fonteva</div>
         </div>
         <div class="ba-metrics">
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Revenue pipeline</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Utilization rate</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Program health</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">SLA compliance</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Member retention</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Event revenue</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Program outcomes</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Non-dues revenue</div></div>
         </div>
         <div class="ba-caption">Five systems. Manual reports. Three days. Still incomplete.</div>
       </div>
@@ -654,10 +681,10 @@ footer a:hover { opacity: 1; }
           <div class="ba-flow-node">Finance</div>
         </div>
         <div class="ba-metrics">
-          <div class="ba-metric"><div class="ba-metric-val">$2.4M</div><div class="ba-metric-label">Revenue pipeline</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">87%</div><div class="ba-metric-label">Utilization rate</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">96%</div><div class="ba-metric-label">Program health</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">99.2%</div><div class="ba-metric-label">SLA compliance</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">91%</div><div class="ba-metric-label">Member retention</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">$340K</div><div class="ba-metric-label">Event revenue</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">96%</div><div class="ba-metric-label">Program outcomes</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">$89K</div><div class="ba-metric-label">Non-dues revenue</div></div>
         </div>
         <div class="ba-caption">Automated. Real-time. One view.</div>
       </div>
@@ -676,12 +703,12 @@ footer a:hover { opacity: 1; }
 
     <!-- Panel A: Ops Dashboard -->
     <div class="dash-panel">
-      <div class="dash-panel-title">Operations Dashboard</div>
+      <div class="dash-panel-title">Membership &amp; Programs Dashboard</div>
       <div class="ops-metrics">
-        <div class="ops-tile"><div class="val">24</div><div class="lbl">Active Projects</div></div>
-        <div class="ops-tile"><div class="val">87%</div><div class="lbl">Utilization</div></div>
-        <div class="ops-tile"><div class="val">96%</div><div class="lbl">SLA Met</div></div>
-        <div class="ops-tile"><div class="val">3</div><div class="lbl">Open Issues</div></div>
+        <div class="ops-tile"><div class="val">2,847</div><div class="lbl">Active Members</div></div>
+        <div class="ops-tile"><div class="val">91%</div><div class="lbl">Renewal Rate</div></div>
+        <div class="ops-tile"><div class="val">$340K</div><div class="lbl">Event Revenue</div></div>
+        <div class="ops-tile"><div class="val">$89K</div><div class="lbl">Non-Dues Rev</div></div>
       </div>
       <div class="ops-charts">
         <div class="bar-chart">
@@ -709,24 +736,24 @@ footer a:hover { opacity: 1; }
         <div class="exec-section">
           <div class="exec-section-title">Key Findings</div>
           <ul>
-            <li>Revenue pipeline up 18% QoQ with 3 enterprise deals in late stage</li>
-            <li>Engineering velocity improved after Sprint 4 restructure</li>
-            <li>Member retention holding at 94% — above industry benchmark</li>
+            <li>Member retention up to 91% after onboarding flow redesign</li>
+            <li>Annual conference registrations tracking 22% ahead of last year</li>
+            <li>Non-dues revenue diversified across 4 streams vs. 2 last quarter</li>
           </ul>
         </div>
         <div class="exec-section">
           <div class="exec-section-title">Risk Areas</div>
           <ul>
-            <li class="risk-item">Infrastructure costs trending 12% above forecast</li>
-            <li class="risk-item">Two key hires still open past 45-day target</li>
+            <li class="risk-item">Lapsed member recovery rate below 15% target</li>
+            <li class="risk-item">Grant reporting deadline in 3 weeks — data still in 2 systems</li>
           </ul>
         </div>
         <div class="exec-section">
           <div class="exec-section-title">Next Steps</div>
           <ul>
-            <li>Finalize Q2 budget with revised spend projections</li>
-            <li>Schedule pipeline review with leadership</li>
-            <li>Launch hiring sprint for open roles</li>
+            <li>Launch automated lapsed-member reengagement sequence</li>
+            <li>Consolidate grant data into unified reporting view</li>
+            <li>Prep board packet with updated membership trends</li>
           </ul>
         </div>
       </div>
@@ -738,22 +765,22 @@ footer a:hover { opacity: 1; }
       <div class="int-map">
         <div class="int-node">
           <div class="int-node-icon">📊</div>
-          <div class="int-node-name">CRM</div>
+          <div class="int-node-name">Salesforce</div>
           <span class="int-node-status status-connected">Connected</span>
         </div>
         <div class="int-node">
           <div class="int-node-icon">📋</div>
-          <div class="int-node-name">PM Tool</div>
+          <div class="int-node-name">Fonteva</div>
           <span class="int-node-status status-connected">Connected</span>
         </div>
         <div class="int-node">
-          <div class="int-node-icon">💰</div>
-          <div class="int-node-name">Finance</div>
+          <div class="int-node-icon">📧</div>
+          <div class="int-node-name">Mailchimp</div>
           <span class="int-node-status status-syncing">Syncing</span>
         </div>
         <div class="int-node">
-          <div class="int-node-icon">👥</div>
-          <div class="int-node-name">HR / LMS</div>
+          <div class="int-node-icon">✅</div>
+          <div class="int-node-name">Asana</div>
           <span class="int-node-status status-connected">Connected</span>
         </div>
         <div class="int-center">HUB</div>
@@ -799,6 +826,31 @@ footer a:hover { opacity: 1; }
     </div>
   </section>
 
+  <!-- ── Systems We Connect ── -->
+  <section class="reveal">
+    <div class="sec-label">Integrations</div>
+    <h2>We work with the tools <i>you already have.</i></h2>
+    <p class="lead">No rip-and-replace. We connect what's already in your stack and build the visibility layer on top.</p>
+    <div class="sys-strip">
+      <span class="sys-chip">Salesforce</span>
+      <span class="sys-chip">Fonteva</span>
+      <span class="sys-chip">iMIS</span>
+      <span class="sys-chip">MemberSuite</span>
+      <span class="sys-chip">Mailchimp</span>
+      <span class="sys-chip">Constant Contact</span>
+      <span class="sys-chip">Asana</span>
+      <span class="sys-chip">Monday.com</span>
+      <span class="sys-chip">QuickBooks</span>
+      <span class="sys-chip">NetSuite</span>
+      <span class="sys-chip">Google Workspace</span>
+      <span class="sys-chip">Microsoft 365</span>
+      <span class="sys-chip">Slack</span>
+      <span class="sys-chip">HubSpot</span>
+      <span class="sys-chip">Jira</span>
+      <span class="sys-chip">Clio</span>
+    </div>
+  </section>
+
   <!-- ── Services ── -->
   <section class="reveal">
     <div class="sec-label">Services</div>
@@ -840,7 +892,7 @@ footer a:hover { opacity: 1; }
   <section class="reveal">
     <div class="sec-label">What You Get</div>
     <h2>The Clarity Audit, <i>in detail.</i></h2>
-    <p class="lead">Most clients tell us the audit alone was worth it — regardless of what they did next.</p>
+    <p class="lead">The audit is designed to be valuable on its own — regardless of what you decide to do next.</p>
     <div class="deliv-card">
       <p class="deliv-intro">"A clear picture of where your operations are working, where they're not, and exactly what to do about it — in writing, in plain language, with a plan your team can execute whether or not we're involved."</p>
       <div class="deliv-grid">
@@ -872,22 +924,23 @@ footer a:hover { opacity: 1; }
     </div>
   </section>
 
-  <!-- ── Testimonials ── -->
+  <!-- ── Patterns We See ── -->
   <section class="reveal">
-    <div class="sec-label">Results</div>
-    <h2>What clarity <i>sounds like.</i></h2>
+    <div class="sec-label">Patterns We See</div>
+    <h2>Sound familiar? <i>You're not alone.</i></h2>
+    <p class="lead">After 12 years in enterprise ops, we see the same problems at every mid-market organization. Here's what we typically find.</p>
     <div class="test-grid">
       <div class="test-card">
-        <blockquote>"We were spending 15 hours a week building reports from four different systems. Now it's automated. I got my Fridays back."</blockquote>
-        <cite>— COO, 120-person IT services firm</cite>
+        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
+        <cite>120-person trade association</cite>
       </div>
       <div class="test-card">
-        <blockquote>"The audit alone changed how we think about our operations. We had no idea how much was falling through the cracks."</blockquote>
-        <cite>— Chief of Staff, DC fintech startup</cite>
+        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
+        <cite>90-person professional services firm</cite>
       </div>
       <div class="test-card">
-        <blockquote>"We went from 'I think we're on track' to 'I can see exactly where every program stands' in two weeks."</blockquote>
-        <cite>— VP Operations, national trade association</cite>
+        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. Meanwhile, the data exists across three systems that don't talk to each other.</blockquote>
+        <cite>200-person membership organization</cite>
       </div>
     </div>
   </section>
@@ -957,7 +1010,7 @@ footer a:hover { opacity: 1; }
     <h2>Scoped. Fixed. <i>No surprises.</i></h2>
     <p class="lead">Every engagement starts with a fixed-scope Clarity Audit — a defined deliverable at a defined price, with no open-ended billing.</p>
     <div class="engage-note">
-      <p>Project work and retainers are scoped <strong>after the audit</strong>, when we both have a clear picture of what needs to be built. <strong>Pricing is discussed on the intro call</strong>, after we understand your organization. If it's not a fit, we'll tell you.</p>
+      <p><strong>Clarity Audits start at $2,500</strong> for organizations up to 150 people — a fixed deliverable at a fixed price. Project work and retainers are scoped <strong>after the audit</strong>, when we both have a clear picture of what needs to be built. If it's not a fit, we'll tell you.</p>
     </div>
   </section>
 
@@ -1005,6 +1058,10 @@ footer a:hover { opacity: 1; }
       <p class="lead">Book a free 30-minute call. We'll look at your tools, workflows, and visibility gaps — and tell you directly whether we can help.</p>
       <div class="calendly-wrap">
         <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0" style="min-width:280px;height:640px;"></div>
+      </div>
+      <div class="alt-cta">
+        <p>Not ready for a call? No problem.</p>
+        <p><a href="mailto:haseeb.clearopsai@gmail.com?subject=Top%203%20ops%20headaches&body=Here%20are%20our%20biggest%20operational%20challenges%3A%0A%0A1.%20%0A2.%20%0A3.%20">Email us your top 3 operational headaches</a> — we'll send back a one-page assessment, free, no strings attached.</p>
       </div>
       <p class="cta-email">Or email directly: <a href="mailto:haseeb.clearopsai@gmail.com">haseeb.clearopsai@gmail.com</a></p>
     </div>
