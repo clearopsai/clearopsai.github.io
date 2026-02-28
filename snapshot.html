@@ -854,10 +854,10 @@ const GAPS = {
     cost: '~4 hrs/week on cross-referencing + failed sync debugging'
   },
   'imis+mailchimp': {
-    title: 'iMIS + Mailchimp: No native integration',
-    desc: 'Neither Mailchimp nor iMIS offers a native connector. Member data must be exported via custom iMIS queries (that only one person knows how to run), transformed to match Mailchimp\u2019s format, deduplicated, and uploaded. Member types, committee assignments, and renewal status require a different query each time. This is your single biggest point-of-failure risk.',
+    title: 'iMIS + Mailchimp: No native connector, third-party bridges required',
+    desc: 'iMIS has no built-in Mailchimp connector. Third-party bridges exist (ATS MailChimp Bridge, Connect for Mailchimp, Zapier) but add cost and configuration complexity. Without middleware, member data must be exported via custom iMIS IQA queries, transformed to match Mailchimp\u2019s format, deduplicated, and uploaded. Member types, committee assignments, and renewal status require different queries each time. The person who knows how to run these queries becomes a single point-of-failure risk.',
     hours: 4,
-    cost: '~4 hrs/week + institutional knowledge dependency'
+    cost: '~4 hrs/week without middleware, or $50\u2013200/month for bridge tools'
   },
   'imis+quickbooks': {
     title: 'iMIS + QuickBooks: Batch-only GL export',
@@ -873,7 +873,7 @@ const GAPS = {
   },
   'fonteva+quickbooks': {
     title: 'Fonteva + QuickBooks: Payment reconciliation',
-    desc: 'Event payments, dues, and sponsorships processed through Fonteva must be matched to QuickBooks entries one by one. Credit notes spanning multiple sales orders require workarounds that \u201cone cannot use for too long as it hurts adoption.\u201d Refunds, partial payments, and multi-year memberships multiply the reconciliation complexity. Revenue recognition entries are entirely by hand.',
+    desc: 'Event payments, dues, and sponsorships processed through Fonteva must be matched to QuickBooks entries one by one. Fonteva uses Credit Notes as the only approved method to adjust posted invoices, but QuickBooks Online lacks native sales order support entirely \u2014 creating a format mismatch that requires manual workarounds. Refunds, partial payments, and multi-year memberships multiply the reconciliation complexity. Revenue recognition entries are entirely by hand.',
     hours: 5,
     cost: '~5 hrs/week in payment matching + month-end spikes'
   },
@@ -908,8 +908,8 @@ const GAPS = {
     cost: '~4 hrs/week on segmentation + export workflows'
   },
   'personify+mailchimp': {
-    title: 'Personify + Mailchimp: Complex data model mismatch',
-    desc: 'Personify\u2019s data model doesn\u2019t map cleanly to Mailchimp audiences. Member attributes, event history, and certification status require custom export queries before any targeted email send. Like MemberSuite, the \u201cintegration\u201d is really an export-review-import workflow with extra transformation steps.',
+    title: 'Personify + Mailchimp: No native connector, middleware required',
+    desc: 'Personify has no direct Mailchimp connector. While Personify supports third-party integrations via its iPaaS capabilities, connecting to Mailchimp requires middleware or manual export workflows. Member attributes, event history, and certification status must be extracted via custom queries before any targeted email send. Without middleware, each campaign starts with an export-transform-import cycle.',
     hours: 4,
     cost: '~4 hrs/week on data transformation + export'
   },
@@ -932,10 +932,10 @@ const GAPS = {
     cost: '~5 hrs/week on cross-system verification'
   },
   'constant_contact+salesforce': {
-    title: 'Constant Contact + Salesforce: No native connector',
-    desc: 'Unlike Mailchimp, Constant Contact has no native Salesforce connector at all. Integration requires Zapier or third-party middleware. Every email campaign requires a list export from Salesforce, import to Constant Contact, and the results don\u2019t flow back automatically.',
-    hours: 4,
-    cost: '~4 hrs/week on list management + middleware upkeep'
+    title: 'Constant Contact + Salesforce: One-way sync with significant gaps',
+    desc: 'Constant Contact\u2019s native Salesforce connector only syncs one direction \u2014 pushing contact data from Salesforce to Constant Contact on a scheduled basis (not real-time). Email engagement data (opens, clicks, unsubscribes) does not flow back into Salesforce automatically. There is no native app on the Salesforce AppExchange; the connection is configured within Constant Contact\u2019s interface. For bidirectional sync or advanced segmentation, third-party middleware like SyncApps or Zapier is required.',
+    hours: 3,
+    cost: '~3 hrs/week on sync gaps + manual engagement tracking'
   }
 };
 
