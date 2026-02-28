@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity — Operational Intelligence Dashboard | ClearOps AI</title>
+<meta name="description" content="Cross-channel operational intelligence dashboard. See how your organization actually runs — bottlenecks, trends, and AI-generated insights in one view.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-D3V52Q2K1Q');
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #080b12;
+  --bg2: #0d1120;
+  --bg3: #111828;
+  --line: #1a2236;
+  --line2: #1f2a40;
+  --teal: #00c9a0;
+  --teal-dim: rgba(0,201,160,.12);
+  --teal-glow: rgba(0,201,160,.22);
+  --blue: #3d7eff;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --green: #22c55e;
+  --text: #dde3f0;
+  --soft: #7e8ea8;
+  --muted: #4a566e;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* ─── Top Bar ─── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,11,18,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-logo {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  color: var(--teal); text-decoration: none;
+}
+.topbar-logo span { color: var(--soft); font-weight: 300; margin-left: 6px; font-size: 14px; }
+.topbar-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--soft); }
+.mode-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+}
+.mode-badge.demo { background: rgba(245,158,11,.12); color: var(--amber); }
+.mode-badge.live { background: rgba(0,201,160,.12); color: var(--teal); }
+.mode-dot { width: 7px; height: 7px; border-radius: 50%; }
+.mode-badge.demo .mode-dot { background: var(--amber); }
+.mode-badge.live .mode-dot { background: var(--teal); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+.back-link { color: var(--soft); text-decoration: none; font-size: 13px; }
+.back-link:hover { color: var(--teal); }
+
+/* ─── Layout ─── */
+.dashboard {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: 24px 20px 60px;
+}
+
+.panel {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.panel-title {
+  font-family: var(--serif); font-size: 16px; font-weight: 600;
+  color: var(--text); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-title .icon { font-size: 18px; }
+
+/* ─── Hero Metrics ─── */
+.hero-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 20px;
+}
+.metric-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.metric-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: .5;
+}
+.metric-value {
+  font-family: var(--serif); font-size: 36px; font-weight: 700;
+  color: var(--teal); line-height: 1.1; margin-bottom: 4px;
+}
+.metric-label { font-size: 13px; color: var(--soft); margin-bottom: 12px; }
+.sparkline-wrap { position: relative; height: 32px; width: 100%; }
+.metric-sparkline { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* ─── Grid Layout ─── */
+.grid-2col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+
+/* ─── Flow Visualization ─── */
+.flow-canvas-wrap { width: 100%; overflow-x: auto; }
+#flowCanvas { width: 100%; height: 120px; }
+
+/* ─── Bubble Chart ─── */
+.chart-wrap { position: relative; height: 320px; }
+.chart-wrap canvas { max-height: 320px; }
+
+/* ─── Bottleneck Table ─── */
+.bottleneck-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.bottleneck-table th {
+  text-align: left; padding: 10px 12px; color: var(--soft);
+  border-bottom: 1px solid var(--line); font-weight: 500; font-size: 12px;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.bottleneck-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.bottleneck-table tr:last-child td { border-bottom: none; }
+.severity-bar {
+  width: 3px; height: 24px; border-radius: 2px;
+  display: inline-block; margin-right: 8px; vertical-align: middle;
+}
+.severity-high { background: var(--red); }
+.severity-medium { background: var(--amber); }
+.severity-low { background: var(--green); }
+.status-chip {
+  display: inline-block; padding: 2px 10px; border-radius: 10px;
+  font-size: 11px; font-weight: 500;
+}
+.status-active { background: rgba(239,68,68,.15); color: var(--red); }
+.status-monitoring { background: rgba(245,158,11,.15); color: var(--amber); }
+.status-resolved { background: rgba(34,197,94,.15); color: var(--green); }
+
+/* ─── Trend Chart ─── */
+.trend-wrap { position: relative; height: 280px; }
+.trend-wrap canvas { max-height: 280px; }
+
+/* ─── AI Insights ─── */
+.insights-list { display: flex; flex-direction: column; gap: 14px; }
+.insight-card {
+  display: flex; gap: 14px; padding: 16px;
+  background: var(--bg3); border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.insight-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.insight-body {}
+.insight-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+.insight-text { font-size: 13px; color: var(--soft); line-height: 1.5; }
+
+/* ─── Loading Skeleton ─── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg3) 25%, var(--line) 50%, var(--bg3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.skeleton-line { height: 16px; margin-bottom: 8px; }
+.skeleton-block { height: 200px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2col { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; gap: 8px; }
+  .metric-value { font-size: 28px; }
+  .dashboard { padding: 16px 12px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="/" class="topbar-logo">ClearOps AI<span>Clarity</span></a>
+  </div>
+  <div class="topbar-right">
+    <span id="modeBadge" class="mode-badge demo">
+      <span class="mode-dot"></span>
+      <span id="modeText">Demo Mode</span>
+    </span>
+    <span id="lastRefreshed" style="font-size:12px;color:var(--muted)"></span>
+    <a href="/" class="back-link">&larr; Back to ClearOps</a>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- Panel 1: Hero Metrics -->
+  <div class="hero-grid" id="heroGrid">
+    <div class="metric-card">
+      <div class="metric-value" id="metricOps">--</div>
+      <div class="metric-label">Total Operations (30d)</div>
+      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkOps"></canvas></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="metricResolution">--</div>
+      <div class="metric-label">Avg Resolution Time</div>
+      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkResolution"></canvas></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="metricSuccess">--</div>
+      <div class="metric-label">Success Rate</div>
+      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkSuccess"></canvas></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="metricBottlenecks">--</div>
+      <div class="metric-label">Bottlenecks Detected</div>
+      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkBottlenecks"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Panel 2: Cross-Channel Flow -->
+  <div class="panel">
+    <div class="panel-title"><span class="icon">&#x2192;</span> Cross-Channel Operations Flow</div>
+    <div class="flow-canvas-wrap">
+      <canvas id="flowCanvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Panel 3 & 4: Two columns -->
+  <div class="grid-2col">
+    <!-- Panel 3: Topic Clusters -->
+    <div class="panel">
+      <div class="panel-title"><span class="icon">&#x25CF;</span> Topic Clusters</div>
+      <div class="chart-wrap"><canvas id="bubbleChart"></canvas></div>
+    </div>
+
+    <!-- Panel 4: Bottleneck Detection -->
+    <div class="panel">
+      <div class="panel-title"><span class="icon">&#x26A0;</span> Bottleneck Detection</div>
+      <div id="bottleneckTableWrap">
+        <table class="bottleneck-table">
+          <thead><tr><th></th><th>Issue</th><th>Count</th><th>Severity</th><th>Last Seen</th><th>Status</th></tr></thead>
+          <tbody id="bottleneckBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 5: Trend Analysis -->
+  <div class="panel">
+    <div class="panel-title"><span class="icon">&#x1F4C8;</span> Trend Analysis (30 Days)</div>
+    <div class="trend-wrap"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <!-- Panel 6: AI Insights -->
+  <div class="panel">
+    <div class="panel-title"><span class="icon">&#x2728;</span> AI-Generated Insights</div>
+    <div class="insights-list" id="insightsList">
+      <div class="skeleton skeleton-block" style="height:180px"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// DEMO DATA — realistic sample data for demonstration
+// ══════════════════════════════════════════════════════════════════
+const DEMO_DATA = {
+  hero: {
+    total_ops: 3092,
+    avg_resolution_s: 8.4,
+    success_rate: 91.2,
+    bottlenecks: 14
+  },
+  sparklines: {
+    ops: [85,92,110,98,105,120,88,95,130,115,102,108,125,140,135,112,98,105,115,128,118,142,130,110,105,120,135,128,115,108],
+    resolution: [9.2,8.8,8.5,9.1,8.3,7.9,8.6,9.0,8.2,7.8,8.4,8.1,7.6,8.0,8.5,8.8,8.2,7.9,8.3,7.7,8.1,7.5,8.0,8.6,8.3,7.8,8.1,7.9,8.4,8.2],
+    success: [88,89,90,87,91,93,90,92,91,94,92,89,93,91,95,92,90,93,91,90,92,93,91,92,94,91,90,92,91,93],
+    bottlenecks: [2,1,0,1,2,1,0,0,1,2,1,0,1,0,0,1,2,1,0,1,0,0,1,1,0,0,1,0,0,1]
+  },
+  flow: {
+    stages: [
+      { name: 'Incoming\nQueries', count: 3092, color: '#3d7eff' },
+      { name: 'Arena\nProcessing', count: 2800, color: '#00c9a0' },
+      { name: 'Agent\nTasks', count: 520, color: '#a78bfa' },
+      { name: 'Tool\nExecution', count: 2040, color: '#f59e0b' },
+      { name: 'Resolved', count: 2820, color: '#22c55e', success: 2720, fail: 100 }
+    ]
+  },
+  clusters: [
+    { label: 'Chat / Q&A',      x: 3.2, y: 95, r: 40, count: 1800 },
+    { label: 'Code Edits',      x: 8.5, y: 82, r: 28, count: 320  },
+    { label: 'Research',         x: 6.1, y: 88, r: 22, count: 180  },
+    { label: 'File Navigation',  x: 5.4, y: 90, r: 18, count: 120  },
+    { label: 'System Admin',     x: 7.8, y: 76, r: 15, count: 95   },
+    { label: 'RAG / Vault',      x: 4.2, y: 92, r: 20, count: 150  },
+    { label: 'Probes',           x: 4.8, y: 97, r: 16, count: 110  }
+  ],
+  bottlenecks: [
+    { issue: 'Provider cascade timeout (DeepSeek)', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
+    { issue: 'Max steps exhausted on code edits', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
+    { issue: 'RAG context retrieval > 5s', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
+    { issue: 'Edit rejected — AST pre-check fail', count: 8, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
+    { issue: 'Arena judge fallback to heuristic', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
+    { issue: 'Groq rate limit (30 RPM)', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
+  ],
+  trends: {
+    labels: [],
+    volume: [],
+    latency: [],
+    error_rate: []
+  },
+  insights: [
+    {
+      icon: '\u26A1',
+      title: 'Provider Cascade Optimization Opportunity',
+      text: 'DeepSeek timeouts account for 41% of all provider failures. Moving Grok ahead of DeepSeek in the STRONG stack during peak hours (9am-5pm EST) could reduce average resolution time by 1.2s.'
+    },
+    {
+      icon: '\uD83D\uDCC9',
+      title: 'Code Edit Success Rate Trending Down',
+      text: 'EXECUTE mode tasks involving multi-file edits dropped from 89% to 76% success rate this week. Root cause: complexity gate not triggering on tasks with 2+ edit targets. Consider lowering the threshold.'
+    },
+    {
+      icon: '\u2705',
+      title: 'Arena Latency at All-Time Low',
+      text: 'Arena P95 latency is 2.4s, down from 14s two weeks ago. The consultant timeout reduction and judge optimization are working. No action needed — maintain current configuration.'
+    },
+    {
+      icon: '\uD83D\uDD04',
+      title: 'Recurring Pattern: Read-Loop Stalls',
+      text: '12% of EXECUTE sessions exceed 15 steps due to repeated file reads without action. The trajectory monitor catches this at step 5, but earlier intervention at step 3 could save ~40% of wasted compute.'
+    },
+    {
+      icon: '\uD83D\uDCB0',
+      title: 'Cost Efficiency: 73% Below Claude-Only Baseline',
+      text: 'Multi-provider routing saved $47.20 this week vs. all-Claude baseline. Groq handles 62% of ASSESS tasks, Gemini Flash handles 45% of arena judging. Sonnet budget utilization is at 68%.'
+    }
+  ]
+};
+
+// Generate 30-day trend labels and data
+(function() {
+  const d = DEMO_DATA.trends;
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const dt = new Date(now); dt.setDate(dt.getDate() - i);
+    d.labels.push(dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+    d.volume.push(80 + Math.floor(Math.random() * 60) + (i < 10 ? 15 : 0));
+    d.latency.push(+(7 + Math.random() * 4 - (i < 10 ? 1.5 : 0)).toFixed(1));
+    d.error_rate.push(+(3 + Math.random() * 6).toFixed(1));
+  }
+})();
+
+
+// ══════════════════════════════════════════════════════════════════
+// MODE DETECTION
+// ══════════════════════════════════════════════════════════════════
+function detectMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') === 'live') return 'live';
+  if (params.get('mode') === 'demo') return 'demo';
+  const host = window.location.hostname;
+  if (['localhost','127.0.0.1','192.168.1.154'].includes(host) || host.endsWith('.ts.net')) return 'live';
+  return 'demo';
+}
+
+const MODE = detectMode();
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '192.168.1.154' || window.location.hostname.endsWith('.ts.net'))
+  ? `${window.location.protocol}//${window.location.host}`
+  : 'http://192.168.1.154:8000';
+const API_KEY = 'jarvis';
+
+// ══════════════════════════════════════════════════════════════════
+// DATA LOADER
+// ══════════════════════════════════════════════════════════════════
+class ClarityDataLoader {
+  constructor(mode) { this.mode = mode; }
+
+  async load() {
+    if (this.mode === 'demo') return DEMO_DATA;
+    try {
+      const resp = await fetch(`${API_BASE}/api/clarity/data`, {
+        headers: { 'Authorization': `Bearer ${API_KEY}` }
+      });
+      if (!resp.ok) throw new Error(`API ${resp.status}`);
+      const raw = await resp.json();
+      return this.transformLive(raw);
+    } catch (e) {
+      console.warn('Live data fetch failed, falling back to demo:', e);
+      updateMode('demo', 'Live unavailable — showing demo data');
+      return DEMO_DATA;
+    }
+  }
+
+  transformLive(raw) {
+    const ss = raw.session_summary || {};
+    const dt = raw.daily_trends || {};
+    const bn = raw.bottlenecks || [];
+    const fl = raw.flow || {};
+
+    const total = (ss.success || 0) + (ss.max_steps || 0) + (ss.provider_failed || 0) + (ss.assess || 0);
+    const successRate = total > 0 ? ((ss.success || 0) / total * 100) : 0;
+
+    return {
+      hero: {
+        total_ops: dt.total_requests || total,
+        avg_resolution_s: ss.avg_duration_s || 0,
+        success_rate: +successRate.toFixed(1),
+        bottlenecks: bn.length
+      },
+      sparklines: {
+        ops: (dt.daily_volume || []).slice(-30),
+        resolution: (dt.daily_latency || []).slice(-30),
+        success: (dt.daily_success_rate || []).slice(-30),
+        bottlenecks: (dt.daily_bottlenecks || []).slice(-30)
+      },
+      flow: fl,
+      clusters: this.buildClusters(raw.topic_clusters || []),
+      bottlenecks: bn.map(b => ({
+        issue: b.issue || b.goal || 'Unknown',
+        count: b.count || 1,
+        severity: b.severity || 'low',
+        last_seen: b.last_seen || 'Unknown',
+        status: b.status || 'monitoring'
+      })),
+      trends: {
+        labels: dt.labels || [],
+        volume: dt.daily_volume || [],
+        latency: dt.daily_latency || [],
+        error_rate: dt.daily_error_rate || []
+      },
+      insights: raw.insights || DEMO_DATA.insights
+    };
+  }
+
+  buildClusters(raw) {
+    if (raw.length) return raw;
+    return DEMO_DATA.clusters;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// RENDERING
+// ══════════════════════════════════════════════════════════════════
+
+function updateMode(mode, text) {
+  const badge = document.getElementById('modeBadge');
+  const modeText = document.getElementById('modeText');
+  badge.className = 'mode-badge ' + (mode === 'live' ? 'live' : 'demo');
+  modeText.textContent = text || (mode === 'live' ? 'Connected to Jarvis API' : 'Demo Mode');
+}
+
+function updateTimestamp() {
+  document.getElementById('lastRefreshed').textContent =
+    'Updated ' + new Date().toLocaleTimeString();
+}
+
+function renderHeroMetrics(data) {
+  document.getElementById('metricOps').textContent = data.hero.total_ops.toLocaleString();
+  document.getElementById('metricResolution').textContent = data.hero.avg_resolution_s.toFixed(1) + 's';
+  document.getElementById('metricSuccess').textContent = data.hero.success_rate.toFixed(1) + '%';
+  document.getElementById('metricBottlenecks').textContent = data.hero.bottlenecks;
+}
+
+function createSparkline(canvasId, dataPoints, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || !dataPoints.length) return;
+  const ctx = canvas.getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dataPoints.map((_, i) => i),
+      datasets: [{
+        data: dataPoints,
+        borderColor: color || '#00c9a0',
+        borderWidth: 1.5,
+        fill: true,
+        backgroundColor: (color || 'rgba(0,201,160,') === '#ef4444'
+          ? 'rgba(239,68,68,.08)' : 'rgba(0,201,160,.08)',
+        pointRadius: 0,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      }
+    }
+  });
+}
+
+function renderSparklines(data) {
+  createSparkline('sparkOps', data.sparklines.ops, '#00c9a0');
+  createSparkline('sparkResolution', data.sparklines.resolution, '#3d7eff');
+  createSparkline('sparkSuccess', data.sparklines.success, '#22c55e');
+  createSparkline('sparkBottlenecks', data.sparklines.bottlenecks, '#ef4444');
+}
+
+// ─── Flow Visualization ───
+function renderFlow(data) {
+  const canvas = document.getElementById('flowCanvas');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 120 * dpr;
+  canvas.style.height = '120px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const stages = data.flow.stages || [];
+  if (!stages.length) return;
+
+  const w = rect.width;
+  const stageW = Math.min(140, (w - 40) / stages.length - 20);
+  const gap = (w - stages.length * stageW) / (stages.length + 1);
+  const cy = 55;
+
+  stages.forEach((stage, i) => {
+    const x = gap + i * (stageW + gap);
+
+    // Draw connector
+    if (i > 0) {
+      const prevX = gap + (i - 1) * (stageW + gap) + stageW;
+      ctx.beginPath();
+      ctx.moveTo(prevX + 4, cy);
+      ctx.lineTo(x - 4, cy);
+      ctx.strokeStyle = 'rgba(255,255,255,.12)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // Arrow
+      ctx.beginPath();
+      ctx.moveTo(x - 10, cy - 5);
+      ctx.lineTo(x - 4, cy);
+      ctx.lineTo(x - 10, cy + 5);
+      ctx.strokeStyle = 'rgba(255,255,255,.2)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    // Rounded rectangle
+    const rh = 60;
+    const ry = cy - rh / 2;
+    const radius = 10;
+    ctx.beginPath();
+    ctx.roundRect(x, ry, stageW, rh, radius);
+    ctx.fillStyle = stage.color + '18';
+    ctx.fill();
+    ctx.strokeStyle = stage.color + '60';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Stage name
+    ctx.fillStyle = '#dde3f0';
+    ctx.font = '500 11px "DM Sans", sans-serif';
+    ctx.textAlign = 'center';
+    const lines = stage.name.split('\n');
+    lines.forEach((line, li) => {
+      ctx.fillText(line, x + stageW / 2, ry + 20 + li * 14);
+    });
+
+    // Count
+    ctx.fillStyle = stage.color;
+    ctx.font = '700 15px "Fraunces", serif';
+    ctx.fillText(stage.count.toLocaleString(), x + stageW / 2, ry + rh - 8);
+
+    // Success/fail indicator for last stage
+    if (stage.success !== undefined) {
+      ctx.font = '11px "DM Sans", sans-serif';
+      ctx.fillStyle = '#22c55e';
+      ctx.fillText(stage.success + ' \u2713', x + stageW / 2 - 20, ry + rh + 14);
+      ctx.fillStyle = '#ef4444';
+      ctx.fillText(stage.fail + ' \u2717', x + stageW / 2 + 25, ry + rh + 14);
+    }
+  });
+}
+
+// ─── Bubble Chart ───
+function renderBubbleChart(data) {
+  const ctx = document.getElementById('bubbleChart').getContext('2d');
+  const colors = ['#00c9a0','#3d7eff','#a78bfa','#f59e0b','#ef4444','#22c55e','#ec4899'];
+
+  new Chart(ctx, {
+    type: 'bubble',
+    data: {
+      datasets: data.clusters.map((c, i) => ({
+        label: c.label,
+        data: [{ x: c.x, y: c.y, r: c.r / 2.5 }],
+        backgroundColor: colors[i % colors.length] + '40',
+        borderColor: colors[i % colors.length],
+        borderWidth: 1.5
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 12, usePointStyle: true } },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const c = data.clusters[ctx.datasetIndex];
+              return `${c.label}: ${c.count} ops, ${c.y}% success, ~${c.x} avg steps`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Avg Steps', color: '#7e8ea8', font: { size: 12 } },
+             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 0, max: 12 },
+        y: { title: { display: true, text: 'Success Rate %', color: '#7e8ea8', font: { size: 12 } },
+             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 60, max: 100 }
+      }
+    }
+  });
+}
+
+// ─── Bottleneck Table ───
+function renderBottlenecks(data) {
+  const tbody = document.getElementById('bottleneckBody');
+  tbody.innerHTML = data.bottlenecks.map(b => {
+    const sevClass = b.severity === 'high' ? 'severity-high' : b.severity === 'medium' ? 'severity-medium' : 'severity-low';
+    const statusClass = b.status === 'active' ? 'status-active' : b.status === 'monitoring' ? 'status-monitoring' : 'status-resolved';
+    return `<tr>
+      <td><span class="severity-bar ${sevClass}"></span></td>
+      <td>${b.issue}</td>
+      <td>${b.count}</td>
+      <td style="text-transform:capitalize">${b.severity}</td>
+      <td style="color:var(--soft)">${b.last_seen}</td>
+      <td><span class="status-chip ${statusClass}">${b.status}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── Trend Chart ───
+function renderTrendChart(data) {
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.trends.labels,
+      datasets: [
+        {
+          label: 'Daily Volume',
+          data: data.trends.volume,
+          borderColor: '#00c9a0',
+          backgroundColor: 'rgba(0,201,160,.08)',
+          fill: true, tension: 0.3, borderWidth: 2, pointRadius: 2, yAxisID: 'y'
+        },
+        {
+          label: 'Avg Latency (s)',
+          data: data.trends.latency,
+          borderColor: '#3d7eff',
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1'
+        },
+        {
+          label: 'Error Rate %',
+          data: data.trends.error_rate,
+          borderColor: '#f59e0b',
+          borderDash: [6, 3],
+          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 16, usePointStyle: true } },
+        tooltip: { backgroundColor: '#111828', borderColor: '#1a2236', borderWidth: 1 }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#4a566e', maxRotation: 45, font: { size: 10 } } },
+        y: { position: 'left', title: { display: true, text: 'Volume', color: '#7e8ea8' },
+             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' } },
+        y1: { position: 'right', title: { display: true, text: 'Latency / Error %', color: '#7e8ea8' },
+              grid: { drawOnChartArea: false }, ticks: { color: '#4a566e' } }
+      }
+    }
+  });
+}
+
+// ─── AI Insights ───
+function renderInsights(data) {
+  const el = document.getElementById('insightsList');
+  el.innerHTML = data.insights.map(i => `
+    <div class="insight-card">
+      <div class="insight-icon">${i.icon}</div>
+      <div class="insight-body">
+        <div class="insight-title">${i.title}</div>
+        <div class="insight-text">${i.text}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function loadAIInsights(data) {
+  if (MODE !== 'live') return;
+  const el = document.getElementById('insightsList');
+  el.innerHTML = '<div class="skeleton skeleton-block" style="height:180px"></div>';
+  try {
+    const summary = `Operations data summary:
+- Total ops: ${data.hero.total_ops}, Success rate: ${data.hero.success_rate}%
+- Avg resolution: ${data.hero.avg_resolution_s}s
+- Bottlenecks: ${data.hero.bottlenecks}
+- Top issues: ${data.bottlenecks.slice(0,3).map(b => b.issue).join('; ')}
+- Volume trend: ${data.trends.volume.slice(-7).join(',')}`;
+
+    const resp = await fetch(`${API_BASE}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'jarvis-arena',
+        messages: [
+          { role: 'system', content: 'You are an operations analyst. Given metrics, produce exactly 5 insights as JSON array: [{icon: "emoji", title: "short title", text: "1-2 sentence actionable insight"}]. Return ONLY the JSON array, no markdown.' },
+          { role: 'user', content: summary }
+        ],
+        max_tokens: 1000
+      })
+    });
+    const result = await resp.json();
+    const content = result.choices?.[0]?.message?.content || '';
+    const match = content.match(/\[[\s\S]*\]/);
+    if (match) {
+      const insights = JSON.parse(match[0]);
+      renderInsights({ insights });
+      return;
+    }
+  } catch (e) {
+    console.warn('AI insights generation failed:', e);
+  }
+  renderInsights(data);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// MAIN
+// ══════════════════════════════════════════════════════════════════
+async function init() {
+  updateMode(MODE);
+  updateTimestamp();
+
+  const loader = new ClarityDataLoader(MODE);
+  const data = await loader.load();
+
+  renderHeroMetrics(data);
+  renderSparklines(data);
+  renderFlow(data);
+  renderBubbleChart(data);
+  renderBottlenecks(data);
+  renderTrendChart(data);
+  renderInsights(data);
+
+  // In live mode, try AI-generated insights
+  if (MODE === 'live') {
+    loadAIInsights(data);
+  }
+
+  // Auto-refresh in live mode
+  if (MODE === 'live') {
+    setInterval(async () => {
+      try {
+        const fresh = await loader.load();
+        renderHeroMetrics(fresh);
+        renderBottlenecks(fresh);
+        updateTimestamp();
+      } catch (e) { console.warn('Refresh failed:', e); }
+    }, 5 * 60 * 1000);
+  }
+
+  // Resize handler for flow canvas
+  window.addEventListener('resize', () => renderFlow(data));
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
