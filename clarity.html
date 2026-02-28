@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clarity — Operational Intelligence Dashboard | ClearOps AI</title>
-<meta name="description" content="Cross-channel operational intelligence dashboard. See how your organization actually runs — bottlenecks, trends, and AI-generated insights in one view.">
+<meta name="description" content="See what's falling through the cracks. Clarity surfaces the blind spots, missed handoffs, and at-risk items hiding across your tools — before they become problems.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -307,7 +307,7 @@ body::before {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-bottom: 16px;
 }
-.ap-roi-label { font-size: 13px; color: var(--soft); }
+.ap-roi-label { font-size: 13px; color: var(--amber); }
 .ap-roi-value { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--teal); }
 .ap-roi-sub { font-size: 11px; color: var(--muted); }
 .ap-cta {
@@ -539,9 +539,9 @@ body::before {
 
   <!-- CTA -->
   <div class="cta-banner" id="ctaBanner">
-    <h3>This is sample data. Imagine your real operations here.</h3>
-    <p>ClearOps connects your actual tools and builds this dashboard with your live data — setup takes under a week.</p>
-    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Demo &rarr;</a>
+    <h3>Right now, things are falling through the cracks. This shows you where.</h3>
+    <p>ClearOps connects your tools and surfaces the gaps, missed handoffs, and at-risk items your team can't see today — live, in one place.</p>
+    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">See What You're Missing &rarr;</a>
   </div>
 
 </div>
@@ -564,20 +564,20 @@ body::before {
   <div class="ap-footer">
     <div class="ap-roi-total">
       <div>
-        <div class="ap-roi-label">Projected Monthly Savings</div>
-        <div class="ap-roi-sub">Based on industry benchmarks</div>
+        <div class="ap-roi-label">Monthly Risk Exposure</div>
+        <div class="ap-roi-sub">Revenue at risk from these gaps</div>
       </div>
       <div class="ap-roi-value" id="apTotal">$0</div>
     </div>
-    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get This Action Plan</button>
+    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get Your Risk Assessment</button>
   </div>
 </div>
 
 <!-- Checkout Modal -->
 <div class="checkout-overlay" id="checkoutOverlay">
   <div class="checkout-modal">
-    <h3>Get Your Custom Action Plan</h3>
-    <div class="checkout-sub">We'll send you a detailed breakdown with ROI projections and recommended next steps.</div>
+    <h3>Get Your Risk Assessment</h3>
+    <div class="checkout-sub">We'll send you a detailed breakdown of your operational blind spots and a prioritized fix plan.</div>
     <div class="checkout-preview" id="checkoutPreview"></div>
     <form id="checkoutForm" onsubmit="submitActionPlan(event)">
       <div class="checkout-field">
@@ -588,7 +588,7 @@ body::before {
         <label>Organization Name</label>
         <input type="text" id="checkoutOrg" placeholder="Your company or organization" required>
       </div>
-      <button type="submit" class="checkout-submit">Get My Action Plan &rarr;</button>
+      <button type="submit" class="checkout-submit">Get My Risk Assessment &rarr;</button>
     </form>
     <button class="checkout-cancel" onclick="hideCheckout()">Back to dashboard</button>
   </div>
@@ -597,19 +597,19 @@ body::before {
 <!-- Summary View (shown after checkout) -->
 <div class="summary-view" id="summaryView">
   <div class="summary-header">
-    <h2>Your ClearOps Action Plan</h2>
+    <h2>Your Operational Risk Assessment</h2>
     <p id="summarySubtitle">Prepared for your organization</p>
     <div class="summary-meta" id="summaryMeta"></div>
   </div>
   <div id="summaryItems"></div>
   <div class="summary-total">
-    <div class="summary-total-label">Total Projected Monthly Savings</div>
+    <div class="summary-total-label">Total Monthly Risk Exposure</div>
     <div class="summary-total-value" id="summaryTotal">$0</div>
-    <div class="summary-total-sub">Based on industry benchmarks for organizations of your size</div>
+    <div class="summary-total-sub">Revenue and productivity at risk from these operational blind spots</div>
   </div>
   <div class="summary-next">
-    <h3>Ready to make this real?</h3>
-    <p>We can typically implement 2-3 of these fixes in the first week. Book a call to walk through your plan with a ClearOps engineer.</p>
+    <h3>Stop the bleeding.</h3>
+    <p>We close 2-3 of these gaps in the first week. No long implementation. No ramp-up. Book a call and we'll walk through your risk map live.</p>
     <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Call &rarr;</a>
   </div>
 </div>
@@ -664,11 +664,11 @@ const INDUSTRY_PRESETS = {
       { issue: 'Approval requests going unseen in Slack channels', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
     ],
     insights: [
-      { icon: '\u26A1', title: 'Onboarding Handoff Is Your Biggest Bottleneck', text: 'Client onboarding takes 4.2 touchpoints on average to resolve \u2014 42% more than support tickets. New client info sits in Slack for 6+ hours before someone manually enters it into the CRM.' },
-      { icon: '\uD83D\uDCC9', title: 'Thursday Support Volume Spikes 35%', text: 'Thursdays consistently see 35% more inbound support requests than other weekdays, but staffing levels stay flat. Consider shifting one team member\'s flex day to cover Thursday afternoons.' },
-      { icon: '\u2705', title: 'Billing Inquiry Resolution at All-Time Best', text: 'Average resolution time for billing questions dropped from 4.1 hours to 47 minutes after the self-service portal launched. 97% resolution rate with zero escalations this week.' },
-      { icon: '\uD83D\uDD04', title: '12 Contract Renewals at Risk of Lapsing', text: '12 contracts expiring in the next 30 days have had zero touchpoints in 60 days. 4 are in the top 20% by revenue. Renewal reminders are firing to outdated email addresses.' },
-      { icon: '\uD83D\uDCB0', title: 'Manual Reporting Costs ~18 Hours/Week', text: 'Three team members spend 18 hours weekly assembling reports across spreadsheets and tools. Automating the data pull alone would recover 12 hours \u2014 equivalent to $2,400/month.' }
+      { icon: '\u26A1', title: 'New Clients Are Falling Through the Cracks', text: 'Client onboarding takes 4.2 touchpoints on average \u2014 42% more than support tickets. New client info sits in Slack for 6+ hours before anyone enters it into the CRM. That\u2019s 6 hours where a new client thinks nobody\u2019s working on their case.' },
+      { icon: '\uD83D\uDCC9', title: 'Thursday Afternoons Are a Blind Spot', text: 'Thursdays see 35% more inbound requests than other weekdays, but staffing levels stay flat. Your team doesn\u2019t know this is happening \u2014 they just feel overwhelmed every Thursday and don\u2019t know why.' },
+      { icon: '\u2705', title: 'Billing Inquiries Under Control', text: 'This is working. Billing resolution dropped from 4.1 hours to 47 minutes since the self-service portal launched. Zero escalations this week. This is what every process should look like.' },
+      { icon: '\uD83D\uDD04', title: '12 Renewals About to Lapse \u2014 Nobody\u2019s Watching', text: '12 contracts expiring in 30 days have had zero touchpoints in 60 days. 4 are in your top 20% by revenue. Renewal reminders are going to outdated email addresses. Without this dashboard, you wouldn\u2019t know until they churned.' },
+      { icon: '\uD83D\uDEA8', title: 'Your Team Spends 18 Hours/Week on Reports No One Trusts', text: 'Three people spend 18 hours weekly assembling reports across spreadsheets and tools. But the real problem isn\u2019t the time \u2014 it\u2019s that the data is always 2 weeks stale by the time leadership sees it.' }
     ]
   },
 
@@ -707,11 +707,11 @@ const INDUSTRY_PRESETS = {
       { issue: 'Realization rate dropping on flat-fee matters', count: 4, severity: 'low', last_seen: '5d ago', status: 'resolved' }
     ],
     insights: [
-      { icon: '\u26A1', title: 'Conflict Checks Are Your Biggest Delay', text: '28 new matters waited 6+ hours for conflict clearance this month. The bottleneck is partner sign-off \u2014 85% of delays happen when the reviewing partner has 3+ matters in queue.' },
-      { icon: '\uD83D\uDCC9', title: 'Billable Time Leakage: ~$32K/Month', text: 'Associates are entering time 48+ hours after work is performed, leading to an estimated 12% under-billing. Real-time time capture could recover $32K monthly in missed billable hours.' },
-      { icon: '\u2705', title: 'Client Responsiveness Up 40%', text: 'Average client email response time dropped from 18 hours to 11 hours after implementing the triage queue. Client satisfaction scores are up for the third consecutive month.' },
-      { icon: '\uD83D\uDD04', title: '7 Filing Deadlines at Risk This Month', text: '7 upcoming court deadlines are tracked only in individual attorney calendars with no backup notification. If one person is out sick, these deadlines could be missed.' },
-      { icon: '\uD83D\uDCB0', title: 'Document Version Chaos Costs 6 Hours/Week', text: 'Paralegals spend ~6 hours weekly reconciling document versions between the DMS, email attachments, and shared drives. A single source of truth would eliminate this entirely.' }
+      { icon: '\u26A1', title: 'Conflict Checks Are a Liability Risk', text: '28 new matters waited 6+ hours for conflict clearance this month. The bottleneck is partner sign-off \u2014 85% of delays happen when the reviewing partner has 3+ matters in queue. One missed conflict and you have a malpractice exposure.' },
+      { icon: '\uD83D\uDCC9', title: 'You Don\u2019t Know How Much Time Is Going Unbilled', text: 'Associates enter time 48+ hours after work is performed. At that point, they\u2019re guessing. The firm has no visibility into how much billable work is actually being captured \u2014 and no way to know what\u2019s being left on the table.' },
+      { icon: '\u2705', title: 'Client Responsiveness Under Control', text: 'Average email response time dropped from 18 to 11 hours with the triage queue. Client satisfaction is up for the third consecutive month. This is what visibility looks like when it works.' },
+      { icon: '\uD83D\uDD04', title: '7 Court Deadlines Have No Safety Net', text: '7 upcoming court deadlines are tracked only in individual attorney calendars. No backup notification. No redundancy. If someone is out sick or on vacation, these deadlines could be missed. That\u2019s not a process problem \u2014 it\u2019s a ticking bomb.' },
+      { icon: '\uD83D\uDEA8', title: 'Document Versions Are Diverging Across Tools', text: 'Paralegals find different versions of the same document in the DMS, email, and shared drives. They spend 6 hours/week reconciling. But the real risk is when they don\u2019t catch a discrepancy and the wrong version goes to court.' }
     ]
   },
 
@@ -750,11 +750,11 @@ const INDUSTRY_PRESETS = {
       { issue: 'Advocacy alerts sent to lapsed members', count: 3, severity: 'low', last_seen: '6d ago', status: 'resolved' }
     ],
     insights: [
-      { icon: '\u26A1', title: 'Renewal Sync Gap Costing You Members', text: '19 renewal notices failed to reach members because the AMS and email platform are out of sync. At your $450 average dues, that\u2019s up to $8,550 in at-risk revenue this quarter alone.' },
-      { icon: '\uD83D\uDCC9', title: 'Event Registration Is Still Manual', text: 'Staff spend 8 hours per event manually entering registrations from the event platform into the AMS. With 4 events/month, that\u2019s 32 hours of data entry that should be automated.' },
-      { icon: '\u2705', title: 'Member Satisfaction Trending to All-Time High', text: 'Response time dropped from 3.4 hours to 2.1 hours over 30 days. Members who get a response within 2 hours are 3x more likely to renew \u2014 you\u2019re now hitting that mark 68% of the time.' },
-      { icon: '\uD83D\uDD04', title: 'Committee Engagement Dropping Off', text: 'Only 34% of committee members opened the last 3 meeting recaps. The notes go out as PDF attachments via email \u2014 switching to a digest format could increase engagement significantly.' },
-      { icon: '\uD83D\uDCB0', title: 'Sponsorship Tracking Is a Risk', text: 'Sponsor deliverables are tracked across 6 separate spreadsheets with no single owner. Two sponsors received late reports last quarter. A unified tracker would take 2 hours to set up and prevent churn.' }
+      { icon: '\u26A1', title: '19 Members Never Got Their Renewal Notice', text: '19 renewal notices failed to reach members because the AMS and email platform are out of sync. You have no way to know this happened without manually cross-checking both systems. At $450/member, that\u2019s $8,550 in renewals you might silently lose.' },
+      { icon: '\uD83D\uDCC9', title: 'Nobody Knows What\u2019s Happening Between Events and the AMS', text: 'Staff spend 8 hours per event manually entering registrations. But the real issue is the gap \u2014 between registration and data entry, you have no visibility into who actually signed up, who paid, or who needs follow-up.' },
+      { icon: '\u2705', title: 'Member Response Time Under Control', text: 'Response time dropped from 3.4 to 2.1 hours. Members who hear back within 2 hours are 3x more likely to renew. You\u2019re hitting that mark 68% of the time now. This is what operational control looks like.' },
+      { icon: '\uD83D\uDD04', title: 'Committee Members Are Disengaging \u2014 Quietly', text: 'Only 34% of committee members opened the last 3 meeting recaps. You wouldn\u2019t know this without checking. By the time they stop showing up, it\u2019s too late. These are your future board candidates and volunteers.' },
+      { icon: '\uD83D\uDEA8', title: 'Sponsor Deliverables Are a Churn Risk', text: 'Sponsor deliverables are tracked across 6 spreadsheets with no single owner. Two sponsors got late reports last quarter. If a sponsor doesn\u2019t renew, you won\u2019t know it was because of a missed deliverable they never told you about.' }
     ]
   },
 
@@ -793,11 +793,11 @@ const INDUSTRY_PRESETS = {
       { issue: 'Engagement letters expiring without follow-up', count: 5, severity: 'low', last_seen: '5d ago', status: 'resolved' }
     ],
     insights: [
-      { icon: '\u26A1', title: 'Missing Client Docs Are Your #1 Bottleneck', text: '32 client document requests are outstanding for 7+ days. These are blocking 24 tax returns from moving to preparation. An automated reminder sequence at days 3, 5, and 7 would cut this backlog in half.' },
-      { icon: '\uD83D\uDCC9', title: 'Review Cycles Are Too Long', text: 'Workpapers are averaging 3.2 review rounds before sign-off. Industry benchmark is 1.8. The root cause: reviewers are catching formatting issues that a checklist or template would prevent upfront.' },
-      { icon: '\u2705', title: 'Payroll Processing Is Your Smoothest Operation', text: 'Payroll has a 97% on-time rate with only 2.0 touchpoints per cycle. This is your best-run process \u2014 use it as the model for standardizing other workflows.' },
-      { icon: '\uD83D\uDD04', title: 'Client Portal Notifications Are Broken', text: '10 client uploads this month didn\u2019t trigger staff notifications. Staff discovered the documents days later during manual checks. This is a configuration issue, not a process issue \u2014 fixable in hours.' },
-      { icon: '\uD83D\uDCB0', title: 'Tax Season Capacity Planning Gap', text: 'Current trajectory shows 340 returns in queue for March with capacity for 280. You\u2019ll need either 2 seasonal staff or to shift 60 returns to February with early-filing incentives.' }
+      { icon: '\u26A1', title: '32 Client Requests Are Sitting Unanswered Right Now', text: '32 document requests have been outstanding for 7+ days. These are blocking 24 tax returns. Your clients think you\u2019re working on their return. You\u2019re actually waiting on documents they don\u2019t know you need. No one is tracking this.' },
+      { icon: '\uD83D\uDCC9', title: 'Workpapers Go Through 3 Review Rounds \u2014 Should Be 2', text: 'Average review cycles are 3.2 rounds vs. industry benchmark of 1.8. The issue isn\u2019t reviewer quality \u2014 it\u2019s that formatting errors make it past preparation. Without visibility into what\u2019s causing rework, the cycle never shortens.' },
+      { icon: '\u2705', title: 'Payroll Is Under Control', text: 'Payroll hits 97% on-time with only 2 touchpoints per cycle. This is what a well-tracked process looks like. Every other workflow should be measured against this standard.' },
+      { icon: '\uD83D\uDD04', title: 'Clients Are Uploading Documents Nobody Sees', text: '10 client uploads this month didn\u2019t trigger staff notifications. Staff found them days later during manual checks. Your clients think they\u2019ve done their part. Your staff doesn\u2019t know the documents exist. This is fixable in hours.' },
+      { icon: '\uD83D\uDEA8', title: 'You\u2019re Headed for a Tax Season Capacity Crunch', text: 'Current trajectory: 340 returns in queue for March, capacity for 280. You don\u2019t have a plan for the gap yet. Without this visibility, you\u2019d find out in March when it\u2019s too late to hire or shift work.' }
     ]
   }
 };
@@ -1187,31 +1187,31 @@ async function loadAIInsights(data) {
 // ══════════════════════════════════════════════════════════════════
 const actionPlan = [];
 const ROI_MAP = {
-  'handoff': { hrs: 8, rate: 50, label: 'Handoff automation' },
-  'missing context': { hrs: 5, rate: 50, label: 'Context bridging' },
-  'manual': { hrs: 12, rate: 50, label: 'Report automation' },
-  'duplicate': { hrs: 4, rate: 50, label: 'Dedup automation' },
-  'deadline': { hrs: 2, rate: 50, label: 'Deadline alerts', flat: 3000 },
-  'approval': { hrs: 3, rate: 50, label: 'Approval routing' },
-  'sync': { hrs: 4, rate: 50, label: 'Data sync' },
-  'stale': { hrs: 3, rate: 50, label: 'Freshness alerts' },
-  'overdue': { hrs: 3, rate: 50, label: 'Status tracking' },
-  'review': { hrs: 6, rate: 50, label: 'Review workflow' },
-  'notification': { hrs: 2, rate: 50, label: 'Notification fix' },
-  'time entr': { hrs: 6, rate: 75, label: 'Time capture' },
-  'billable': { hrs: 6, rate: 75, label: 'Time capture' },
-  'conflict': { hrs: 3, rate: 50, label: 'Conflict check automation' },
-  'renewal': { hrs: 4, rate: 50, label: 'Renewal automation', flat: 2000 },
-  'filing': { hrs: 2, rate: 50, label: 'Filing tracker', flat: 2500 },
-  'document': { hrs: 6, rate: 50, label: 'Document management' },
-  'spreadsheet': { hrs: 4, rate: 50, label: 'Spreadsheet elimination' },
-  'portal': { hrs: 2, rate: 50, label: 'Portal fix' },
-  'capacity': { hrs: 3, rate: 50, label: 'Capacity planning', flat: 2000 },
-  'member': { hrs: 4, rate: 50, label: 'Member engagement', flat: 1500 },
-  'event': { hrs: 8, rate: 50, label: 'Event automation' },
-  'sponsor': { hrs: 3, rate: 50, label: 'Sponsor tracking', flat: 1500 },
-  'committee': { hrs: 3, rate: 50, label: 'Committee workflow' },
-  'default': { hrs: 4, rate: 50, label: 'Process improvement' }
+  'handoff': { hrs: 8, rate: 50, label: 'Blind handoff — no one sees the gap' },
+  'missing context': { hrs: 5, rate: 50, label: 'Context lost between teams' },
+  'manual': { hrs: 12, rate: 50, label: 'Manual process — no visibility' },
+  'duplicate': { hrs: 4, rate: 50, label: 'Duplicate work across tools' },
+  'deadline': { hrs: 2, rate: 50, label: 'Deadline risk — single point of failure', flat: 3000 },
+  'approval': { hrs: 3, rate: 50, label: 'Approvals stuck in someone\'s inbox' },
+  'sync': { hrs: 4, rate: 50, label: 'Tools out of sync — no single truth' },
+  'stale': { hrs: 3, rate: 50, label: 'Stale data — decisions made on old info' },
+  'overdue': { hrs: 3, rate: 50, label: 'Overdue items no one is tracking' },
+  'review': { hrs: 6, rate: 50, label: 'Review bottleneck — work piling up' },
+  'notification': { hrs: 2, rate: 50, label: 'Broken alerts — things slip through' },
+  'time entr': { hrs: 6, rate: 75, label: 'Unbilled hours leaking revenue' },
+  'billable': { hrs: 6, rate: 75, label: 'Billable time going untracked' },
+  'conflict': { hrs: 3, rate: 50, label: 'Conflict checks bottlenecked' },
+  'renewal': { hrs: 4, rate: 50, label: 'Renewals at risk — no follow-up', flat: 2000 },
+  'filing': { hrs: 2, rate: 50, label: 'Filing deadlines — no safety net', flat: 2500 },
+  'document': { hrs: 6, rate: 50, label: 'Document chaos — versions diverging' },
+  'spreadsheet': { hrs: 4, rate: 50, label: 'Spreadsheet dependency — no backup' },
+  'portal': { hrs: 2, rate: 50, label: 'Portal gap — uploads going unseen' },
+  'capacity': { hrs: 3, rate: 50, label: 'Capacity blind spot', flat: 2000 },
+  'member': { hrs: 4, rate: 50, label: 'Member engagement gap — churn risk', flat: 1500 },
+  'event': { hrs: 8, rate: 50, label: 'Event data stuck in manual entry' },
+  'sponsor': { hrs: 3, rate: 50, label: 'Sponsor deliverables untracked', flat: 1500 },
+  'committee': { hrs: 3, rate: 50, label: 'Committee follow-through gap' },
+  'default': { hrs: 4, rate: 50, label: 'Operational blind spot' }
 };
 
 function estimateROI(text) {
@@ -1271,7 +1271,7 @@ function renderActionPlan() {
     return `<div class="ap-item">
       <button class="ap-item-remove" onclick="removeFromPlan(${i})">&times;</button>
       <div class="ap-item-title">${item.title}</div>
-      <div class="ap-item-roi">~${item.roi.hrs}h/week saved &middot; $${Math.round(item.roi.monthly).toLocaleString()}/mo</div>
+      <div class="ap-item-roi">~${item.roi.hrs}h/week untracked &middot; $${Math.round(item.roi.monthly).toLocaleString()}/mo at risk</div>
     </div>`;
   }).join('');
 
@@ -1288,8 +1288,8 @@ function showCheckout() {
   let totalROI = 0;
   preview.innerHTML = actionPlan.map(item => {
     totalROI += item.roi.monthly;
-    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>$${Math.round(item.roi.monthly).toLocaleString()}/mo</span></div>`;
-  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Projected Monthly Savings</span><span>$${Math.round(totalROI).toLocaleString()}/mo</span></div>`;
+    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>$${Math.round(item.roi.monthly).toLocaleString()}/mo at risk</span></div>`;
+  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Total Monthly Exposure</span><span>$${Math.round(totalROI).toLocaleString()}/mo</span></div>`;
   document.getElementById('checkoutOverlay').classList.add('show');
   document.getElementById('apSidebar').classList.remove('open');
   gtag('event', 'clarity_checkout_open', { event_label: actionPlan.length + ' items' });
@@ -1317,13 +1317,13 @@ function submitActionPlan(e) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      _subject: `Clarity Action Plan: ${org}`,
+      _subject: `Clarity Risk Assessment: ${org}`,
       email: email,
       organization: org,
       industry: preset.label,
       tools: tools.join(', '),
-      items: actionPlan.map(i => `${i.title} ($${Math.round(i.roi.monthly)}/mo)`).join('\n'),
-      total_roi: '$' + Math.round(totalROI).toLocaleString() + '/mo',
+      items: actionPlan.map(i => `${i.title} — ${i.roi.label} ($${Math.round(i.roi.monthly)}/mo at risk)`).join('\n'),
+      total_exposure: '$' + Math.round(totalROI).toLocaleString() + '/mo at risk',
       submitted_at: new Date().toISOString()
     })
   }).catch(() => {});
@@ -1344,10 +1344,10 @@ function submitActionPlan(e) {
 
   document.getElementById('summaryItems').innerHTML = actionPlan.map((item, i) => `
     <div class="summary-card">
-      <div class="summary-card-num">Issue ${i + 1}</div>
+      <div class="summary-card-num">Risk ${i + 1}</div>
       <div class="summary-card-title">${item.title}</div>
-      <div class="summary-card-detail">${item.roi.label}: Estimated ${item.roi.hrs} hours/week currently lost to this issue. ClearOps can automate or streamline this within the first 1-2 weeks of engagement.</div>
-      <div class="summary-card-roi">Projected savings: $${Math.round(item.roi.monthly).toLocaleString()}/month</div>
+      <div class="summary-card-detail">${item.roi.label}. This gap costs your team ~${item.roi.hrs} hours/week in workarounds, rework, or missed items. ClearOps closes this gap within 1-2 weeks.</div>
+      <div class="summary-card-roi">Exposure: $${Math.round(item.roi.monthly).toLocaleString()}/month at risk</div>
     </div>`).join('');
 
   document.getElementById('summaryTotal').textContent = '$' + Math.round(totalROI).toLocaleString();
