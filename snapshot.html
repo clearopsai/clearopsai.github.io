@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Ops Snapshot — ClearOps AI</title>
-<meta name="description" content="See where your operations are leaking time in under 2 minutes. Select your tools, answer 3 questions, get instant results.">
+<title>Free Ops Health Score — ClearOps AI</title>
+<meta name="description" content="Score your operations health out of 100. Select your tools, answer 5 questions, get your score with category breakdowns and a shareable badge.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <!-- Google Analytics -->
@@ -15,9 +15,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-D3V52Q2K1Q');
 function trackEvent(action, label, value) {
-  gtag('event', action, { event_category: 'ops_snapshot', event_label: label, value: value || 0 });
+  gtag('event', action, { event_category: 'ops_health_score', event_label: label, value: value || 0 });
 }
 </script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" defer></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -33,6 +34,7 @@ html { scroll-behavior: smooth; }
   --blue: #3d7eff;
   --amber: #f59e0b;
   --red: #ef4444;
+  --green: #22c55e;
   --text: #dde3f0;
   --soft: #7e8ea8;
   --muted: #4a566e;
@@ -86,9 +88,7 @@ body::after {
 .page-header p { color: var(--soft); font-size: 16px; max-width: 520px; margin: 0 auto; }
 
 /* Progress bar */
-.progress-wrap {
-  margin-bottom: 40px;
-}
+.progress-wrap { margin-bottom: 40px; }
 .progress-steps {
   display: flex; justify-content: space-between; position: relative;
   max-width: 360px; margin: 0 auto;
@@ -212,6 +212,129 @@ body::after {
 .btn-primary { background: var(--teal); color: var(--bg); }
 .btn-secondary { background: var(--bg2); color: var(--soft); border: 1px solid var(--line2); }
 
+/* ─── Score Hero ─── */
+.score-hero {
+  text-align: center; margin-bottom: 40px;
+}
+.score-ring-wrap {
+  position: relative; width: 200px; height: 200px;
+  margin: 0 auto 20px;
+}
+.score-ring {
+  width: 200px; height: 200px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.score-ring-bg {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(var(--line2) 0deg, var(--line2) 360deg);
+}
+.score-ring-fill {
+  position: absolute; inset: 0; border-radius: 50%;
+  transition: background 1.2s ease;
+}
+.score-ring-inner {
+  position: absolute; inset: 16px; border-radius: 50%;
+  background: var(--bg); display: flex; align-items: center;
+  justify-content: center; flex-direction: column; z-index: 1;
+}
+.score-number {
+  font-size: 3.5rem; font-weight: 700; line-height: 1;
+  transition: color .3s;
+}
+.score-of { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.score-verdict {
+  font-family: var(--serif); font-size: 22px; font-weight: 600;
+  margin-bottom: 6px;
+}
+.score-verdict-sub {
+  font-size: 14px; color: var(--soft); max-width: 400px; margin: 0 auto;
+}
+
+/* ─── Category Breakdown ─── */
+.category-section { margin-bottom: 36px; }
+.category-section .panel-title { margin-bottom: 16px; }
+.cat-bar-item {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 14px;
+}
+.cat-label {
+  width: 160px; min-width: 160px; font-size: 13px; font-weight: 500;
+}
+.cat-track {
+  flex: 1; height: 24px; background: var(--bg3);
+  border-radius: 6px; overflow: hidden; position: relative;
+}
+.cat-fill {
+  height: 100%; border-radius: 6px;
+  transition: width 1s ease;
+  min-width: 2px;
+}
+.cat-score {
+  width: 52px; min-width: 52px; text-align: right;
+  font-size: 14px; font-weight: 700;
+}
+
+/* ─── Shareable Badge ─── */
+.badge-section { margin-bottom: 36px; }
+.badge-wrap {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 16px; padding: 32px; margin-bottom: 16px;
+}
+.badge-card {
+  background: linear-gradient(135deg, #0a0f1a 0%, #111828 100%);
+  border: 1px solid var(--line2); border-radius: 14px;
+  padding: 28px 32px; max-width: 420px; margin: 0 auto;
+  text-align: center;
+}
+.badge-brand {
+  font-family: var(--serif); font-size: 12px; color: var(--muted);
+  margin-bottom: 16px;
+}
+.badge-brand b { color: var(--teal); }
+.badge-score-ring {
+  width: 100px; height: 100px; border-radius: 50%;
+  margin: 0 auto 14px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.badge-score-ring-bg {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(var(--line2) 0deg, var(--line2) 360deg);
+}
+.badge-score-ring-fill {
+  position: absolute; inset: 0; border-radius: 50%;
+}
+.badge-score-ring-inner {
+  position: absolute; inset: 8px; border-radius: 50%;
+  background: linear-gradient(135deg, #0a0f1a 0%, #111828 100%);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1;
+}
+.badge-score-num {
+  font-size: 1.8rem; font-weight: 700; line-height: 1;
+}
+.badge-verdict {
+  font-family: var(--serif); font-size: 15px; font-weight: 600;
+  margin-bottom: 14px;
+}
+.badge-bars {
+  display: flex; gap: 6px; justify-content: center; margin-bottom: 16px;
+}
+.badge-mini-bar {
+  width: 60px; height: 6px; border-radius: 3px;
+  background: var(--bg3); overflow: hidden;
+}
+.badge-mini-fill {
+  height: 100%; border-radius: 3px;
+}
+.badge-url {
+  font-size: 10px; color: var(--muted);
+}
+.badge-actions {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+.badge-actions .btn { font-size: 13px; padding: 10px 20px; }
+
 /* Results */
 .results-header {
   text-align: center; margin-bottom: 36px;
@@ -239,7 +362,6 @@ body::after {
 .stat-val.danger { color: var(--red); }
 .stat-label { font-size: 12px; color: var(--soft); line-height: 1.4; }
 
-/* Animated count-up values */
 .stat-val[data-target] { transition: color .3s; }
 
 .gap-list { margin-bottom: 32px; }
@@ -297,12 +419,8 @@ body::after {
 .snapshot-cta p { font-size: 14px; color: var(--soft); margin-bottom: 20px; }
 
 /* Inline form */
-.snapshot-form {
-  max-width: 400px; margin: 0 auto;
-}
-.snapshot-form .form-row {
-  display: flex; gap: 8px; margin-bottom: 8px;
-}
+.snapshot-form { max-width: 400px; margin: 0 auto; }
+.snapshot-form .form-row { display: flex; gap: 8px; margin-bottom: 8px; }
 .snapshot-form input {
   flex: 1; padding: 12px 16px; border-radius: 8px;
   background: var(--bg); border: 1px solid var(--line2);
@@ -356,6 +474,12 @@ body::after {
   .dash-mini-metrics { grid-template-columns: 1fr 1fr; }
   .snapshot-form .form-row { flex-direction: column; }
   .progress-steps { max-width: 280px; }
+  .cat-label { width: 110px; min-width: 110px; font-size: 12px; }
+  .score-ring-wrap { width: 160px; height: 160px; }
+  .score-ring { width: 160px; height: 160px; }
+  .score-ring-inner { inset: 14px; }
+  .score-number { font-size: 2.8rem; }
+  .badge-card { padding: 20px; }
 }
 </style>
 </head>
@@ -368,8 +492,8 @@ body::after {
   </div>
 
   <div class="page-header">
-    <h1>Your free <i>Ops Snapshot.</i></h1>
-    <p>Select your tools, answer 3 questions, see where your operations are leaking time. Takes under 2 minutes.</p>
+    <h1>Your free <i>Ops Health Score.</i></h1>
+    <p>Select your tools, answer 5 questions, get a score out of 100 with category breakdowns. Takes under 2 minutes.</p>
   </div>
 
   <!-- Progress indicator -->
@@ -386,7 +510,7 @@ body::after {
       </div>
       <div class="p-step" data-step="3">
         <div class="p-step-num">3</div>
-        <div class="p-step-label">Results</div>
+        <div class="p-step-label">Your Score</div>
       </div>
     </div>
   </div>
@@ -503,7 +627,7 @@ body::after {
   <!-- STEP 2: Questions -->
   <div class="panel" id="step2">
     <div class="panel-title">A few quick questions.</div>
-    <div class="panel-sub">This helps us calibrate your results to organizations like yours.</div>
+    <div class="panel-sub">This helps us calibrate your score to organizations like yours.</div>
 
     <div class="question-group">
       <label>How many people work at your organization?</label>
@@ -535,32 +659,91 @@ body::after {
       </div>
     </div>
 
+    <div class="question-group">
+      <label>When a new member or client joins, how many systems need manual updates?</label>
+      <div class="radio-group" data-q="manualUpdates">
+        <div class="radio-opt" data-val="1"><div class="radio-dot"></div><div class="radio-text">1 system <span class="sub">Everything flows from one source of truth</span></div></div>
+        <div class="radio-opt" data-val="2-3"><div class="radio-dot"></div><div class="radio-text">2 – 3 systems <span class="sub">A few manual entries after the initial setup</span></div></div>
+        <div class="radio-opt" data-val="4-5"><div class="radio-dot"></div><div class="radio-text">4 – 5 systems <span class="sub">Onboarding involves a checklist across multiple tools</span></div></div>
+        <div class="radio-opt" data-val="6+"><div class="radio-dot"></div><div class="radio-text">6+ systems <span class="sub">Someone spends hours setting up each new person everywhere</span></div></div>
+      </div>
+    </div>
+
+    <div class="question-group">
+      <label>How confident is leadership that report data is accurate and current?</label>
+      <div class="radio-group" data-q="dataConfidence">
+        <div class="radio-opt" data-val="very"><div class="radio-dot"></div><div class="radio-text">Very confident <span class="sub">Data is live and trusted across the org</span></div></div>
+        <div class="radio-opt" data-val="somewhat"><div class="radio-dot"></div><div class="radio-text">Somewhat confident <span class="sub">Usually accurate, but we double-check before presenting</span></div></div>
+        <div class="radio-opt" data-val="not_very"><div class="radio-dot"></div><div class="radio-text">Not very confident <span class="sub">Numbers sometimes conflict depending on who runs the report</span></div></div>
+        <div class="radio-opt" data-val="distrust"><div class="radio-dot"></div><div class="radio-text">We don't trust our numbers <span class="sub">Leadership regularly questions whether reports reflect reality</span></div></div>
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn btn-secondary" id="btn2back">&larr; Back</button>
-      <button class="btn btn-primary" id="btn2next" disabled>See My Results &rarr;</button>
+      <button class="btn btn-primary" id="btn2next" disabled>See My Score &rarr;</button>
     </div>
   </div>
 
   <!-- STEP 3: Results -->
   <div class="panel" id="step3">
-    <div class="results-header">
-      <h2>Your Ops Snapshot <i>results.</i></h2>
-      <p>Based on your tools and answers, here's what we found.</p>
+
+    <!-- 3a: Score Hero -->
+    <div class="score-hero" id="scoreHero">
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <div class="score-ring-bg"></div>
+          <div class="score-ring-fill" id="scoreRingFill"></div>
+          <div class="score-ring-inner">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-of">/ 100</div>
+          </div>
+        </div>
+      </div>
+      <div class="score-verdict" id="scoreVerdict"></div>
+      <div class="score-verdict-sub" id="scoreVerdictSub"></div>
     </div>
 
-    <div class="stat-row" id="statRow">
-      <!-- Filled by JS -->
+    <!-- 3b: Category Breakdown -->
+    <div class="category-section">
+      <div class="panel-title">Category Breakdown</div>
+      <div id="categoryBars"></div>
     </div>
 
-    <div id="gapList" class="gap-list">
-      <!-- Filled by JS -->
+    <!-- 3c: Shareable Badge -->
+    <div class="badge-section">
+      <div class="panel-title" style="margin-bottom:14px;">Share Your Score</div>
+      <div class="badge-wrap">
+        <div class="badge-card" id="badgeCard">
+          <div class="badge-brand">Clear<b>Ops</b> AI</div>
+          <div class="badge-score-ring" id="badgeRing">
+            <div class="badge-score-ring-bg"></div>
+            <div class="badge-score-ring-fill" id="badgeRingFill"></div>
+            <div class="badge-score-ring-inner">
+              <div class="badge-score-num" id="badgeScoreNum">0</div>
+            </div>
+          </div>
+          <div class="badge-verdict" id="badgeVerdict"></div>
+          <div class="badge-bars" id="badgeBars"></div>
+          <div class="badge-url">clearopsai.com/snapshot</div>
+        </div>
+      </div>
+      <div class="badge-actions">
+        <button class="btn btn-primary" id="downloadBadge">Download Score Card</button>
+        <a class="btn btn-secondary" id="shareLinkedIn" href="#" target="_blank" rel="noopener">Share on LinkedIn</a>
+      </div>
     </div>
 
+    <!-- 3d: Integration Gaps -->
+    <div id="gapList" class="gap-list"></div>
+
+    <!-- 3e: Cost Estimate -->
+    <div class="stat-row" id="statRow"></div>
+
+    <!-- 3f: Dashboard Preview -->
     <div class="dash-preview">
       <div class="dash-preview-title">What your dashboard could look like</div>
-      <div class="dash-mini-metrics" id="dashMetrics">
-        <!-- Filled by JS -->
-      </div>
+      <div class="dash-mini-metrics" id="dashMetrics"></div>
       <div class="dash-mini-bars">
         <div class="bar" style="height:55%"></div>
         <div class="bar" style="height:80%"></div>
@@ -573,9 +756,10 @@ body::after {
       </div>
     </div>
 
+    <!-- 3g: CTA Form -->
     <div class="snapshot-cta">
       <h3>Want the full analysis?</h3>
-      <p>Get a detailed Ops Snapshot with specific recommendations for your organization — written by a human, not a template.</p>
+      <p>Get a detailed breakdown with specific recommendations for your organization — written by a human, not a template.</p>
 
       <div class="snapshot-form" id="snapshotForm">
         <div class="form-row">
@@ -587,12 +771,12 @@ body::after {
         <div class="form-row">
           <input type="text" id="formOrg" placeholder="Organization name">
         </div>
-        <button class="btn btn-primary" id="formSubmit" type="button">Get Your Full Ops Snapshot &rarr;</button>
+        <button class="btn btn-primary" id="formSubmit" type="button">Get Your Full Analysis &rarr;</button>
       </div>
 
       <div class="form-success" id="formSuccess">
         <h4>Received.</h4>
-        <p>We'll review your results and send your personalized Ops Snapshot within 48 hours.</p>
+        <p>We'll review your results and send your personalized analysis within 48 hours.</p>
       </div>
 
       <div class="or-divider">or</div>
@@ -602,8 +786,8 @@ body::after {
     </div>
 
     <div class="fine-print">
-      <p>Estimates use industry benchmarks for common tool combinations across ~48 working weeks.<br>
-      Your full Ops Snapshot includes a hands-on review of your specific workflows and data flows.</p>
+      <p>Scores are based on industry benchmarks for common tool combinations and operational patterns.<br>
+      Your full analysis includes a hands-on review of your specific workflows and data flows.</p>
       <p style="margin-top: 8px;"><a href="/">Back to clearopsai.com</a></p>
     </div>
   </div>
@@ -620,7 +804,9 @@ const state = {
   tools: new Set(),
   orgSize: null,
   reportHours: null,
-  boardSystems: null
+  boardSystems: null,
+  manualUpdates: null,
+  dataConfidence: null
 };
 
 // ─── Integration Gap Knowledge Base ───
@@ -785,7 +971,7 @@ document.querySelectorAll('.radio-group').forEach(group => {
 
 function checkStep2Complete() {
   document.getElementById('btn2next').disabled =
-    !(state.orgSize && state.reportHours && state.boardSystems);
+    !(state.orgSize && state.reportHours && state.boardSystems && state.manualUpdates && state.dataConfidence);
 }
 
 // ─── Navigation ───
@@ -793,7 +979,6 @@ function showStep(n) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step' + n).classList.add('active');
 
-  // Update progress indicator
   document.querySelectorAll('.p-step').forEach((s, i) => {
     s.classList.remove('active', 'done');
     if (i + 1 === n) s.classList.add('active');
@@ -826,13 +1011,58 @@ function animateValue(el, start, end, duration, prefix, suffix) {
   function update(now) {
     const elapsed = now - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    // ease-out
     const eased = 1 - Math.pow(1 - progress, 3);
     const current = Math.round(start + range * eased);
     el.textContent = prefix + current.toLocaleString() + suffix;
     if (progress < 1) requestAnimationFrame(update);
   }
   requestAnimationFrame(update);
+}
+
+// ─── Scoring ───
+function clamp(min, max, val) { return Math.max(min, Math.min(max, val)); }
+
+function calculateScores(gapCount) {
+  // Integration Health (0-25): fewer gaps = better
+  const integration = clamp(0, 25, 25 - gapCount * 3);
+
+  // Reporting Automation (0-25): fewer hours = better
+  const reportMap = { low: 22, mid: 14, high: 7, extreme: 2 };
+  const reporting = reportMap[state.reportHours] || 14;
+
+  // Data Visibility (0-25): board systems + confidence
+  const sysBase = { '1': 18, '3': 12, '5': 7, '7': 3 };
+  const confAdj = { very: 7, somewhat: 4, not_very: 1, distrust: -2 };
+  const visibility = clamp(0, 25, (sysBase[state.boardSystems] || 12) + (confAdj[state.dataConfidence] || 4));
+
+  // Workflow Efficiency (0-25): manual updates + org size penalty
+  const updateBase = { '1': 22, '2-3': 16, '4-5': 9, '6+': 3 };
+  const sizePenalty = { small: 0, mid: -1, large: -3, xlarge: -5 };
+  const workflow = clamp(0, 25, (updateBase[state.manualUpdates] || 16) + (sizePenalty[state.orgSize] || 0));
+
+  const total = integration + reporting + visibility + workflow;
+
+  return { integration, reporting, visibility, workflow, total };
+}
+
+function getScoreColor(score) {
+  if (score <= 40) return 'var(--red)';
+  if (score <= 60) return 'var(--amber)';
+  if (score <= 80) return 'var(--teal)';
+  return 'var(--green)';
+}
+
+function getScoreTier(score) {
+  if (score <= 40) return { label: 'Critical', sub: 'Your operations have significant integration gaps and manual bottlenecks that are costing real time and money.' };
+  if (score <= 60) return { label: 'At Risk', sub: 'Your operations are functional but fragile — manual workarounds are masking deeper systemic issues.' };
+  if (score <= 80) return { label: 'Moderate', sub: 'Your operations are reasonably well-connected but there\'s meaningful room to automate and streamline.' };
+  return { label: 'Strong', sub: 'Your operations are well-integrated. Focus on fine-tuning automation and reducing remaining manual touchpoints.' };
+}
+
+function renderScoreRing(el, score, size) {
+  const deg = (score / 100) * 360;
+  const color = getScoreColor(score);
+  el.style.background = `conic-gradient(${color} 0deg, ${color} ${deg}deg, var(--line2) ${deg}deg, var(--line2) 360deg)`;
 }
 
 // ─── Results Generation ───
@@ -850,7 +1080,10 @@ function generateResults() {
     }
   }
 
-  // Calculate hours
+  const gapCount = foundGaps.length;
+  const scores = calculateScores(gapCount);
+
+  // Calculate hours + cost (same as V1)
   const reportMultiplier = { low: 1, mid: 1.2, high: 1.5, extreme: 1.8 };
   const sizeMultiplier = { small: 0.8, mid: 1, large: 1.3, xlarge: 1.6 };
   const baseHours = foundGaps.reduce((sum, g) => sum + g.hours, 0);
@@ -859,16 +1092,124 @@ function generateResults() {
     (reportMultiplier[state.reportHours] || 1) *
     (sizeMultiplier[state.orgSize] || 1)
   );
-
-  // Estimated annual cost — 48 working weeks, $45/hr avg ops staff
   const annualCost = adjustedHours * 45 * 48;
-  const gapCount = foundGaps.length;
   const systemCount = tools.length;
 
-  // Track results
-  trackEvent('results_generated', 'gaps_' + gapCount + '_hours_' + adjustedHours, annualCost);
+  trackEvent('score_generated', 'score_' + scores.total + '_gaps_' + gapCount, scores.total);
 
-  // Stat cards with animated count-up
+  // ── 3a: Score Hero ──
+  const scoreColor = getScoreColor(scores.total);
+  const tier = getScoreTier(scores.total);
+
+  // Animate score ring
+  setTimeout(() => {
+    renderScoreRing(document.getElementById('scoreRingFill'), scores.total);
+    document.getElementById('scoreNumber').style.color = scoreColor;
+    animateValue(document.getElementById('scoreNumber'), 0, scores.total, 1400);
+  }, 200);
+
+  document.getElementById('scoreVerdict').textContent = tier.label;
+  document.getElementById('scoreVerdict').style.color = scoreColor;
+  document.getElementById('scoreVerdictSub').textContent = tier.sub;
+
+  // ── 3b: Category Breakdown ──
+  const categories = [
+    { label: 'Integration Health', score: scores.integration, max: 25 },
+    { label: 'Reporting Automation', score: scores.reporting, max: 25 },
+    { label: 'Data Visibility', score: scores.visibility, max: 25 },
+    { label: 'Workflow Efficiency', score: scores.workflow, max: 25 }
+  ];
+
+  const barsEl = document.getElementById('categoryBars');
+  barsEl.innerHTML = categories.map(c => {
+    const pct = (c.score / c.max) * 100;
+    const color = getScoreColor((c.score / c.max) * 100);
+    return `
+      <div class="cat-bar-item">
+        <div class="cat-label">${c.label}</div>
+        <div class="cat-track">
+          <div class="cat-fill" style="width:0%;background:${color};" data-width="${pct}%"></div>
+        </div>
+        <div class="cat-score" style="color:${color};">${c.score}/${c.max}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    barsEl.querySelectorAll('.cat-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 400);
+
+  // ── 3c: Badge ──
+  setTimeout(() => {
+    renderScoreRing(document.getElementById('badgeRingFill'), scores.total);
+    document.getElementById('badgeScoreNum').textContent = scores.total;
+    document.getElementById('badgeScoreNum').style.color = scoreColor;
+    document.getElementById('badgeVerdict').textContent = tier.label;
+    document.getElementById('badgeVerdict').style.color = scoreColor;
+  }, 600);
+
+  // Mini bars for badge
+  const badgeBarsEl = document.getElementById('badgeBars');
+  badgeBarsEl.innerHTML = categories.map(c => {
+    const pct = (c.score / c.max) * 100;
+    const color = getScoreColor((c.score / c.max) * 100);
+    return `<div class="badge-mini-bar"><div class="badge-mini-fill" style="width:${pct}%;background:${color};"></div></div>`;
+  }).join('');
+
+  // Download badge button
+  document.getElementById('downloadBadge').onclick = function() {
+    const card = document.getElementById('badgeCard');
+    if (typeof html2canvas !== 'undefined') {
+      html2canvas(card, { backgroundColor: '#0a0f1a', scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'ops-health-score-' + scores.total + '.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        trackEvent('badge_download', 'score_' + scores.total);
+      });
+    }
+  };
+
+  // LinkedIn share
+  const shareText = encodeURIComponent(
+    `Our organization scored ${scores.total}/100 on the ClearOps Ops Health Score.\n\n` +
+    `Integration Health: ${scores.integration}/25\n` +
+    `Reporting Automation: ${scores.reporting}/25\n` +
+    `Data Visibility: ${scores.visibility}/25\n` +
+    `Workflow Efficiency: ${scores.workflow}/25\n\n` +
+    `Take yours free at clearopsai.com/snapshot`
+  );
+  document.getElementById('shareLinkedIn').href =
+    'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://clearopsai.com/snapshot') +
+    '&summary=' + shareText;
+
+  // ── 3d: Integration Gaps ──
+  const gapListEl = document.getElementById('gapList');
+  if (foundGaps.length > 0) {
+    gapListEl.innerHTML = '<div class="panel-title" style="margin-bottom:14px;">Integration gaps we identified</div>' +
+      foundGaps.slice(0, 5).map(g => `
+        <div class="gap-item">
+          <h4>${g.title}</h4>
+          <p>${g.desc}</p>
+          <span class="gap-cost">${g.cost}</span>
+        </div>
+      `).join('');
+    if (foundGaps.length > 5) {
+      gapListEl.innerHTML += `<p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px;">+ ${foundGaps.length - 5} more gaps identified. Get your full analysis for the complete breakdown.</p>`;
+    }
+  } else {
+    gapListEl.innerHTML = `
+      <div class="gap-item" style="border-left-color: var(--teal);">
+        <h4>Your tool combination has less-documented integration patterns.</h4>
+        <p>That doesn't mean everything is running smoothly \u2014 it means your stack likely has custom workarounds and tribal knowledge that a standardized scan can't detect. The full analysis includes a hands-on review that catches what automation can't.</p>
+      </div>
+    `;
+  }
+
+  // ── 3e: Cost Estimate ──
   const statRow = document.getElementById('statRow');
   const hourClass = adjustedHours > 15 ? ' danger' : adjustedHours > 8 ? ' warning' : '';
   const costClass = annualCost > 50000 ? ' danger' : ' warning';
@@ -889,37 +1230,13 @@ function generateResults() {
     </div>
   `;
 
-  // Trigger animations after a brief delay for visual impact
   setTimeout(() => {
     animateValue(document.getElementById('animHours'), 0, adjustedHours, 1200);
     animateValue(document.getElementById('animGaps'), 0, gapCount, 800);
     animateValue(document.getElementById('animCost'), 0, costK, 1400, '$', 'K');
-  }, 300);
+  }, 800);
 
-  // Gap details
-  const gapListEl = document.getElementById('gapList');
-  if (foundGaps.length > 0) {
-    gapListEl.innerHTML = '<div class="panel-title" style="margin-bottom:14px;">Integration gaps we identified</div>' +
-      foundGaps.slice(0, 5).map(g => `
-        <div class="gap-item">
-          <h4>${g.title}</h4>
-          <p>${g.desc}</p>
-          <span class="gap-cost">${g.cost}</span>
-        </div>
-      `).join('');
-    if (foundGaps.length > 5) {
-      gapListEl.innerHTML += `<p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px;">+ ${foundGaps.length - 5} more gaps identified. Get your full Ops Snapshot for the complete analysis.</p>`;
-    }
-  } else {
-    gapListEl.innerHTML = `
-      <div class="gap-item" style="border-left-color: var(--teal);">
-        <h4>Your tool combination has less-documented integration patterns.</h4>
-        <p>That doesn't mean everything is running smoothly \u2014 it means your stack likely has custom workarounds and tribal knowledge that a standardized scan can't detect. The full Ops Snapshot includes a hands-on review that catches what automation can't.</p>
-      </div>
-    `;
-  }
-
-  // Dashboard preview metrics
+  // ── 3f: Dashboard Preview ──
   const dashMetrics = document.getElementById('dashMetrics');
   const hasMembership = tools.some(t => ['fonteva','imis','membersuite','personify'].includes(t));
   if (hasMembership) {
@@ -945,14 +1262,14 @@ function generateResults() {
     `;
   }
 
-  // CTA email fallback link (simplified)
+  // ── 3g: CTA email fallback ──
   const toolNames = tools.map(t => {
     const el = document.querySelector(`[data-tool="${t}"] .tool-name`);
     return el ? el.textContent : t;
   });
-  const emailSubject = encodeURIComponent('Ops Snapshot Request \u2014 ' + toolNames.slice(0, 3).join(', '));
+  const emailSubject = encodeURIComponent('Ops Health Score Follow-up \u2014 ' + toolNames.slice(0, 3).join(', '));
   const emailBody = encodeURIComponent(
-    'Tools: ' + toolNames.join(', ') + '\nGaps found: ' + gapCount + '\nEst. hours/week: ' + adjustedHours + '\n\nI\'d like the full Ops Snapshot.'
+    'Score: ' + scores.total + '/100\nTools: ' + toolNames.join(', ') + '\nGaps found: ' + gapCount + '\nEst. hours/week: ' + adjustedHours + '\n\nI\'d like the full analysis.'
   );
   document.getElementById('ctaEmail').href =
     'mailto:haseeb.clearopsai@gmail.com?subject=' + emailSubject + '&body=' + emailBody;
@@ -963,6 +1280,13 @@ function generateResults() {
     orgSize: state.orgSize,
     reportHours: state.reportHours,
     boardSystems: state.boardSystems,
+    manualUpdates: state.manualUpdates,
+    dataConfidence: state.dataConfidence,
+    score: scores.total,
+    integration: scores.integration,
+    reporting: scores.reporting,
+    visibility: scores.visibility,
+    workflow: scores.workflow,
     gapCount: gapCount,
     adjustedHours: adjustedHours,
     annualCost: annualCost
@@ -976,13 +1300,11 @@ document.getElementById('formSubmit').addEventListener('click', function() {
   const org = document.getElementById('formOrg').value.trim();
 
   if (!name || !email) {
-    // Highlight empty fields
     if (!name) document.getElementById('formName').style.borderColor = 'var(--red)';
     if (!email) document.getElementById('formEmail').style.borderColor = 'var(--red)';
     return;
   }
 
-  // Basic email validation
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     document.getElementById('formEmail').style.borderColor = 'var(--red)';
     return;
@@ -990,21 +1312,26 @@ document.getElementById('formSubmit').addEventListener('click', function() {
 
   const data = window._snapshotData || {};
 
-  // Send via Formspree (replace with your endpoint)
   const payload = {
     name: name,
     email: email,
     organization: org,
     tools: data.tools,
+    score: data.score,
+    integration: data.integration,
+    reporting: data.reporting,
+    visibility: data.visibility,
+    workflow: data.workflow,
     org_size: data.orgSize,
     report_hours: data.reportHours,
     board_systems: data.boardSystems,
+    manual_updates: data.manualUpdates,
+    data_confidence: data.dataConfidence,
     gaps_found: data.gapCount,
     hours_per_week: data.adjustedHours,
     annual_cost: data.annualCost
   };
 
-  // Submit to Formspree (free tier: 50 submissions/month)
   fetch('https://formspree.io/f/xnjbregp', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1013,14 +1340,12 @@ document.getElementById('formSubmit').addEventListener('click', function() {
     if (r.ok) {
       document.getElementById('snapshotForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
-      trackEvent('form_submit', 'success', data.gapCount);
+      trackEvent('form_submit', 'success', data.score);
     } else {
-      // Fallback: open email
       window.location.href = document.getElementById('ctaEmail').href;
       trackEvent('form_submit', 'fallback_email');
     }
   }).catch(() => {
-    // Fallback: open email
     window.location.href = document.getElementById('ctaEmail').href;
     trackEvent('form_submit', 'error_fallback');
   });
