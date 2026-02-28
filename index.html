@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClearOps AI — Operational Clarity for Growing Companies</title>
+  <meta name="description" content="ClearOps AI connects your tools, automates reporting, and builds dashboards your leadership actually needs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080b12;
+      --bg-card: #0d1117;
+      --bg-card-alt: #111822;
+      --teal: #00c9a0;
+      --teal-dim: rgba(0,201,160,0.15);
+      --blue: #3d7eff;
+      --blue-dim: rgba(61,126,255,0.12);
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      --border: rgba(255,255,255,0.06);
+      --font-display: 'Fraunces', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(8,11,18,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-family: var(--font-display);
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--teal);
+      text-decoration: none;
+    }
+    .brand span { color: var(--text); }
+    .nav-cta {
+      padding: 0.6rem 1.4rem;
+      background: var(--teal);
+      color: var(--bg);
+      border: none; border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── SHARED ── */
+    section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--teal); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--text-dim);
+      font-size: 1.1rem; max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      max-width: 900px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--teal);
+      color: var(--bg);
+      font-weight: 700; font-size: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── CREDENTIAL BAR ── */
+    .cred-bar {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 0.75rem;
+      margin-top: 3rem;
+    }
+    .cred-pill {
+      padding: 0.4rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--text-dim);
+    }
+
+    /* ── BEFORE / AFTER ── */
+    .ba-section { padding-bottom: 3rem; }
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .ba-panel {
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .ba-panel:hover { transform: translateY(-4px); }
+    .ba-before {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(245,158,11,0.06));
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+    .ba-after {
+      background: linear-gradient(135deg, rgba(0,201,160,0.08), rgba(61,126,255,0.06));
+      border: 1px solid rgba(0,201,160,0.2);
+    }
+    .ba-label {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+    }
+    .ba-before .ba-label { color: var(--red); }
+    .ba-after .ba-label { color: var(--teal); }
+
+    .ba-tools {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .ba-tool {
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.78rem; font-weight: 600;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .ba-before .ba-tool {
+      background: rgba(239,68,68,0.1);
+      border: 1px dashed rgba(239,68,68,0.3);
+      color: #fca5a5;
+    }
+    .ba-after .ba-tool {
+      background: rgba(0,201,160,0.1);
+      border: 1px solid rgba(0,201,160,0.3);
+      color: #6ee7b7;
+    }
+
+    .ba-metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.75rem; margin-bottom: 1.5rem;
+    }
+    .ba-metric {
+      padding: 0.75rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .ba-before .ba-metric {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.12);
+    }
+    .ba-after .ba-metric {
+      background: rgba(0,201,160,0.06);
+      border: 1px solid rgba(0,201,160,0.12);
+    }
+    .ba-metric-val {
+      font-family: 'DM Sans', monospace;
+      font-size: 1.3rem; font-weight: 700;
+    }
+    .ba-before .ba-metric-val { color: #fca5a5; }
+    .ba-after .ba-metric-val { color: var(--teal); }
+    .ba-metric-label {
+      font-size: 0.7rem; color: var(--text-dim);
+      margin-top: 0.15rem;
+    }
+    .ba-caption {
+      font-size: 0.85rem; font-weight: 500;
+      padding-top: 0.5rem;
+    }
+    .ba-before .ba-caption { color: #fca5a5; }
+    .ba-after .ba-caption { color: #6ee7b7; }
+
+    /* ── CONNECTION LINES (After panel) ── */
+    .ba-flow {
+      display: flex; align-items: center;
+      justify-content: center; gap: 0;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ba-flow-node {
+      padding: 0.45rem 0.8rem;
+      background: rgba(0,201,160,0.1);
+      border: 1px solid rgba(0,201,160,0.3);
+      border-radius: 8px;
+      font-size: 0.75rem; font-weight: 600; color: #6ee7b7;
+    }
+    .ba-flow-line {
+      width: 32px; height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      position: relative;
+    }
+    .ba-flow-line::after {
+      content: '';
+      position: absolute; right: -3px; top: -3px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ── DASHBOARD SHOWCASE ── */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .dash-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .dash-panel:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,201,160,0.25);
+    }
+    .dash-panel-title {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--teal); margin-bottom: 1.25rem;
+    }
+
+    /* Panel A: Ops Dashboard */
+    .ops-metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.6rem; margin-bottom: 1.25rem;
+    }
+    .ops-metric-tile {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+    }
+    .ops-metric-tile .val {
+      font-size: 1.4rem; font-weight: 700;
+      font-family: 'DM Sans', monospace;
+      color: var(--teal);
+    }
+    .ops-metric-tile .lbl {
+      font-size: 0.65rem; color: var(--text-dim);
+      margin-top: 0.1rem;
+    }
+    .ops-charts {
+      display: flex; gap: 1.25rem; align-items: flex-end;
+    }
+    .bar-chart {
+      display: flex; align-items: flex-end;
+      gap: 5px; height: 80px; flex: 1;
+    }
+    .bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(to top, var(--teal), var(--blue));
+      transition: height 0.6s ease;
+    }
+    .donut-wrap {
+      width: 80px; height: 80px;
+      position: relative; flex-shrink: 0;
+    }
+    .donut {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--teal) 0% 72%,
+        var(--amber) 72% 90%,
+        var(--red) 90% 100%
+      );
+      position: relative;
+    }
+    .donut::after {
+      content: '72%';
+      position: absolute;
+      inset: 18px;
+      background: var(--bg-card);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--teal);
+    }
+    .donut-legend {
+      display: flex; gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.55rem; color: var(--text-dim);
+    }
+    .donut-legend span::before {
+      content: ''; display: inline-block;
+      width: 6px; height: 6px; border-radius: 50%;
+      margin-right: 3px; vertical-align: middle;
+    }
+    .leg-teal::before { background: var(--teal); }
+    .leg-amber::before { background: var(--amber); }
+    .leg-red::before { background: var(--red); }
+
+    /* Panel B: Executive Report */
+    .exec-report {
+      background: var(--bg-card-alt);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-family: 'Fraunces', serif;
+      border-left: 3px solid var(--teal);
+    }
+    .exec-report h4 {
+      font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 0.6rem; color: var(--text);
+    }
+    .exec-report ul {
+      list-style: none; padding: 0;
+      margin-bottom: 1rem;
+    }
+    .exec-report li {
+      font-size: 0.75rem; color: var(--text-dim);
+      padding: 0.25rem 0;
+      padding-left: 1rem;
+      position: relative;
+      font-family: var(--font-body);
+    }
+    .exec-report li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--teal);
+    }
+    .exec-report .risk-item::before { color: var(--amber); content: '⚠'; }
+    .exec-section {
+      margin-bottom: 0.75rem;
+    }
+    .exec-section-title {
+      font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--text-dim); margin-bottom: 0.3rem;
+      font-family: var(--font-body);
+    }
+
+    /* Panel C: Integration Map */
+    .int-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      position: relative;
+    }
+    .int-node {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .int-node-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+    .int-node-name {
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .int-node-status {
+      font-size: 0.6rem;
+      margin-top: 0.25rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      display: inline-block;
+    }
+    .status-connected {
+      background: rgba(0,201,160,0.15);
+      color: var(--teal);
+    }
+    .status-syncing {
+      background: rgba(61,126,255,0.15);
+      color: var(--blue);
+    }
+    .int-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px; height: 50px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700;
+      color: var(--bg);
+      z-index: 2;
+      box-shadow: 0 0 20px rgba(0,201,160,0.4);
+    }
+    .int-lines {
+      position: absolute; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+    .int-line {
+      position: absolute;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      height: 2px;
+      transform-origin: left center;
+    }
+    .int-line-v {
+      width: 2px; height: 40px;
+      background: linear-gradient(to bottom, var(--teal), var(--blue));
+    }
+    .int-pulse {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse-travel 2s ease-in-out infinite;
+    }
+    @keyframes pulse-travel {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .int-stats {
+      margin-top: 0.75rem;
+      display: flex; gap: 0.5rem; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .int-stat {
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-dim);
+    }
+    .int-stat strong { color: var(--teal); }
+
+    /* ── WHO WE SERVE ── */
+    .serve-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .serve-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .serve-card:hover {
+      border-color: rgba(0,201,160,0.25);
+      transform: translateY(-3px);
+    }
+    .serve-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+    .serve-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .serve-card p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── SERVICES TIMELINE ── */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 2.5rem;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      z-index: 0;
+    }
+    .tl-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 0.75rem;
+    }
+    .tl-num {
+      display: inline-flex;
+      width: 56px; height: 56px;
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--teal);
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+    .tl-step h3 {
+      font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .tl-step p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.45;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .test-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .test-card blockquote {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .test-card cite {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-style: normal;
+    }
+
+    /* ── ABOUT ── */
+    .about-content {
+      display: flex;
+      gap: 3rem;
+      align-items: flex-start;
+      margin-top: 2rem;
+    }
+    .about-text {
+      flex: 1;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+    .about-badges {
+      display: flex; flex-wrap: wrap;
+      gap: 0.6rem; margin-top: 1.5rem;
+    }
+    .about-badge {
+      padding: 0.4rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .cta-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .cta-section h2 em {
+      font-style: normal; color: var(--teal);
+    }
+    .cta-section p {
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+    .calendly-wrap {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .cta-email {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .cta-email a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+    .cta-email a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .ba-grid, .showcase-grid, .test-grid {
+        grid-template-columns: 1fr;
+      }
+      .serve-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .timeline {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 2rem;
+      }
+      .timeline::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .serve-grid {
+        grid-template-columns: 1fr;
+      }
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+      nav { padding: 0.75rem 1rem; }
+      section { padding: 3rem 1.25rem; }
+      .hero { padding: 4rem 1.25rem 3rem; }
+      .about-content { flex-direction: column; gap: 1.5rem; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="brand">Clear<span>Ops</span></a>
+    <a href="#book" class="nav-cta">Book a Free Call</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Operational clarity for <em>growing companies.</em></h1>
+    <p>We connect your tools, automate your reporting, and build the dashboards your leadership actually needs.</p>
+    <a href="#book" class="hero-cta">See What Clarity Looks Like</a>
+    <div class="cred-bar">
+      <span class="cred-pill">eBay</span>
+      <span class="cred-pill">Splunk</span>
+      <span class="cred-pill">CoreSite</span>
+      <span class="cred-pill">Cadence</span>
+      <span class="cred-pill">Axoni</span>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="ba-section reveal">
+    <div class="section-label">The Difference</div>
+    <div class="section-title">From scattered to streamlined.</div>
+    <div class="ba-grid">
+      <!-- BEFORE -->
+      <div class="ba-panel ba-before">
+        <div class="ba-label">Before ClearOps</div>
+        <div class="ba-tools">
+          <div class="ba-tool">Slack</div>
+          <div class="ba-tool">Sheets</div>
+          <div class="ba-tool">Email</div>
+          <div class="ba-tool">Salesforce</div>
+          <div class="ba-tool">Jira</div>
+        </div>
+        <div class="ba-metrics">
+          <div class="ba-metric">
+            <div class="ba-metric-val">?</div>
+            <div class="ba-metric-label">Revenue pipeline</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">?</div>
+            <div class="ba-metric-label">Team utilization</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">?</div>
+            <div class="ba-metric-label">Project health</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">?</div>
+            <div class="ba-metric-label">SLA status</div>
+          </div>
+        </div>
+        <div class="ba-caption">Manual reports. 3 days. Still incomplete.</div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="ba-panel ba-after">
+        <div class="ba-label">After ClearOps</div>
+        <div class="ba-flow">
+          <div class="ba-flow-node">CRM</div>
+          <div class="ba-flow-line"></div>
+          <div class="ba-flow-node">PM</div>
+          <div class="ba-flow-line"></div>
+          <div class="ba-flow-node">Dashboard</div>
+          <div class="ba-flow-line"></div>
+          <div class="ba-flow-node">Finance</div>
+        </div>
+        <div class="ba-metrics">
+          <div class="ba-metric">
+            <div class="ba-metric-val">$2.4M</div>
+            <div class="ba-metric-label">Revenue pipeline</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">87%</div>
+            <div class="ba-metric-label">Team utilization</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">96%</div>
+            <div class="ba-metric-label">Project health</div>
+          </div>
+          <div class="ba-metric">
+            <div class="ba-metric-val">99.2%</div>
+            <div class="ba-metric-label">SLA status</div>
+          </div>
+        </div>
+        <div class="ba-caption">Automated. Real-time. One view.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD SHOWCASE -->
+  <section class="reveal">
+    <div class="section-label">What You Get</div>
+    <div class="section-title">Dashboards, reports, and integrations — built for you.</div>
+    <div class="showcase-grid">
+
+      <!-- Panel A: Operations Dashboard -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Operations Dashboard</div>
+        <div class="ops-metrics">
+          <div class="ops-metric-tile">
+            <div class="val">24</div>
+            <div class="lbl">Active Projects</div>
+          </div>
+          <div class="ops-metric-tile">
+            <div class="val">87%</div>
+            <div class="lbl">Utilization</div>
+          </div>
+          <div class="ops-metric-tile">
+            <div class="val">96%</div>
+            <div class="lbl">SLA Met</div>
+          </div>
+          <div class="ops-metric-tile">
+            <div class="val">3</div>
+            <div class="lbl">Open Issues</div>
+          </div>
+        </div>
+        <div class="ops-charts">
+          <div class="bar-chart">
+            <div class="bar" style="height: 65%"></div>
+            <div class="bar" style="height: 85%"></div>
+            <div class="bar" style="height: 45%"></div>
+            <div class="bar" style="height: 92%"></div>
+            <div class="bar" style="height: 70%"></div>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut"></div>
+            <div class="donut-legend">
+              <span class="leg-teal">Track</span>
+              <span class="leg-amber">Risk</span>
+              <span class="leg-red">Late</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel B: Executive Report -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Executive Report</div>
+        <div class="exec-report">
+          <div class="exec-section">
+            <div class="exec-section-title">Key Findings</div>
+            <ul>
+              <li>Revenue pipeline up 18% QoQ with 3 enterprise deals in late stage</li>
+              <li>Engineering velocity improved after Sprint 4 restructure</li>
+              <li>Customer retention holding at 94% — above industry benchmark</li>
+            </ul>
+          </div>
+          <div class="exec-section">
+            <div class="exec-section-title">Risk Areas</div>
+            <ul>
+              <li class="risk-item">Infrastructure costs trending 12% above forecast</li>
+              <li class="risk-item">Two key hires still open past 45-day target</li>
+            </ul>
+          </div>
+          <div class="exec-section">
+            <div class="exec-section-title">Next Steps</div>
+            <ul>
+              <li>Finalize Q2 budget with revised cloud spend projections</li>
+              <li>Schedule pipeline review with sales leadership</li>
+              <li>Launch hiring sprint for senior engineer roles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel C: Integration Map -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Systems Integration Map</div>
+        <div class="int-map">
+          <div class="int-node">
+            <div class="int-node-icon">📊</div>
+            <div class="int-node-name">CRM</div>
+            <span class="int-node-status status-connected">Connected</span>
+          </div>
+          <div class="int-node">
+            <div class="int-node-icon">📋</div>
+            <div class="int-node-name">PM Tool</div>
+            <span class="int-node-status status-connected">Connected</span>
+          </div>
+          <div class="int-node">
+            <div class="int-node-icon">💰</div>
+            <div class="int-node-name">Finance</div>
+            <span class="int-node-status status-syncing">Syncing</span>
+          </div>
+          <div class="int-node">
+            <div class="int-node-icon">👥</div>
+            <div class="int-node-name">HR</div>
+            <span class="int-node-status status-connected">Connected</span>
+          </div>
+          <div class="int-center">HUB</div>
+        </div>
+        <div class="int-stats">
+          <span class="int-stat"><strong>4</strong> systems</span>
+          <span class="int-stat"><strong>24</strong> data points/day</span>
+          <span class="int-stat"><strong>Real-time</strong> sync</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE SERVE -->
+  <section class="reveal">
+    <div class="section-label">Who We Serve</div>
+    <div class="section-title">Built for teams that have outgrown spreadsheets.</div>
+    <div class="serve-grid">
+      <div class="serve-card">
+        <div class="serve-icon">🏢</div>
+        <h3>IT Services Firms</h3>
+        <p>Unify project tracking, utilization, and client reporting in one view.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🏛️</div>
+        <h3>Trade Associations</h3>
+        <p>Track membership, events, and program outcomes without the spreadsheet chaos.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🚀</div>
+        <h3>Funded Startups</h3>
+        <p>Board-ready dashboards and burn rate monitoring from day one.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">⚖️</div>
+        <h3>Professional Services</h3>
+        <p>Billable hours, pipeline, and delivery health — all automated.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES TIMELINE -->
+  <section class="reveal">
+    <div class="section-label">How It Works</div>
+    <div class="section-title">Four steps to operational clarity.</div>
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-num">01</div>
+        <h3>Audit</h3>
+        <p>We map your tools, workflows, and reporting gaps in a 2-hour deep dive.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">02</div>
+        <h3>Integrate</h3>
+        <p>Connect your systems so data flows automatically — no manual exports.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">03</div>
+        <h3>Dashboard</h3>
+        <p>Custom dashboards and automated reports tailored to your leadership team.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">04</div>
+        <h3>Monitor</h3>
+        <p>Ongoing optimization, alerting, and support as your operations scale.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="reveal">
+    <div class="section-label">Results</div>
+    <div class="section-title">What clarity sounds like.</div>
+    <div class="test-grid">
+      <div class="test-card">
+        <blockquote>"We were spending 15 hours a week building reports from four systems. Now it's automated. I got my Fridays back."</blockquote>
+        <cite>— COO, 120-person IT services firm</cite>
+      </div>
+      <div class="test-card">
+        <blockquote>"The audit alone changed how we think about our operations. We had no idea how much was falling through the cracks."</blockquote>
+        <cite>— Chief of Staff, DC fintech startup</cite>
+      </div>
+      <div class="test-card">
+        <blockquote>"We went from 'I think we're on track' to 'I can see exactly where every program stands' in two weeks."</blockquote>
+        <cite>— VP Operations, national trade association</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="reveal">
+    <div class="section-label">About</div>
+    <div class="section-title">Operator-built. Enterprise-tested.</div>
+    <div class="about-content">
+      <div class="about-text">
+        <p>ClearOps AI was founded by an operations leader who spent a decade building reporting systems, integration pipelines, and dashboards at companies from startups to the Fortune 500.</p>
+        <p>We bring enterprise-grade operational thinking to companies that are scaling fast but don't have a 50-person ops team.</p>
+        <p>The tools exist. The data exists. You just need someone who knows how to connect them.</p>
+        <div class="about-badges">
+          <span class="about-badge">eBay</span>
+          <span class="about-badge">Splunk</span>
+          <span class="about-badge">CoreSite</span>
+          <span class="about-badge">Cadence</span>
+          <span class="about-badge">Axoni</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA + CALENDLY -->
+  <section class="cta-section reveal" id="book">
+    <h2>See what <em>clarity</em> looks like.</h2>
+    <p>30-minute call. No pitch deck. We'll map your current ops stack and show you where the gaps are.</p>
+    <div class="calendly-wrap">
+      <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min" style="min-width:280px;height:630px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    </div>
+    <div class="cta-email">or email <a href="mailto:haseeb@clearopsai.com">haseeb@clearopsai.com</a></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 ClearOps AI. All rights reserved.
+  </footer>
+
+  <!-- SCROLL REVEAL -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
+      reveals.forEach(el => observer.observe(el));
+      // Fallback: ensure all sections visible after 1.5s (covers non-scroll environments)
+      setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 1500);
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
