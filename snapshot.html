@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Ops Snapshot — ClearOps AI</title>
+<meta name="description" content="See where your operations are leaking time in under 2 minutes. Select your tools, answer 3 questions, get instant results.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #080b12;
+  --bg2: #0d1120;
+  --bg3: #111828;
+  --line: #1a2236;
+  --line2: #1f2a40;
+  --teal: #00c9a0;
+  --teal-dim: rgba(0,201,160,.12);
+  --blue: #3d7eff;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --text: #dde3f0;
+  --soft: #7e8ea8;
+  --muted: #4a566e;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* Nav */
+.nav-bar {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 48px;
+}
+.nav-brand {
+  font-family: var(--serif); font-weight: 600; font-size: 15px;
+  color: var(--text); text-decoration: none;
+}
+.nav-brand b { color: var(--teal); }
+.nav-back {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+}
+.nav-back:hover { color: var(--teal); }
+
+/* Header */
+.page-header { text-align: center; margin-bottom: 48px; }
+.page-header h1 {
+  font-family: var(--serif); font-size: clamp(28px, 5vw, 42px);
+  font-weight: 300; line-height: 1.1; letter-spacing: -.03em;
+  margin-bottom: 12px;
+}
+.page-header h1 i { font-style: italic; color: var(--teal); }
+.page-header p { color: var(--soft); font-size: 16px; max-width: 520px; margin: 0 auto; }
+
+/* Steps indicator */
+.steps-bar {
+  display: flex; justify-content: center; gap: 8px;
+  margin-bottom: 40px;
+}
+.step-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--line2); transition: background .3s, box-shadow .3s;
+}
+.step-dot.active {
+  background: var(--teal);
+  box-shadow: 0 0 8px rgba(0,201,160,.4);
+}
+.step-dot.done { background: rgba(0,201,160,.4); }
+
+/* Panels */
+.panel { display: none; animation: fadeIn .4s ease; }
+.panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.panel-title {
+  font-family: var(--serif); font-size: 20px; font-weight: 600;
+  margin-bottom: 6px;
+}
+.panel-sub { color: var(--soft); font-size: 14px; margin-bottom: 24px; }
+
+/* Tool grid */
+.tool-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px; margin-bottom: 32px;
+}
+.tool-btn {
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 10px; padding: 14px 12px;
+  text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s, transform .15s;
+  user-select: none;
+}
+.tool-btn:hover { border-color: rgba(0,201,160,.3); background: var(--bg3); }
+.tool-btn.selected {
+  border-color: var(--teal); background: rgba(0,201,160,.08);
+  transform: scale(1.02);
+}
+.tool-btn .tool-icon { font-size: 24px; margin-bottom: 6px; }
+.tool-btn .tool-name { font-size: 12px; font-weight: 600; }
+.tool-btn .tool-cat { font-size: 10px; color: var(--muted); }
+.tool-btn.selected .tool-name { color: var(--teal); }
+.tool-count {
+  text-align: center; font-size: 13px; color: var(--muted);
+  margin-bottom: 20px;
+}
+.tool-count strong { color: var(--teal); }
+
+/* Questions */
+.question-group { margin-bottom: 28px; }
+.question-group label {
+  display: block; font-size: 14px; font-weight: 500;
+  margin-bottom: 10px;
+}
+.radio-group { display: flex; flex-direction: column; gap: 8px; }
+.radio-opt {
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 10px; padding: 14px 18px;
+  cursor: pointer; transition: border-color .2s, background .2s;
+  display: flex; align-items: center; gap: 12px;
+}
+.radio-opt:hover { border-color: rgba(0,201,160,.3); }
+.radio-opt.selected { border-color: var(--teal); background: rgba(0,201,160,.06); }
+.radio-dot {
+  width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
+  border: 2px solid var(--line2); transition: border-color .2s, background .2s;
+  position: relative;
+}
+.radio-opt.selected .radio-dot {
+  border-color: var(--teal);
+  background: var(--teal);
+}
+.radio-opt.selected .radio-dot::after {
+  content: ''; position: absolute; inset: 4px;
+  background: var(--bg); border-radius: 50%;
+}
+.radio-text { font-size: 14px; }
+.radio-text .sub { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+
+/* Next / back buttons */
+.btn-row { display: flex; gap: 12px; justify-content: center; margin-top: 32px; }
+.btn {
+  padding: 12px 28px; border-radius: 8px; font-family: var(--sans);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  border: none; transition: opacity .2s, transform .15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--teal); color: var(--bg); }
+.btn-secondary { background: var(--bg2); color: var(--soft); border: 1px solid var(--line2); }
+
+/* Results */
+.results-header {
+  text-align: center; margin-bottom: 36px;
+}
+.results-header h2 {
+  font-family: var(--serif); font-size: 28px; font-weight: 300;
+  margin-bottom: 8px;
+}
+.results-header h2 i { color: var(--teal); font-style: italic; }
+.results-header p { color: var(--soft); font-size: 14px; }
+
+.stat-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px; text-align: center;
+}
+.stat-val {
+  font-size: 2rem; font-weight: 700; color: var(--teal);
+  margin-bottom: 4px;
+}
+.stat-val.warning { color: var(--amber); }
+.stat-val.danger { color: var(--red); }
+.stat-label { font-size: 11px; color: var(--muted); }
+
+.gap-list { margin-bottom: 28px; }
+.gap-item {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  border-radius: 10px; padding: 18px 20px;
+  margin-bottom: 10px;
+}
+.gap-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.gap-item p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+.gap-item .gap-cost {
+  display: inline-block; margin-top: 6px;
+  font-size: 11px; font-weight: 600; color: var(--amber);
+  background: rgba(245,158,11,.08); padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.dash-preview {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 24px; margin-bottom: 28px;
+}
+.dash-preview-title {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .15em; color: var(--teal); margin-bottom: 14px;
+}
+.dash-mini-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin-bottom: 14px;
+}
+.dash-mini-tile {
+  background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px; text-align: center;
+}
+.dash-mini-tile .val { font-size: 1.1rem; font-weight: 700; color: var(--teal); }
+.dash-mini-tile .lbl { font-size: 9px; color: var(--muted); }
+.dash-mini-bars {
+  display: flex; align-items: flex-end; gap: 4px; height: 48px;
+}
+.dash-mini-bars .bar {
+  flex: 1; border-radius: 2px 2px 0 0;
+  background: linear-gradient(to top, var(--teal), var(--blue));
+}
+
+/* CTA box */
+.snapshot-cta {
+  background: linear-gradient(135deg, rgba(0,201,160,.06), rgba(61,126,255,.05));
+  border: 1px solid rgba(0,201,160,.2); border-radius: 16px;
+  padding: 32px; text-align: center; margin-bottom: 28px;
+}
+.snapshot-cta h3 {
+  font-family: var(--serif); font-size: 20px; font-weight: 600;
+  margin-bottom: 8px;
+}
+.snapshot-cta p { font-size: 14px; color: var(--soft); margin-bottom: 16px; }
+.snapshot-cta .btn-primary { padding: 14px 32px; font-size: 15px; text-decoration: none; display: inline-block; }
+
+.fine-print {
+  text-align: center; font-size: 11px; color: var(--muted);
+  margin-top: 20px;
+}
+.fine-print a { color: var(--teal); text-decoration: none; }
+
+/* Footer */
+.snap-footer {
+  margin-top: 48px; padding: 20px 0;
+  border-top: 1px solid var(--line);
+  text-align: center; font-size: 11px; color: var(--muted);
+}
+.snap-footer a { color: var(--teal); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tool-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  .stat-row { grid-template-columns: 1fr; }
+  .dash-mini-metrics { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav-bar">
+    <a href="/" class="nav-brand">Clear<b>Ops</b> AI</a>
+    <a href="/" class="nav-back">&larr; Back to site</a>
+  </div>
+
+  <div class="page-header">
+    <h1>Your free <i>Ops Snapshot.</i></h1>
+    <p>Select your tools, answer 3 questions, see where your operations are leaking time. Takes under 2 minutes.</p>
+  </div>
+
+  <div class="steps-bar">
+    <div class="step-dot active" data-step="1"></div>
+    <div class="step-dot" data-step="2"></div>
+    <div class="step-dot" data-step="3"></div>
+  </div>
+
+  <!-- STEP 1: Tool Selection -->
+  <div class="panel active" id="step1">
+    <div class="panel-title">What tools does your organization use?</div>
+    <div class="panel-sub">Select all that apply. We'll identify integration gaps between them.</div>
+    <div class="tool-grid" id="toolGrid">
+      <!-- CRM -->
+      <div class="tool-btn" data-tool="salesforce" data-cat="crm">
+        <div class="tool-icon">☁️</div>
+        <div class="tool-name">Salesforce</div>
+        <div class="tool-cat">CRM</div>
+      </div>
+      <div class="tool-btn" data-tool="hubspot" data-cat="crm">
+        <div class="tool-icon">🟠</div>
+        <div class="tool-name">HubSpot</div>
+        <div class="tool-cat">CRM</div>
+      </div>
+      <!-- AMS -->
+      <div class="tool-btn" data-tool="fonteva" data-cat="ams">
+        <div class="tool-icon">🏛️</div>
+        <div class="tool-name">Fonteva</div>
+        <div class="tool-cat">AMS</div>
+      </div>
+      <div class="tool-btn" data-tool="imis" data-cat="ams">
+        <div class="tool-icon">🏛️</div>
+        <div class="tool-name">iMIS</div>
+        <div class="tool-cat">AMS</div>
+      </div>
+      <div class="tool-btn" data-tool="membersuite" data-cat="ams">
+        <div class="tool-icon">🏛️</div>
+        <div class="tool-name">MemberSuite</div>
+        <div class="tool-cat">AMS</div>
+      </div>
+      <div class="tool-btn" data-tool="personify" data-cat="ams">
+        <div class="tool-icon">🏛️</div>
+        <div class="tool-name">Personify</div>
+        <div class="tool-cat">AMS</div>
+      </div>
+      <!-- Email -->
+      <div class="tool-btn" data-tool="mailchimp" data-cat="email">
+        <div class="tool-icon">📧</div>
+        <div class="tool-name">Mailchimp</div>
+        <div class="tool-cat">Email</div>
+      </div>
+      <div class="tool-btn" data-tool="constant_contact" data-cat="email">
+        <div class="tool-icon">📧</div>
+        <div class="tool-name">Constant Contact</div>
+        <div class="tool-cat">Email</div>
+      </div>
+      <!-- PM -->
+      <div class="tool-btn" data-tool="asana" data-cat="pm">
+        <div class="tool-icon">✅</div>
+        <div class="tool-name">Asana</div>
+        <div class="tool-cat">Project Mgmt</div>
+      </div>
+      <div class="tool-btn" data-tool="monday" data-cat="pm">
+        <div class="tool-icon">📋</div>
+        <div class="tool-name">Monday.com</div>
+        <div class="tool-cat">Project Mgmt</div>
+      </div>
+      <div class="tool-btn" data-tool="jira" data-cat="pm">
+        <div class="tool-icon">🔷</div>
+        <div class="tool-name">Jira</div>
+        <div class="tool-cat">Project Mgmt</div>
+      </div>
+      <!-- Finance -->
+      <div class="tool-btn" data-tool="quickbooks" data-cat="finance">
+        <div class="tool-icon">💰</div>
+        <div class="tool-name">QuickBooks</div>
+        <div class="tool-cat">Finance</div>
+      </div>
+      <div class="tool-btn" data-tool="netsuite" data-cat="finance">
+        <div class="tool-icon">💰</div>
+        <div class="tool-name">NetSuite</div>
+        <div class="tool-cat">Finance</div>
+      </div>
+      <!-- Productivity -->
+      <div class="tool-btn" data-tool="google_workspace" data-cat="productivity">
+        <div class="tool-icon">📊</div>
+        <div class="tool-name">Google Workspace</div>
+        <div class="tool-cat">Productivity</div>
+      </div>
+      <div class="tool-btn" data-tool="microsoft_365" data-cat="productivity">
+        <div class="tool-icon">📊</div>
+        <div class="tool-name">Microsoft 365</div>
+        <div class="tool-cat">Productivity</div>
+      </div>
+      <div class="tool-btn" data-tool="slack" data-cat="communication">
+        <div class="tool-icon">💬</div>
+        <div class="tool-name">Slack</div>
+        <div class="tool-cat">Communication</div>
+      </div>
+      <div class="tool-btn" data-tool="teams" data-cat="communication">
+        <div class="tool-icon">💬</div>
+        <div class="tool-name">MS Teams</div>
+        <div class="tool-cat">Communication</div>
+      </div>
+      <!-- Legal -->
+      <div class="tool-btn" data-tool="clio" data-cat="legal">
+        <div class="tool-icon">⚖️</div>
+        <div class="tool-name">Clio</div>
+        <div class="tool-cat">Legal</div>
+      </div>
+    </div>
+    <div class="tool-count"><strong id="toolCountNum">0</strong> tools selected</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn1next" disabled>Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Questions -->
+  <div class="panel" id="step2">
+    <div class="panel-title">A few quick questions.</div>
+    <div class="panel-sub">This helps us calibrate your results to organizations like yours.</div>
+
+    <div class="question-group">
+      <label>How many people work at your organization?</label>
+      <div class="radio-group" data-q="orgSize">
+        <div class="radio-opt" data-val="small"><div class="radio-dot"></div><div class="radio-text">Under 50</div></div>
+        <div class="radio-opt" data-val="mid"><div class="radio-dot"></div><div class="radio-text">50 – 150</div></div>
+        <div class="radio-opt" data-val="large"><div class="radio-dot"></div><div class="radio-text">150 – 300</div></div>
+        <div class="radio-opt" data-val="xlarge"><div class="radio-dot"></div><div class="radio-text">300+</div></div>
+      </div>
+    </div>
+
+    <div class="question-group">
+      <label>How many hours per week does your team spend assembling reports manually?</label>
+      <div class="radio-group" data-q="reportHours">
+        <div class="radio-opt" data-val="low"><div class="radio-dot"></div><div class="radio-text">Under 5 hours <span class="sub">Quick exports, mostly automated</span></div></div>
+        <div class="radio-opt" data-val="mid"><div class="radio-dot"></div><div class="radio-text">5 – 15 hours <span class="sub">Regular manual pulls from multiple systems</span></div></div>
+        <div class="radio-opt" data-val="high"><div class="radio-dot"></div><div class="radio-text">15 – 30 hours <span class="sub">Someone's full-time job is basically reporting</span></div></div>
+        <div class="radio-opt" data-val="extreme"><div class="radio-dot"></div><div class="radio-text">30+ hours <span class="sub">Multiple people, multiple days, every week</span></div></div>
+      </div>
+    </div>
+
+    <div class="question-group">
+      <label>How many different systems do you pull data from for your board or leadership packet?</label>
+      <div class="radio-group" data-q="boardSystems">
+        <div class="radio-opt" data-val="1"><div class="radio-dot"></div><div class="radio-text">1 – 2 systems</div></div>
+        <div class="radio-opt" data-val="3"><div class="radio-dot"></div><div class="radio-text">3 – 4 systems</div></div>
+        <div class="radio-opt" data-val="5"><div class="radio-dot"></div><div class="radio-text">5 – 6 systems</div></div>
+        <div class="radio-opt" data-val="7"><div class="radio-dot"></div><div class="radio-text">7+ systems</div></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="btn2back">&larr; Back</button>
+      <button class="btn btn-primary" id="btn2next" disabled>See My Results &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Results -->
+  <div class="panel" id="step3">
+    <div class="results-header">
+      <h2>Your Ops Snapshot <i>results.</i></h2>
+      <p>Based on your tools and answers, here's what we found.</p>
+    </div>
+
+    <div class="stat-row" id="statRow">
+      <!-- Filled by JS -->
+    </div>
+
+    <div id="gapList" class="gap-list">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="dash-preview">
+      <div class="dash-preview-title">What your dashboard could look like</div>
+      <div class="dash-mini-metrics" id="dashMetrics">
+        <!-- Filled by JS -->
+      </div>
+      <div class="dash-mini-bars">
+        <div class="bar" style="height:55%"></div>
+        <div class="bar" style="height:80%"></div>
+        <div class="bar" style="height:40%"></div>
+        <div class="bar" style="height:90%"></div>
+        <div class="bar" style="height:65%"></div>
+        <div class="bar" style="height:72%"></div>
+        <div class="bar" style="height:48%"></div>
+        <div class="bar" style="height:85%"></div>
+      </div>
+    </div>
+
+    <div class="snapshot-cta">
+      <h3>Want the full analysis?</h3>
+      <p>Get a detailed Ops Snapshot with specific recommendations for your organization — written by a human, not a template.</p>
+      <a class="btn btn-primary" id="ctaEmail" href="#">Request Your Full Ops Snapshot &rarr;</a>
+    </div>
+
+    <div class="fine-print">
+      <p>This simulation uses benchmarks from common tool combinations. Your actual results will vary.<br>
+      The full Ops Snapshot includes a personalized review of your specific workflows and data flows.</p>
+      <p style="margin-top: 8px;"><a href="/">Back to clearopsai.com</a></p>
+    </div>
+  </div>
+
+  <div class="snap-footer">
+    &copy; 2026 ClearOps AI &middot; Washington DC Metro &middot; <a href="/">clearopsai.com</a>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───
+const state = {
+  tools: new Set(),
+  orgSize: null,
+  reportHours: null,
+  boardSystems: null
+};
+
+// ─── Integration Gap Knowledge Base ───
+const GAPS = {
+  'salesforce+fonteva': {
+    title: 'Salesforce + Fonteva: Automation failures & reporting gaps',
+    desc: 'Fonteva Flows (purchase → activate membership → welcome email) break silently — purchases complete but downstream automation fails with no error. Staff must manually verify every new member. Reporting is limited: board questions like "Q3 renewals by tier?" require exporting to Excel and manually building pivot tables. When multiple apps hit Salesforce\'s 24-hour API call limit, ALL integrations fail simultaneously.',
+    hours: 6,
+    cost: '~6 hrs/week debugging flows + manual report exports'
+  },
+  'salesforce+mailchimp': {
+    title: 'Salesforce + Mailchimp: One-way sync & compliance risk',
+    desc: 'The native connector only syncs Salesforce → Mailchimp. Mailchimp unsubscribes do NOT flow back to Salesforce, creating CAN-SPAM and GDPR compliance risk. Duplicates appear when the same person exists as both Lead and Contact. Custom member fields (tier, chapter, committee) require manual merge field mapping — most teams give up and export/import CSVs for every campaign. Campaign engagement isn\'t linked to Opportunities, so you can\'t answer "did our renewal email actually drive renewals?"',
+    hours: 5,
+    cost: '~5 hrs/week on CSV exports, dedup, compliance audits'
+  },
+  'fonteva+mailchimp': {
+    title: 'Fonteva + Mailchimp: No native connector exists',
+    desc: 'There is no direct Fonteva-Mailchimp integration. The path is Fonteva → Salesforce → Mailchimp, but Fonteva stores data in custom objects (OrderApi__Sales_Order__c, FontevaApp__Membership__c) that the Mailchimp connector can\'t read. Membership type, renewal date, and event attendance don\'t flow through without middleware ($50-200/month for Zapier or SyncApps). Most associations resort to the "export CSV, clean, upload" ritual before every campaign.',
+    hours: 4,
+    cost: '~4 hrs/week on export-clean-import cycles'
+  },
+  'salesforce+quickbooks': {
+    title: 'Salesforce + QuickBooks: Double entry & revenue recognition',
+    desc: 'Invoices created in Salesforce must be re-entered in QuickBooks. Annual membership dues paid upfront need monthly GAAP journal entries for deferred revenue — calculated and entered manually. Chart of accounts rarely maps 1:1 between systems, requiring a custom mapping table maintained in (of course) a spreadsheet. Month-end close takes days instead of hours.',
+    hours: 6,
+    cost: '~6 hrs/week, spiking to 15+ at month-end'
+  },
+  'salesforce+google_workspace': {
+    title: 'Salesforce + Google Sheets: Shadow reporting layer',
+    desc: 'Despite having Salesforce, teams export data to Google Sheets for board packets, custom analysis, and cross-department reporting. Committee rosters, renewal tracking, volunteer engagement — all live in "shadow spreadsheets" because Salesforce reports don\'t produce what the board actually wants. The week before a board meeting, reporting hours spike to 15+ as staff reconcile the spreadsheet versions with CRM reality.',
+    hours: 7,
+    cost: '~7 hrs/week, 15+ before board meetings'
+  },
+  'salesforce+asana': {
+    title: 'Salesforce + Asana: Integration deprecated, manual bridge',
+    desc: 'The native Asana-Salesforce integration was deprecated in February 2026 — no new installations supported. Conference tasks in Asana ("confirm keynote speaker," "send sponsor invoices") have zero connection to the Salesforce records for those speakers and sponsors. Staff manually cross-reference between systems for every status update.',
+    hours: 4,
+    cost: '~4 hrs/week cross-referencing + rebuilding broken automations'
+  },
+  'salesforce+monday': {
+    title: 'Salesforce + Monday.com: Field type mismatches',
+    desc: 'Monday.com\'s Salesforce integration doesn\'t convert field types — phone fields map as text, formula columns and mirror columns don\'t sync at all. Updates to lookup fields silently fail to propagate. Multiple integrations pointing to the same object cause competing automations. Project tasks and member records live in separate universes.',
+    hours: 4,
+    cost: '~4 hrs/week on manual cross-referencing + sync failures'
+  },
+  'imis+mailchimp': {
+    title: 'iMIS + Mailchimp: No native integration',
+    desc: 'Neither Mailchimp nor iMIS offers a native connector. Member data must be exported via custom iMIS queries (that only one person knows how to run), transformed to match Mailchimp\'s format, deduplicated, and uploaded. Member types, committee assignments, and renewal status require a different query each time. This is your single biggest point-of-failure risk.',
+    hours: 4,
+    cost: '~4 hrs/week + institutional knowledge risk'
+  },
+  'imis+quickbooks': {
+    title: 'iMIS + QuickBooks: Batch export & manual reconciliation',
+    desc: 'iMIS lacks accounts payable or general ledger functionality. Organizations export GL transactions in batch mode, then perform month-end reconciliation to verify the AR Subsidiary Ledger matches the AR Control Account. Products like financeSYNC exist specifically because the native export is so painful. Revenue recognition for annual dues requires manual monthly journal entries.',
+    hours: 6,
+    cost: '~6 hrs/week, spiking to 15-20 at month/year-end'
+  },
+  'imis+google_workspace': {
+    title: 'iMIS + Google Sheets: Board reporting workaround',
+    desc: 'iMIS reporting is powerful but complex — most staff export to Google Sheets for any analysis beyond basic queries. Board decks, trend analysis, membership dashboards, and program metrics all get built in spreadsheets. Committee rosters, volunteer tracking, and renewal outreach status live in shadow spreadsheets because iMIS modules are too clunky for operational use.',
+    hours: 5,
+    cost: '~5 hrs/week on exports, concentrated before board meetings'
+  },
+  'fonteva+quickbooks': {
+    title: 'Fonteva + QuickBooks: Payment reconciliation nightmare',
+    desc: 'Event payments, dues, and sponsorships processed through Fonteva must be manually matched to QuickBooks. Credit notes spanning multiple sales orders require workarounds that "one cannot use for too long as it hurts adoption." Refunds, partial payments, and multi-year memberships multiply the reconciliation complexity. Annual revenue recognition entries are fully manual.',
+    hours: 5,
+    cost: '~5 hrs/week in payment matching + month-end spikes'
+  },
+  'mailchimp+google_workspace': {
+    title: 'Mailchimp + Google Sheets: Manual list building',
+    desc: 'Email lists are built by exporting from CRM/AMS into Google Sheets, cleaning, deduplicating, and importing into Mailchimp. No automated segment sync means every targeted campaign starts with a data wrangling session. The Mailchimp audience drifts out of sync with the source systems, and staff spend additional hours investigating why email metrics don\'t match CRM reality.',
+    hours: 3,
+    cost: '~3 hrs/week per campaign cycle'
+  },
+  'asana+google_workspace': {
+    title: 'Asana + Google Sheets: Dual status tracking',
+    desc: 'Project tasks live in Asana but leadership reporting happens in Google Sheets. Someone manually updates a spreadsheet tracker from Asana every week, creating a lag between reality and what leadership sees. With the Salesforce integration deprecated, the Google Sheets bridge is now the only way to connect project status to organizational reporting.',
+    hours: 2,
+    cost: '~2 hrs/week duplicating status updates'
+  },
+  'quickbooks+google_workspace': {
+    title: 'QuickBooks + Google Sheets: Financial reporting gap',
+    desc: 'QuickBooks handles transactions but custom financial reports, budget-vs-actual tracking, grant reporting, and board financial summaries all get built in Google Sheets with manual data pulls. Staff maintain parallel financial "views" that drift from QuickBooks reality between monthly reconciliations.',
+    hours: 3,
+    cost: '~3 hrs/week on financial report assembly'
+  },
+  'hubspot+quickbooks': {
+    title: 'HubSpot + QuickBooks: Pipeline-to-revenue disconnect',
+    desc: 'Deals closed in HubSpot don\'t automatically create invoices or revenue entries in QuickBooks. Sales says one number, finance says another, and reconciliation happens manually. Revenue forecasting requires pulling from both systems and merging in a spreadsheet.',
+    hours: 3,
+    cost: '~3 hrs/week on revenue reconciliation'
+  },
+  'membersuite+mailchimp': {
+    title: 'MemberSuite + Mailchimp: Segment sync gap',
+    desc: 'MemberSuite claims to "download activity directly to your financial software" but in practice this means exporting a file that must be reviewed, mapped, and imported. Member segments and renewal status require manual export for email campaigns. Automated drip sequences based on membership lifecycle events require custom middleware.',
+    hours: 4,
+    cost: '~4 hrs/week on manual segmentation + exports'
+  },
+  'personify+mailchimp': {
+    title: 'Personify + Mailchimp: Complex data model mismatch',
+    desc: 'Personify\'s data model doesn\'t map cleanly to Mailchimp audiences. Member attributes, event history, and certification status require custom export queries before any targeted email send. Like MemberSuite, the "integration" is really a manual export-review-import workflow with extra steps.',
+    hours: 4,
+    cost: '~4 hrs/week on data transformation + export'
+  },
+  'clio+quickbooks': {
+    title: 'Clio + QuickBooks: Trust accounting reconciliation',
+    desc: 'Time entries and invoices in Clio must be reconciled with QuickBooks, especially for trust accounts. Discrepancies between billed, collected, and deposited amounts require manual verification. The reconciliation is compliance-critical — errors can trigger bar association audits.',
+    hours: 4,
+    cost: '~4 hrs/week on trust reconciliation'
+  },
+  'clio+google_workspace': {
+    title: 'Clio + Google Sheets: Firm reporting gap',
+    desc: 'Clio tracks matters and time but firm-wide reporting, profitability analysis by practice area, and partner compensation calculations happen in Google Sheets with manual data exports. Utilization reports for individual attorneys require cross-referencing Clio data with the firm\'s custom billing targets.',
+    hours: 3,
+    cost: '~3 hrs/week on manual reporting'
+  },
+  'netsuite+salesforce': {
+    title: 'NetSuite + Salesforce: Order-to-cash visibility gap',
+    desc: 'Sales data in Salesforce and financial data in NetSuite don\'t sync automatically in most configurations. Revenue recognition, invoice status, and payment tracking require manual cross-system verification. The chart of accounts mapping between systems is maintained manually and drifts quarterly.',
+    hours: 5,
+    cost: '~5 hrs/week on cross-system verification'
+  },
+  'constant_contact+salesforce': {
+    title: 'Constant Contact + Salesforce: No native connector',
+    desc: 'Unlike Mailchimp, Constant Contact has no native Salesforce connector at all. Integration requires Zapier or third-party middleware. Every email campaign requires manual list export from Salesforce, import to Constant Contact, and the results don\'t flow back automatically.',
+    hours: 4,
+    cost: '~4 hrs/week on manual list management + middleware'
+  }
+};
+
+// ─── Tool Selection ───
+document.getElementById('toolGrid').addEventListener('click', function(e) {
+  const btn = e.target.closest('.tool-btn');
+  if (!btn) return;
+  const tool = btn.dataset.tool;
+  if (state.tools.has(tool)) {
+    state.tools.delete(tool);
+    btn.classList.remove('selected');
+  } else {
+    state.tools.add(tool);
+    btn.classList.add('selected');
+  }
+  document.getElementById('toolCountNum').textContent = state.tools.size;
+  document.getElementById('btn1next').disabled = state.tools.size < 2;
+});
+
+// ─── Radio Selection ───
+document.querySelectorAll('.radio-group').forEach(group => {
+  group.addEventListener('click', function(e) {
+    const opt = e.target.closest('.radio-opt');
+    if (!opt) return;
+    group.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    state[group.dataset.q] = opt.dataset.val;
+    checkStep2Complete();
+  });
+});
+
+function checkStep2Complete() {
+  document.getElementById('btn2next').disabled =
+    !(state.orgSize && state.reportHours && state.boardSystems);
+}
+
+// ─── Navigation ───
+function showStep(n) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i + 1 === n) d.classList.add('active');
+    else if (i + 1 < n) d.classList.add('done');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('btn1next').addEventListener('click', () => showStep(2));
+document.getElementById('btn2back').addEventListener('click', () => showStep(1));
+document.getElementById('btn2next').addEventListener('click', () => {
+  generateResults();
+  showStep(3);
+});
+
+// ─── Results Generation ───
+function generateResults() {
+  const tools = Array.from(state.tools);
+
+  // Find matching gaps
+  const foundGaps = [];
+  for (let i = 0; i < tools.length; i++) {
+    for (let j = i + 1; j < tools.length; j++) {
+      const key1 = tools[i] + '+' + tools[j];
+      const key2 = tools[j] + '+' + tools[i];
+      if (GAPS[key1]) foundGaps.push(GAPS[key1]);
+      else if (GAPS[key2]) foundGaps.push(GAPS[key2]);
+    }
+  }
+
+  // Calculate hours
+  const reportMultiplier = { low: 1, mid: 1.2, high: 1.5, extreme: 1.8 };
+  const sizeMultiplier = { small: 0.8, mid: 1, large: 1.3, xlarge: 1.6 };
+  const baseHours = foundGaps.reduce((sum, g) => sum + g.hours, 0);
+  const adjustedHours = Math.round(
+    baseHours *
+    (reportMultiplier[state.reportHours] || 1) *
+    (sizeMultiplier[state.orgSize] || 1)
+  );
+
+  // Estimated annual cost ($45/hr avg for ops staff)
+  const annualCost = adjustedHours * 45 * 52;
+  const gapCount = foundGaps.length;
+  const systemCount = tools.length;
+
+  // Stat cards
+  const statRow = document.getElementById('statRow');
+  statRow.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-val${adjustedHours > 15 ? ' danger' : adjustedHours > 8 ? ' warning' : ''}">${adjustedHours}</div>
+      <div class="stat-label">Estimated hrs/week lost to manual processes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val warning">${gapCount}</div>
+      <div class="stat-label">Integration gaps between your ${systemCount} tools</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val${annualCost > 50000 ? ' danger' : ' warning'}">$${Math.round(annualCost / 1000)}K</div>
+      <div class="stat-label">Estimated annual cost of manual workarounds</div>
+    </div>
+  `;
+
+  // Gap details
+  const gapListEl = document.getElementById('gapList');
+  if (foundGaps.length > 0) {
+    gapListEl.innerHTML = '<div class="panel-title" style="margin-bottom:14px;">Integration gaps we identified</div>' +
+      foundGaps.slice(0, 5).map(g => `
+        <div class="gap-item">
+          <h4>${g.title}</h4>
+          <p>${g.desc}</p>
+          <span class="gap-cost">${g.cost}</span>
+        </div>
+      `).join('');
+    if (foundGaps.length > 5) {
+      gapListEl.innerHTML += `<p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px;">+ ${foundGaps.length - 5} more gaps identified. Request your full Ops Snapshot for the complete analysis.</p>`;
+    }
+  } else {
+    gapListEl.innerHTML = `
+      <div class="gap-item" style="border-left-color: var(--teal);">
+        <h4>We didn't find common integration gaps in our database for your specific combination.</h4>
+        <p>This doesn't mean everything is connected smoothly — it means your stack may have less-documented integration challenges that require a hands-on review. Request your full Ops Snapshot for a personalized analysis.</p>
+      </div>
+    `;
+  }
+
+  // Dashboard preview metrics
+  const dashMetrics = document.getElementById('dashMetrics');
+  const hasMembership = tools.some(t => ['fonteva','imis','membersuite','personify'].includes(t));
+  if (hasMembership) {
+    dashMetrics.innerHTML = `
+      <div class="dash-mini-tile"><div class="val">2,847</div><div class="lbl">Members</div></div>
+      <div class="dash-mini-tile"><div class="val">91%</div><div class="lbl">Retention</div></div>
+      <div class="dash-mini-tile"><div class="val">$340K</div><div class="lbl">Event Rev</div></div>
+      <div class="dash-mini-tile"><div class="val">$89K</div><div class="lbl">Non-Dues</div></div>
+    `;
+  } else if (tools.includes('clio')) {
+    dashMetrics.innerHTML = `
+      <div class="dash-mini-tile"><div class="val">142</div><div class="lbl">Active Matters</div></div>
+      <div class="dash-mini-tile"><div class="val">87%</div><div class="lbl">Utilization</div></div>
+      <div class="dash-mini-tile"><div class="val">$1.2M</div><div class="lbl">Billed YTD</div></div>
+      <div class="dash-mini-tile"><div class="val">94%</div><div class="lbl">Collection Rate</div></div>
+    `;
+  } else {
+    dashMetrics.innerHTML = `
+      <div class="dash-mini-tile"><div class="val">24</div><div class="lbl">Active Projects</div></div>
+      <div class="dash-mini-tile"><div class="val">87%</div><div class="lbl">Utilization</div></div>
+      <div class="dash-mini-tile"><div class="val">96%</div><div class="lbl">On Track</div></div>
+      <div class="dash-mini-tile"><div class="val">$2.1M</div><div class="lbl">Pipeline</div></div>
+    `;
+  }
+
+  // CTA email link
+  const toolNames = tools.map(t => {
+    const el = document.querySelector(`[data-tool="${t}"] .tool-name`);
+    return el ? el.textContent : t;
+  });
+  const emailBody = encodeURIComponent(
+    `Organization: \nSize: ${state.orgSize}\nReporting hours/week: ${state.reportHours}\nBoard packet systems: ${state.boardSystems}\n\nTools: ${toolNames.join(', ')}\n\nSimulation found ${gapCount} integration gaps and ~${adjustedHours} hrs/week in manual workarounds (~$${Math.round(annualCost/1000)}K/year).\n\nI'd like the full Ops Snapshot with specific recommendations.`
+  );
+  document.getElementById('ctaEmail').href =
+    `mailto:haseeb.clearopsai@gmail.com?subject=Full%20Ops%20Snapshot%20Request&body=${emailBody}`;
+}
+</script>
+</body>
+</html>
