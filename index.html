@@ -1,967 +1,884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClearOps AI — Operational Clarity for Growing Companies</title>
-  <meta name="description" content="ClearOps AI connects your tools, automates reporting, and builds dashboards your leadership actually needs.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearOps AI — Operational Intelligence for the DC Metro</title>
+<meta name="description" content="ClearOps AI helps associations, law firms, and professional services organizations in DC, Baltimore, and Richmond get operational clarity out of fragmented technology — connecting tools, automating reporting, and building visibility dashboards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<style>
 
-    :root {
-      --bg: #080b12;
-      --bg-card: #0d1117;
-      --bg-card-alt: #111822;
-      --teal: #00c9a0;
-      --teal-dim: rgba(0,201,160,0.15);
-      --blue: #3d7eff;
-      --blue-dim: rgba(61,126,255,0.12);
-      --amber: #f59e0b;
-      --red: #ef4444;
-      --text: #e6edf3;
-      --text-dim: #8b949e;
-      --border: rgba(255,255,255,0.06);
-      --font-display: 'Fraunces', serif;
-      --font-body: 'DM Sans', sans-serif;
-    }
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+/* ─── Tokens ─── */
+:root {
+  --bg:       #080b12;
+  --bg2:      #0d1120;
+  --bg3:      #111828;
+  --line:     #1a2236;
+  --line2:    #1f2a40;
+  --teal:     #00c9a0;
+  --teal-dim: rgba(0,201,160,.12);
+  --teal-glow:rgba(0,201,160,.22);
+  --blue:     #3d7eff;
+  --amber:    #f59e0b;
+  --red:      #ef4444;
+  --text:     #dde3f0;
+  --soft:     #7e8ea8;
+  --muted:    #4a566e;
+  --serif:    'Fraunces', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+}
 
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(8,11,18,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .brand {
-      font-family: var(--font-display);
-      font-size: 1.35rem; font-weight: 700;
-      color: var(--teal);
-      text-decoration: none;
-    }
-    .brand span { color: var(--text); }
-    .nav-cta {
-      padding: 0.6rem 1.4rem;
-      background: var(--teal);
-      color: var(--bg);
-      border: none; border-radius: 6px;
-      font-family: var(--font-body);
-      font-weight: 700; font-size: 0.9rem;
-      cursor: pointer; text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.85; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
 
-    /* ── SHARED ── */
-    section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.75rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--teal); margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700; line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-    .section-sub {
-      color: var(--text-dim);
-      font-size: 1.1rem; max-width: 600px;
-      margin-bottom: 2.5rem;
-    }
+/* Noise overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity: .5;
+}
 
-    /* ── HERO ── */
-    .hero {
-      text-align: center;
-      padding: 7rem 2rem 4rem;
-      max-width: 900px;
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 700; line-height: 1.15;
-      margin-bottom: 1.25rem;
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--teal);
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-dim);
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-    }
-    .hero-cta {
-      display: inline-block;
-      padding: 0.85rem 2rem;
-      background: var(--teal);
-      color: var(--bg);
-      font-weight: 700; font-size: 1rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .hero-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+/* ─── Layout ─── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+.wrap-wide { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
 
-    /* ── CREDENTIAL BAR ── */
-    .cred-bar {
-      display: flex; flex-wrap: wrap;
-      justify-content: center; gap: 0.75rem;
-      margin-top: 3rem;
-    }
-    .cred-pill {
-      padding: 0.4rem 1rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      font-size: 0.8rem; font-weight: 500;
-      color: var(--text-dim);
-    }
+/* ─── Nav ─── */
+header {
+  padding: 30px 0 0;
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(to bottom, var(--bg) 80%, transparent);
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+}
+.brand-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-weight: 700; font-size: 16px;
+  color: #000; flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(0,201,160,.25);
+}
+.brand-name {
+  font-family: var(--serif); font-weight: 600; font-size: 17px;
+  letter-spacing: -.02em; color: var(--text);
+}
+.brand-name b { color: var(--teal); font-weight: 600; }
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: 7px; cursor: pointer; border: none;
+  background: rgba(0,201,160,.1); border: 1px solid rgba(0,201,160,.2);
+  color: var(--teal); font-family: var(--sans); font-size: 13px; font-weight: 500;
+  text-decoration: none; transition: background .2s, border-color .2s;
+}
+.nav-btn:hover { background: rgba(0,201,160,.18); border-color: rgba(0,201,160,.38); }
 
-    /* ── BEFORE / AFTER ── */
-    .ba-section { padding-bottom: 3rem; }
-    .ba-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .ba-panel {
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s;
-    }
-    .ba-panel:hover { transform: translateY(-4px); }
-    .ba-before {
-      background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(245,158,11,0.06));
-      border: 1px solid rgba(239,68,68,0.2);
-    }
-    .ba-after {
-      background: linear-gradient(135deg, rgba(0,201,160,0.08), rgba(61,126,255,0.06));
-      border: 1px solid rgba(0,201,160,0.2);
-    }
-    .ba-label {
-      font-size: 0.7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.2em;
-      margin-bottom: 1.5rem;
-    }
-    .ba-before .ba-label { color: var(--red); }
-    .ba-after .ba-label { color: var(--teal); }
+/* ─── Hero ─── */
+.hero {
+  padding: 80px 0 72px;
+  border-bottom: 1px solid var(--line);
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 28px;
+}
+.tag-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--teal); box-shadow: 0 0 10px var(--teal);
+  animation: blink 2.5s ease infinite;
+}
+.tag-text {
+  font-size: 11px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--teal);
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-    .ba-tools {
-      display: flex; flex-wrap: wrap; gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    .ba-tool {
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.78rem; font-weight: 600;
-      display: flex; align-items: center; gap: 0.4rem;
-    }
-    .ba-before .ba-tool {
-      background: rgba(239,68,68,0.1);
-      border: 1px dashed rgba(239,68,68,0.3);
-      color: #fca5a5;
-    }
-    .ba-after .ba-tool {
-      background: rgba(0,201,160,0.1);
-      border: 1px solid rgba(0,201,160,0.3);
-      color: #6ee7b7;
-    }
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(38px, 6vw, 62px);
+  font-weight: 300; line-height: 1.05;
+  letter-spacing: -.04em; margin-bottom: 24px;
+}
+h1 i { font-style: italic; color: var(--teal); }
 
-    .ba-metrics {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.75rem; margin-bottom: 1.5rem;
-    }
-    .ba-metric {
-      padding: 0.75rem;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .ba-before .ba-metric {
-      background: rgba(239,68,68,0.06);
-      border: 1px solid rgba(239,68,68,0.12);
-    }
-    .ba-after .ba-metric {
-      background: rgba(0,201,160,0.06);
-      border: 1px solid rgba(0,201,160,0.12);
-    }
-    .ba-metric-val {
-      font-family: 'DM Sans', monospace;
-      font-size: 1.3rem; font-weight: 700;
-    }
-    .ba-before .ba-metric-val { color: #fca5a5; }
-    .ba-after .ba-metric-val { color: var(--teal); }
-    .ba-metric-label {
-      font-size: 0.7rem; color: var(--text-dim);
-      margin-top: 0.15rem;
-    }
-    .ba-caption {
-      font-size: 0.85rem; font-weight: 500;
-      padding-top: 0.5rem;
-    }
-    .ba-before .ba-caption { color: #fca5a5; }
-    .ba-after .ba-caption { color: #6ee7b7; }
+.hero-body {
+  font-size: 17px; color: var(--soft); font-weight: 300;
+  max-width: 540px; line-height: 1.72; margin-bottom: 36px;
+}
 
-    /* ── CONNECTION LINES (After panel) ── */
-    .ba-flow {
-      display: flex; align-items: center;
-      justify-content: center; gap: 0;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .ba-flow-node {
-      padding: 0.45rem 0.8rem;
-      background: rgba(0,201,160,0.1);
-      border: 1px solid rgba(0,201,160,0.3);
-      border-radius: 8px;
-      font-size: 0.75rem; font-weight: 600; color: #6ee7b7;
-    }
-    .ba-flow-line {
-      width: 32px; height: 2px;
-      background: linear-gradient(90deg, var(--teal), var(--blue));
-      position: relative;
-    }
-    .ba-flow-line::after {
-      content: '';
-      position: absolute; right: -3px; top: -3px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
-      animation: pulse-dot 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 0.4; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
+.credbar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.credbar-label { font-size: 11.5px; color: var(--muted); }
+.credbar-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  font-size: 11.5px; font-weight: 500; color: var(--soft);
+  padding: 3px 10px; border-radius: 4px;
+  background: var(--bg2); border: 1px solid var(--line2);
+}
 
-    /* ── DASHBOARD SHOWCASE ── */
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .dash-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .dash-panel:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0,201,160,0.25);
-    }
-    .dash-panel-title {
-      font-size: 0.7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--teal); margin-bottom: 1.25rem;
-    }
+/* ─── Sections ─── */
+section {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--line);
+}
+.sec-label {
+  font-size: 10.5px; font-weight: 500; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--teal);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.sec-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--line2), transparent);
+  max-width: 100px;
+}
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.2vw, 30px);
+  font-weight: 300; letter-spacing: -.03em;
+  line-height: 1.15; margin-bottom: 14px;
+}
+h2 i { font-style: italic; color: var(--teal); }
+.lead {
+  font-size: 15.5px; color: var(--soft); font-weight: 300;
+  max-width: 600px; margin-bottom: 32px;
+}
 
-    /* Panel A: Ops Dashboard */
-    .ops-metrics {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.6rem; margin-bottom: 1.25rem;
-    }
-    .ops-metric-tile {
-      background: var(--bg-card-alt);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.65rem 0.75rem;
-    }
-    .ops-metric-tile .val {
-      font-size: 1.4rem; font-weight: 700;
-      font-family: 'DM Sans', monospace;
-      color: var(--teal);
-    }
-    .ops-metric-tile .lbl {
-      font-size: 0.65rem; color: var(--text-dim);
-      margin-top: 0.1rem;
-    }
-    .ops-charts {
-      display: flex; gap: 1.25rem; align-items: flex-end;
-    }
-    .bar-chart {
-      display: flex; align-items: flex-end;
-      gap: 5px; height: 80px; flex: 1;
-    }
-    .bar {
-      flex: 1;
-      border-radius: 3px 3px 0 0;
-      background: linear-gradient(to top, var(--teal), var(--blue));
-      transition: height 0.6s ease;
-    }
-    .donut-wrap {
-      width: 80px; height: 80px;
-      position: relative; flex-shrink: 0;
-    }
-    .donut {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background: conic-gradient(
-        var(--teal) 0% 72%,
-        var(--amber) 72% 90%,
-        var(--red) 90% 100%
-      );
-      position: relative;
-    }
-    .donut::after {
-      content: '72%';
-      position: absolute;
-      inset: 18px;
-      background: var(--bg-card);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; font-weight: 700; color: var(--teal);
-    }
-    .donut-legend {
-      display: flex; gap: 0.5rem;
-      margin-top: 0.5rem;
-      font-size: 0.55rem; color: var(--text-dim);
-    }
-    .donut-legend span::before {
-      content: ''; display: inline-block;
-      width: 6px; height: 6px; border-radius: 50%;
-      margin-right: 3px; vertical-align: middle;
-    }
-    .leg-teal::before { background: var(--teal); }
-    .leg-amber::before { background: var(--amber); }
-    .leg-red::before { background: var(--red); }
+/* ─── Before / After ─── */
+.ba-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin-top: 8px;
+}
+.ba-panel {
+  border-radius: 16px; padding: 28px 24px;
+  position: relative; overflow: hidden;
+  transition: transform .3s;
+}
+.ba-panel:hover { transform: translateY(-3px); }
+.ba-before {
+  background: linear-gradient(135deg, rgba(239,68,68,.06), rgba(245,158,11,.04));
+  border: 1px solid rgba(239,68,68,.18);
+}
+.ba-after {
+  background: linear-gradient(135deg, rgba(0,201,160,.06), rgba(61,126,255,.04));
+  border: 1px solid rgba(0,201,160,.18);
+}
+.ba-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.ba-before .ba-label { color: var(--red); }
+.ba-after .ba-label { color: var(--teal); }
+.ba-tools {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
+}
+.ba-tool {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 500;
+}
+.ba-before .ba-tool {
+  background: rgba(239,68,68,.08);
+  border: 1px dashed rgba(239,68,68,.25);
+  color: #fca5a5;
+}
+.ba-after .ba-tool {
+  background: rgba(0,201,160,.08);
+  border: 1px solid rgba(0,201,160,.25);
+  color: #6ee7b7;
+}
+.ba-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin-bottom: 14px;
+}
+.ba-metric {
+  padding: 10px 8px; border-radius: 8px; text-align: center;
+}
+.ba-before .ba-metric {
+  background: rgba(239,68,68,.05);
+  border: 1px solid rgba(239,68,68,.1);
+}
+.ba-after .ba-metric {
+  background: rgba(0,201,160,.05);
+  border: 1px solid rgba(0,201,160,.1);
+}
+.ba-metric-val {
+  font-family: var(--sans); font-size: 1.3rem; font-weight: 700;
+}
+.ba-before .ba-metric-val { color: #fca5a5; }
+.ba-after .ba-metric-val { color: var(--teal); }
+.ba-metric-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.ba-caption { font-size: 13px; font-weight: 500; }
+.ba-before .ba-caption { color: #fca5a5; }
+.ba-after .ba-caption { color: #6ee7b7; }
 
-    /* Panel B: Executive Report */
-    .exec-report {
-      background: var(--bg-card-alt);
-      border-radius: 8px;
-      padding: 1.25rem;
-      font-family: 'Fraunces', serif;
-      border-left: 3px solid var(--teal);
-    }
-    .exec-report h4 {
-      font-size: 0.85rem; font-weight: 600;
-      margin-bottom: 0.6rem; color: var(--text);
-    }
-    .exec-report ul {
-      list-style: none; padding: 0;
-      margin-bottom: 1rem;
-    }
-    .exec-report li {
-      font-size: 0.75rem; color: var(--text-dim);
-      padding: 0.25rem 0;
-      padding-left: 1rem;
-      position: relative;
-      font-family: var(--font-body);
-    }
-    .exec-report li::before {
-      content: '→';
-      position: absolute; left: 0;
-      color: var(--teal);
-    }
-    .exec-report .risk-item::before { color: var(--amber); content: '⚠'; }
-    .exec-section {
-      margin-bottom: 0.75rem;
-    }
-    .exec-section-title {
-      font-size: 0.65rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--text-dim); margin-bottom: 0.3rem;
-      font-family: var(--font-body);
-    }
+/* After flow nodes */
+.ba-flow {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 16px; flex-wrap: wrap;
+}
+.ba-flow-node {
+  padding: 4px 9px; background: rgba(0,201,160,.08);
+  border: 1px solid rgba(0,201,160,.25); border-radius: 6px;
+  font-size: 10px; font-weight: 600; color: #6ee7b7;
+}
+.ba-flow-line {
+  width: 24px; height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  position: relative;
+}
+.ba-flow-line::after {
+  content: ''; position: absolute; right: -2px; top: -2px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: .4; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
 
-    /* Panel C: Integration Map */
-    .int-map {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      position: relative;
-    }
-    .int-node {
-      background: var(--bg-card-alt);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.85rem;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .int-node-icon {
-      font-size: 1.4rem;
-      margin-bottom: 0.3rem;
-    }
-    .int-node-name {
-      font-size: 0.75rem; font-weight: 600;
-    }
-    .int-node-status {
-      font-size: 0.6rem;
-      margin-top: 0.25rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 100px;
-      display: inline-block;
-    }
-    .status-connected {
-      background: rgba(0,201,160,0.15);
-      color: var(--teal);
-    }
-    .status-syncing {
-      background: rgba(61,126,255,0.15);
-      color: var(--blue);
-    }
-    .int-center {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 50px; height: 50px;
-      background: var(--teal);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.6rem; font-weight: 700;
-      color: var(--bg);
-      z-index: 2;
-      box-shadow: 0 0 20px rgba(0,201,160,0.4);
-    }
-    .int-lines {
-      position: absolute; inset: 0; z-index: 0;
-      pointer-events: none;
-    }
-    .int-line {
-      position: absolute;
-      background: linear-gradient(90deg, var(--teal), var(--blue));
-      height: 2px;
-      transform-origin: left center;
-    }
-    .int-line-v {
-      width: 2px; height: 40px;
-      background: linear-gradient(to bottom, var(--teal), var(--blue));
-    }
-    .int-pulse {
-      position: absolute;
-      width: 6px; height: 6px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: pulse-travel 2s ease-in-out infinite;
-    }
-    @keyframes pulse-travel {
-      0% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-    .int-stats {
-      margin-top: 0.75rem;
-      display: flex; gap: 0.5rem; justify-content: center;
-      flex-wrap: wrap;
-    }
-    .int-stat {
-      font-size: 0.65rem;
-      padding: 0.25rem 0.6rem;
-      background: var(--bg-card-alt);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--text-dim);
-    }
-    .int-stat strong { color: var(--teal); }
+/* ─── Dashboard Showcase ─── */
+.showcase-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px; margin-top: 8px;
+}
+.dash-panel {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px;
+  transition: transform .3s, border-color .3s;
+}
+.dash-panel:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0,201,160,.2);
+}
+.dash-panel-title {
+  font-size: 10px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 16px;
+}
 
-    /* ── WHO WE SERVE ── */
-    .serve-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-top: 2rem;
-    }
-    .serve-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .serve-card:hover {
-      border-color: rgba(0,201,160,0.25);
-      transform: translateY(-3px);
-    }
-    .serve-icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.75rem;
-    }
-    .serve-card h3 {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-    .serve-card p {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
+/* Panel A: Ops Dashboard */
+.ops-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px; margin-bottom: 14px;
+}
+.ops-tile {
+  background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 10px;
+}
+.ops-tile .val {
+  font-size: 1.25rem; font-weight: 700; color: var(--teal);
+}
+.ops-tile .lbl { font-size: 10px; color: var(--muted); }
+.ops-charts { display: flex; gap: 14px; align-items: flex-end; }
+.bar-chart {
+  display: flex; align-items: flex-end; gap: 4px; height: 72px; flex: 1;
+}
+.bar {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: linear-gradient(to top, var(--teal), var(--blue));
+}
+.donut-wrap { width: 72px; height: 72px; position: relative; flex-shrink: 0; }
+.donut {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: conic-gradient(var(--teal) 0% 72%, var(--amber) 72% 90%, var(--red) 90% 100%);
+  position: relative;
+}
+.donut::after {
+  content: '72%'; position: absolute; inset: 16px;
+  background: var(--bg2); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--teal);
+}
+.donut-legend {
+  display: flex; gap: 6px; margin-top: 6px; font-size: 9px; color: var(--muted);
+}
+.donut-legend span::before {
+  content: ''; display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; margin-right: 2px; vertical-align: middle;
+}
+.leg-teal::before { background: var(--teal); }
+.leg-amber::before { background: var(--amber); }
+.leg-red::before { background: var(--red); }
 
-    /* ── SERVICES TIMELINE ── */
-    .timeline {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      margin-top: 2.5rem;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      top: 28px; left: 10%; right: 10%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal), var(--blue));
-      z-index: 0;
-    }
-    .tl-step {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      padding: 0 0.75rem;
-    }
-    .tl-num {
-      display: inline-flex;
-      width: 56px; height: 56px;
-      align-items: center; justify-content: center;
-      border-radius: 50%;
-      background: var(--bg-card);
-      border: 2px solid var(--teal);
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--teal);
-      margin-bottom: 0.75rem;
-    }
-    .tl-step h3 {
-      font-size: 0.95rem; font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-    .tl-step p {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      line-height: 1.45;
-    }
+/* Panel B: Executive Report */
+.exec-report {
+  background: var(--bg3); border-radius: 8px; padding: 16px;
+  font-family: var(--serif); border-left: 3px solid var(--teal);
+}
+.exec-section { margin-bottom: 10px; }
+.exec-section:last-child { margin-bottom: 0; }
+.exec-section-title {
+  font-size: 9px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--muted); margin-bottom: 4px;
+  font-family: var(--sans);
+}
+.exec-report ul { list-style: none; padding: 0; }
+.exec-report li {
+  font-size: 11px; color: var(--soft); padding: 2px 0 2px 14px;
+  position: relative; font-family: var(--sans); line-height: 1.5;
+}
+.exec-report li::before {
+  content: '→'; position: absolute; left: 0; color: var(--teal);
+}
+.exec-report .risk-item::before { color: var(--amber); content: '⚠'; }
 
-    /* ── TESTIMONIALS ── */
-    .test-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .test-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--teal);
-      border-radius: 12px;
-      padding: 1.75rem;
-    }
-    .test-card blockquote {
-      font-size: 0.92rem;
-      line-height: 1.65;
-      color: var(--text);
-      margin-bottom: 1rem;
-      font-style: italic;
-    }
-    .test-card cite {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      font-style: normal;
-    }
+/* Panel C: Integration Map */
+.int-map {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; position: relative;
+}
+.int-node {
+  background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px; text-align: center;
+  position: relative; z-index: 1;
+}
+.int-node-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.int-node-name { font-size: 11px; font-weight: 600; }
+.int-node-status {
+  font-size: 9px; margin-top: 3px; padding: 2px 6px;
+  border-radius: 100px; display: inline-block;
+}
+.status-connected { background: rgba(0,201,160,.12); color: var(--teal); }
+.status-syncing { background: rgba(61,126,255,.12); color: var(--blue); }
+.int-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px; height: 42px; background: var(--teal);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 9px; font-weight: 700;
+  color: var(--bg); z-index: 2;
+  box-shadow: 0 0 16px rgba(0,201,160,.35);
+}
+.int-stats {
+  margin-top: 10px; display: flex; gap: 5px;
+  justify-content: center; flex-wrap: wrap;
+}
+.int-stat {
+  font-size: 9px; padding: 3px 7px;
+  background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 100px; color: var(--muted);
+}
+.int-stat strong { color: var(--teal); }
 
-    /* ── ABOUT ── */
-    .about-content {
-      display: flex;
-      gap: 3rem;
-      align-items: flex-start;
-      margin-top: 2rem;
-    }
-    .about-text {
-      flex: 1;
-    }
-    .about-text p {
-      font-size: 1rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 0.75rem;
-    }
-    .about-badges {
-      display: flex; flex-wrap: wrap;
-      gap: 0.6rem; margin-top: 1.5rem;
-    }
-    .about-badge {
-      padding: 0.4rem 1rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-    }
+/* ─── Who We Serve Grid ─── */
+.serve-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.serve-tile {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 13px; padding: 26px;
+  transition: border-color .25s, transform .2s, background .2s;
+}
+.serve-tile:hover {
+  border-color: rgba(0,201,160,.2); background: var(--bg3);
+  transform: translateY(-2px);
+}
+.serve-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+.serve-tile h3 {
+  font-family: var(--serif); font-size: 15px; font-weight: 600;
+  letter-spacing: -.01em; margin-bottom: 7px;
+}
+.serve-tile p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
 
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      padding: 4rem 2rem;
-    }
-    .cta-section h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .cta-section h2 em {
-      font-style: normal; color: var(--teal);
-    }
-    .cta-section p {
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-      font-size: 1.05rem;
-    }
-    .calendly-wrap {
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-    }
-    .cta-email {
-      color: var(--text-dim);
-      font-size: 0.9rem;
-    }
-    .cta-email a {
-      color: var(--teal);
-      text-decoration: none;
-    }
-    .cta-email a:hover { text-decoration: underline; }
+/* ─── Services List ─── */
+.service-list { display: flex; flex-direction: column; gap: 8px; }
+.svc {
+  display: grid; grid-template-columns: 40px 1fr;
+  gap: 20px; align-items: start;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 12px; padding: 22px 26px;
+  transition: background .2s, border-color .2s;
+}
+.svc:hover { background: var(--bg3); border-color: var(--line2); }
+.svc-n {
+  font-family: var(--serif); font-size: 12px; font-weight: 600;
+  color: var(--teal); opacity: .65; padding-top: 3px;
+}
+.svc h3 {
+  font-family: var(--serif); font-size: 15.5px; font-weight: 600;
+  letter-spacing: -.01em; margin-bottom: 5px;
+}
+.svc p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.65; }
 
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--text-dim);
-    }
+/* ─── Deliverables ─── */
+.deliv-card {
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 38px 42px;
+}
+.deliv-intro {
+  font-family: var(--serif); font-size: 16px; font-style: italic;
+  font-weight: 300; color: var(--soft); line-height: 1.75;
+  margin-bottom: 30px; padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.deliv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.deliv { display: flex; gap: 14px; align-items: flex-start; }
+.deliv-check {
+  width: 22px; height: 22px; min-width: 22px; border-radius: 50%;
+  background: rgba(0,201,160,.09); border: 1px solid rgba(0,201,160,.22);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--teal); margin-top: 2px;
+}
+.deliv-body strong { display: block; font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.deliv-body span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .ba-grid, .showcase-grid, .test-grid {
-        grid-template-columns: 1fr;
-      }
-      .serve-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .timeline {
-        grid-template-columns: 1fr 1fr;
-        row-gap: 2rem;
-      }
-      .timeline::before { display: none; }
-    }
-    @media (max-width: 600px) {
-      .serve-grid {
-        grid-template-columns: 1fr;
-      }
-      .timeline {
-        grid-template-columns: 1fr;
-      }
-      nav { padding: 0.75rem 1rem; }
-      section { padding: 3rem 1.25rem; }
-      .hero { padding: 4rem 1.25rem 3rem; }
-      .about-content { flex-direction: column; gap: 1.5rem; }
-    }
+/* ─── Testimonials ─── */
+.test-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+}
+.test-card {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px; padding: 24px;
+}
+.test-card blockquote {
+  font-size: 13.5px; line-height: 1.7; color: var(--text);
+  margin-bottom: 12px; font-style: italic;
+}
+.test-card cite {
+  font-size: 11.5px; color: var(--muted); font-style: normal;
+}
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+/* ─── Engagement Note ─── */
+.engage-note {
+  background: linear-gradient(135deg, rgba(0,201,160,.05), rgba(61,126,255,.05));
+  border: 1px solid rgba(0,201,160,.15); border-radius: 14px;
+  padding: 28px 34px;
+}
+.engage-note p {
+  font-size: 15px; color: var(--soft); line-height: 1.75;
+  font-family: var(--serif); font-style: italic; font-weight: 300; margin: 0;
+}
+.engage-note strong { font-style: normal; font-weight: 600; color: var(--text); }
+
+/* ─── Bio Card ─── */
+.bio-card {
+  background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 38px 42px;
+  position: relative; overflow: hidden;
+}
+.bio-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue), transparent);
+}
+.bio-name {
+  font-family: var(--serif); font-size: 19px; font-weight: 600;
+  letter-spacing: -.02em; margin-bottom: 3px;
+}
+.bio-role {
+  font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+}
+.bio-text {
+  font-size: 15px; color: var(--soft); font-weight: 300;
+  line-height: 1.8; margin-bottom: 14px;
+}
+.bio-text strong { color: var(--text); font-weight: 500; }
+.bio-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.badge {
+  font-size: 12px; font-weight: 500; color: var(--teal);
+  padding: 4px 12px; border-radius: 5px;
+  background: rgba(0,201,160,.07); border: 1px solid rgba(0,201,160,.16);
+}
+
+/* ─── Process Steps ─── */
+.steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+.steps::before {
+  content: ''; position: absolute;
+  left: 18px; top: 36px; bottom: 36px; width: 1px;
+  background: linear-gradient(to bottom, rgba(0,201,160,.25), transparent);
+}
+.step { display: flex; gap: 22px; padding: 18px 0; }
+.step-n {
+  width: 38px; height: 38px; min-width: 38px; border-radius: 50%;
+  background: var(--bg2); border: 1px solid var(--line2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 13px; font-weight: 600;
+  color: var(--teal); z-index: 1; position: relative;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.step-body h3 {
+  font-family: var(--serif); font-size: 15px; font-weight: 600;
+  margin-bottom: 5px; margin-top: 9px; letter-spacing: -.01em;
+}
+.step-body p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.65; }
+
+/* ─── CTA ─── */
+.cta-section { padding: 80px 0 96px; border-bottom: none; text-align: center; }
+.cta-box {
+  background: var(--bg2); border: 1px solid rgba(0,201,160,.2);
+  border-radius: 20px; padding: 56px 48px;
+  position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: .4;
+}
+.cta-glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 500px; height: 300px; pointer-events: none;
+  background: radial-gradient(ellipse, rgba(0,201,160,.055), transparent 70%);
+}
+.cta-box h2 {
+  font-size: clamp(26px, 4vw, 38px); margin-bottom: 14px; position: relative;
+}
+.cta-box .lead { max-width: 480px; margin: 0 auto 32px; position: relative; }
+.calendly-wrap {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--line2); position: relative;
+}
+.cta-email {
+  margin-top: 18px !important;
+  font-size: 12px !important; color: var(--muted) !important;
+}
+.cta-email a { color: var(--teal); text-decoration: none; }
+.cta-email a:hover { text-decoration: underline; }
+
+/* ─── Footer ─── */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+footer p { font-size: 12px; color: var(--muted); margin: 0; }
+footer a { color: var(--teal); text-decoration: none; opacity: .8; transition: opacity .2s; }
+footer a:hover { opacity: 1; }
+
+/* ─── Scroll Reveal ─── */
+.reveal {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .wrap { padding: 0 20px; }
+  .wrap-wide { padding: 0 20px; }
+  .ba-grid { grid-template-columns: 1fr; }
+  .showcase-grid { grid-template-columns: 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
+  .serve-grid { grid-template-columns: 1fr; }
+  .deliv-grid { grid-template-columns: 1fr; }
+  .cta-box { padding: 36px 22px; }
+  .bio-card, .deliv-card { padding: 28px 24px; }
+}
+
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="brand">Clear<span>Ops</span></a>
-    <a href="#book" class="nav-cta">Book a Free Call</a>
-  </nav>
+<!-- ── Nav ── -->
+<header>
+<div class="wrap">
+<nav class="nav">
+  <div class="brand">
+    <div class="brand-mark">C</div>
+    <div class="brand-name">Clear<b>Ops</b> AI</div>
+  </div>
+  <a class="nav-btn" onclick="Calendly.initPopupWidget({url:'https://calendly.com/haseeb-clearopsai/30min'}); return false;" href="#">
+    Book a Free Call &rarr;
+  </a>
+</nav>
+</div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Operational clarity for <em>growing companies.</em></h1>
-    <p>We connect your tools, automate your reporting, and build the dashboards your leadership actually needs.</p>
-    <a href="#book" class="hero-cta">See What Clarity Looks Like</a>
-    <div class="cred-bar">
-      <span class="cred-pill">eBay</span>
-      <span class="cred-pill">Splunk</span>
-      <span class="cred-pill">CoreSite</span>
-      <span class="cred-pill">Cadence</span>
-      <span class="cred-pill">Axoni</span>
+<div class="wrap">
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="tag"><div class="tag-dot"></div><span class="tag-text">Tech-Driven Ops Clarity &middot; DC &ndash; Baltimore &ndash; Richmond</span></div>
+    <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
+    <p class="hero-body">ClearOps AI helps associations, law firms, and professional services organizations in the DC metro corridor get operational clarity out of their fragmented technology — so leadership can see what's actually happening and act on it.</p>
+    <div class="credbar">
+      <span class="credbar-label">12+ years in enterprise ops at</span>
+      <div class="credbar-pills">
+        <span class="pill">eBay</span>
+        <span class="pill">Splunk</span>
+        <span class="pill">CoreSite</span>
+        <span class="pill">Cadence</span>
+        <span class="pill">Axoni</span>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- BEFORE / AFTER -->
-  <section class="ba-section reveal">
-    <div class="section-label">The Difference</div>
-    <div class="section-title">From scattered to streamlined.</div>
+  <!-- ── Before / After ── -->
+  <section class="reveal">
+    <div class="sec-label">The Difference</div>
+    <h2>From scattered tools to <i>one clear view.</i></h2>
     <div class="ba-grid">
-      <!-- BEFORE -->
       <div class="ba-panel ba-before">
         <div class="ba-label">Before ClearOps</div>
         <div class="ba-tools">
-          <div class="ba-tool">Slack</div>
+          <div class="ba-tool">CRM</div>
           <div class="ba-tool">Sheets</div>
           <div class="ba-tool">Email</div>
-          <div class="ba-tool">Salesforce</div>
-          <div class="ba-tool">Jira</div>
+          <div class="ba-tool">PM Tool</div>
+          <div class="ba-tool">LMS</div>
         </div>
         <div class="ba-metrics">
-          <div class="ba-metric">
-            <div class="ba-metric-val">?</div>
-            <div class="ba-metric-label">Revenue pipeline</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">?</div>
-            <div class="ba-metric-label">Team utilization</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">?</div>
-            <div class="ba-metric-label">Project health</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">?</div>
-            <div class="ba-metric-label">SLA status</div>
-          </div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Revenue pipeline</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Utilization rate</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Program health</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">SLA compliance</div></div>
         </div>
-        <div class="ba-caption">Manual reports. 3 days. Still incomplete.</div>
+        <div class="ba-caption">Five systems. Manual reports. Three days. Still incomplete.</div>
       </div>
-
-      <!-- AFTER -->
       <div class="ba-panel ba-after">
         <div class="ba-label">After ClearOps</div>
         <div class="ba-flow">
-          <div class="ba-flow-node">CRM</div>
-          <div class="ba-flow-line"></div>
-          <div class="ba-flow-node">PM</div>
-          <div class="ba-flow-line"></div>
-          <div class="ba-flow-node">Dashboard</div>
-          <div class="ba-flow-line"></div>
+          <div class="ba-flow-node">CRM</div><div class="ba-flow-line"></div>
+          <div class="ba-flow-node">PM</div><div class="ba-flow-line"></div>
+          <div class="ba-flow-node">Dashboard</div><div class="ba-flow-line"></div>
           <div class="ba-flow-node">Finance</div>
         </div>
         <div class="ba-metrics">
-          <div class="ba-metric">
-            <div class="ba-metric-val">$2.4M</div>
-            <div class="ba-metric-label">Revenue pipeline</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">87%</div>
-            <div class="ba-metric-label">Team utilization</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">96%</div>
-            <div class="ba-metric-label">Project health</div>
-          </div>
-          <div class="ba-metric">
-            <div class="ba-metric-val">99.2%</div>
-            <div class="ba-metric-label">SLA status</div>
-          </div>
+          <div class="ba-metric"><div class="ba-metric-val">$2.4M</div><div class="ba-metric-label">Revenue pipeline</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">87%</div><div class="ba-metric-label">Utilization rate</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">96%</div><div class="ba-metric-label">Program health</div></div>
+          <div class="ba-metric"><div class="ba-metric-val">99.2%</div><div class="ba-metric-label">SLA compliance</div></div>
         </div>
         <div class="ba-caption">Automated. Real-time. One view.</div>
       </div>
     </div>
   </section>
 
-  <!-- DASHBOARD SHOWCASE -->
-  <section class="reveal">
-    <div class="section-label">What You Get</div>
-    <div class="section-title">Dashboards, reports, and integrations — built for you.</div>
-    <div class="showcase-grid">
+</div><!-- /wrap -->
 
-      <!-- Panel A: Operations Dashboard -->
-      <div class="dash-panel">
-        <div class="dash-panel-title">Operations Dashboard</div>
-        <div class="ops-metrics">
-          <div class="ops-metric-tile">
-            <div class="val">24</div>
-            <div class="lbl">Active Projects</div>
-          </div>
-          <div class="ops-metric-tile">
-            <div class="val">87%</div>
-            <div class="lbl">Utilization</div>
-          </div>
-          <div class="ops-metric-tile">
-            <div class="val">96%</div>
-            <div class="lbl">SLA Met</div>
-          </div>
-          <div class="ops-metric-tile">
-            <div class="val">3</div>
-            <div class="lbl">Open Issues</div>
-          </div>
-        </div>
-        <div class="ops-charts">
-          <div class="bar-chart">
-            <div class="bar" style="height: 65%"></div>
-            <div class="bar" style="height: 85%"></div>
-            <div class="bar" style="height: 45%"></div>
-            <div class="bar" style="height: 92%"></div>
-            <div class="bar" style="height: 70%"></div>
-          </div>
-          <div class="donut-wrap">
-            <div class="donut"></div>
-            <div class="donut-legend">
-              <span class="leg-teal">Track</span>
-              <span class="leg-amber">Risk</span>
-              <span class="leg-red">Late</span>
-            </div>
-          </div>
-        </div>
+<!-- ── Dashboard Showcase (wide) ── -->
+<section class="reveal">
+<div class="wrap-wide">
+  <div class="sec-label">What You Get</div>
+  <h2>Dashboards, reports, and integrations — <i>built for you.</i></h2>
+  <p class="lead">Not generic templates. Custom visibility layers built on top of the tools you already have.</p>
+  <div class="showcase-grid">
+
+    <!-- Panel A: Ops Dashboard -->
+    <div class="dash-panel">
+      <div class="dash-panel-title">Operations Dashboard</div>
+      <div class="ops-metrics">
+        <div class="ops-tile"><div class="val">24</div><div class="lbl">Active Projects</div></div>
+        <div class="ops-tile"><div class="val">87%</div><div class="lbl">Utilization</div></div>
+        <div class="ops-tile"><div class="val">96%</div><div class="lbl">SLA Met</div></div>
+        <div class="ops-tile"><div class="val">3</div><div class="lbl">Open Issues</div></div>
       </div>
-
-      <!-- Panel B: Executive Report -->
-      <div class="dash-panel">
-        <div class="dash-panel-title">Executive Report</div>
-        <div class="exec-report">
-          <div class="exec-section">
-            <div class="exec-section-title">Key Findings</div>
-            <ul>
-              <li>Revenue pipeline up 18% QoQ with 3 enterprise deals in late stage</li>
-              <li>Engineering velocity improved after Sprint 4 restructure</li>
-              <li>Customer retention holding at 94% — above industry benchmark</li>
-            </ul>
-          </div>
-          <div class="exec-section">
-            <div class="exec-section-title">Risk Areas</div>
-            <ul>
-              <li class="risk-item">Infrastructure costs trending 12% above forecast</li>
-              <li class="risk-item">Two key hires still open past 45-day target</li>
-            </ul>
-          </div>
-          <div class="exec-section">
-            <div class="exec-section-title">Next Steps</div>
-            <ul>
-              <li>Finalize Q2 budget with revised cloud spend projections</li>
-              <li>Schedule pipeline review with sales leadership</li>
-              <li>Launch hiring sprint for senior engineer roles</li>
-            </ul>
-          </div>
+      <div class="ops-charts">
+        <div class="bar-chart">
+          <div class="bar" style="height:65%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:92%"></div>
+          <div class="bar" style="height:70%"></div>
         </div>
-      </div>
-
-      <!-- Panel C: Integration Map -->
-      <div class="dash-panel">
-        <div class="dash-panel-title">Systems Integration Map</div>
-        <div class="int-map">
-          <div class="int-node">
-            <div class="int-node-icon">📊</div>
-            <div class="int-node-name">CRM</div>
-            <span class="int-node-status status-connected">Connected</span>
+        <div class="donut-wrap">
+          <div class="donut"></div>
+          <div class="donut-legend">
+            <span class="leg-teal">Track</span>
+            <span class="leg-amber">Risk</span>
+            <span class="leg-red">Late</span>
           </div>
-          <div class="int-node">
-            <div class="int-node-icon">📋</div>
-            <div class="int-node-name">PM Tool</div>
-            <span class="int-node-status status-connected">Connected</span>
-          </div>
-          <div class="int-node">
-            <div class="int-node-icon">💰</div>
-            <div class="int-node-name">Finance</div>
-            <span class="int-node-status status-syncing">Syncing</span>
-          </div>
-          <div class="int-node">
-            <div class="int-node-icon">👥</div>
-            <div class="int-node-name">HR</div>
-            <span class="int-node-status status-connected">Connected</span>
-          </div>
-          <div class="int-center">HUB</div>
-        </div>
-        <div class="int-stats">
-          <span class="int-stat"><strong>4</strong> systems</span>
-          <span class="int-stat"><strong>24</strong> data points/day</span>
-          <span class="int-stat"><strong>Real-time</strong> sync</span>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- WHO WE SERVE -->
+    <!-- Panel B: Executive Report -->
+    <div class="dash-panel">
+      <div class="dash-panel-title">Executive Report</div>
+      <div class="exec-report">
+        <div class="exec-section">
+          <div class="exec-section-title">Key Findings</div>
+          <ul>
+            <li>Revenue pipeline up 18% QoQ with 3 enterprise deals in late stage</li>
+            <li>Engineering velocity improved after Sprint 4 restructure</li>
+            <li>Member retention holding at 94% — above industry benchmark</li>
+          </ul>
+        </div>
+        <div class="exec-section">
+          <div class="exec-section-title">Risk Areas</div>
+          <ul>
+            <li class="risk-item">Infrastructure costs trending 12% above forecast</li>
+            <li class="risk-item">Two key hires still open past 45-day target</li>
+          </ul>
+        </div>
+        <div class="exec-section">
+          <div class="exec-section-title">Next Steps</div>
+          <ul>
+            <li>Finalize Q2 budget with revised spend projections</li>
+            <li>Schedule pipeline review with leadership</li>
+            <li>Launch hiring sprint for open roles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel C: Integration Map -->
+    <div class="dash-panel">
+      <div class="dash-panel-title">Systems Integration Map</div>
+      <div class="int-map">
+        <div class="int-node">
+          <div class="int-node-icon">📊</div>
+          <div class="int-node-name">CRM</div>
+          <span class="int-node-status status-connected">Connected</span>
+        </div>
+        <div class="int-node">
+          <div class="int-node-icon">📋</div>
+          <div class="int-node-name">PM Tool</div>
+          <span class="int-node-status status-connected">Connected</span>
+        </div>
+        <div class="int-node">
+          <div class="int-node-icon">💰</div>
+          <div class="int-node-name">Finance</div>
+          <span class="int-node-status status-syncing">Syncing</span>
+        </div>
+        <div class="int-node">
+          <div class="int-node-icon">👥</div>
+          <div class="int-node-name">HR / LMS</div>
+          <span class="int-node-status status-connected">Connected</span>
+        </div>
+        <div class="int-center">HUB</div>
+      </div>
+      <div class="int-stats">
+        <span class="int-stat"><strong>4</strong> systems</span>
+        <span class="int-stat"><strong>24</strong> points/day</span>
+        <span class="int-stat"><strong>Real-time</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="wrap">
+
+  <!-- ── Who We Serve ── -->
   <section class="reveal">
-    <div class="section-label">Who We Serve</div>
-    <div class="section-title">Built for teams that have outgrown spreadsheets.</div>
+    <div class="sec-label">Who We Serve</div>
+    <h2>For organizations where the<br>operational mess <i>lives in technology.</i></h2>
+    <p class="lead">You already have the tools. They're just not connected, not visible, and not working for you.</p>
     <div class="serve-grid">
-      <div class="serve-card">
-        <div class="serve-icon">🏢</div>
-        <h3>IT Services Firms</h3>
-        <p>Unify project tracking, utilization, and client reporting in one view.</p>
+      <div class="serve-tile">
+        <span class="serve-icon">🏛️</span>
+        <h3>Associations &amp; Membership Orgs</h3>
+        <p>AMS, events platform, LMS, CRM, email tool — all siloed. We connect them and build the visibility layer.</p>
       </div>
-      <div class="serve-card">
-        <div class="serve-icon">🏛️</div>
-        <h3>Trade Associations</h3>
-        <p>Track membership, events, and program outcomes without the spreadsheet chaos.</p>
+      <div class="serve-tile">
+        <span class="serve-icon">⚖️</span>
+        <h3>Law &amp; Professional Services</h3>
+        <p>Practice management, billing, conflicts, document management — we surface what's actually happening across the firm.</p>
       </div>
-      <div class="serve-card">
-        <div class="serve-icon">🚀</div>
-        <h3>Funded Startups</h3>
-        <p>Board-ready dashboards and burn rate monitoring from day one.</p>
+      <div class="serve-tile">
+        <span class="serve-icon">🏥</span>
+        <h3>Healthcare &amp; Behavioral Health</h3>
+        <p>EHR, billing, care coordination, grant reporting — operational visibility in regulated environments, made reliable.</p>
       </div>
-      <div class="serve-card">
-        <div class="serve-icon">⚖️</div>
-        <h3>Professional Services</h3>
-        <p>Billable hours, pipeline, and delivery health — all automated.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES TIMELINE -->
-  <section class="reveal">
-    <div class="section-label">How It Works</div>
-    <div class="section-title">Four steps to operational clarity.</div>
-    <div class="timeline">
-      <div class="tl-step">
-        <div class="tl-num">01</div>
-        <h3>Audit</h3>
-        <p>We map your tools, workflows, and reporting gaps in a 2-hour deep dive.</p>
-      </div>
-      <div class="tl-step">
-        <div class="tl-num">02</div>
-        <h3>Integrate</h3>
-        <p>Connect your systems so data flows automatically — no manual exports.</p>
-      </div>
-      <div class="tl-step">
-        <div class="tl-num">03</div>
-        <h3>Dashboard</h3>
-        <p>Custom dashboards and automated reports tailored to your leadership team.</p>
-      </div>
-      <div class="tl-step">
-        <div class="tl-num">04</div>
-        <h3>Monitor</h3>
-        <p>Ongoing optimization, alerting, and support as your operations scale.</p>
+      <div class="serve-tile">
+        <span class="serve-icon">🏦</span>
+        <h3>Financial &amp; Professional Services</h3>
+        <p>CRMs, compliance platforms, reporting tools that don't talk to each other. We build the layer that ties them together.</p>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- ── Services ── -->
   <section class="reveal">
-    <div class="section-label">Results</div>
-    <div class="section-title">What clarity sounds like.</div>
+    <div class="sec-label">Services</div>
+    <h2>Four ways we help.</h2>
+    <p class="lead">Every engagement is scoped, fixed, and built around a concrete deliverable. No open-ended retainers with vague outcomes.</p>
+    <div class="service-list">
+      <div class="svc">
+        <div class="svc-n">01</div>
+        <div>
+          <h3>Operational Clarity Audit</h3>
+          <p>We map every tool, workflow, and data flow — identifying where systems are fragmented, where reporting is manual, and where the visibility gaps are costing you.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">02</div>
+        <div>
+          <h3>Systems Integration &amp; Workflow Automation</h3>
+          <p>We connect the platforms that aren't talking to each other and automate the manual processes that shouldn't require a person.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">03</div>
+        <div>
+          <h3>Operational Visibility Dashboards</h3>
+          <p>Custom dashboards that pull from your existing tools and surface the data leadership actually needs — automatically, without manual assembly.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">04</div>
+        <div>
+          <h3>Ongoing Ops Intelligence Retainer</h3>
+          <p>Monthly partnership for continuous monitoring, reporting automation, and operational intelligence as your stack and team evolve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Deliverables ── -->
+  <section class="reveal">
+    <div class="sec-label">What You Get</div>
+    <h2>The Clarity Audit, <i>in detail.</i></h2>
+    <p class="lead">Most clients tell us the audit alone was worth it — regardless of what they did next.</p>
+    <div class="deliv-card">
+      <p class="deliv-intro">"A clear picture of where your operations are working, where they're not, and exactly what to do about it — in writing, in plain language, with a plan your team can execute whether or not we're involved."</p>
+      <div class="deliv-grid">
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Workflow &amp; Tools Audit</strong><span>Structured review of your current processes, systems, and the gaps between them.</span></div>
+        </div>
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Written Findings Report</strong><span>Plain-language document describing what we found, why it matters, and what it's costing you.</span></div>
+        </div>
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Prioritized Action Roadmap</strong><span>Fixes ranked by impact and effort — starting with the highest-leverage items.</span></div>
+        </div>
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Executive Summary</strong><span>One-page version for leadership review, board presentations, or internal alignment.</span></div>
+        </div>
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Follow-Up Review Call</strong><span>Dedicated session to walk through findings and answer questions from your team.</span></div>
+        </div>
+        <div class="deliv">
+          <div class="deliv-check">&#10003;</div>
+          <div class="deliv-body"><strong>Yours to Keep</strong><span>All documentation is handed off completely. No dependency on us to act on the findings.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ── -->
+  <section class="reveal">
+    <div class="sec-label">Results</div>
+    <h2>What clarity <i>sounds like.</i></h2>
     <div class="test-grid">
       <div class="test-card">
-        <blockquote>"We were spending 15 hours a week building reports from four systems. Now it's automated. I got my Fridays back."</blockquote>
+        <blockquote>"We were spending 15 hours a week building reports from four different systems. Now it's automated. I got my Fridays back."</blockquote>
         <cite>— COO, 120-person IT services firm</cite>
       </div>
       <div class="test-card">
@@ -975,60 +892,156 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ── Where AI Comes In ── -->
   <section class="reveal">
-    <div class="section-label">About</div>
-    <div class="section-title">Operator-built. Enterprise-tested.</div>
-    <div class="about-content">
-      <div class="about-text">
-        <p>ClearOps AI was founded by an operations leader who spent a decade building reporting systems, integration pipelines, and dashboards at companies from startups to the Fortune 500.</p>
-        <p>We bring enterprise-grade operational thinking to companies that are scaling fast but don't have a 50-person ops team.</p>
-        <p>The tools exist. The data exists. You just need someone who knows how to connect them.</p>
-        <div class="about-badges">
-          <span class="about-badge">eBay</span>
-          <span class="about-badge">Splunk</span>
-          <span class="about-badge">CoreSite</span>
-          <span class="about-badge">Cadence</span>
-          <span class="about-badge">Axoni</span>
+    <div class="sec-label">Where AI Comes In</div>
+    <h2>The "AI" in ClearOps AI<br>does <i>real work.</i></h2>
+    <p class="lead">Not a buzzword. Not a chatbot bolted onto a spreadsheet. Here's exactly what AI is doing in every engagement.</p>
+    <div class="service-list">
+      <div class="svc">
+        <div class="svc-n">&#9889;</div>
+        <div>
+          <h3>Operational Pattern Recognition</h3>
+          <p>AI analyzes how work actually flows through your organization — identifying bottlenecks, redundancies, and coordination gaps that would take weeks to surface manually.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">&#128202;</div>
+        <div>
+          <h3>Automated Reporting &amp; Dashboards</h3>
+          <p>AI-assisted reporting pipelines that pull from your CRM, project management, email, and spreadsheets — surfacing operational data leadership needs, on a schedule, without manual assembly.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">&#128269;</div>
+        <div>
+          <h3>Research &amp; Due Diligence</h3>
+          <p>Before any engagement, we use AI to deeply research your organization — your programs, partners, and operational footprint — so the first conversation is informed, not exploratory.</p>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-n">&#128257;</div>
+        <div>
+          <h3>Workflow Intelligence &amp; Monitoring</h3>
+          <p>After workflows are redesigned, AI monitors them continuously — flagging anomalies, tracking completion rates, and alerting leadership when something drifts before it becomes a problem.</p>
+        </div>
+      </div>
+    </div>
+    <div class="engage-note" style="margin-top: 20px;">
+      <p>The bottom line: <strong>AI compresses the time it takes to find problems and build solutions.</strong> What would require a 3-month internal ops review gets done in weeks. You get enterprise-grade ops intelligence at a fraction of the cost of building it in-house.</p>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section class="reveal">
+    <div class="sec-label">About</div>
+    <h2>Enterprise ops experience<br>in <i>technology-driven organizations.</i></h2>
+    <div class="bio-card">
+      <div class="bio-name">Haseeb Bassam</div>
+      <div class="bio-role">Founder &amp; Principal, ClearOps AI</div>
+      <p class="bio-text">I spent <strong>12 years in operations and infrastructure roles at eBay, Splunk, Cadence Design Systems, CoreSite Data Centers, and Axoni</strong> — building monitoring systems, managing cloud and data center operations at scale, and connecting the dots between fragmented tools so leadership could actually see what was happening.</p>
+      <p class="bio-text">The problem I kept seeing: <strong>organizations running on five or six platforms that don't talk to each other, assembling reports by hand every month, with no real visibility layer tying it all together.</strong> That gap is expensive — in time, in errors, and in decisions made without the right data.</p>
+      <div class="bio-badges">
+        <span class="badge">eBay</span>
+        <span class="badge">Splunk</span>
+        <span class="badge">CoreSite Data Centers</span>
+        <span class="badge">Cadence Design Systems</span>
+        <span class="badge">Axoni</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Engagements ── -->
+  <section class="reveal">
+    <div class="sec-label">Engagements</div>
+    <h2>Scoped. Fixed. <i>No surprises.</i></h2>
+    <p class="lead">Every engagement starts with a fixed-scope Clarity Audit — a defined deliverable at a defined price, with no open-ended billing.</p>
+    <div class="engage-note">
+      <p>Project work and retainers are scoped <strong>after the audit</strong>, when we both have a clear picture of what needs to be built. <strong>Pricing is discussed on the intro call</strong>, after we understand your organization. If it's not a fit, we'll tell you.</p>
+    </div>
+  </section>
+
+  <!-- ── Process ── -->
+  <section class="reveal">
+    <div class="sec-label">Process</div>
+    <h2>How it works.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h3>20-Minute Intro Call &mdash; Free</h3>
+          <p>A focused conversation about your organization and your biggest operational headaches. No pitch, no pressure — just an honest look at whether there's a fit.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h3>Clarity Audit</h3>
+          <p>We go deep into your current systems and workflows. You receive a written findings report and a prioritized roadmap — delivered on a fixed timeline at a fixed price.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h3>Build &amp; Deploy (Optional)</h3>
+          <p>If you want to move from findings to implementation, we design and build the solutions — workflow redesigns, dashboards, integrations — with your team involved at every step.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <h3>Ongoing Support (Optional)</h3>
+          <p>Stay on retainer for continuous monitoring, reporting, and ops intelligence as your organization grows.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA + CALENDLY -->
-  <section class="cta-section reveal" id="book">
-    <h2>See what <em>clarity</em> looks like.</h2>
-    <p>30-minute call. No pitch deck. We'll map your current ops stack and show you where the gaps are.</p>
-    <div class="calendly-wrap">
-      <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min" style="min-width:280px;height:630px;"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <!-- ── CTA ── -->
+  <section class="cta-section reveal">
+    <div class="cta-box">
+      <div class="cta-glow"></div>
+      <h2>Ready to stop assembling<br>reports <i>by hand?</i></h2>
+      <p class="lead">Book a free 30-minute call. We'll look at your tools, workflows, and visibility gaps — and tell you directly whether we can help.</p>
+      <div class="calendly-wrap">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0" style="min-width:280px;height:640px;"></div>
+      </div>
+      <p class="cta-email">Or email directly: <a href="mailto:haseeb.clearopsai@gmail.com">haseeb.clearopsai@gmail.com</a></p>
     </div>
-    <div class="cta-email">or email <a href="mailto:haseeb@clearopsai.com">haseeb@clearopsai.com</a></div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ── Footer ── -->
   <footer>
-    &copy; 2026 ClearOps AI. All rights reserved.
+    <p>&copy; 2026 ClearOps AI &middot; Washington DC Metro</p>
+    <p><a href="mailto:haseeb.clearopsai@gmail.com">haseeb.clearopsai@gmail.com</a></p>
   </footer>
 
-  <!-- SCROLL REVEAL -->
-  <script>
-    const reveals = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
-      reveals.forEach(el => observer.observe(el));
-      // Fallback: ensure all sections visible after 1.5s (covers non-scroll environments)
-      setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 1500);
-    } else {
-      reveals.forEach(el => el.classList.add('visible'));
-    }
-  </script>
+</div><!-- /wrap -->
+
+<script>
+window.addEventListener('load', function() {
+  if (window.Calendly) {
+    Calendly.initInlineWidget({
+      url: 'https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0',
+      parentElement: document.querySelector('.calendly-inline-widget')
+    });
+  }
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
+  reveals.forEach(el => observer.observe(el));
+  setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 1500);
+} else {
+  reveals.forEach(el => el.classList.add('visible'));
+}
+</script>
+
 </body>
 </html>
