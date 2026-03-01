@@ -105,333 +105,356 @@ body::before {
 }
 .panel-title .icon { font-size: 18px; }
 
-/* ─── Config Bar ─── */
-.config-bar {
-  background: var(--bg2);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  display: flex; align-items: flex-start; gap: 32px; flex-wrap: wrap;
+/* ─── Step 1: The Hook ─── */
+.hook-section { text-align: center; margin-bottom: 12px; }
+.hook-industry {
+  margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
 }
-.config-section { display: flex; flex-direction: column; gap: 8px; }
-.config-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); font-weight: 500; }
-.config-select {
-  background: var(--bg3); border: 1px solid var(--line2); border-radius: 8px;
-  color: var(--text); font-family: var(--sans); font-size: 14px;
-  padding: 8px 32px 8px 12px; cursor: pointer; outline: none;
+.hook-industry label {
+  font-size: 13px; color: var(--soft); text-transform: uppercase; letter-spacing: .8px; font-weight: 500;
+}
+.industry-select {
+  background: var(--bg3); border: 1px solid var(--line2); border-radius: 10px;
+  color: var(--text); font-family: var(--sans); font-size: 15px; font-weight: 500;
+  padding: 10px 36px 10px 16px; cursor: pointer; outline: none;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237e8ea8'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center;
+  background-repeat: no-repeat; background-position: right 12px center;
 }
-.config-select:hover { border-color: var(--teal); }
-.tool-chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 600px; }
-.tool-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
-  background: var(--bg3); border: 1px solid var(--line2);
-  color: var(--soft); cursor: pointer; transition: all .2s;
-  user-select: none;
-}
-.tool-chip:hover { border-color: var(--teal); color: var(--text); }
-.tool-chip.active { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
-.tool-chip .check { display: none; }
-.tool-chip.active .check { display: inline; }
+.industry-select:hover { border-color: var(--teal); }
 
-/* ─── Connect Modal ─── */
-.connect-overlay {
-  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,.7); z-index: 200; align-items: center; justify-content: center;
+.hook-headline {
+  font-family: var(--serif); font-size: 32px; font-weight: 600;
+  color: var(--text); margin-bottom: 8px; line-height: 1.2;
 }
-.connect-overlay.show { display: flex; }
-.connect-modal {
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 16px;
-  padding: 40px; text-align: center; max-width: 420px; width: 90%;
-}
-.connect-modal h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 16px; }
-.connect-spinner {
-  width: 36px; height: 36px; border: 3px solid var(--line);
-  border-top-color: var(--teal); border-radius: 50%;
-  animation: spin .8s linear infinite; margin: 16px auto;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.connect-progress {
-  width: 100%; height: 6px; background: var(--bg3); border-radius: 3px;
-  margin: 16px 0; overflow: hidden;
-}
-.connect-progress-fill {
-  height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--blue));
-  border-radius: 3px; transition: width .3s;
-}
-.connect-status { font-size: 13px; color: var(--soft); min-height: 20px; }
-.connect-done { color: var(--teal); font-weight: 600; font-size: 15px; }
+.hook-subtext { color: var(--soft); font-size: 16px; margin-bottom: 36px; }
 
-/* ─── Hero Metrics ─── */
-.hero-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-  margin-bottom: 20px;
+/* ─── Frustration Cards Grid ─── */
+.frustration-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  max-width: 960px; margin: 0 auto 32px;
 }
-.metric-card {
+.frustration-card {
   background: var(--bg2);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 20px;
-  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
   position: relative;
-  overflow: hidden;
+  text-align: left;
+  user-select: none;
 }
-.metric-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--teal), transparent);
-  opacity: .5;
+.frustration-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+.frustration-card.selected {
+  border-color: var(--teal);
+  background: var(--teal-dim);
+  box-shadow: 0 0 20px rgba(0,201,160,.1);
 }
-.metric-value {
-  font-family: var(--serif); font-size: 36px; font-weight: 700;
-  color: var(--teal); line-height: 1.1; margin-bottom: 4px;
+.frustration-card .check-indicator {
+  position: absolute; top: 14px; right: 14px;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--line2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: transparent; transition: all .2s;
 }
-.metric-label { font-size: 13px; color: var(--soft); margin-bottom: 12px; }
-.sparkline-wrap { position: relative; height: 32px; width: 100%; }
-.metric-sparkline { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.frustration-card.selected .check-indicator {
+  border-color: var(--teal); background: var(--teal); color: var(--bg);
+}
+.frustration-card .fc-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.frustration-card .fc-title {
+  font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 6px; padding-right: 28px;
+}
+.frustration-card .fc-desc { font-size: 13px; color: var(--soft); line-height: 1.5; }
 
-/* ─── Grid Layout ─── */
-.grid-2col {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+/* ─── Reveal CTA ─── */
+.reveal-cta-wrap { text-align: center; margin-bottom: 40px; }
+.reveal-cta {
+  display: inline-block; padding: 14px 32px;
+  background: var(--teal); color: var(--bg);
+  font-weight: 700; font-size: 16px; border: none; border-radius: 10px;
+  cursor: pointer; transition: all .25s;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+}
+.reveal-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reveal-cta:hover { opacity: .88; }
+
+/* ─── Step 2: Personalized Dashboard ─── */
+.step2 {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .6s ease, transform .6s ease;
+  pointer-events: none; max-height: 0; overflow: hidden;
+}
+.step2.revealed {
+  opacity: 1; transform: translateY(0);
+  pointer-events: auto; max-height: none; overflow: visible;
 }
 
-/* ─── Flow Visualization ─── */
+/* Frustration mini-panels */
+.frustration-panel {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  align-items: center;
+}
+.fp-chart { position: relative; height: 200px; }
+.fp-chart canvas { max-height: 200px; }
+.fp-stat-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 200px;
+}
+.fp-stat-value {
+  font-family: var(--serif); font-size: 48px; font-weight: 700; color: var(--teal);
+}
+.fp-stat-label { font-size: 14px; color: var(--soft); margin-top: 4px; }
+.fp-info {}
+.fp-severity {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 12px;
+}
+.fp-severity.high { background: rgba(239,68,68,.12); color: var(--red); }
+.fp-severity.medium { background: rgba(245,158,11,.12); color: var(--amber); }
+.fp-severity.low { background: rgba(34,197,94,.12); color: var(--green); }
+.fp-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  margin-bottom: 8px; line-height: 1.3;
+}
+.fp-finding { font-size: 14px; color: var(--soft); line-height: 1.6; margin-bottom: 16px; }
+.fp-fix-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  background: var(--teal-dim); border: 1px solid transparent;
+  color: var(--teal); cursor: pointer; transition: all .2s;
+}
+.fp-fix-btn:hover { border-color: var(--teal); background: var(--teal-glow); }
+.fp-fix-btn.fixed { background: rgba(34,197,94,.12); color: var(--green); pointer-events: none; }
+
+/* Overview row */
+.grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Flow visualization */
 .flow-canvas-wrap { width: 100%; overflow-x: auto; }
 #flowCanvas { width: 100%; height: 140px; }
 
-/* ─── Bubble Chart ─── */
-.chart-wrap { position: relative; height: 320px; }
-.chart-wrap canvas { max-height: 320px; }
+/* Health gauge */
+.health-gauge-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.health-gauge-canvas { width: 220px; height: 130px; }
+.health-score {
+  font-family: var(--serif); font-size: 52px; font-weight: 700;
+  color: var(--teal); margin-top: -10px;
+}
+.health-label { font-size: 14px; color: var(--soft); }
 
-/* ─── Bottleneck Table ─── */
-.bottleneck-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.bottleneck-table th {
-  text-align: left; padding: 10px 12px; color: var(--soft);
-  border-bottom: 1px solid var(--line); font-weight: 500; font-size: 12px;
-  text-transform: uppercase; letter-spacing: .5px;
-}
-.bottleneck-table td {
-  padding: 10px 12px; border-bottom: 1px solid var(--line);
-  vertical-align: middle;
-}
-.bottleneck-table tr:last-child td { border-bottom: none; }
-.severity-bar {
-  width: 3px; height: 24px; border-radius: 2px;
-  display: inline-block; margin-right: 8px; vertical-align: middle;
-}
-.severity-high { background: var(--red); }
-.severity-medium { background: var(--amber); }
-.severity-low { background: var(--green); }
-.status-chip {
-  display: inline-block; padding: 2px 10px; border-radius: 10px;
-  font-size: 11px; font-weight: 500;
-}
-.status-active { background: rgba(239,68,68,.15); color: var(--red); }
-.status-monitoring { background: rgba(245,158,11,.15); color: var(--amber); }
-.status-resolved { background: rgba(34,197,94,.15); color: var(--green); }
-
-/* ─── Trend Chart ─── */
+/* Trend chart */
 .trend-wrap { position: relative; height: 280px; }
 .trend-wrap canvas { max-height: 280px; }
 
-/* ─── AI Insights ─── */
-.insights-list { display: flex; flex-direction: column; gap: 14px; }
-.insight-card {
-  display: flex; gap: 14px; padding: 16px;
-  background: var(--bg3); border-radius: 10px;
-  border: 1px solid var(--line);
+/* ─── Inline Roadmap Preview (Step 2.5 — ungated) ─── */
+.roadmap-preview {
+  opacity: 0; max-height: 0; overflow: hidden;
+  transition: opacity .5s ease, max-height .5s ease;
+  margin-top: 8px;
 }
-.insight-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.insight-body {}
-.insight-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text); }
-.insight-text { font-size: 13px; color: var(--soft); line-height: 1.5; }
+.roadmap-preview.visible {
+  opacity: 1; max-height: 3000px; overflow: visible;
+}
+.roadmap-preview-header {
+  text-align: center; margin-bottom: 28px; padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.roadmap-preview-header h2 {
+  font-family: var(--serif); font-size: 26px; font-weight: 600; margin-bottom: 6px;
+}
+.roadmap-preview-header p { color: var(--soft); font-size: 14px; }
 
-/* ─── Loading Skeleton ─── */
-.skeleton {
-  background: linear-gradient(90deg, var(--bg3) 25%, var(--line) 50%, var(--bg3) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 8px;
+/* Inline Clarity Score gauge (ungated) */
+.inline-gauge-wrap { text-align: center; margin-bottom: 28px; }
+.inline-gauge-canvas { width: 240px; height: 140px; margin: 0 auto; display: block; }
+.inline-score-num {
+  font-family: var(--serif); font-size: 52px; font-weight: 700;
+  margin-top: -14px;
 }
-@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-.skeleton-block { height: 200px; }
+.inline-score-label { font-size: 14px; color: var(--soft); margin-top: 2px; }
+.inline-score-context {
+  font-size: 13px; color: var(--muted); margin-top: 8px;
+}
+.inline-score-context strong { color: var(--text); }
 
-/* ─── Action Plan Sidebar ─── */
-.ap-tab {
-  position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 150;
-  background: var(--teal); color: var(--bg); font-weight: 700; font-size: 13px;
-  padding: 12px 10px; border-radius: 10px 0 0 10px; cursor: pointer;
-  writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 1px;
-  box-shadow: -2px 0 12px rgba(0,201,160,.25); transition: all .2s;
-}
-.ap-tab:hover { padding-right: 14px; }
-.ap-badge {
-  display: inline-block; background: var(--bg); color: var(--teal);
-  border-radius: 50%; width: 22px; height: 22px; line-height: 22px;
-  text-align: center; font-size: 12px; margin-bottom: 6px; writing-mode: horizontal-tb;
-}
-.ap-sidebar {
-  position: fixed; right: -420px; top: 0; width: 400px; height: 100vh;
-  background: var(--bg2); border-left: 1px solid var(--line); z-index: 160;
-  transition: right .3s ease; display: flex; flex-direction: column;
-  box-shadow: -4px 0 24px rgba(0,0,0,.4);
-}
-.ap-sidebar.open { right: 0; }
-.ap-header {
-  padding: 20px 24px; border-bottom: 1px solid var(--line);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.ap-header h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; }
-.ap-close { background: none; border: none; color: var(--soft); font-size: 22px; cursor: pointer; padding: 4px; }
-.ap-close:hover { color: var(--text); }
-.ap-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
-.ap-empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
-.ap-item {
-  background: var(--bg3); border: 1px solid var(--line); border-radius: 10px;
-  padding: 14px; margin-bottom: 10px; position: relative;
-}
-.ap-item-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; padding-right: 24px; }
-.ap-item-roi { font-size: 12px; color: var(--teal); font-weight: 600; }
-.ap-item-remove {
-  position: absolute; top: 10px; right: 10px; background: none; border: none;
-  color: var(--muted); font-size: 16px; cursor: pointer; padding: 2px;
-}
-.ap-item-remove:hover { color: var(--red); }
-.ap-footer {
-  padding: 20px 24px; border-top: 1px solid var(--line); background: var(--bg3);
-}
-.ap-roi-total {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 16px;
-}
-.ap-roi-label { font-size: 13px; color: var(--teal); }
-.ap-roi-value { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--teal); }
-.ap-roi-sub { font-size: 11px; color: var(--muted); }
-.ap-cta {
-  width: 100%; padding: 14px; background: var(--teal); color: var(--bg);
-  font-weight: 700; font-size: 15px; border: none; border-radius: 10px;
-  cursor: pointer; transition: opacity .2s;
-}
-.ap-cta:hover { opacity: .85; }
-.ap-cta:disabled { opacity: .4; cursor: not-allowed; }
-
-/* Add-to-plan buttons */
-.add-plan-btn {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
-  background: var(--teal-dim); border: 1px solid transparent;
-  color: var(--teal); cursor: pointer; transition: all .2s; white-space: nowrap;
-}
-.add-plan-btn:hover { border-color: var(--teal); background: var(--teal-glow); }
-.add-plan-btn.added { background: rgba(34,197,94,.12); color: var(--green); pointer-events: none; }
-.insight-card { position: relative; }
-.insight-add { position: absolute; top: 14px; right: 14px; }
-
-/* ─── Checkout Modal ─── */
-.checkout-overlay {
-  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,.75); z-index: 250; align-items: center; justify-content: center;
-}
-.checkout-overlay.show { display: flex; }
-.checkout-modal {
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 16px;
-  padding: 36px; max-width: 480px; width: 92%;
-}
-.checkout-modal h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 6px; }
-.checkout-sub { color: var(--soft); font-size: 14px; margin-bottom: 24px; }
-.checkout-field { margin-bottom: 16px; }
-.checkout-field label { display: block; font-size: 12px; color: var(--soft); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
-.checkout-field input {
-  width: 100%; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--line2);
-  border-radius: 8px; color: var(--text); font-family: var(--sans); font-size: 14px; outline: none;
-}
-.checkout-field input:focus { border-color: var(--teal); }
-.checkout-submit {
-  width: 100%; padding: 14px; background: var(--teal); color: var(--bg);
-  font-weight: 700; font-size: 15px; border: none; border-radius: 10px;
-  cursor: pointer; margin-top: 8px; transition: opacity .2s;
-}
-.checkout-submit:hover { opacity: .85; }
-.checkout-cancel {
-  display: block; width: 100%; text-align: center; margin-top: 12px;
-  color: var(--muted); font-size: 13px; cursor: pointer; background: none; border: none;
-}
-.checkout-cancel:hover { color: var(--soft); }
-.checkout-preview { margin-bottom: 20px; padding: 14px; background: var(--bg3); border-radius: 10px; font-size: 13px; }
-.checkout-preview-line { display: flex; justify-content: space-between; padding: 3px 0; }
-.checkout-preview-total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; font-weight: 700; color: var(--teal); }
-
-/* ─── Summary View ─── */
-.summary-view {
-  display: none; position: relative; z-index: 1;
-  max-width: 800px; margin: 0 auto; padding: 40px 20px 80px;
-}
-.summary-view.show { display: block; }
-.summary-header { text-align: center; margin-bottom: 40px; }
-.summary-header h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 8px; }
-.summary-header p { color: var(--soft); font-size: 15px; }
-.summary-meta { display: flex; gap: 24px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
-.summary-meta-item { font-size: 13px; color: var(--muted); }
-.summary-meta-item strong { color: var(--text); }
-.summary-card {
+/* Inline gap cards (ungated before+after) */
+.inline-gap-card {
   background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
-  padding: 20px 24px; margin-bottom: 16px;
+  padding: 20px 24px; margin-bottom: 12px;
 }
-.summary-card-num { font-family: var(--serif); font-size: 14px; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
-.summary-card-title { font-weight: 600; font-size: 16px; margin-bottom: 6px; }
-.summary-card-detail { font-size: 13px; color: var(--soft); line-height: 1.5; }
-.summary-card-roi { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--teal); }
-.summary-total {
+.igc-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.igc-icon { font-size: 22px; }
+.igc-title { font-weight: 600; font-size: 15px; }
+.igc-hrs {
+  margin-left: auto;
+  padding: 3px 10px; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+  background: var(--teal-dim); color: var(--teal);
+}
+.igc-before, .igc-after {
+  padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-bottom: 6px;
+}
+.igc-before {
+  background: rgba(239,68,68,.06); border-left: 3px solid var(--red); color: var(--soft);
+}
+.igc-before strong { color: var(--red); }
+.igc-after {
+  background: rgba(34,197,94,.06); border-left: 3px solid var(--green); color: var(--soft);
+}
+.igc-after strong { color: var(--green); }
+
+/* Roadmap actions bar */
+.roadmap-actions-bar {
+  background: linear-gradient(135deg, rgba(0,201,160,.08), rgba(61,126,255,.08));
+  border: 1px solid var(--teal-dim); border-radius: 14px;
+  padding: 24px 28px; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  flex-wrap: wrap;
+}
+.ra-text {}
+.ra-headline {
+  font-family: var(--serif); font-size: 20px; font-weight: 600; margin-bottom: 4px;
+}
+.ra-sub { font-size: 14px; color: var(--soft); }
+.ra-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.ra-email-row {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 20px 24px;
+}
+.ra-email-form {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.ra-email-label { font-size: 14px; font-weight: 600; color: var(--soft); white-space: nowrap; }
+.ra-email-form input {
+  padding: 10px 14px; background: var(--bg3); border: 1px solid var(--line2);
+  border-radius: 8px; color: var(--text); font-family: var(--sans); font-size: 14px; outline: none;
+  flex: 1; min-width: 160px;
+}
+.ra-email-form input:focus { border-color: var(--teal); }
+.ra-email-btn {
+  padding: 10px 20px; background: var(--teal); color: var(--bg);
+  font-weight: 700; font-size: 14px; border: none; border-radius: 8px;
+  cursor: pointer; transition: opacity .2s; white-space: nowrap;
+}
+.ra-email-btn:hover { opacity: .85; }
+.ra-sent { color: var(--green); font-weight: 600; font-size: 15px; padding: 8px 0; }
+
+
+/* Implementation timeline */
+.timeline-wrap {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 28px; margin: 20px 0;
+}
+.timeline-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600; margin-bottom: 20px; text-align: center;
+}
+.timeline-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.timeline-step {
+  text-align: center; padding: 16px; border-radius: 10px;
+  background: var(--bg3); border: 1px solid var(--line);
+}
+.timeline-step-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .8px;
+  color: var(--teal); font-weight: 600; margin-bottom: 8px;
+}
+.timeline-step-items { font-size: 13px; color: var(--soft); line-height: 1.6; }
+
+/* Total hours reclaimed */
+.summary-total-inline {
   background: linear-gradient(135deg, rgba(0,201,160,.1), rgba(61,126,255,.1));
   border: 1px solid var(--teal-dim); border-radius: 14px;
-  padding: 28px; text-align: center; margin: 28px 0;
+  padding: 24px; text-align: center; margin: 20px 0;
 }
-.summary-total-label { font-size: 14px; color: var(--soft); margin-bottom: 4px; }
-.summary-total-value { font-family: var(--serif); font-size: 42px; font-weight: 700; color: var(--teal); }
-.summary-total-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
-.summary-next {
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
-  padding: 28px; text-align: center; margin-top: 28px;
-}
-.summary-next h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
-.summary-next p { color: var(--soft); font-size: 14px; margin-bottom: 16px; }
+.summary-total-inline .st-label { font-size: 14px; color: var(--soft); margin-bottom: 4px; }
+.summary-total-inline .st-value { font-family: var(--serif); font-size: 44px; font-weight: 700; color: var(--teal); }
+.summary-total-inline .st-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-/* ─── CTA Banner ─── */
-.cta-banner {
-  background: linear-gradient(135deg, rgba(0,201,160,.08), rgba(61,126,255,.08));
-  border: 1px solid var(--teal-dim);
-  border-radius: 14px; padding: 28px 32px; text-align: center; margin-bottom: 20px;
+/* ─── Sticky Roadmap CTA ─── */
+.sticky-cta {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+  background: rgba(13,17,32,.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--teal-dim);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  transform: translateY(100%); transition: transform .3s ease;
 }
-.cta-banner h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
-.cta-banner p { color: var(--soft); font-size: 14px; margin-bottom: 16px; }
-.cta-btn {
-  display: inline-block; padding: 12px 28px; background: var(--teal);
-  color: var(--bg); font-weight: 600; font-size: 14px; border-radius: 8px;
-  text-decoration: none; transition: opacity .2s;
+.sticky-cta.visible { transform: translateY(0); }
+.sticky-cta-text {
+  font-size: 15px; color: var(--text); font-weight: 500;
 }
-.cta-btn:hover { opacity: .85; }
+.sticky-cta-text strong { color: var(--teal); font-family: var(--serif); font-size: 18px; }
+.sticky-cta-btn {
+  padding: 12px 28px; background: var(--teal); color: var(--bg);
+  font-weight: 700; font-size: 15px; border: none; border-radius: 10px;
+  cursor: pointer; transition: opacity .2s; white-space: nowrap;
+}
+.sticky-cta-btn:hover { opacity: .85; }
+
+/* Action buttons (used in roadmap actions bar) */
+.fr-action-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all .2s; text-decoration: none;
+  border: 1px solid var(--line);
+}
+.fr-action-primary {
+  background: var(--teal); color: var(--bg); border-color: var(--teal);
+}
+.fr-action-primary:hover { opacity: .85; }
+.fr-action-secondary {
+  background: var(--bg3); color: var(--text);
+}
+.fr-action-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+/* Share link copied toast */
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--teal); color: var(--bg); padding: 10px 24px; border-radius: 10px;
+  font-weight: 600; font-size: 14px; opacity: 0; transition: all .3s; z-index: 300;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
-  .hero-grid { grid-template-columns: repeat(2, 1fr); }
+  .frustration-grid { grid-template-columns: repeat(2, 1fr); }
   .grid-2col { grid-template-columns: 1fr; }
-  .config-bar { flex-direction: column; gap: 16px; }
+  .frustration-panel { grid-template-columns: 1fr; }
+  .timeline-row { grid-template-columns: 1fr; }
+  .hook-headline { font-size: 26px; }
+  .roadmap-actions-bar { flex-direction: column; text-align: center; }
+  .ra-email-form { justify-content: center; }
 }
 @media (max-width: 600px) {
-  .hero-grid { grid-template-columns: 1fr; }
+  .frustration-grid { grid-template-columns: 1fr; }
   .topbar { flex-direction: column; gap: 8px; }
-  .metric-value { font-size: 28px; }
+  .hook-headline { font-size: 22px; }
   .dashboard { padding: 16px 12px 40px; }
+  .hook-industry { flex-direction: column; gap: 8px; }
+  .sticky-cta { flex-direction: column; gap: 10px; padding: 12px 16px; }
+  .ra-buttons { flex-direction: column; align-items: stretch; }
+  .ra-email-form { flex-direction: column; }
+  .ra-email-form input { min-width: 100%; }
 }
 </style>
 </head>
 <body>
 
 <!-- Top Bar -->
-<div class="topbar">
+<div class="topbar" id="topbar">
   <div class="topbar-left">
     <a href="/" class="topbar-logo">ClearOps AI<span>Clarity</span></a>
   </div>
@@ -440,205 +463,128 @@ body::before {
       <span class="mode-dot"></span>
       <span id="modeText">Demo Mode</span>
     </span>
-    <span id="lastRefreshed" style="font-size:12px;color:var(--muted)"></span>
     <a href="/" class="back-link">&larr; Back to ClearOps</a>
   </div>
 </div>
 
-<div class="dashboard">
+<div class="dashboard" id="mainDashboard">
 
-  <!-- Config Bar: Industry + Tools (demo only) -->
-  <div class="config-bar" id="configBar">
-    <div class="config-section">
-      <div class="config-label">Your Industry</div>
-      <select class="config-select" id="industrySelect">
+  <!-- Step 1: The Hook -->
+  <div class="hook-section" id="hookSection">
+    <div class="hook-industry">
+      <label>Your industry:</label>
+      <select class="industry-select" id="industrySelect">
         <option value="professional_services">Professional Services</option>
         <option value="law_firm">Law Firm</option>
         <option value="trade_association">Trade Association</option>
         <option value="accounting">Accounting / CPA Firm</option>
       </select>
     </div>
-    <div class="config-section" style="flex:1">
-      <div class="config-label">Your Tools (click to connect)</div>
-      <div class="tool-chips" id="toolChips">
-        <span class="tool-chip active" data-tool="email">&#x2709; Email / Gmail</span>
-        <span class="tool-chip active" data-tool="slack">&#x1F4AC; Slack</span>
-        <span class="tool-chip" data-tool="zendesk">&#x1F3AB; Zendesk</span>
-        <span class="tool-chip" data-tool="hubspot">&#x1F4CA; HubSpot</span>
-        <span class="tool-chip" data-tool="salesforce">&#x2601; Salesforce</span>
-        <span class="tool-chip" data-tool="quickbooks">&#x1F4B2; QuickBooks</span>
-        <span class="tool-chip" data-tool="monday">&#x1F4CB; Monday.com</span>
-        <span class="tool-chip" data-tool="asana">&#x2705; Asana</span>
-        <span class="tool-chip" data-tool="sheets">&#x1F4D7; Google Sheets</span>
+    <h1 class="hook-headline">What's costing your team time?</h1>
+    <p class="hook-subtext">Pick the problems that feel familiar. <span style="color:var(--muted)">(Select up to 4)</span></p>
+    <div class="frustration-grid" id="frustrationGrid"></div>
+    <div class="reveal-cta-wrap">
+      <button class="reveal-cta" id="revealCta" onclick="revealDashboard()">Show me what's happening &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Personalized Dashboard -->
+  <div class="step2" id="step2">
+    <div id="frustrationPanels"></div>
+
+    <!-- Overview row -->
+    <div class="grid-2col">
+      <div class="panel">
+        <div class="panel-title"><span class="icon">&#x2192;</span> Operations Flow</div>
+        <div class="flow-canvas-wrap"><canvas id="flowCanvas"></canvas></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><span class="icon">&#x1F4CA;</span> Ops Health Score</div>
+        <div class="health-gauge-wrap">
+          <canvas class="health-gauge-canvas" id="healthGauge"></canvas>
+          <div class="health-score" id="healthScore">--</div>
+          <div class="health-label">Based on selected operational areas</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Hero Metrics -->
-  <div class="hero-grid" id="heroGrid">
-    <div class="metric-card">
-      <div class="metric-value" id="metricOps">--</div>
-      <div class="metric-label" id="labelOps">Total Operations (30d)</div>
-      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkOps"></canvas></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="metricResolution">--</div>
-      <div class="metric-label" id="labelResolution">Avg Resolution (hours)</div>
-      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkResolution"></canvas></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="metricSuccess">--</div>
-      <div class="metric-label" id="labelSuccess">Resolution Rate</div>
-      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkSuccess"></canvas></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-value" id="metricBottlenecks">--</div>
-      <div class="metric-label" id="labelBottlenecks">Bottlenecks Detected</div>
-      <div class="sparkline-wrap"><canvas class="metric-sparkline" id="sparkBottlenecks"></canvas></div>
-    </div>
-  </div>
-
-  <!-- Cross-Channel Flow -->
-  <div class="panel">
-    <div class="panel-title"><span class="icon">&#x2192;</span> Cross-Channel Operations Flow</div>
-    <div class="flow-canvas-wrap">
-      <canvas id="flowCanvas"></canvas>
-    </div>
-  </div>
-
-  <!-- Two columns -->
-  <div class="grid-2col">
+    <!-- Trend Chart -->
     <div class="panel">
-      <div class="panel-title"><span class="icon">&#x25CF;</span> Topic Clusters</div>
-      <div class="chart-wrap"><canvas id="bubbleChart"></canvas></div>
+      <div class="panel-title"><span class="icon">&#x1F4C8;</span> 30-Day Trend</div>
+      <div class="trend-wrap"><canvas id="trendChart"></canvas></div>
     </div>
-    <div class="panel">
-      <div class="panel-title"><span class="icon">&#x26A0;</span> Bottleneck Detection</div>
-      <div id="bottleneckTableWrap">
-        <table class="bottleneck-table">
-          <thead><tr><th></th><th>Issue</th><th>Count</th><th>Severity</th><th>Last Seen</th><th>Status</th></tr></thead>
-          <tbody id="bottleneckBody"></tbody>
-        </table>
+
+    <!-- Inline Roadmap Preview (appears after first "Fix this") -->
+    <div class="roadmap-preview" id="roadmapPreview">
+      <div class="roadmap-preview-header">
+        <h2>Your Clarity Roadmap</h2>
+        <p>Here's what we found &mdash; and what it's costing you.</p>
+      </div>
+
+      <!-- Clarity Score (ungated) -->
+      <div class="inline-gauge-wrap">
+        <canvas class="inline-gauge-canvas" id="inlineGauge"></canvas>
+        <div class="inline-score-num" id="inlineScoreNum">--</div>
+        <div class="inline-score-label">Operational Clarity Score</div>
+        <div class="inline-score-context">
+          Firms your size average <strong>67/100</strong>. Here's where you're losing time.
+        </div>
+      </div>
+
+      <!-- Gap cards: before + after (all ungated) -->
+      <div id="gapCards"></div>
+
+      <!-- Timeline (ungated) -->
+      <div id="inlineTimeline"></div>
+
+      <!-- Total hours (ungated) -->
+      <div id="inlineTotalWrap"></div>
+
+      <!-- CTA: Get PDF / Share / Book call -->
+      <div id="roadmapActions" style="display:none">
+        <div class="roadmap-actions-bar">
+          <div class="ra-text">
+            <div class="ra-headline">This roadmap is yours.</div>
+            <div class="ra-sub">Download it, share it with your team, or talk to us about implementing it.</div>
+          </div>
+          <div class="ra-buttons">
+            <button class="fr-action-btn fr-action-secondary" onclick="shareRoadmap()">&#x1F517; Share with Team</button>
+            <a class="fr-action-btn fr-action-primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank" onclick="gtag('event','clarity_book_call')">&#x1F4DE; Book a Call</a>
+          </div>
+        </div>
+        <div class="ra-email-row">
+          <form class="ra-email-form" onsubmit="sendRoadmapPDF(event)">
+            <span class="ra-email-label">Want this as a PDF?</span>
+            <input type="email" id="pdfEmail" placeholder="you@company.com" required>
+            <input type="text" id="pdfOrg" placeholder="Organization" required>
+            <button type="submit" class="ra-email-btn">Send me the PDF &rarr;</button>
+          </form>
+          <div class="ra-sent" id="raSent" style="display:none">&#x2713; Sent! Check your inbox.</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Trend Analysis -->
-  <div class="panel">
-    <div class="panel-title"><span class="icon">&#x1F4C8;</span> Trend Analysis (30 Days)</div>
-    <div class="trend-wrap"><canvas id="trendChart"></canvas></div>
-  </div>
-
-  <!-- AI Insights -->
-  <div class="panel">
-    <div class="panel-title"><span class="icon">&#x2728;</span> AI-Generated Insights</div>
-    <div class="insights-list" id="insightsList">
-      <div class="skeleton skeleton-block" style="height:180px"></div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-banner" id="ctaBanner">
-    <h3>Right now, things are falling through the cracks. This shows you where.</h3>
-    <p>ClearOps connects your tools and surfaces the gaps, missed handoffs, and at-risk items your team can't see today — live, in one place.</p>
-    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">See What You're Missing &rarr;</a>
-  </div>
-
 </div>
 
-<!-- Action Plan Sidebar Tab -->
-<div class="ap-tab" id="apTab" onclick="toggleSidebar()" style="display:none">
-  <span class="ap-badge" id="apBadge">0</span>
-  ACTION PLAN
+<!-- Sticky Roadmap CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-cta-text">
+    <strong id="stickyCount">0</strong> gaps identified &mdash; <strong id="stickyHours">0</strong>h/week to reclaim
+  </div>
+  <button class="sticky-cta-btn" onclick="scrollToRoadmap()">See Your Roadmap &darr;</button>
 </div>
 
-<!-- Action Plan Sidebar -->
-<div class="ap-sidebar" id="apSidebar">
-  <div class="ap-header">
-    <h3>Your Action Plan</h3>
-    <button class="ap-close" onclick="toggleSidebar()">&times;</button>
-  </div>
-  <div class="ap-items" id="apItems">
-    <div class="ap-empty" id="apEmpty">Click <strong>+ Add to Plan</strong> on any bottleneck or insight to start building your action plan.</div>
-  </div>
-  <div class="ap-footer">
-    <div class="ap-roi-total">
-      <div>
-        <div class="ap-roi-label">Time You'd Get Back</div>
-        <div class="ap-roi-sub">Hours/week your team stops chasing things</div>
-      </div>
-      <div class="ap-roi-value" id="apTotal">0h</div>
-    </div>
-    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get Your Clarity Roadmap</button>
-  </div>
-</div>
-
-<!-- Checkout Modal -->
-<div class="checkout-overlay" id="checkoutOverlay">
-  <div class="checkout-modal">
-    <h3>Get Your Clarity Roadmap</h3>
-    <div class="checkout-sub">We'll send you a clear breakdown of what's falling through the cracks and a step-by-step plan to fix it.</div>
-    <div class="checkout-preview" id="checkoutPreview"></div>
-    <form id="checkoutForm" onsubmit="submitActionPlan(event)">
-      <div class="checkout-field">
-        <label>Work Email</label>
-        <input type="email" id="checkoutEmail" placeholder="you@company.com" required>
-      </div>
-      <div class="checkout-field">
-        <label>Organization Name</label>
-        <input type="text" id="checkoutOrg" placeholder="Your company or organization" required>
-      </div>
-      <button type="submit" class="checkout-submit">Get My Clarity Roadmap &rarr;</button>
-    </form>
-    <button class="checkout-cancel" onclick="hideCheckout()">Back to dashboard</button>
-  </div>
-</div>
-
-<!-- Summary View (shown after checkout) -->
-<div class="summary-view" id="summaryView">
-  <div class="summary-header">
-    <h2>Your Clarity Roadmap</h2>
-    <p id="summarySubtitle">Prepared for your organization</p>
-    <div class="summary-meta" id="summaryMeta"></div>
-  </div>
-  <div id="summaryItems"></div>
-  <div class="summary-total">
-    <div class="summary-total-label">Total Time Your Team Gets Back</div>
-    <div class="summary-total-value" id="summaryTotal">0h</div>
-    <div class="summary-total-sub">Every week — less chasing, less rework, less "wait, where is that?"</div>
-  </div>
-  <div class="summary-next">
-    <h3>Get your team's time back.</h3>
-    <p>We close 2-3 of these gaps in the first week. No long implementation. No learning curve. Book a call and we'll walk through exactly how this gets done.</p>
-    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Call &rarr;</a>
-  </div>
-</div>
-
-<!-- Connect Modal -->
-<div class="connect-overlay" id="connectOverlay">
-  <div class="connect-modal">
-    <h3 id="connectTitle">Connecting to HubSpot...</h3>
-    <div class="connect-spinner" id="connectSpinner"></div>
-    <div class="connect-progress"><div class="connect-progress-fill" id="connectFill"></div></div>
-    <div class="connect-status" id="connectStatus">Authenticating...</div>
-  </div>
-</div>
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
 
 <script>
 // ══════════════════════════════════════════════════════════════════
-// INDUSTRY PRESETS
+// INDUSTRY PRESETS (frustration-first)
 // ══════════════════════════════════════════════════════════════════
 const INDUSTRY_PRESETS = {
   professional_services: {
     label: 'Professional Services Firm',
-    hero: { total_ops: 4218, avg_resolution_s: 3.2, success_rate: 91.2, bottlenecks: 14 },
-    metricLabels: { ops: 'Total Requests (30d)', resolution: 'Avg Resolution (hours)', success: 'Resolution Rate', bottlenecks: 'Bottlenecks Detected' },
-    sparklines: {
-      ops: [120,135,142,128,155,160,118,125,170,148,138,152,165,180,172,145,132,148,158,168,152,178,170,142,138,155,172,165,150,140],
-      resolution: [3.8,3.5,3.2,3.6,3.1,2.9,3.4,3.5,3.0,2.8,3.2,3.0,2.7,2.9,3.3,3.5,3.0,2.8,3.1,2.6,2.9,2.5,2.8,3.3,3.1,2.7,2.9,2.8,3.2,3.0],
-      success: [88,89,90,87,91,93,90,92,91,94,92,89,93,91,95,92,90,93,91,90,92,93,91,92,94,91,90,92,91,93],
-      bottlenecks: [2,1,0,1,2,1,0,0,1,2,1,0,1,0,0,1,2,1,0,1,0,0,1,1,0,0,1,0,0,1]
-    },
     flow: [
       { name: 'Incoming\nRequests', count: 4218, color: '#3d7eff' },
       { name: 'Auto-Routed\n& Triaged', count: 3840, color: '#00c9a0' },
@@ -646,42 +592,72 @@ const INDUSTRY_PRESETS = {
       { name: 'In\nProgress', count: 2940, color: '#f59e0b' },
       { name: 'Resolved', count: 3780, color: '#22c55e', success: 3640, fail: 140 }
     ],
-    clusters: [
-      { label: 'Client Onboarding',  x: 4.2, y: 94, r: 35, count: 860  },
-      { label: 'Support Tickets',    x: 2.8, y: 96, r: 45, count: 1420 },
-      { label: 'Contract Renewals',  x: 5.5, y: 88, r: 22, count: 310  },
-      { label: 'Billing Inquiries',  x: 2.1, y: 97, r: 28, count: 580  },
-      { label: 'Internal Requests',  x: 6.8, y: 78, r: 18, count: 240  },
-      { label: 'Compliance Reviews', x: 7.2, y: 85, r: 15, count: 165  },
-      { label: 'Scheduling',         x: 1.8, y: 98, r: 20, count: 380  }
-    ],
-    bottlenecks: [
-      { issue: 'Client onboarding handoff delayed between Slack and CRM', count: 23, severity: 'high', last_seen: '2h ago', status: 'active' },
-      { issue: 'Support tickets missing context from email thread', count: 18, severity: 'high', last_seen: '4h ago', status: 'active' },
-      { issue: 'Contract renewal reminders sent after deadline', count: 12, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-      { issue: 'Duplicate entries across ticketing and CRM', count: 9, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
-      { issue: 'Weekly report assembly taking 3+ hours manually', count: 5, severity: 'low', last_seen: '3d ago', status: 'resolved' },
-      { issue: 'Approval requests going unseen in Slack channels', count: 4, severity: 'low', last_seen: '2d ago', status: 'resolved' }
-    ],
-    insights: [
-      { icon: '\u26A1', title: 'New Clients Are Falling Through the Cracks', text: 'Client onboarding takes 4.2 touchpoints on average \u2014 42% more than support tickets. New client info sits in Slack for 6+ hours before anyone enters it into the CRM. That\u2019s 6 hours where a new client thinks nobody\u2019s working on their case.' },
-      { icon: '\uD83D\uDCC9', title: 'Thursday Afternoons Are a Blind Spot', text: 'Thursdays see 35% more inbound requests than other weekdays, but staffing levels stay flat. Your team doesn\u2019t know this is happening \u2014 they just feel overwhelmed every Thursday and don\u2019t know why.' },
-      { icon: '\u2705', title: 'Billing Inquiries Under Control', text: 'This is working. Billing resolution dropped from 4.1 hours to 47 minutes since the self-service portal launched. Zero escalations this week. This is what every process should look like.' },
-      { icon: '\uD83D\uDD04', title: '12 Renewals About to Lapse \u2014 Nobody\u2019s Watching', text: '12 contracts expiring in 30 days have had zero touchpoints in 60 days. 4 are in your top 20% by revenue. Renewal reminders are going to outdated email addresses. Without this dashboard, you wouldn\u2019t know until they churned.' },
-      { icon: '\uD83D\uDEA8', title: 'Your Team Spends 18 Hours/Week on Reports No One Trusts', text: 'Three people spend 18 hours weekly assembling reports across spreadsheets and tools. But the real problem isn\u2019t the time \u2014 it\u2019s that the data is always 2 weeks stale by the time leadership sees it.' }
+    frustrations: [
+      {
+        id: 'handoff_gaps', icon: '\uD83D\uDD04', title: 'Things Get Lost in Handoffs',
+        description: 'Client requests bounce between people and tools with no one tracking them.',
+        chart: { type: 'bar', labels: ['Email','Slack','CRM','PM Tool'], values: [42,28,18,12], colors: ['#3d7eff','#a78bfa','#00c9a0','#f59e0b'], unit: '% of handoffs' },
+        finding: 'Client onboarding takes 4.2 touchpoints on average \u2014 42% more than support tickets. New client info sits in Slack for 6+ hours before anyone enters it into the CRM.',
+        fix: 'Automated handoff tracking with alerts when items stall over 2 hours.',
+        before: 'Client info sits in Slack 6+ hours before CRM entry. No one knows a handoff is stuck until the client complains.',
+        after: 'Automated tracking catches every handoff. Alerts fire at 2 hours. Average handoff time drops to 45 minutes.',
+        timeline: 'Week 1', hrs: 8, severity: 'high'
+      },
+      {
+        id: 'renewal_blind', icon: '\uD83D\uDCC5', title: 'Nobody Tracks Renewals',
+        description: '12 contracts expiring soon with zero follow-up in the last 60 days.',
+        chart: { type: 'donut', labels: ['At Risk','Contacted','Renewed'], values: [12,8,45], colors: ['#ef4444','#f59e0b','#22c55e'], unit: 'contracts' },
+        finding: '12 contracts expiring in 30 days have had zero touchpoints in 60 days. 4 are in your top 20% by revenue. Renewal reminders are going to outdated emails.',
+        fix: 'Automated renewal pipeline with 90/60/30-day triggers and updated contact verification.',
+        before: '12 renewals expiring with no one watching. Reminders go to outdated email addresses.',
+        after: 'Automated 90/60/30-day triggers. Every renewal has an owner and a timeline. Zero silent churn.',
+        timeline: 'Week 1', hrs: 4, severity: 'high'
+      },
+      {
+        id: 'report_drain', icon: '\uD83D\uDCCA', title: 'Reports Take Forever',
+        description: 'Three people spend 18 hours weekly building reports from scattered data.',
+        chart: { type: 'stat', value: '18', label: 'Hours/week spent on manual reports' },
+        finding: 'Three people spend 18 hours weekly assembling reports across spreadsheets and tools. The data is always 2 weeks stale by the time leadership sees it.',
+        fix: 'Auto-generated dashboards pulling live data from connected tools. Reports update themselves.',
+        before: '3 people spend 18 hrs/week on reports. Data is 2 weeks stale when leadership sees it.',
+        after: 'Live dashboards auto-update from connected tools. Leadership sees real-time data. Report assembly time: zero.',
+        timeline: 'Week 2', hrs: 18, severity: 'medium'
+      },
+      {
+        id: 'thursday_spike', icon: '\uD83D\uDCC9', title: 'Thursday Is a Blind Spot',
+        description: '35% more requests hit on Thursdays but staffing stays flat.',
+        chart: { type: 'bar', labels: ['Mon','Tue','Wed','Thu','Fri'], values: [140,142,138,192,145], colors: ['#3d7eff','#3d7eff','#3d7eff','#ef4444','#3d7eff'], unit: 'avg requests' },
+        finding: 'Thursdays see 35% more inbound requests than other weekdays, but staffing levels stay flat. Your team feels overwhelmed every Thursday and doesn\u2019t know why.',
+        fix: 'Workload forecasting that flags capacity gaps 48 hours in advance.',
+        before: 'Thursday volume spikes 35%. Team is overwhelmed but nobody can see why.',
+        after: 'Workload forecasting flags the spike 48h ahead. Staff shifts are adjusted before the crunch hits.',
+        timeline: 'Week 2', hrs: 3, severity: 'medium'
+      },
+      {
+        id: 'context_lost', icon: '\uD83D\uDCE7', title: 'Tickets Miss Key Context',
+        description: 'Support tickets arrive stripped of the email thread that explains the problem.',
+        chart: { type: 'donut', labels: ['Missing Context','Complete'], values: [38,62], colors: ['#ef4444','#22c55e'], unit: '% of tickets' },
+        finding: '38% of support tickets arrive without context from the original email thread. Staff spend 15+ minutes per ticket reconstructing the history.',
+        fix: 'Auto-attach email thread context to every ticket created from email or Slack.',
+        before: '38% of tickets lack context. Staff spend 15 min/ticket reconstructing what happened.',
+        after: 'Email threads auto-attach to tickets. Full context on every issue from the start.',
+        timeline: 'Week 1', hrs: 5, severity: 'high'
+      },
+      {
+        id: 'approvals_stuck', icon: '\u23F3', title: 'Approvals Sit in Inboxes',
+        description: 'Approval requests go unseen in Slack channels for days.',
+        chart: { type: 'bar', labels: ['<1h','1-4h','4-24h','>24h'], values: [15,25,35,25], colors: ['#22c55e','#00c9a0','#f59e0b','#ef4444'], unit: '% of approvals' },
+        finding: '60% of approvals take more than 4 hours. 25% take over 24 hours. The bottleneck is visibility \u2014 approvers don\u2019t know the request is waiting.',
+        fix: 'Smart escalation: approval requests ping the right person, then auto-escalate after 2 hours.',
+        before: '60% of approvals take 4+ hours. 25% take over a day. No one knows they\u2019re waiting.',
+        after: 'Approval requests route to the right person with auto-escalation at 2h. Average approval time under 1 hour.',
+        timeline: 'Week 2', hrs: 3, severity: 'medium'
+      }
     ]
   },
 
   law_firm: {
     label: 'Law Firm',
-    hero: { total_ops: 3640, avg_resolution_s: 4.8, success_rate: 88.5, bottlenecks: 18 },
-    metricLabels: { ops: 'Total Matters Tracked (30d)', resolution: 'Avg Time to Close (hours)', success: 'On-Time Completion', bottlenecks: 'Bottlenecks Detected' },
-    sparklines: {
-      ops: [105,112,118,108,125,130,98,108,138,122,115,128,135,148,140,118,110,125,132,142,128,150,142,118,112,128,140,135,122,115],
-      resolution: [5.2,5.0,4.8,5.1,4.6,4.4,4.9,5.0,4.5,4.3,4.7,4.5,4.2,4.4,4.8,5.0,4.5,4.3,4.6,4.1,4.4,4.0,4.3,4.8,4.6,4.2,4.4,4.3,4.7,4.5],
-      success: [85,86,87,84,88,90,87,89,88,91,89,86,90,88,92,89,87,90,88,87,89,90,88,89,91,88,87,89,88,90],
-      bottlenecks: [3,2,1,2,3,2,1,1,2,3,2,1,2,1,1,2,3,2,1,2,1,1,2,2,1,1,2,1,1,2]
-    },
     flow: [
       { name: 'New\nMatters', count: 3640, color: '#3d7eff' },
       { name: 'Conflict\nCheck', count: 3520, color: '#00c9a0' },
@@ -689,42 +665,54 @@ const INDUSTRY_PRESETS = {
       { name: 'Active\nWork', count: 2860, color: '#f59e0b' },
       { name: 'Closed', count: 3220, color: '#22c55e', success: 2850, fail: 370 }
     ],
-    clusters: [
-      { label: 'New Case Intake',     x: 3.8, y: 92, r: 38, count: 920  },
-      { label: 'Document Review',     x: 6.2, y: 84, r: 32, count: 680  },
-      { label: 'Client Communication', x: 2.4, y: 95, r: 28, count: 540 },
-      { label: 'Court Filings',       x: 5.8, y: 91, r: 22, count: 380  },
-      { label: 'Billing / Time Entry', x: 3.1, y: 88, r: 25, count: 460 },
-      { label: 'Compliance / Ethics',  x: 7.5, y: 82, r: 14, count: 180 },
-      { label: 'Internal Admin',       x: 4.5, y: 79, r: 16, count: 220 }
-    ],
-    bottlenecks: [
-      { issue: 'Conflict checks delayed \u2014 partner approval bottleneck', count: 28, severity: 'high', last_seen: '1h ago', status: 'active' },
-      { issue: 'Time entries submitted 48+ hours after work performed', count: 22, severity: 'high', last_seen: '3h ago', status: 'active' },
-      { issue: 'Client emails unanswered for 24+ hours', count: 15, severity: 'medium', last_seen: '8h ago', status: 'monitoring' },
-      { issue: 'Document versions out of sync across DMS and email', count: 11, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-      { issue: 'Court filing deadlines tracked in personal calendars only', count: 7, severity: 'high', last_seen: '2d ago', status: 'monitoring' },
-      { issue: 'Realization rate dropping on flat-fee matters', count: 4, severity: 'low', last_seen: '5d ago', status: 'resolved' }
-    ],
-    insights: [
-      { icon: '\u26A1', title: 'Conflict Checks Are a Liability Risk', text: '28 new matters waited 6+ hours for conflict clearance this month. The bottleneck is partner sign-off \u2014 85% of delays happen when the reviewing partner has 3+ matters in queue. One missed conflict and you have a malpractice exposure.' },
-      { icon: '\uD83D\uDCC9', title: 'You Don\u2019t Know How Much Time Is Going Unbilled', text: 'Associates enter time 48+ hours after work is performed. At that point, they\u2019re guessing. The firm has no visibility into how much billable work is actually being captured \u2014 and no way to know what\u2019s being left on the table.' },
-      { icon: '\u2705', title: 'Client Responsiveness Under Control', text: 'Average email response time dropped from 18 to 11 hours with the triage queue. Client satisfaction is up for the third consecutive month. This is what visibility looks like when it works.' },
-      { icon: '\uD83D\uDD04', title: '7 Court Deadlines Have No Safety Net', text: '7 upcoming court deadlines are tracked only in individual attorney calendars. No backup notification. No redundancy. If someone is out sick or on vacation, these deadlines could be missed. That\u2019s not a process problem \u2014 it\u2019s a ticking bomb.' },
-      { icon: '\uD83D\uDEA8', title: 'Document Versions Are Diverging Across Tools', text: 'Paralegals find different versions of the same document in the DMS, email, and shared drives. They spend 6 hours/week reconciling. But the real risk is when they don\u2019t catch a discrepancy and the wrong version goes to court.' }
+    frustrations: [
+      { id: 'conflict_delay', icon: '\u26A0\uFE0F', title: 'Conflict Checks Bottleneck', description: 'New matters wait 6+ hours for partner sign-off on conflict clearance.',
+        chart: { type: 'bar', labels: ['<1h','1-3h','3-6h','6h+'], values: [12,18,28,42], colors: ['#22c55e','#00c9a0','#f59e0b','#ef4444'], unit: '% of matters' },
+        finding: '28 new matters waited 6+ hours for conflict clearance this month. 85% of delays happen when the reviewing partner has 3+ matters in queue.',
+        fix: 'Auto-route conflicts to available partners. Flag high-risk conflicts for priority review.',
+        before: '42% of matters wait 6+ hours for conflict clearance. One missed conflict = malpractice risk.',
+        after: 'Auto-routing to available partners. High-risk flags for priority review. Average clearance under 1 hour.',
+        timeline: 'Week 1', hrs: 6, severity: 'high' },
+      { id: 'unbilled_time', icon: '\uD83D\uDCB0', title: 'Time Goes Unbilled', description: 'Associates enter time 48+ hours late \u2014 they\u2019re guessing, not tracking.',
+        chart: { type: 'stat', value: '48h', label: 'Average delay before time entry' },
+        finding: 'Associates enter time 48+ hours after work is performed. The firm has no visibility into how much billable work is actually being captured.',
+        fix: 'Passive time tracking tied to matter activity. Reminders at end of day, auto-draft entries from calendar + docs.',
+        before: 'Time entered 48h+ late. Associates guess hours. Revenue leaks you can\u2019t measure.',
+        after: 'Passive tracking drafts entries from calendar and docs. Daily reminders. Capture rate up 15-20%.',
+        timeline: 'Week 1', hrs: 6, severity: 'high' },
+      { id: 'court_deadlines', icon: '\uD83D\uDCC5', title: 'Deadlines Have No Safety Net', description: '7 upcoming court deadlines tracked only in personal calendars.',
+        chart: { type: 'donut', labels: ['Personal Only','Shared Calendar','Automated'], values: [7,12,24], colors: ['#ef4444','#f59e0b','#22c55e'], unit: 'deadlines' },
+        finding: '7 upcoming court deadlines are tracked only in individual attorney calendars. No backup notification, no redundancy.',
+        fix: 'Centralized deadline tracking with redundant notifications and backup assignee alerts.',
+        before: '7 deadlines in personal calendars only. If someone is sick or on vacation, deadlines get missed.',
+        after: 'Every deadline in a shared system with backup assignees and escalation alerts at 48h, 24h, and 2h.',
+        timeline: 'Week 1', hrs: 2, severity: 'high' },
+      { id: 'doc_versions', icon: '\uD83D\uDCC4', title: 'Document Versions Diverge', description: 'Different versions of the same document in DMS, email, and shared drives.',
+        chart: { type: 'bar', labels: ['DMS','Email','Shared Drive','Local'], values: [45,28,18,9], colors: ['#22c55e','#3d7eff','#f59e0b','#ef4444'], unit: '% of docs' },
+        finding: 'Paralegals find different versions in the DMS, email, and shared drives. They spend 6 hours/week reconciling. The real risk: wrong version going to court.',
+        fix: 'Single-source document management with version locking. Auto-sync across all storage locations.',
+        before: 'Docs in 4 places with different versions. 6h/week reconciling. Wrong version risk is real.',
+        after: 'One master copy auto-synced everywhere. Version locking prevents conflicts. Zero reconciliation time.',
+        timeline: 'Week 2', hrs: 6, severity: 'medium' },
+      { id: 'client_response', icon: '\uD83D\uDCE9', title: 'Client Emails Go Cold', description: 'Client emails unanswered for 24+ hours with no visibility into the queue.',
+        chart: { type: 'bar', labels: ['<4h','4-12h','12-24h','24h+'], values: [30,25,25,20], colors: ['#22c55e','#00c9a0','#f59e0b','#ef4444'], unit: '% of emails' },
+        finding: '45% of client emails take over 12 hours to get a response. 20% go past 24 hours. No one has visibility into the queue.',
+        fix: 'Shared client communication queue with SLA tracking and auto-escalation at 12 hours.',
+        before: '20% of client emails unanswered past 24h. No one sees the backlog building.',
+        after: 'Shared queue with SLA tracking. Auto-escalation at 12h. Average response under 4 hours.',
+        timeline: 'Week 2', hrs: 4, severity: 'medium' },
+      { id: 'flat_fee_leak', icon: '\uD83D\uDCC9', title: 'Flat Fees Eat Margins', description: 'Realization rate dropping on flat-fee matters but no one tracks the overage.',
+        chart: { type: 'donut', labels: ['Over Budget','On Budget','Under Budget'], values: [35,40,25], colors: ['#ef4444','#f59e0b','#22c55e'], unit: '% of flat-fee matters' },
+        finding: '35% of flat-fee matters go over budget. The firm doesn\u2019t track time against flat fees, so there\u2019s no early warning when a matter is burning through its budget.',
+        fix: 'Budget tracking on flat-fee matters with alerts at 50%, 75%, and 90% of estimated hours.',
+        before: '35% of flat-fee matters over budget. No early warning. Margin erosion is invisible.',
+        after: 'Real-time budget tracking with alerts at 50/75/90%. Partners see overruns before they happen.',
+        timeline: 'Week 4', hrs: 3, severity: 'low' }
     ]
   },
 
   trade_association: {
     label: 'Trade Association',
-    hero: { total_ops: 5820, avg_resolution_s: 2.1, success_rate: 93.8, bottlenecks: 11 },
-    metricLabels: { ops: 'Member Interactions (30d)', resolution: 'Avg Response Time (hours)', success: 'Member Satisfaction', bottlenecks: 'Bottlenecks Detected' },
-    sparklines: {
-      ops: [165,178,185,172,198,205,155,168,218,195,182,200,210,230,220,190,175,195,205,218,198,228,218,185,178,200,218,210,195,182],
-      resolution: [2.5,2.3,2.1,2.4,2.0,1.8,2.2,2.3,1.9,1.7,2.1,1.9,1.6,1.8,2.2,2.4,1.9,1.7,2.0,1.5,1.8,1.4,1.7,2.2,2.0,1.6,1.8,1.7,2.1,1.9],
-      success: [91,92,93,90,94,95,93,94,93,96,94,91,95,93,97,94,92,95,93,92,94,95,93,94,96,93,92,94,93,95],
-      bottlenecks: [1,1,0,1,2,1,0,0,1,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,0,0,1]
-    },
     flow: [
       { name: 'Member\nInquiries', count: 5820, color: '#3d7eff' },
       { name: 'Auto-\nCategorized', count: 5400, color: '#00c9a0' },
@@ -732,42 +720,54 @@ const INDUSTRY_PRESETS = {
       { name: 'In\nProgress', count: 4100, color: '#f59e0b' },
       { name: 'Resolved', count: 5460, color: '#22c55e', success: 5120, fail: 340 }
     ],
-    clusters: [
-      { label: 'Membership Renewals',  x: 3.5, y: 96, r: 42, count: 1580 },
-      { label: 'Event Registration',   x: 1.8, y: 98, r: 38, count: 1320 },
-      { label: 'Advocacy / Policy',     x: 5.2, y: 90, r: 20, count: 380  },
-      { label: 'Sponsorship Mgmt',     x: 4.8, y: 87, r: 18, count: 290  },
-      { label: 'Committee Coordination', x: 6.1, y: 82, r: 22, count: 420 },
-      { label: 'Member Benefits',       x: 2.5, y: 95, r: 30, count: 860  },
-      { label: 'Communications',        x: 2.2, y: 97, r: 26, count: 680  }
-    ],
-    bottlenecks: [
-      { issue: 'Renewal notices not synced between AMS and email platform', count: 19, severity: 'high', last_seen: '3h ago', status: 'active' },
-      { issue: 'Event registrations requiring manual data entry into AMS', count: 14, severity: 'high', last_seen: '5h ago', status: 'active' },
-      { issue: 'Committee meeting notes not reaching all members', count: 10, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-      { issue: 'Sponsor deliverables tracked in spreadsheets only', count: 8, severity: 'medium', last_seen: '2d ago', status: 'monitoring' },
-      { issue: 'New member welcome sequence delayed 5+ days', count: 6, severity: 'low', last_seen: '4d ago', status: 'resolved' },
-      { issue: 'Advocacy alerts sent to lapsed members', count: 3, severity: 'low', last_seen: '6d ago', status: 'resolved' }
-    ],
-    insights: [
-      { icon: '\u26A1', title: '19 Members Never Got Their Renewal Notice', text: '19 renewal notices failed to reach members because the AMS and email platform are out of sync. You have no way to know this happened without manually cross-checking both systems. At $450/member, that\u2019s $8,550 in renewals you might silently lose.' },
-      { icon: '\uD83D\uDCC9', title: 'Nobody Knows What\u2019s Happening Between Events and the AMS', text: 'Staff spend 8 hours per event manually entering registrations. But the real issue is the gap \u2014 between registration and data entry, you have no visibility into who actually signed up, who paid, or who needs follow-up.' },
-      { icon: '\u2705', title: 'Member Response Time Under Control', text: 'Response time dropped from 3.4 to 2.1 hours. Members who hear back within 2 hours are 3x more likely to renew. You\u2019re hitting that mark 68% of the time now. This is what operational control looks like.' },
-      { icon: '\uD83D\uDD04', title: 'Committee Members Are Disengaging \u2014 Quietly', text: 'Only 34% of committee members opened the last 3 meeting recaps. You wouldn\u2019t know this without checking. By the time they stop showing up, it\u2019s too late. These are your future board candidates and volunteers.' },
-      { icon: '\uD83D\uDEA8', title: 'Sponsor Deliverables Are a Churn Risk', text: 'Sponsor deliverables are tracked across 6 spreadsheets with no single owner. Two sponsors got late reports last quarter. If a sponsor doesn\u2019t renew, you won\u2019t know it was because of a missed deliverable they never told you about.' }
+    frustrations: [
+      { id: 'renewal_sync', icon: '\uD83D\uDD14', title: 'Renewal Notices Go Missing', description: 'AMS and email platform out of sync \u2014 19 members never got their notice.',
+        chart: { type: 'stat', value: '19', label: 'Members who missed renewal notices' },
+        finding: '19 renewal notices failed to reach members because the AMS and email platform are out of sync. At $450/member, that\u2019s $8,550 in renewals you might silently lose.',
+        fix: 'Bi-directional AMS-email sync with delivery confirmation and bounce alerts.',
+        before: '19 members missed notices. You only find out when they don\u2019t renew. $8,550 at risk.',
+        after: 'Every notice confirmed delivered. Bounce alerts trigger staff follow-up within 24h. Zero silent churn.',
+        timeline: 'Week 1', hrs: 4, severity: 'high' },
+      { id: 'event_manual', icon: '\uD83D\uDCCB', title: 'Event Data Stuck in Limbo', description: 'Staff spend 8 hours per event manually entering registrations into the AMS.',
+        chart: { type: 'bar', labels: ['Data Entry','Follow-up','Reconcile','Report'], values: [8,4,3,2], colors: ['#ef4444','#f59e0b','#f59e0b','#3d7eff'], unit: 'hours/event' },
+        finding: 'Staff spend 8 hours per event on manual data entry. Between registration and entry, you have zero visibility into who signed up, paid, or needs follow-up.',
+        fix: 'Direct event-to-AMS sync. Registrations auto-create member records with payment status.',
+        before: '8h per event on data entry. Gap between registration and AMS means no visibility.',
+        after: 'Auto-sync from event platform to AMS. Registrations appear instantly. Staff reclaim 8h per event.',
+        timeline: 'Week 1', hrs: 8, severity: 'high' },
+      { id: 'committee_disengage', icon: '\uD83D\uDC65', title: 'Committee Members Ghosting', description: 'Only 34% of committee members opened the last 3 meeting recaps.',
+        chart: { type: 'donut', labels: ['Disengaged','Occasional','Active'], values: [34,28,38], colors: ['#ef4444','#f59e0b','#22c55e'], unit: '% of members' },
+        finding: 'Only 34% of committee members opened the last 3 recaps. By the time they stop showing up, it\u2019s too late. These are your future board candidates.',
+        fix: 'Engagement scoring with automated re-engagement sequences for at-risk members.',
+        before: '34% engagement rate and dropping. You don\u2019t know who\u2019s checked out until they resign.',
+        after: 'Engagement scores flag at-risk members early. Auto re-engagement catches them before they leave.',
+        timeline: 'Week 2', hrs: 3, severity: 'medium' },
+      { id: 'sponsor_chaos', icon: '\uD83D\uDCC1', title: 'Sponsor Deliverables Untracked', description: 'Deliverables tracked across 6 spreadsheets with no single owner.',
+        chart: { type: 'bar', labels: ['On Time','Late','Missed'], values: [58,28,14], colors: ['#22c55e','#f59e0b','#ef4444'], unit: '% of deliverables' },
+        finding: 'Two sponsors got late reports last quarter. Deliverables are tracked across 6 spreadsheets with no single owner. If a sponsor churns, you won\u2019t know it was a missed deliverable.',
+        fix: 'Centralized sponsor dashboard with deadline tracking and owner assignment.',
+        before: '6 spreadsheets, no owner. Late deliverables = silent sponsor churn risk.',
+        after: 'One dashboard per sponsor. Deadlines tracked with owner alerts. Zero missed deliverables.',
+        timeline: 'Week 2', hrs: 3, severity: 'medium' },
+      { id: 'welcome_delay', icon: '\uD83D\uDC4B', title: 'New Members Wait in Silence', description: 'Welcome sequence delayed 5+ days \u2014 first impression is silence.',
+        chart: { type: 'bar', labels: ['Day 1','Day 2-3','Day 4-5','Day 5+'], values: [25,20,15,40], colors: ['#22c55e','#00c9a0','#f59e0b','#ef4444'], unit: '% of new members' },
+        finding: '40% of new members don\u2019t hear from you for 5+ days. Their first impression is silence. Members who get a Day 1 welcome are 3x more likely to renew.',
+        fix: 'Instant automated welcome flow: Day 0 welcome, Day 2 benefits guide, Day 7 check-in.',
+        before: '40% wait 5+ days for welcome. First impression: "Did anyone notice I joined?"',
+        after: 'Automated Day 0/2/7 sequence. Every new member feels seen from day one.',
+        timeline: 'Week 1', hrs: 2, severity: 'medium' },
+      { id: 'advocacy_lapsed', icon: '\uD83D\uDCE2', title: 'Alerts Reach Wrong People', description: 'Advocacy alerts sent to lapsed members who shouldn\u2019t receive them.',
+        chart: { type: 'donut', labels: ['Lapsed','Active','Unverified'], values: [15,72,13], colors: ['#ef4444','#22c55e','#f59e0b'], unit: '% of recipients' },
+        finding: '15% of advocacy alert recipients are lapsed members. You\u2019re sending policy calls-to-action to people who no longer pay dues. It undermines credibility and inflates your reach metrics.',
+        fix: 'List hygiene automation: sync membership status before every broadcast.',
+        before: '15% of advocacy recipients are lapsed. Credibility risk + inflated metrics.',
+        after: 'Auto-sync membership status before every send. Only active members receive alerts.',
+        timeline: 'Week 4', hrs: 1, severity: 'low' }
     ]
   },
 
   accounting: {
     label: 'Accounting / CPA Firm',
-    hero: { total_ops: 2940, avg_resolution_s: 5.6, success_rate: 89.3, bottlenecks: 16 },
-    metricLabels: { ops: 'Client Engagements (30d)', resolution: 'Avg Turnaround (hours)', success: 'On-Time Delivery', bottlenecks: 'Bottlenecks Detected' },
-    sparklines: {
-      ops: [80,88,95,85,102,108,78,85,115,100,92,105,112,125,118,95,88,100,108,115,102,122,115,92,88,102,115,108,98,90],
-      resolution: [6.2,5.8,5.5,6.0,5.3,5.0,5.7,5.8,5.2,4.8,5.4,5.1,4.8,5.0,5.5,5.8,5.2,4.9,5.3,4.6,5.0,4.4,4.8,5.5,5.2,4.8,5.0,4.9,5.4,5.1],
-      success: [86,87,88,85,89,91,88,90,89,92,90,87,91,89,93,90,88,91,89,88,90,91,89,90,92,89,88,90,89,91],
-      bottlenecks: [3,2,1,2,3,2,1,1,2,3,2,1,2,1,1,2,3,2,1,2,1,1,2,2,1,1,2,1,1,2]
-    },
     flow: [
       { name: 'Client\nRequests', count: 2940, color: '#3d7eff' },
       { name: 'Document\nCollection', count: 2680, color: '#00c9a0' },
@@ -775,42 +775,51 @@ const INDUSTRY_PRESETS = {
       { name: 'In\nReview', count: 2180, color: '#f59e0b' },
       { name: 'Delivered', count: 2625, color: '#22c55e', success: 2340, fail: 285 }
     ],
-    clusters: [
-      { label: 'Tax Preparation',      x: 5.8, y: 91, r: 40, count: 980  },
-      { label: 'Bookkeeping',          x: 2.5, y: 96, r: 32, count: 640  },
-      { label: 'Audit Engagements',    x: 8.2, y: 82, r: 18, count: 185  },
-      { label: 'Advisory / Consulting', x: 6.5, y: 86, r: 22, count: 280 },
-      { label: 'Payroll',              x: 2.0, y: 97, r: 25, count: 420  },
-      { label: 'Client Onboarding',    x: 4.8, y: 88, r: 16, count: 195  },
-      { label: 'Compliance Filings',   x: 5.2, y: 90, r: 20, count: 310  }
-    ],
-    bottlenecks: [
-      { issue: 'Client document requests unanswered for 7+ days', count: 32, severity: 'high', last_seen: '1h ago', status: 'active' },
-      { issue: 'Tax returns queued behind missing client docs', count: 24, severity: 'high', last_seen: '2h ago', status: 'active' },
-      { issue: 'Workpaper review cycle taking 3+ rounds', count: 14, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-      { issue: 'Client portal uploads not triggering staff notifications', count: 10, severity: 'medium', last_seen: '8h ago', status: 'monitoring' },
-      { issue: 'Fee estimates sent without current year rate card', count: 6, severity: 'low', last_seen: '3d ago', status: 'resolved' },
-      { issue: 'Engagement letters expiring without follow-up', count: 5, severity: 'low', last_seen: '5d ago', status: 'resolved' }
-    ],
-    insights: [
-      { icon: '\u26A1', title: '32 Client Requests Are Sitting Unanswered Right Now', text: '32 document requests have been outstanding for 7+ days. These are blocking 24 tax returns. Your clients think you\u2019re working on their return. You\u2019re actually waiting on documents they don\u2019t know you need. No one is tracking this.' },
-      { icon: '\uD83D\uDCC9', title: 'Workpapers Go Through 3 Review Rounds \u2014 Should Be 2', text: 'Average review cycles are 3.2 rounds vs. industry benchmark of 1.8. The issue isn\u2019t reviewer quality \u2014 it\u2019s that formatting errors make it past preparation. Without visibility into what\u2019s causing rework, the cycle never shortens.' },
-      { icon: '\u2705', title: 'Payroll Is Under Control', text: 'Payroll hits 97% on-time with only 2 touchpoints per cycle. This is what a well-tracked process looks like. Every other workflow should be measured against this standard.' },
-      { icon: '\uD83D\uDD04', title: 'Clients Are Uploading Documents Nobody Sees', text: '10 client uploads this month didn\u2019t trigger staff notifications. Staff found them days later during manual checks. Your clients think they\u2019ve done their part. Your staff doesn\u2019t know the documents exist. This is fixable in hours.' },
-      { icon: '\uD83D\uDEA8', title: 'You\u2019re Headed for a Tax Season Capacity Crunch', text: 'Current trajectory: 340 returns in queue for March, capacity for 280. You don\u2019t have a plan for the gap yet. Without this visibility, you\u2019d find out in March when it\u2019s too late to hire or shift work.' }
+    frustrations: [
+      { id: 'doc_blackhole', icon: '\uD83D\uDCE5', title: 'Client Docs Sit Unanswered', description: '32 document requests outstanding for 7+ days \u2014 blocking 24 returns.',
+        chart: { type: 'stat', value: '32', label: 'Document requests outstanding 7+ days' },
+        finding: '32 document requests have been outstanding 7+ days. These are blocking 24 tax returns. Your clients think you\u2019re working on their return. You\u2019re waiting on docs they don\u2019t know you need.',
+        fix: 'Automated document request sequences with 3/5/7-day reminders and staff escalation.',
+        before: '32 requests outstanding. Clients don\u2019t know you\u2019re waiting. Returns are silently blocked.',
+        after: 'Auto-reminders at 3/5/7 days. Staff alerted to non-responsive clients. Blocked returns drop 80%.',
+        timeline: 'Week 1', hrs: 6, severity: 'high' },
+      { id: 'review_rework', icon: '\uD83D\uDD04', title: 'Workpapers Need 3 Rounds', description: 'Review cycle is 3.2 rounds when industry benchmark is 1.8.',
+        chart: { type: 'bar', labels: ['1 Round','2 Rounds','3 Rounds','4+ Rounds'], values: [15,30,35,20], colors: ['#22c55e','#00c9a0','#f59e0b','#ef4444'], unit: '% of workpapers' },
+        finding: 'Average review cycles are 3.2 rounds vs. industry benchmark of 1.8. Formatting errors make it past preparation. Without visibility into what\u2019s causing rework, the cycle never shortens.',
+        fix: 'Prep checklists with auto-validation. Track rework reasons to fix root causes.',
+        before: '3.2 review rounds per workpaper. Formatting errors pass through. Root cause invisible.',
+        after: 'Auto-validation catches formatting errors. Root cause tracking. Target: 1.8 rounds.',
+        timeline: 'Week 2', hrs: 6, severity: 'medium' },
+      { id: 'portal_blind', icon: '\uD83D\uDEAA', title: 'Portal Uploads Go Unseen', description: 'Client uploads don\u2019t trigger notifications \u2014 staff find them days later.',
+        chart: { type: 'donut', labels: ['Missed Alert','Notified'], values: [10,62], colors: ['#ef4444','#22c55e'], unit: 'uploads this month' },
+        finding: '10 client uploads this month didn\u2019t trigger staff notifications. Staff found them days later. Clients think they\u2019ve done their part. Staff doesn\u2019t know the documents exist.',
+        fix: 'Fix notification pipeline. Add real-time upload alerts with assignee routing.',
+        before: '10 uploads missed this month. Clients waiting. Staff unaware. Fixable in hours.',
+        after: 'Real-time alerts when clients upload. Docs routed to the assigned preparer automatically.',
+        timeline: 'Week 1', hrs: 2, severity: 'high' },
+      { id: 'capacity_crunch', icon: '\uD83D\uDCC8', title: 'Tax Season Capacity Gap', description: '340 returns in queue for March \u2014 capacity for 280.',
+        chart: { type: 'bar', labels: ['Jan','Feb','Mar','Apr'], values: [180,240,340,380], colors: ['#22c55e','#f59e0b','#ef4444','#ef4444'], unit: 'returns in queue' },
+        finding: 'Current trajectory: 340 returns in queue for March, capacity for 280. Without this visibility, you\u2019d find out in March when it\u2019s too late to hire or shift work.',
+        fix: 'Capacity forecasting dashboard. Flag gaps 6 weeks ahead. Auto-suggest load balancing.',
+        before: '340 returns queued vs. 280 capacity. You find out when it\u2019s too late.',
+        after: 'Forecasting flags gaps 6 weeks ahead. Load balancing suggestions before the crunch.',
+        timeline: 'Week 2', hrs: 3, severity: 'high' },
+      { id: 'engagement_expired', icon: '\uD83D\uDCDD', title: 'Engagement Letters Expire', description: 'Expired engagement letters with no follow-up \u2014 work continues unsigned.',
+        chart: { type: 'stat', value: '5', label: 'Engagement letters expired without follow-up' },
+        finding: '5 engagement letters expired without follow-up this month. Work is continuing on unsigned engagements. That\u2019s a liability issue hiding in plain sight.',
+        fix: 'Automated engagement letter tracking with expiration alerts and work-hold triggers.',
+        before: '5 expired letters. Work continues on unsigned engagements. Liability exposure.',
+        after: 'Auto-alerts at 30/7/1 days before expiry. Work pauses on unsigned engagements until resolved.',
+        timeline: 'Week 4', hrs: 1, severity: 'low' },
+      { id: 'rate_card_old', icon: '\uD83D\uDCB2', title: 'Fee Estimates Use Old Rates', description: 'Estimates sent without the current year rate card.',
+        chart: { type: 'donut', labels: ['Wrong Rates','Current Rates'], values: [22,78], colors: ['#ef4444','#22c55e'], unit: '% of estimates' },
+        finding: '22% of fee estimates this quarter used outdated rates. Some clients were undercharged and the firm absorbed the difference. Others were overcharged, creating awkward conversations.',
+        fix: 'Centralized rate card with auto-pull into estimate templates. Lock prior-year rates.',
+        before: '22% of estimates use wrong rates. Margin leaks and client friction.',
+        after: 'Estimates auto-pull current rates. Prior-year rates locked. Zero manual rate lookups.',
+        timeline: 'Week 1', hrs: 2, severity: 'medium' }
     ]
   }
-};
-
-// Tool-specific bottleneck overlays — injected when tools are "connected"
-const TOOL_BOTTLENECKS = {
-  zendesk: { issue: 'Zendesk tickets auto-closed before client confirmation', count: 11, severity: 'medium', last_seen: '5h ago', status: 'monitoring' },
-  hubspot: { issue: 'HubSpot contacts missing lifecycle stage updates', count: 15, severity: 'high', last_seen: '2h ago', status: 'active' },
-  salesforce: { issue: 'Salesforce opportunities stale for 30+ days', count: 9, severity: 'medium', last_seen: '1d ago', status: 'monitoring' },
-  quickbooks: { issue: 'QuickBooks invoices not synced to CRM records', count: 7, severity: 'medium', last_seen: '12h ago', status: 'monitoring' },
-  monday: { issue: 'Monday.com tasks assigned but never started', count: 13, severity: 'high', last_seen: '4h ago', status: 'active' },
-  asana: { issue: 'Asana project milestones overdue with no status update', count: 8, severity: 'medium', last_seen: '6h ago', status: 'monitoring' },
-  sheets: { issue: 'Google Sheets reporting data 2+ weeks stale', count: 6, severity: 'low', last_seen: '3d ago', status: 'monitoring' }
 };
 
 
@@ -818,7 +827,11 @@ const TOOL_BOTTLENECKS = {
 // STATE
 // ══════════════════════════════════════════════════════════════════
 let currentIndustry = 'professional_services';
-let activeTools = new Set(['email', 'slack']);
+let selectedFrustrations = new Set();
+let fixedItems = new Set();
+let dashboardRevealed = false;
+let submittedEmail = '';
+let submittedOrg = '';
 let chartInstances = {};
 let flowAnimFrame = null;
 
@@ -843,37 +856,16 @@ const API_KEY = 'jarvis';
 // ══════════════════════════════════════════════════════════════════
 function getDemoData() {
   const preset = INDUSTRY_PRESETS[currentIndustry];
-  const data = {
-    hero: { ...preset.hero },
-    metricLabels: preset.metricLabels,
-    sparklines: preset.sparklines,
-    flow: { stages: [...preset.flow] },
-    clusters: preset.clusters,
-    bottlenecks: [...preset.bottlenecks],
-    insights: preset.insights,
-    trends: { labels: [], volume: [], latency: [], error_rate: [] }
-  };
-  // Add tool-specific bottlenecks
-  activeTools.forEach(t => {
-    if (TOOL_BOTTLENECKS[t]) {
-      data.bottlenecks.splice(2, 0, { ...TOOL_BOTTLENECKS[t] });
-    }
-  });
-  data.bottlenecks = data.bottlenecks.slice(0, 8);
-  // Scale hero ops by connected tools
-  const toolBoost = Math.max(0, activeTools.size - 2) * 0.12;
-  data.hero.total_ops = Math.round(preset.hero.total_ops * (1 + toolBoost));
-  // Generate trends
+  const trends = { labels: [], volume: [], latency: [], error_rate: [] };
   const now = new Date();
   for (let i = 29; i >= 0; i--) {
     const dt = new Date(now); dt.setDate(dt.getDate() - i);
-    data.trends.labels.push(dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-    const base = preset.hero.total_ops / 30;
-    data.trends.volume.push(Math.round(base * (0.7 + Math.random() * 0.6)));
-    data.trends.latency.push(+(preset.hero.avg_resolution_s * (0.8 + Math.random() * 0.4)).toFixed(1));
-    data.trends.error_rate.push(+((100 - preset.hero.success_rate) * (0.5 + Math.random())).toFixed(1));
+    trends.labels.push(dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+    trends.volume.push(Math.round(140 * (0.7 + Math.random() * 0.6)));
+    trends.latency.push(+(3.5 * (0.8 + Math.random() * 0.4)).toFixed(1));
+    trends.error_rate.push(+(8 * (0.5 + Math.random())).toFixed(1));
   }
-  return data;
+  return { flow: { stages: [...preset.flow] }, trends };
 }
 
 class ClarityDataLoader {
@@ -883,118 +875,362 @@ class ClarityDataLoader {
     try {
       const resp = await fetch(`${API_BASE}/api/clarity/data`, { headers: { 'Authorization': `Bearer ${API_KEY}` } });
       if (!resp.ok) throw new Error(`API ${resp.status}`);
-      const raw = await resp.json();
-      return this.transformLive(raw);
+      return await resp.json();
     } catch (e) {
       console.warn('Live data fetch failed, falling back to demo:', e);
       updateMode('demo', 'Live unavailable \u2014 showing demo data');
       return getDemoData();
     }
   }
-  transformLive(raw) {
-    const ss = raw.session_summary || {}, dt = raw.daily_trends || {}, bn = raw.bottlenecks || [], fl = raw.flow || {};
-    const total = (ss.success||0) + (ss.max_steps||0) + (ss.provider_failed||0) + (ss.assess||0);
-    const successRate = total > 0 ? ((ss.success||0) / total * 100) : 0;
-    return {
-      hero: { total_ops: dt.total_requests || total, avg_resolution_s: ss.avg_duration_s || 0, success_rate: +successRate.toFixed(1), bottlenecks: bn.length },
-      metricLabels: INDUSTRY_PRESETS.professional_services.metricLabels,
-      sparklines: { ops: (dt.daily_volume||[]).slice(-30), resolution: (dt.daily_latency||[]).slice(-30), success: (dt.daily_success_rate||[]).slice(-30), bottlenecks: (dt.daily_bottlenecks||[]).slice(-30) },
-      flow: fl, clusters: (raw.topic_clusters||[]).length ? raw.topic_clusters : INDUSTRY_PRESETS.professional_services.clusters,
-      bottlenecks: bn.map(b => ({ issue: b.issue||b.goal||'Unknown', count: b.count||1, severity: b.severity||'low', last_seen: b.last_seen||'Unknown', status: b.status||'monitoring' })),
-      trends: { labels: dt.labels||[], volume: dt.daily_volume||[], latency: dt.daily_latency||[], error_rate: dt.daily_error_rate||[] },
-      insights: raw.insights || INDUSTRY_PRESETS.professional_services.insights
-    };
-  }
 }
+
 
 // ══════════════════════════════════════════════════════════════════
-// RENDERING
+// STEP 1: FRUSTRATION CARDS
 // ══════════════════════════════════════════════════════════════════
-function updateMode(mode, text) {
-  const badge = document.getElementById('modeBadge');
-  badge.className = 'mode-badge ' + (mode === 'live' ? 'live' : 'demo');
-  document.getElementById('modeText').textContent = text || (mode === 'live' ? 'Connected \u2014 Live Data' : 'Demo Mode \u2014 Sample Data');
-}
-function updateTimestamp() {
-  document.getElementById('lastRefreshed').textContent = 'Updated ' + new Date().toLocaleTimeString();
-}
-
-// ─── Animated number counter ───
-function animateValue(el, target, suffix, duration) {
-  const start = 0;
-  const startTime = performance.now();
-  const isFloat = String(target).includes('.');
-  function tick(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const current = start + (target - start) * eased;
-    if (isFloat) {
-      el.textContent = current.toFixed(1) + suffix;
-    } else {
-      el.textContent = Math.round(current).toLocaleString() + suffix;
-    }
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+function renderFrustrationCards() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const grid = document.getElementById('frustrationGrid');
+  grid.innerHTML = preset.frustrations.map(f => `
+    <div class="frustration-card ${selectedFrustrations.has(f.id) ? 'selected' : ''}" data-id="${f.id}" onclick="toggleFrustration('${f.id}')">
+      <div class="check-indicator">\u2713</div>
+      <span class="fc-icon">${f.icon}</span>
+      <div class="fc-title">${f.title}</div>
+      <div class="fc-desc">${f.description}</div>
+    </div>
+  `).join('');
+  updateRevealCta();
 }
 
-function renderHeroMetrics(data, animate) {
-  const labels = data.metricLabels || {};
-  if (labels.ops) document.getElementById('labelOps').textContent = labels.ops;
-  if (labels.resolution) document.getElementById('labelResolution').textContent = labels.resolution;
-  if (labels.success) document.getElementById('labelSuccess').textContent = labels.success;
-  if (labels.bottlenecks) document.getElementById('labelBottlenecks').textContent = labels.bottlenecks;
-
-  const dur = animate ? 1200 : 0;
-  const elOps = document.getElementById('metricOps');
-  const elRes = document.getElementById('metricResolution');
-  const elSuc = document.getElementById('metricSuccess');
-  const elBot = document.getElementById('metricBottlenecks');
-
-  if (animate) {
-    animateValue(elOps, data.hero.total_ops, '', dur);
-    animateValue(elRes, data.hero.avg_resolution_s, 'h', dur);
-    animateValue(elSuc, data.hero.success_rate, '%', dur);
-    animateValue(elBot, data.hero.bottlenecks, '', dur);
+function toggleFrustration(id) {
+  if (selectedFrustrations.has(id)) {
+    selectedFrustrations.delete(id);
   } else {
-    elOps.textContent = data.hero.total_ops.toLocaleString();
-    elRes.textContent = data.hero.avg_resolution_s.toFixed(1) + (MODE === 'live' ? 's' : 'h');
-    elSuc.textContent = data.hero.success_rate.toFixed(1) + '%';
-    elBot.textContent = data.hero.bottlenecks;
+    if (selectedFrustrations.size >= 4) return;
+    selectedFrustrations.add(id);
+  }
+  gtag('event', 'clarity_frustration_toggle', { event_label: id });
+  document.querySelectorAll('.frustration-card').forEach(card => {
+    card.classList.toggle('selected', selectedFrustrations.has(card.dataset.id));
+  });
+  updateRevealCta();
+  if (dashboardRevealed) {
+    renderFrustrationPanels();
+    updateRoadmapCta();
+    if (fixedItems.size > 0) renderRoadmapPreview();
   }
 }
 
-function destroyChart(key) {
-  if (chartInstances[key]) { chartInstances[key].destroy(); chartInstances[key] = null; }
+function updateRevealCta() {
+  document.getElementById('revealCta').classList.toggle('visible', selectedFrustrations.size >= 2);
 }
 
-function createSparkline(canvasId, dataPoints, color) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas || !dataPoints.length) return;
-  destroyChart(canvasId);
-  chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
-    type: 'line',
-    data: {
-      labels: dataPoints.map((_, i) => i),
-      datasets: [{ data: dataPoints, borderColor: color || '#00c9a0', borderWidth: 1.5, fill: true,
-        backgroundColor: color === '#ef4444' ? 'rgba(239,68,68,.08)' : 'rgba(0,201,160,.08)',
-        pointRadius: 0, tension: 0.4 }]
-    },
-    options: { responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { enabled: false } },
-      scales: { x: { display: false }, y: { display: false } }
-    }
+
+// ══════════════════════════════════════════════════════════════════
+// STEP 2: REVEAL DASHBOARD
+// ══════════════════════════════════════════════════════════════════
+function revealDashboard() {
+  if (dashboardRevealed) {
+    document.getElementById('step2').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  dashboardRevealed = true;
+  document.getElementById('step2').classList.add('revealed');
+  gtag('event', 'clarity_reveal_dashboard', { event_label: Array.from(selectedFrustrations).join(',') });
+
+  renderFrustrationPanels();
+  const data = getDemoData();
+  renderFlow(data);
+  renderHealthGauge();
+  renderTrendChart(data);
+
+  setTimeout(() => {
+    document.getElementById('step2').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+// FRUSTRATION MINI-PANELS
+// ══════════════════════════════════════════════════════════════════
+function renderFrustrationPanels() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const container = document.getElementById('frustrationPanels');
+  const selected = preset.frustrations.filter(f => selectedFrustrations.has(f.id));
+
+  container.innerHTML = selected.map(f => `
+    <div class="frustration-panel" id="panel-${f.id}">
+      <div class="fp-chart">
+        ${f.chart.type === 'stat'
+          ? `<div class="fp-stat-card"><div class="fp-stat-value">${f.chart.value}</div><div class="fp-stat-label">${f.chart.label}</div></div>`
+          : `<canvas id="chart-${f.id}"></canvas>`
+        }
+      </div>
+      <div class="fp-info">
+        <span class="fp-severity ${f.severity}">${f.severity}</span>
+        <div class="fp-title">${f.icon} ${f.title}</div>
+        <div class="fp-finding">${f.finding}</div>
+        <button class="fp-fix-btn ${fixedItems.has(f.id) ? 'fixed' : ''}" onclick="fixThis('${f.id}')">
+          ${fixedItems.has(f.id) ? '\u2713 Added to roadmap' : 'Fix this \u2192'}
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  selected.forEach(f => {
+    if (f.chart.type !== 'stat') renderFrustrationChart(f);
   });
 }
-function renderSparklines(data) {
-  createSparkline('sparkOps', data.sparklines.ops, '#00c9a0');
-  createSparkline('sparkResolution', data.sparklines.resolution, '#3d7eff');
-  createSparkline('sparkSuccess', data.sparklines.success, '#22c55e');
-  createSparkline('sparkBottlenecks', data.sparklines.bottlenecks, '#ef4444');
+
+function renderFrustrationChart(f) {
+  const canvasId = `chart-${f.id}`;
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  destroyChart(canvasId);
+  const cfg = f.chart;
+  if (cfg.type === 'bar') {
+    chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+      type: 'bar',
+      data: { labels: cfg.labels, datasets: [{ data: cfg.values, backgroundColor: cfg.colors.map(c => c + 'CC'), borderColor: cfg.colors, borderWidth: 1, borderRadius: 6 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' ' + cfg.unit } } },
+        scales: { x: { grid: { display: false }, ticks: { color: '#7e8ea8', font: { size: 11 } } }, y: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e', font: { size: 10 } } } } }
+    });
+  } else if (cfg.type === 'donut') {
+    chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: cfg.labels, datasets: [{ data: cfg.values, backgroundColor: cfg.colors.map(c => c + 'CC'), borderColor: 'transparent', borderWidth: 0 }] },
+      options: { responsive: true, maintainAspectRatio: false, cutout: '60%',
+        plugins: { legend: { position: 'bottom', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 10, usePointStyle: true } }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + ' ' + cfg.unit } } } }
+    });
+  }
 }
 
-// ─── Flow Visualization with animated dots ───
+
+// ══════════════════════════════════════════════════════════════════
+// HEALTH GAUGE
+// ══════════════════════════════════════════════════════════════════
+function renderHealthGauge() {
+  const canvas = document.getElementById('healthGauge');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 220 * dpr; canvas.height = 130 * dpr;
+  canvas.style.width = '220px'; canvas.style.height = '130px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const selected = preset.frustrations.filter(f => selectedFrustrations.has(f.id));
+  const highCount = selected.filter(f => f.severity === 'high').length;
+  const medCount = selected.filter(f => f.severity === 'medium').length;
+  const score = Math.max(20, 100 - highCount * 18 - medCount * 10 - selected.length * 3);
+  drawHalfGauge(ctx, 110, 115, 85, 18, score);
+  document.getElementById('healthScore').textContent = score;
+  document.getElementById('healthScore').style.color = scoreColor(score);
+}
+
+function drawHalfGauge(ctx, cx, cy, r, lw, score) {
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, 0);
+  ctx.lineWidth = lw; ctx.strokeStyle = '#1a2236'; ctx.lineCap = 'round'; ctx.stroke();
+  const pct = score / 100;
+  const endAngle = Math.PI + (Math.PI * pct);
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, endAngle);
+  ctx.lineWidth = lw; ctx.strokeStyle = scoreColor(score); ctx.lineCap = 'round'; ctx.stroke();
+}
+
+function scoreColor(s) { return s >= 70 ? '#22c55e' : s >= 45 ? '#f59e0b' : '#ef4444'; }
+
+function calcScore(items) {
+  const h = items.filter(f => f.severity === 'high').length;
+  const m = items.filter(f => f.severity === 'medium').length;
+  return Math.max(20, 100 - h * 18 - m * 10 - items.length * 3);
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+// FIX THIS → ROADMAP PREVIEW (the new flow)
+// ══════════════════════════════════════════════════════════════════
+function fixThis(id) {
+  if (fixedItems.has(id)) return;
+  fixedItems.add(id);
+  gtag('event', 'clarity_fix_this', { event_label: id });
+  const panel = document.getElementById('panel-' + id);
+  if (panel) {
+    const btn = panel.querySelector('.fp-fix-btn');
+    btn.classList.add('fixed');
+    btn.textContent = '\u2713 Added to roadmap';
+  }
+  updateRoadmapCta();
+  renderRoadmapPreview();
+}
+
+function updateRoadmapCta() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const fixed = preset.frustrations.filter(f => fixedItems.has(f.id));
+  const sticky = document.getElementById('stickyCta');
+  if (fixed.length > 0) {
+    const totalHrs = fixed.reduce((sum, f) => sum + f.hrs, 0);
+    document.getElementById('stickyCount').textContent = fixed.length;
+    document.getElementById('stickyHours').textContent = totalHrs;
+    sticky.classList.add('visible');
+  } else {
+    sticky.classList.remove('visible');
+  }
+}
+
+function scrollToRoadmap() {
+  document.getElementById('roadmapPreview').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderRoadmapPreview() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const fixed = preset.frustrations.filter(f => fixedItems.has(f.id));
+  if (fixed.length === 0) {
+    document.getElementById('roadmapPreview').classList.remove('visible');
+    document.getElementById('roadmapActions').style.display = 'none';
+    return;
+  }
+
+  const preview = document.getElementById('roadmapPreview');
+  preview.classList.add('visible');
+
+  // Render inline Clarity Score
+  const score = calcScore(fixed);
+  renderInlineGauge(score);
+
+  const totalHrs = fixed.reduce((s, f) => s + f.hrs, 0);
+
+  // Gap cards — before + after together (all ungated)
+  document.getElementById('gapCards').innerHTML = fixed.map(f => `
+    <div class="inline-gap-card">
+      <div class="igc-header">
+        <span class="igc-icon">${f.icon}</span>
+        <span class="igc-title">${f.title}</span>
+        <span class="igc-hrs">${f.hrs}h/week reclaimed</span>
+      </div>
+      <div class="igc-before"><strong>Now:</strong> ${f.before}</div>
+      <div class="igc-after"><strong>After:</strong> ${f.after}</div>
+    </div>
+  `).join('');
+
+  // Timeline
+  const week1 = fixed.filter(f => f.timeline === 'Week 1');
+  const week2 = fixed.filter(f => f.timeline === 'Week 2');
+  const week4 = fixed.filter(f => f.timeline === 'Week 4');
+  document.getElementById('inlineTimeline').innerHTML = `
+    <div class="timeline-wrap">
+      <div class="timeline-title">Implementation Timeline</div>
+      <div class="timeline-row">
+        <div class="timeline-step"><div class="timeline-step-label">Week 1</div>
+          <div class="timeline-step-items">${week1.length ? week1.map(f => f.title).join('<br>') : '<span style="color:var(--muted)">\u2014</span>'}</div></div>
+        <div class="timeline-step"><div class="timeline-step-label">Week 2</div>
+          <div class="timeline-step-items">${week2.length ? week2.map(f => f.title).join('<br>') : '<span style="color:var(--muted)">\u2014</span>'}</div></div>
+        <div class="timeline-step"><div class="timeline-step-label">Week 4</div>
+          <div class="timeline-step-items">${week4.length ? week4.map(f => f.title).join('<br>') : '<span style="color:var(--muted)">\u2014</span>'}</div></div>
+      </div>
+    </div>`;
+
+  // Total hours
+  document.getElementById('inlineTotalWrap').innerHTML = `
+    <div class="summary-total-inline">
+      <div class="st-label">Total Time Your Team Gets Back</div>
+      <div class="st-value">${totalHrs}h/week</div>
+      <div class="st-sub">Less chasing, less rework, less "wait, where is that?"</div>
+    </div>`;
+
+  // Show action bar
+  document.getElementById('roadmapActions').style.display = 'block';
+
+  // Scroll to preview
+  setTimeout(() => preview.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+}
+
+function renderInlineGauge(score) {
+  const canvas = document.getElementById('inlineGauge');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 240 * dpr; canvas.height = 140 * dpr;
+  canvas.style.width = '240px'; canvas.style.height = '140px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const cx = 120, cy = 125, r = 90;
+  // Background arc
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, 0);
+  ctx.lineWidth = 20; ctx.strokeStyle = '#1a2236'; ctx.lineCap = 'round'; ctx.stroke();
+  // Zone arcs (faint)
+  [[0.33, '#ef4444'], [0.66, '#f59e0b'], [1.0, '#22c55e']].reduce((last, [end, color]) => {
+    ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI + Math.PI * last, Math.PI + Math.PI * end);
+    ctx.lineWidth = 20; ctx.strokeStyle = color + '25'; ctx.lineCap = 'butt'; ctx.stroke();
+    return end;
+  }, 0);
+  // Score arc
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, Math.PI + Math.PI * (score / 100));
+  ctx.lineWidth = 20; ctx.strokeStyle = scoreColor(score); ctx.lineCap = 'round'; ctx.stroke();
+
+  const numEl = document.getElementById('inlineScoreNum');
+  numEl.textContent = score + '/100';
+  numEl.style.color = scoreColor(score);
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+// SEND ROADMAP PDF (optional email — not a gate)
+// ══════════════════════════════════════════════════════════════════
+function sendRoadmapPDF(e) {
+  e.preventDefault();
+  submittedEmail = document.getElementById('pdfEmail').value;
+  submittedOrg = document.getElementById('pdfOrg').value;
+
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const fixed = preset.frustrations.filter(f => fixedItems.has(f.id));
+  const totalHrs = fixed.reduce((s, f) => s + f.hrs, 0);
+
+  gtag('event', 'clarity_pdf_requested', {
+    event_label: `${submittedOrg} | ${submittedEmail} | ${currentIndustry} | ${fixed.length} items | ${totalHrs}h/wk`
+  });
+
+  // Send via Formspree
+  fetch('https://formspree.io/f/xqakvebr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _subject: `Clarity Roadmap PDF: ${submittedOrg}`,
+      email: submittedEmail, organization: submittedOrg,
+      industry: preset.label,
+      frustrations: fixed.map(f => `${f.title} \u2014 ${f.fix} (~${f.hrs}h/wk)`).join('\n'),
+      total_hours_reclaimed: totalHrs + 'h/week',
+      submitted_at: new Date().toISOString()
+    })
+  }).catch(() => {});
+
+  // Show success state
+  document.querySelector('.ra-email-form').style.display = 'none';
+  document.getElementById('raSent').style.display = 'block';
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+// SHARE / TOAST ACTIONS
+// ══════════════════════════════════════════════════════════════════
+
+function shareRoadmap() {
+  gtag('event', 'clarity_share_roadmap');
+  const url = window.location.origin + window.location.pathname +
+    '?industry=' + currentIndustry + '&mode=demo';
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('Link copied! Share it with your team.');
+  }).catch(() => {
+    showToast('Copy this link: ' + url);
+  });
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// FLOW VISUALIZATION
+// ══════════════════════════════════════════════════════════════════
 function renderFlow(data) {
   if (flowAnimFrame) { cancelAnimationFrame(flowAnimFrame); flowAnimFrame = null; }
   const canvas = document.getElementById('flowCanvas');
@@ -1010,25 +1246,17 @@ function renderFlow(data) {
   const stageW = Math.min(140, (w - 40) / stages.length - 20);
   const gap = (w - stages.length * stageW) / (stages.length + 1);
   const cy = 60;
-
-  // Dots state
   const dots = [];
   for (let i = 0; i < stages.length - 1; i++) {
     const fromX = gap + i * (stageW + gap) + stageW;
     const toX = gap + (i + 1) * (stageW + gap);
-    for (let d = 0; d < 3; d++) {
-      dots.push({ fromX: fromX + 4, toX: toX - 4, progress: d * 0.33, speed: 0.003 + Math.random() * 0.002, color: stages[i].color });
-    }
+    for (let d = 0; d < 3; d++) dots.push({ fromX: fromX + 4, toX: toX - 4, progress: d * 0.33, speed: 0.003 + Math.random() * 0.002, color: stages[i].color });
   }
-
   function drawFrame() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, 140);
-
-    // Draw stages
     stages.forEach((stage, i) => {
       const x = gap + i * (stageW + gap);
-      // Connector
       if (i > 0) {
         const prevX = gap + (i - 1) * (stageW + gap) + stageW;
         ctx.beginPath(); ctx.moveTo(prevX + 4, cy); ctx.lineTo(x - 4, cy);
@@ -1036,26 +1264,20 @@ function renderFlow(data) {
         ctx.beginPath(); ctx.moveTo(x - 10, cy - 5); ctx.lineTo(x - 4, cy); ctx.lineTo(x - 10, cy + 5);
         ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 1.5; ctx.stroke();
       }
-      // Box
       const rh = 62, ry = cy - rh / 2;
       ctx.beginPath(); ctx.roundRect(x, ry, stageW, rh, 10);
       ctx.fillStyle = stage.color + '15'; ctx.fill();
       ctx.strokeStyle = stage.color + '50'; ctx.lineWidth = 1; ctx.stroke();
-      // Name
       ctx.fillStyle = '#dde3f0'; ctx.font = '500 11px "DM Sans", sans-serif'; ctx.textAlign = 'center';
       stage.name.split('\n').forEach((line, li) => { ctx.fillText(line, x + stageW / 2, ry + 20 + li * 14); });
-      // Count
       ctx.fillStyle = stage.color; ctx.font = '700 15px "Fraunces", serif';
       ctx.fillText(stage.count.toLocaleString(), x + stageW / 2, ry + rh - 8);
-      // Success/fail
       if (stage.success !== undefined) {
         ctx.font = '11px "DM Sans", sans-serif';
         ctx.fillStyle = '#22c55e'; ctx.fillText(stage.success.toLocaleString() + ' \u2713', x + stageW / 2 - 22, ry + rh + 16);
         ctx.fillStyle = '#ef4444'; ctx.fillText(stage.fail.toLocaleString() + ' \u2717', x + stageW / 2 + 25, ry + rh + 16);
       }
     });
-
-    // Animate dots
     dots.forEach(d => {
       d.progress += d.speed;
       if (d.progress > 1) d.progress -= 1;
@@ -1063,61 +1285,19 @@ function renderFlow(data) {
       ctx.beginPath(); ctx.arc(x, cy, 2.5, 0, Math.PI * 2);
       ctx.fillStyle = d.color + 'AA'; ctx.fill();
     });
-
     flowAnimFrame = requestAnimationFrame(drawFrame);
   }
   drawFrame();
 }
 
-// ─── Bubble Chart ───
-function renderBubbleChart(data) {
-  destroyChart('bubble');
-  const ctx = document.getElementById('bubbleChart').getContext('2d');
-  const colors = ['#00c9a0','#3d7eff','#a78bfa','#f59e0b','#ef4444','#22c55e','#ec4899'];
-  chartInstances['bubble'] = new Chart(ctx, {
-    type: 'bubble',
-    data: {
-      datasets: data.clusters.map((c, i) => ({
-        label: c.label,
-        data: [{ x: c.x, y: c.y, r: c.r / 2.5 }],
-        backgroundColor: colors[i % colors.length] + '40',
-        borderColor: colors[i % colors.length], borderWidth: 1.5
-      }))
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: true, position: 'bottom', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 12, usePointStyle: true } },
-        tooltip: { callbacks: { label: (ctx) => {
-          const c = data.clusters[ctx.datasetIndex];
-          return `${c.label}: ${c.count} items, ${c.y}% resolved, ~${c.x} avg touchpoints`;
-        }}}
-      },
-      scales: {
-        x: { title: { display: true, text: 'Avg Touchpoints to Resolve', color: '#7e8ea8', font: { size: 12 } },
-             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 0, max: 10 },
-        y: { title: { display: true, text: 'Resolution Rate %', color: '#7e8ea8', font: { size: 12 } },
-             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' }, min: 60, max: 100 }
-      }
-    }
-  });
+
+// ══════════════════════════════════════════════════════════════════
+// TREND CHART
+// ══════════════════════════════════════════════════════════════════
+function destroyChart(key) {
+  if (chartInstances[key]) { chartInstances[key].destroy(); chartInstances[key] = null; }
 }
 
-// ─── Bottleneck Table ───
-function renderBottlenecks(data) {
-  const inPlan = new Set(actionPlan.map(i => i.title));
-  document.getElementById('bottleneckBody').innerHTML = data.bottlenecks.map(b => {
-    const sevClass = b.severity === 'high' ? 'severity-high' : b.severity === 'medium' ? 'severity-medium' : 'severity-low';
-    const statusClass = b.status === 'active' ? 'status-active' : b.status === 'monitoring' ? 'status-monitoring' : 'status-resolved';
-    const added = inPlan.has(b.issue);
-    const planBtn = MODE === 'demo' ? `<button class="add-plan-btn ${added ? 'added' : ''}" data-title="${b.issue.replace(/"/g,'&quot;')}" onclick="this.classList.add('added');this.innerHTML='\\u2713 Added';addToPlan('${b.issue.replace(/'/g,"\\'")}','bottleneck')">${added ? '\u2713 Added' : '+ Add to Plan'}</button>` : '';
-    return `<tr><td><span class="severity-bar ${sevClass}"></span></td><td>${b.issue}</td><td>${b.count}</td>
-      <td style="text-transform:capitalize">${b.severity}</td><td style="color:var(--soft)">${b.last_seen}</td>
-      <td style="display:flex;align-items:center;gap:8px"><span class="status-chip ${statusClass}">${b.status}</span>${planBtn}</td></tr>`;
-  }).join('');
-}
-
-// ─── Trend Chart ───
 function renderTrendChart(data) {
   destroyChart('trend');
   chartInstances['trend'] = new Chart(document.getElementById('trendChart').getContext('2d'), {
@@ -1125,363 +1305,57 @@ function renderTrendChart(data) {
     data: {
       labels: data.trends.labels,
       datasets: [
-        { label: 'Daily Volume', data: data.trends.volume, borderColor: '#00c9a0', backgroundColor: 'rgba(0,201,160,.08)',
-          fill: true, tension: 0.3, borderWidth: 2, pointRadius: 2, yAxisID: 'y' },
-        { label: 'Avg Resolution (h)', data: data.trends.latency, borderColor: '#3d7eff',
-          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' },
-        { label: 'Missed Rate %', data: data.trends.error_rate, borderColor: '#f59e0b', borderDash: [6, 3],
-          borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' }
+        { label: 'Daily Volume', data: data.trends.volume, borderColor: '#00c9a0', backgroundColor: 'rgba(0,201,160,.08)', fill: true, tension: 0.3, borderWidth: 2, pointRadius: 2, yAxisID: 'y' },
+        { label: 'Avg Resolution (h)', data: data.trends.latency, borderColor: '#3d7eff', borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' },
+        { label: 'Missed Rate %', data: data.trends.error_rate, borderColor: '#f59e0b', borderDash: [6, 3], borderWidth: 2, tension: 0.3, pointRadius: 2, yAxisID: 'y1' }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { position: 'top', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 16, usePointStyle: true } },
-        tooltip: { backgroundColor: '#111828', borderColor: '#1a2236', borderWidth: 1 }
-      },
+      plugins: { legend: { position: 'top', labels: { color: '#7e8ea8', font: { size: 11 }, padding: 16, usePointStyle: true } }, tooltip: { backgroundColor: '#111828', borderColor: '#1a2236', borderWidth: 1 } },
       scales: {
         x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#4a566e', maxRotation: 45, font: { size: 10 } } },
-        y: { position: 'left', title: { display: true, text: 'Volume', color: '#7e8ea8' },
-             grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' } },
-        y1: { position: 'right', title: { display: true, text: 'Hours / %', color: '#7e8ea8' },
-              grid: { drawOnChartArea: false }, ticks: { color: '#4a566e' } }
+        y: { position: 'left', title: { display: true, text: 'Volume', color: '#7e8ea8' }, grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#4a566e' } },
+        y1: { position: 'right', title: { display: true, text: 'Hours / %', color: '#7e8ea8' }, grid: { drawOnChartArea: false }, ticks: { color: '#4a566e' } }
       }
     }
   });
 }
 
-// ─── AI Insights ───
-function renderInsights(data) {
-  const inPlan = new Set(actionPlan.map(i => i.title));
-  document.getElementById('insightsList').innerHTML = data.insights.map(i => {
-    const added = inPlan.has(i.title);
-    const planBtn = MODE === 'demo' ? `<button class="add-plan-btn insight-add ${added ? 'added' : ''}" data-title="${i.title.replace(/"/g,'&quot;')}" onclick="this.classList.add('added');this.innerHTML='\\u2713 Added';addToPlan('${i.title.replace(/'/g,"\\'")}','insight')">${added ? '\u2713 Added' : '+ Add to Plan'}</button>` : '';
-    return `<div class="insight-card">${planBtn}<div class="insight-icon">${i.icon}</div>
-    <div class="insight-body"><div class="insight-title">${i.title}</div>
-    <div class="insight-text">${i.text}</div></div></div>`;
-  }).join('');
-}
-
-async function loadAIInsights(data) {
-  if (MODE !== 'live') return;
-  document.getElementById('insightsList').innerHTML = '<div class="skeleton skeleton-block" style="height:180px"></div>';
-  try {
-    const summary = `Operations data summary:\n- Total ops: ${data.hero.total_ops}, Success rate: ${data.hero.success_rate}%\n- Avg resolution: ${data.hero.avg_resolution_s}s\n- Bottlenecks: ${data.hero.bottlenecks}\n- Top issues: ${data.bottlenecks.slice(0,3).map(b=>b.issue).join('; ')}\n- Volume trend: ${data.trends.volume.slice(-7).join(',')}`;
-    const resp = await fetch(`${API_BASE}/v1/chat/completions`, {
-      method: 'POST', headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'jarvis-arena', messages: [
-        { role: 'system', content: 'You are an operations analyst. Given metrics, produce exactly 5 insights as JSON array: [{icon: "emoji", title: "short title", text: "1-2 sentence actionable insight"}]. Return ONLY the JSON array, no markdown.' },
-        { role: 'user', content: summary }
-      ], max_tokens: 1000 })
-    });
-    const result = await resp.json();
-    const match = (result.choices?.[0]?.message?.content || '').match(/\[[\s\S]*\]/);
-    if (match) { renderInsights({ insights: JSON.parse(match[0]) }); return; }
-  } catch (e) { console.warn('AI insights failed:', e); }
-  renderInsights(data);
-}
 
 // ══════════════════════════════════════════════════════════════════
-// ACTION PLAN
+// MODE HELPERS
 // ══════════════════════════════════════════════════════════════════
-const actionPlan = [];
-const ROI_MAP = {
-  'handoff': { hrs: 8, rate: 50, label: 'Blind handoff — no one sees the gap' },
-  'missing context': { hrs: 5, rate: 50, label: 'Context lost between teams' },
-  'manual': { hrs: 12, rate: 50, label: 'Manual process — no visibility' },
-  'duplicate': { hrs: 4, rate: 50, label: 'Duplicate work across tools' },
-  'deadline': { hrs: 2, rate: 50, label: 'Deadline risk — single point of failure', flat: 3000 },
-  'approval': { hrs: 3, rate: 50, label: 'Approvals stuck in someone\'s inbox' },
-  'sync': { hrs: 4, rate: 50, label: 'Tools out of sync — no single truth' },
-  'stale': { hrs: 3, rate: 50, label: 'Stale data — decisions made on old info' },
-  'overdue': { hrs: 3, rate: 50, label: 'Overdue items no one is tracking' },
-  'review': { hrs: 6, rate: 50, label: 'Review bottleneck — work piling up' },
-  'notification': { hrs: 2, rate: 50, label: 'Broken alerts — things slip through' },
-  'time entr': { hrs: 6, rate: 75, label: 'Unbilled hours leaking revenue' },
-  'billable': { hrs: 6, rate: 75, label: 'Billable time going untracked' },
-  'conflict': { hrs: 3, rate: 50, label: 'Conflict checks bottlenecked' },
-  'renewal': { hrs: 4, rate: 50, label: 'Renewals at risk — no follow-up', flat: 2000 },
-  'filing': { hrs: 2, rate: 50, label: 'Filing deadlines — no safety net', flat: 2500 },
-  'document': { hrs: 6, rate: 50, label: 'Document chaos — versions diverging' },
-  'spreadsheet': { hrs: 4, rate: 50, label: 'Spreadsheet dependency — no backup' },
-  'portal': { hrs: 2, rate: 50, label: 'Portal gap — uploads going unseen' },
-  'capacity': { hrs: 3, rate: 50, label: 'Capacity blind spot', flat: 2000 },
-  'member': { hrs: 4, rate: 50, label: 'Member engagement gap — churn risk', flat: 1500 },
-  'event': { hrs: 8, rate: 50, label: 'Event data stuck in manual entry' },
-  'sponsor': { hrs: 3, rate: 50, label: 'Sponsor deliverables untracked', flat: 1500 },
-  'committee': { hrs: 3, rate: 50, label: 'Committee follow-through gap' },
-  'default': { hrs: 4, rate: 50, label: 'Operational blind spot' }
-};
-
-function estimateROI(text) {
-  const lower = text.toLowerCase();
-  for (const [key, val] of Object.entries(ROI_MAP)) {
-    if (key !== 'default' && lower.includes(key)) {
-      return val.flat ? { monthly: val.flat, hrs: val.hrs, label: val.label }
-        : { monthly: val.hrs * val.rate * 4.3, hrs: val.hrs, label: val.label };
-    }
-  }
-  const d = ROI_MAP.default;
-  return { monthly: d.hrs * d.rate * 4.3, hrs: d.hrs, label: d.label };
+function updateMode(mode, text) {
+  const badge = document.getElementById('modeBadge');
+  badge.className = 'mode-badge ' + (mode === 'live' ? 'live' : 'demo');
+  document.getElementById('modeText').textContent = text || (mode === 'live' ? 'Connected \u2014 Live Data' : 'Demo Mode');
 }
 
-function addToPlan(title, source) {
-  if (actionPlan.find(i => i.title === title)) return;
-  const roi = estimateROI(title);
-  actionPlan.push({ title, source, roi });
-  gtag('event', 'clarity_add_to_plan', { event_label: title.substring(0, 50) });
-  renderActionPlan();
-}
-
-function removeFromPlan(idx) {
-  actionPlan.splice(idx, 1);
-  renderActionPlan();
-  // Update button states
-  document.querySelectorAll('.add-plan-btn.added').forEach(btn => {
-    const title = btn.dataset.title;
-    if (!actionPlan.find(i => i.title === title)) {
-      btn.classList.remove('added');
-      btn.innerHTML = '+ Add to Plan';
-    }
-  });
-}
-
-function renderActionPlan() {
-  const tab = document.getElementById('apTab');
-  const badge = document.getElementById('apBadge');
-  const items = document.getElementById('apItems');
-  const empty = document.getElementById('apEmpty');
-  const total = document.getElementById('apTotal');
-  const cta = document.getElementById('apCta');
-
-  tab.style.display = MODE === 'demo' ? 'block' : 'none';
-  badge.textContent = actionPlan.length;
-
-  if (actionPlan.length === 0) {
-    items.innerHTML = '<div class="ap-empty">Click <strong>+ Add to Plan</strong> on any bottleneck or insight to start building your clarity roadmap.</div>';
-    total.textContent = '0h';
-    cta.disabled = true;
-    return;
-  }
-
-  let totalHrs = 0;
-  items.innerHTML = actionPlan.map((item, i) => {
-    totalHrs += item.roi.hrs;
-    return `<div class="ap-item">
-      <button class="ap-item-remove" onclick="removeFromPlan(${i})">&times;</button>
-      <div class="ap-item-title">${item.title}</div>
-      <div class="ap-item-roi">${item.roi.label}</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:2px">~${item.roi.hrs}h/week your team spends on this</div>
-    </div>`;
-  }).join('');
-
-  total.textContent = totalHrs + 'h/wk';
-  cta.disabled = false;
-}
-
-function toggleSidebar() {
-  document.getElementById('apSidebar').classList.toggle('open');
-}
-
-function showCheckout() {
-  const preview = document.getElementById('checkoutPreview');
-  let totalHrs = 0;
-  preview.innerHTML = actionPlan.map(item => {
-    totalHrs += item.roi.hrs;
-    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>~${item.roi.hrs}h/wk</span></div>`;
-  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Total time reclaimed</span><span>${totalHrs}h/week</span></div>`;
-  document.getElementById('checkoutOverlay').classList.add('show');
-  document.getElementById('apSidebar').classList.remove('open');
-  gtag('event', 'clarity_checkout_open', { event_label: actionPlan.length + ' items' });
-}
-
-function hideCheckout() {
-  document.getElementById('checkoutOverlay').classList.remove('show');
-}
-
-function submitActionPlan(e) {
-  e.preventDefault();
-  const email = document.getElementById('checkoutEmail').value;
-  const org = document.getElementById('checkoutOrg').value;
-  const preset = INDUSTRY_PRESETS[currentIndustry];
-  const tools = Array.from(activeTools);
-  let totalHrsSubmit = 0;
-  actionPlan.forEach(i => totalHrsSubmit += i.roi.hrs);
-
-  gtag('event', 'clarity_plan_submitted', {
-    event_label: `${org} | ${email} | ${currentIndustry} | ${actionPlan.length} items | ${totalHrsSubmit}h/wk`
-  });
-
-  // Send via Formspree
-  fetch('https://formspree.io/f/xqakvebr', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      _subject: `Clarity Roadmap: ${org}`,
-      email: email,
-      organization: org,
-      industry: preset.label,
-      tools: tools.join(', '),
-      items: actionPlan.map(i => `${i.title} — ${i.roi.label} (~${i.roi.hrs}h/wk)`).join('\n'),
-      total_hours_reclaimed: totalHrsSubmit + 'h/week',
-      submitted_at: new Date().toISOString()
-    })
-  }).catch(() => {});
-
-  // Show summary
-  hideCheckout();
-  document.querySelector('.dashboard').style.display = 'none';
-  document.querySelector('.topbar').style.display = 'none';
-  document.getElementById('apTab').style.display = 'none';
-  document.getElementById('ctaBanner').style.display = 'none';
-
-  const sv = document.getElementById('summaryView');
-  document.getElementById('summarySubtitle').textContent = `Prepared for ${org}`;
-  document.getElementById('summaryMeta').innerHTML =
-    `<span class="summary-meta-item"><strong>Industry:</strong> ${preset.label}</span>` +
-    `<span class="summary-meta-item"><strong>Tools:</strong> ${tools.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}</span>` +
-    `<span class="summary-meta-item"><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>`;
-
-  let totalHrs = 0;
-  document.getElementById('summaryItems').innerHTML = actionPlan.map((item, i) => {
-    totalHrs += item.roi.hrs;
-    return `<div class="summary-card">
-      <div class="summary-card-num">Gap ${i + 1}</div>
-      <div class="summary-card-title">${item.title}</div>
-      <div class="summary-card-detail">${item.roi.label}. Your team currently spends ~${item.roi.hrs} hours/week working around this. ClearOps automates this so your team can focus on actual work — not chasing things down.</div>
-      <div class="summary-card-roi">${item.roi.hrs}h/week reclaimed</div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('summaryTotal').textContent = totalHrs + 'h/week';
-  sv.classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
-// ══════════════════════════════════════════════════════════════════
-// CONNECT TOOL ANIMATION
-// ══════════════════════════════════════════════════════════════════
-function showConnectAnimation(toolName) {
-  const overlay = document.getElementById('connectOverlay');
-  const title = document.getElementById('connectTitle');
-  const fill = document.getElementById('connectFill');
-  const status = document.getElementById('connectStatus');
-  const spinner = document.getElementById('connectSpinner');
-
-  const displayName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
-  const scanMessages = [
-    `Authenticating with ${displayName}...`,
-    `Scanning ${displayName} data...`,
-    `Found ${(800 + Math.floor(Math.random() * 3000)).toLocaleString()} records...`,
-    `Analyzing patterns and bottlenecks...`,
-    `Building operational map...`
-  ];
-
-  title.textContent = `Connecting to ${displayName}`;
-  fill.style.width = '0%';
-  status.textContent = scanMessages[0];
-  status.className = 'connect-status';
-  spinner.style.display = 'block';
-  overlay.classList.add('show');
-
-  let step = 0;
-  const interval = setInterval(() => {
-    step++;
-    if (step < scanMessages.length) {
-      fill.style.width = (step * 20) + '%';
-      status.textContent = scanMessages[step];
-    } else {
-      clearInterval(interval);
-      fill.style.width = '100%';
-      spinner.style.display = 'none';
-      status.className = 'connect-status connect-done';
-      status.textContent = `\u2713 ${displayName} connected \u2014 dashboard updated`;
-      setTimeout(() => {
-        overlay.classList.remove('show');
-        refreshDashboard(true);
-      }, 1200);
-    }
-  }, 800);
-}
-
-// ══════════════════════════════════════════════════════════════════
-// DASHBOARD REFRESH
-// ══════════════════════════════════════════════════════════════════
-function refreshDashboard(animate) {
-  const data = getDemoData();
-  renderHeroMetrics(data, animate);
-  renderSparklines(data);
-  renderFlow(data);
-  renderBubbleChart(data);
-  renderBottlenecks(data);
-  renderTrendChart(data);
-  renderInsights(data);
-  renderActionPlan();
-  updateTimestamp();
-}
 
 // ══════════════════════════════════════════════════════════════════
 // MAIN
 // ══════════════════════════════════════════════════════════════════
-async function init() {
+function init() {
   updateMode(MODE);
-  updateTimestamp();
 
-  // Hide config bar in live mode
-  if (MODE === 'live') {
-    document.getElementById('configBar').style.display = 'none';
-    document.getElementById('ctaBanner').style.display = 'none';
-  }
-
-  // Industry selector
   document.getElementById('industrySelect').addEventListener('change', (e) => {
     currentIndustry = e.target.value;
+    selectedFrustrations.clear();
+    fixedItems.clear();
+    dashboardRevealed = false;
+    document.getElementById('step2').classList.remove('revealed');
+    document.getElementById('roadmapPreview').classList.remove('visible');
+    document.getElementById('stickyCta').classList.remove('visible');
     gtag('event', 'clarity_industry', { event_label: currentIndustry });
-    refreshDashboard(true);
+    renderFrustrationCards();
   });
 
-  // Tool chips
-  document.getElementById('toolChips').addEventListener('click', (e) => {
-    const chip = e.target.closest('.tool-chip');
-    if (!chip) return;
-    const tool = chip.dataset.tool;
-    if (tool === 'email' || tool === 'slack') return; // always on
-
-    if (chip.classList.contains('active')) {
-      chip.classList.remove('active');
-      activeTools.delete(tool);
-      refreshDashboard(false);
-    } else {
-      chip.classList.add('active');
-      activeTools.add(tool);
-      gtag('event', 'clarity_tool_connect', { event_label: tool });
-      showConnectAnimation(tool);
-    }
-  });
-
-  if (MODE === 'live') {
-    const loader = new ClarityDataLoader(MODE);
-    const data = await loader.load();
-    renderHeroMetrics(data, true);
-    renderSparklines(data);
-    renderFlow(data);
-    renderBubbleChart(data);
-    renderBottlenecks(data);
-    renderTrendChart(data);
-    renderInsights(data);
-    loadAIInsights(data);
-    setInterval(async () => {
-      try { const fresh = await loader.load(); renderHeroMetrics(fresh, false); renderBottlenecks(fresh); updateTimestamp(); } catch(e) {}
-    }, 5 * 60 * 1000);
-  } else {
-    refreshDashboard(true);
-  }
+  renderFrustrationCards();
 
   window.addEventListener('resize', () => {
-    const data = MODE === 'live' ? null : getDemoData();
-    if (data) renderFlow(data);
+    if (dashboardRevealed) renderFlow(getDemoData());
   });
 }
 
