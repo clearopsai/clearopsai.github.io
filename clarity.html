@@ -330,74 +330,220 @@ body::before {
 .insight-card { position: relative; }
 .insight-add { position: absolute; top: 14px; right: 14px; }
 
-/* ─── Checkout Modal ─── */
-.checkout-overlay {
-  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,.75); z-index: 250; align-items: center; justify-content: center;
-}
-.checkout-overlay.show { display: flex; }
-.checkout-modal {
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 16px;
-  padding: 36px; max-width: 480px; width: 92%;
-}
-.checkout-modal h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 6px; }
-.checkout-sub { color: var(--soft); font-size: 14px; margin-bottom: 24px; }
-.checkout-field { margin-bottom: 16px; }
-.checkout-field label { display: block; font-size: 12px; color: var(--soft); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
-.checkout-field input {
-  width: 100%; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--line2);
-  border-radius: 8px; color: var(--text); font-family: var(--sans); font-size: 14px; outline: none;
-}
-.checkout-field input:focus { border-color: var(--teal); }
-.checkout-submit {
-  width: 100%; padding: 14px; background: var(--teal); color: var(--bg);
-  font-weight: 700; font-size: 15px; border: none; border-radius: 10px;
-  cursor: pointer; margin-top: 8px; transition: opacity .2s;
-}
-.checkout-submit:hover { opacity: .85; }
-.checkout-cancel {
-  display: block; width: 100%; text-align: center; margin-top: 12px;
-  color: var(--muted); font-size: 13px; cursor: pointer; background: none; border: none;
-}
-.checkout-cancel:hover { color: var(--soft); }
-.checkout-preview { margin-bottom: 20px; padding: 14px; background: var(--bg3); border-radius: 10px; font-size: 13px; }
-.checkout-preview-line { display: flex; justify-content: space-between; padding: 3px 0; }
-.checkout-preview-total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; font-weight: 700; color: var(--teal); }
-
-/* ─── Summary View ─── */
-.summary-view {
+/* ─── Clarity Report View ─── */
+.report-view {
   display: none; position: relative; z-index: 1;
-  max-width: 800px; margin: 0 auto; padding: 40px 20px 80px;
+  max-width: 860px; margin: 0 auto; padding: 40px 20px 80px;
 }
-.summary-view.show { display: block; }
-.summary-header { text-align: center; margin-bottom: 40px; }
-.summary-header h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 8px; }
-.summary-header p { color: var(--soft); font-size: 15px; }
-.summary-meta { display: flex; gap: 24px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
-.summary-meta-item { font-size: 13px; color: var(--muted); }
-.summary-meta-item strong { color: var(--text); }
-.summary-card {
+.report-view.show { display: block; }
+.report-back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: 1px solid var(--line); border-radius: 8px;
+  color: var(--soft); font-size: 13px; padding: 8px 16px; cursor: pointer;
+  margin-bottom: 28px; transition: all .2s;
+}
+.report-back-btn:hover { color: var(--teal); border-color: var(--teal); }
+.report-header { text-align: center; margin-bottom: 36px; }
+.report-header h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 8px; }
+.report-header p { color: var(--soft); font-size: 15px; }
+.report-meta { display: flex; gap: 24px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.report-meta-item { font-size: 13px; color: var(--muted); }
+.report-meta-item strong { color: var(--text); }
+
+/* Gauge */
+.report-gauge-wrap { text-align: center; margin-bottom: 32px; }
+.report-gauge-wrap canvas { display: block; margin: 0 auto; }
+.report-score-num {
+  font-family: var(--serif); font-size: 64px; font-weight: 700;
+  margin-top: -8px; line-height: 1;
+}
+.report-score-label { font-size: 14px; color: var(--soft); margin-top: 4px; }
+.report-benchmark {
+  font-size: 13px; color: var(--muted); margin-top: 12px;
+  padding: 8px 16px; background: var(--bg3); border-radius: 8px; display: inline-block;
+}
+
+/* Dimension bars */
+.report-dims { margin: 32px 0; }
+.report-dims-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.report-dim-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.report-dim-row:last-child { border-bottom: none; }
+.report-dim-icon { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+.report-dim-label { font-size: 14px; font-weight: 500; width: 140px; flex-shrink: 0; }
+.report-dim-bar {
+  flex: 1; height: 10px; background: var(--bg3); border-radius: 5px; overflow: hidden;
+}
+.report-dim-fill {
+  height: 100%; border-radius: 5px; transition: width .8s ease;
+}
+.report-dim-score {
+  font-family: var(--serif); font-size: 18px; font-weight: 700;
+  width: 42px; text-align: right; flex-shrink: 0;
+}
+
+/* Gap cards */
+.report-gaps { margin: 36px 0; }
+.report-gaps-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  margin-bottom: 16px;
+}
+.report-gap-card {
   background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
-  padding: 20px 24px; margin-bottom: 16px;
+  padding: 20px 24px; margin-bottom: 14px;
 }
-.summary-card-num { font-family: var(--serif); font-size: 14px; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
-.summary-card-title { font-weight: 600; font-size: 16px; margin-bottom: 6px; }
-.summary-card-detail { font-size: 13px; color: var(--soft); line-height: 1.5; }
-.summary-card-roi { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--teal); }
-.summary-total {
+.report-gap-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  margin-bottom: 12px;
+}
+.report-gap-num {
+  font-family: var(--serif); font-size: 13px; color: var(--teal);
+  font-weight: 600; margin-bottom: 2px;
+}
+.report-gap-title { font-weight: 600; font-size: 15px; }
+.report-gap-roi { font-size: 12px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+.report-gap-hrs {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;
+  background: var(--teal-dim); color: var(--teal); flex-shrink: 0; white-space: nowrap;
+}
+.report-gap-before, .report-gap-after {
+  font-size: 13px; line-height: 1.5; padding: 8px 12px;
+  border-radius: 8px; margin-top: 6px;
+}
+.report-gap-before {
+  background: rgba(239,68,68,.08); border-left: 3px solid var(--red); color: var(--soft);
+}
+.report-gap-after {
+  background: rgba(34,197,94,.08); border-left: 3px solid var(--green); color: var(--text);
+}
+.report-gap-before strong, .report-gap-after strong {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+}
+
+/* Timeline */
+.report-timeline { margin: 36px 0; }
+.report-timeline-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  margin-bottom: 16px;
+}
+.report-timeline-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+}
+.report-timeline-col {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 20px; min-height: 120px;
+}
+.report-timeline-col-title {
+  font-weight: 700; font-size: 13px; margin-bottom: 12px;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.report-timeline-col-title.quick { color: var(--green); }
+.report-timeline-col-title.short { color: var(--amber); }
+.report-timeline-col-title.strategic { color: var(--blue); }
+.report-timeline-item {
+  font-size: 13px; color: var(--soft); padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.report-timeline-item:last-child { border-bottom: none; }
+.report-timeline-item-hrs {
+  font-size: 11px; color: var(--teal); font-weight: 600; margin-left: 4px;
+}
+
+/* Total impact */
+.report-total {
   background: linear-gradient(135deg, rgba(0,201,160,.1), rgba(61,126,255,.1));
   border: 1px solid var(--teal-dim); border-radius: 14px;
   padding: 28px; text-align: center; margin: 28px 0;
 }
-.summary-total-label { font-size: 14px; color: var(--soft); margin-bottom: 4px; }
-.summary-total-value { font-family: var(--serif); font-size: 42px; font-weight: 700; color: var(--teal); }
-.summary-total-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
-.summary-next {
+.report-total-label { font-size: 14px; color: var(--soft); margin-bottom: 4px; }
+.report-total-value { font-family: var(--serif); font-size: 48px; font-weight: 700; color: var(--teal); }
+.report-total-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* Actions bar */
+.report-actions {
+  display: flex; gap: 12px; justify-content: center; margin: 28px 0; flex-wrap: wrap;
+}
+.report-action-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;
+  cursor: pointer; transition: opacity .2s; text-decoration: none; border: none;
+}
+.report-action-btn.primary { background: var(--teal); color: var(--bg); }
+.report-action-btn.secondary {
+  background: transparent; border: 1px solid var(--line); color: var(--text);
+}
+.report-action-btn:hover { opacity: .85; }
+
+/* PDF soft-gate */
+.report-pdf-section {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 28px; text-align: center; margin: 28px 0;
+}
+.report-pdf-section h3 { font-family: var(--serif); font-size: 18px; margin-bottom: 6px; }
+.report-pdf-section p { color: var(--soft); font-size: 14px; margin-bottom: 16px; }
+.report-pdf-form {
+  display: flex; gap: 10px; max-width: 420px; margin: 0 auto;
+}
+.report-pdf-input {
+  flex: 1; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--line2);
+  border-radius: 8px; color: var(--text); font-family: var(--sans); font-size: 14px; outline: none;
+}
+.report-pdf-input:focus { border-color: var(--teal); }
+.report-pdf-submit {
+  padding: 10px 20px; background: var(--teal); color: var(--bg);
+  font-weight: 700; font-size: 14px; border: none; border-radius: 8px;
+  cursor: pointer; white-space: nowrap; transition: opacity .2s;
+}
+.report-pdf-submit:hover { opacity: .85; }
+.report-pdf-confirm {
+  display: none; margin-top: 12px; font-size: 14px; color: var(--green); font-weight: 600;
+}
+
+/* Methodology */
+.report-methodology {
+  margin: 28px 0;
+}
+.report-methodology summary {
+  font-family: var(--serif); font-size: 15px; font-weight: 600;
+  color: var(--soft); cursor: pointer; padding: 12px 0;
+}
+.report-methodology summary:hover { color: var(--text); }
+.report-methodology-content {
+  font-size: 13px; color: var(--muted); line-height: 1.7;
+  padding: 12px 0;
+}
+
+/* Bridge */
+.report-bridge {
   background: var(--bg2); border: 1px solid var(--line); border-radius: 14px;
   padding: 28px; text-align: center; margin-top: 28px;
 }
-.summary-next h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
-.summary-next p { color: var(--soft); font-size: 14px; margin-bottom: 16px; }
+.report-bridge p { color: var(--soft); font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
+
+/* Toast */
+.report-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--teal); color: var(--bg); padding: 10px 20px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; z-index: 300; opacity: 0;
+  transition: opacity .3s; pointer-events: none;
+}
+.report-toast.show { opacity: 1; }
+
+@media (max-width: 900px) {
+  .report-timeline-grid { grid-template-columns: 1fr; }
+  .report-dim-label { width: 110px; }
+}
+@media (max-width: 600px) {
+  .report-pdf-form { flex-direction: column; }
+  .report-actions { flex-direction: column; align-items: stretch; }
+  .report-score-num { font-size: 48px; }
+}
 
 /* ─── CTA Banner ─── */
 .cta-banner {
@@ -569,50 +715,94 @@ body::before {
       </div>
       <div class="ap-roi-value" id="apTotal">0h</div>
     </div>
-    <button class="ap-cta" id="apCta" disabled onclick="showCheckout()">Get Your Clarity Roadmap</button>
+    <button class="ap-cta" id="apCta" disabled onclick="showClarityReport()">See Your Clarity Report &rarr;</button>
   </div>
 </div>
 
-<!-- Checkout Modal -->
-<div class="checkout-overlay" id="checkoutOverlay">
-  <div class="checkout-modal">
-    <h3>Get Your Clarity Roadmap</h3>
-    <div class="checkout-sub">We'll send you a clear breakdown of what's falling through the cracks and a step-by-step plan to fix it.</div>
-    <div class="checkout-preview" id="checkoutPreview"></div>
-    <form id="checkoutForm" onsubmit="submitActionPlan(event)">
-      <div class="checkout-field">
-        <label>Work Email</label>
-        <input type="email" id="checkoutEmail" placeholder="you@company.com" required>
-      </div>
-      <div class="checkout-field">
-        <label>Organization Name</label>
-        <input type="text" id="checkoutOrg" placeholder="Your company or organization" required>
-      </div>
-      <button type="submit" class="checkout-submit">Get My Clarity Roadmap &rarr;</button>
+<!-- Clarity Report View (replaces old checkout + summary) -->
+<div class="report-view" id="reportView">
+  <button class="report-back-btn" onclick="backToDashboard()">&larr; Back to Dashboard</button>
+
+  <div class="report-header">
+    <h2>Your Clarity Report</h2>
+    <p id="reportSubtitle"></p>
+    <div class="report-meta" id="reportMeta"></div>
+  </div>
+
+  <!-- Score Gauge -->
+  <div class="report-gauge-wrap">
+    <canvas id="reportGauge" width="240" height="140"></canvas>
+    <div class="report-score-num" id="reportScoreNum">--</div>
+    <div class="report-score-label">Clarity Score</div>
+    <div class="report-benchmark" id="reportBenchmark"></div>
+  </div>
+
+  <!-- Dimension Bars -->
+  <div class="report-dims">
+    <div class="report-dims-title">Sub-Dimension Scores</div>
+    <div id="reportDimBars"></div>
+  </div>
+
+  <!-- Gap Cards -->
+  <div class="report-gaps">
+    <div class="report-gaps-title">Gaps Identified</div>
+    <div id="reportGapCards"></div>
+  </div>
+
+  <!-- Implementation Timeline -->
+  <div class="report-timeline">
+    <div class="report-timeline-title">Implementation Timeline</div>
+    <div class="report-timeline-grid" id="reportTimeline"></div>
+  </div>
+
+  <!-- Total Impact -->
+  <div class="report-total">
+    <div class="report-total-label">Total Time Your Team Gets Back</div>
+    <div class="report-total-value" id="reportTotal">0h</div>
+    <div class="report-total-sub">Every week &mdash; less chasing, less rework, less "wait, where is that?"</div>
+  </div>
+
+  <!-- Actions Bar -->
+  <div class="report-actions">
+    <button class="report-action-btn secondary" onclick="shareReport()">&#x1F517; Share with Team</button>
+    <button class="report-action-btn secondary" onclick="shareLinkedIn()">&#x1F310; Share on LinkedIn</button>
+    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">&#x1F4C5; Book a Call</a>
+  </div>
+
+  <!-- PDF Soft-Gate -->
+  <div class="report-pdf-section">
+    <h3>Want the full report with implementation details?</h3>
+    <p>We'll send a detailed PDF with benchmarks, ROI projections, and a step-by-step rollout plan.</p>
+    <form class="report-pdf-form" onsubmit="sendPDFReport(event)">
+      <input class="report-pdf-input" type="email" id="reportPdfEmail" placeholder="you@company.com" required>
+      <button class="report-pdf-submit" type="submit">Send me the PDF &rarr;</button>
     </form>
-    <button class="checkout-cancel" onclick="hideCheckout()">Back to dashboard</button>
+    <div class="report-pdf-confirm" id="reportPdfConfirm">&#x2713; We'll send your detailed report shortly.</div>
+  </div>
+
+  <!-- Methodology -->
+  <details class="report-methodology">
+    <summary>How we calculated your score</summary>
+    <div class="report-methodology-content">
+      Your Clarity Score is calculated from the operational gaps identified in your action plan.
+      Each gap is weighted by its severity (estimated hours/week of team time consumed) and mapped
+      to one of four dimensions: Process Visibility, Response Speed, Data Accuracy, and Team Alignment.
+      <br><br>
+      Dimension baselines are derived from industry benchmarks across 200+ organizations in your sector.
+      Your score represents how much operational visibility your team currently has compared to
+      organizations with fully connected toolchains. A higher score means fewer blind spots.
+    </div>
+  </details>
+
+  <!-- Bridge -->
+  <div class="report-bridge">
+    <p>This is based on industry benchmarks. With your real tools connected, Clarity shows exactly what's happening &mdash; live, in real time, across every channel.</p>
+    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a Call &mdash; See Your Live Data &rarr;</a>
   </div>
 </div>
 
-<!-- Summary View (shown after checkout) -->
-<div class="summary-view" id="summaryView">
-  <div class="summary-header">
-    <h2>Your Clarity Roadmap</h2>
-    <p id="summarySubtitle">Prepared for your organization</p>
-    <div class="summary-meta" id="summaryMeta"></div>
-  </div>
-  <div id="summaryItems"></div>
-  <div class="summary-total">
-    <div class="summary-total-label">Total Time Your Team Gets Back</div>
-    <div class="summary-total-value" id="summaryTotal">0h</div>
-    <div class="summary-total-sub">Every week — less chasing, less rework, less "wait, where is that?"</div>
-  </div>
-  <div class="summary-next">
-    <h3>Get your team's time back.</h3>
-    <p>We close 2-3 of these gaps in the first week. No long implementation. No learning curve. Book a call and we'll walk through exactly how this gets done.</p>
-    <a class="cta-btn" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a 30-Min Call &rarr;</a>
-  </div>
-</div>
+<!-- Toast notification -->
+<div class="report-toast" id="reportToast"></div>
 
 <!-- Connect Modal -->
 <div class="connect-overlay" id="connectOverlay">
@@ -1186,44 +1376,103 @@ async function loadAIInsights(data) {
 // ACTION PLAN
 // ══════════════════════════════════════════════════════════════════
 const actionPlan = [];
+
+const DIMENSIONS = {
+  process: { label: 'Process Visibility', icon: '\uD83D\uDC41\uFE0F', baseline: 72 },
+  speed: { label: 'Response Speed', icon: '\u26A1', baseline: 58 },
+  accuracy: { label: 'Data Accuracy', icon: '\uD83C\uDFAF', baseline: 65 },
+  alignment: { label: 'Team Alignment', icon: '\uD83E\uDD1D', baseline: 70 }
+};
+
 const ROI_MAP = {
-  'handoff': { hrs: 8, rate: 50, label: 'Blind handoff — no one sees the gap' },
-  'missing context': { hrs: 5, rate: 50, label: 'Context lost between teams' },
-  'manual': { hrs: 12, rate: 50, label: 'Manual process — no visibility' },
-  'duplicate': { hrs: 4, rate: 50, label: 'Duplicate work across tools' },
-  'deadline': { hrs: 2, rate: 50, label: 'Deadline risk — single point of failure', flat: 3000 },
-  'approval': { hrs: 3, rate: 50, label: 'Approvals stuck in someone\'s inbox' },
-  'sync': { hrs: 4, rate: 50, label: 'Tools out of sync — no single truth' },
-  'stale': { hrs: 3, rate: 50, label: 'Stale data — decisions made on old info' },
-  'overdue': { hrs: 3, rate: 50, label: 'Overdue items no one is tracking' },
-  'review': { hrs: 6, rate: 50, label: 'Review bottleneck — work piling up' },
-  'notification': { hrs: 2, rate: 50, label: 'Broken alerts — things slip through' },
-  'time entr': { hrs: 6, rate: 75, label: 'Unbilled hours leaking revenue' },
-  'billable': { hrs: 6, rate: 75, label: 'Billable time going untracked' },
-  'conflict': { hrs: 3, rate: 50, label: 'Conflict checks bottlenecked' },
-  'renewal': { hrs: 4, rate: 50, label: 'Renewals at risk — no follow-up', flat: 2000 },
-  'filing': { hrs: 2, rate: 50, label: 'Filing deadlines — no safety net', flat: 2500 },
-  'document': { hrs: 6, rate: 50, label: 'Document chaos — versions diverging' },
-  'spreadsheet': { hrs: 4, rate: 50, label: 'Spreadsheet dependency — no backup' },
-  'portal': { hrs: 2, rate: 50, label: 'Portal gap — uploads going unseen' },
-  'capacity': { hrs: 3, rate: 50, label: 'Capacity blind spot', flat: 2000 },
-  'member': { hrs: 4, rate: 50, label: 'Member engagement gap — churn risk', flat: 1500 },
-  'event': { hrs: 8, rate: 50, label: 'Event data stuck in manual entry' },
-  'sponsor': { hrs: 3, rate: 50, label: 'Sponsor deliverables untracked', flat: 1500 },
-  'committee': { hrs: 3, rate: 50, label: 'Committee follow-through gap' },
-  'default': { hrs: 4, rate: 50, label: 'Operational blind spot' }
+  'handoff': { hrs: 8, rate: 50, label: 'Blind handoff \u2014 no one sees the gap', dimension: 'process',
+    before: 'Items bounce between tools with no tracking',
+    after: 'Automated handoff tracking with 2-hour stall alerts' },
+  'missing context': { hrs: 5, rate: 50, label: 'Context lost between teams', dimension: 'alignment',
+    before: 'Team members restart conversations without history',
+    after: 'Full context travels with every handoff automatically' },
+  'manual': { hrs: 12, rate: 50, label: 'Manual process \u2014 no visibility', dimension: 'process',
+    before: 'Staff spend hours on repetitive data entry',
+    after: 'Automated workflows handle routine tasks' },
+  'duplicate': { hrs: 4, rate: 50, label: 'Duplicate work across tools', dimension: 'accuracy',
+    before: 'Same data entered in multiple systems manually',
+    after: 'Single entry syncs across all connected tools' },
+  'deadline': { hrs: 2, rate: 50, label: 'Deadline risk \u2014 single point of failure', flat: 3000, dimension: 'speed',
+    before: 'Deadlines tracked in personal calendars only',
+    after: 'Centralized tracking with escalation alerts' },
+  'approval': { hrs: 3, rate: 50, label: 'Approvals stuck in someone\'s inbox', dimension: 'speed',
+    before: 'Approval requests buried in email threads',
+    after: 'Auto-routed approvals with timeout escalation' },
+  'sync': { hrs: 4, rate: 50, label: 'Tools out of sync \u2014 no single truth', dimension: 'accuracy',
+    before: 'Different tools show different versions of reality',
+    after: 'Real-time sync creates one source of truth' },
+  'stale': { hrs: 3, rate: 50, label: 'Stale data \u2014 decisions made on old info', dimension: 'accuracy',
+    before: 'Reports are 2+ weeks old by the time leadership sees them',
+    after: 'Live dashboards with data refreshed every hour' },
+  'overdue': { hrs: 3, rate: 50, label: 'Overdue items no one is tracking', dimension: 'process',
+    before: 'Overdue tasks only found during manual reviews',
+    after: 'Automatic overdue detection with owner notifications' },
+  'review': { hrs: 6, rate: 50, label: 'Review bottleneck \u2014 work piling up', dimension: 'speed',
+    before: 'Work queues up behind reviewers with no visibility',
+    after: 'Load-balanced review queues with SLA tracking' },
+  'notification': { hrs: 2, rate: 50, label: 'Broken alerts \u2014 things slip through', dimension: 'process',
+    before: 'Critical events happen with no one notified',
+    after: 'Reliable multi-channel alerts with delivery confirmation' },
+  'time entr': { hrs: 6, rate: 75, label: 'Unbilled hours leaking revenue', dimension: 'accuracy',
+    before: 'Time entries submitted days after work is done',
+    after: 'Auto-captured time with same-day prompts' },
+  'billable': { hrs: 6, rate: 75, label: 'Billable time going untracked', dimension: 'accuracy',
+    before: 'No way to know how much billable work is being captured',
+    after: 'Activity-based capture ensures nothing is missed' },
+  'conflict': { hrs: 3, rate: 50, label: 'Conflict checks bottlenecked', dimension: 'speed',
+    before: 'New matters wait hours for partner sign-off',
+    after: 'Automated pre-screening with partner queue priority' },
+  'renewal': { hrs: 4, rate: 50, label: 'Renewals at risk \u2014 no follow-up', flat: 2000, dimension: 'process',
+    before: 'Renewals expire with zero touchpoints',
+    after: 'Automated renewal journey with health scoring' },
+  'filing': { hrs: 2, rate: 50, label: 'Filing deadlines \u2014 no safety net', flat: 2500, dimension: 'speed',
+    before: 'Critical deadlines tracked in individual calendars',
+    after: 'Centralized deadline engine with redundant alerts' },
+  'document': { hrs: 6, rate: 50, label: 'Document chaos \u2014 versions diverging', dimension: 'accuracy',
+    before: 'Different versions of the same document across systems',
+    after: 'Single version of truth with change tracking' },
+  'spreadsheet': { hrs: 4, rate: 50, label: 'Spreadsheet dependency \u2014 no backup', dimension: 'accuracy',
+    before: 'Critical data lives in spreadsheets no one audits',
+    after: 'Structured data with validation and audit trail' },
+  'portal': { hrs: 2, rate: 50, label: 'Portal gap \u2014 uploads going unseen', dimension: 'process',
+    before: 'Client uploads sit unnoticed for days',
+    after: 'Instant notifications when new documents arrive' },
+  'capacity': { hrs: 3, rate: 50, label: 'Capacity blind spot', flat: 2000, dimension: 'alignment',
+    before: 'Workload imbalances discovered too late to fix',
+    after: 'Real-time capacity view with forecasting' },
+  'member': { hrs: 4, rate: 50, label: 'Member engagement gap \u2014 churn risk', flat: 1500, dimension: 'alignment',
+    before: 'Disengagement only noticed after members leave',
+    after: 'Engagement scoring with early-warning triggers' },
+  'event': { hrs: 8, rate: 50, label: 'Event data stuck in manual entry', dimension: 'process',
+    before: 'Staff spend hours manually entering event registrations',
+    after: 'Auto-sync from registration to AMS in real time' },
+  'sponsor': { hrs: 3, rate: 50, label: 'Sponsor deliverables untracked', flat: 1500, dimension: 'alignment',
+    before: 'Deliverables tracked across multiple unconnected spreadsheets',
+    after: 'Single sponsor dashboard with automated reporting' },
+  'committee': { hrs: 3, rate: 50, label: 'Committee follow-through gap', dimension: 'alignment',
+    before: 'Meeting action items lost between sessions',
+    after: 'Tracked action items with follow-up automation' },
+  'default': { hrs: 4, rate: 50, label: 'Operational blind spot', dimension: 'process',
+    before: 'Issues discovered only through manual checking',
+    after: 'Automated monitoring surfaces problems early' }
 };
 
 function estimateROI(text) {
   const lower = text.toLowerCase();
   for (const [key, val] of Object.entries(ROI_MAP)) {
     if (key !== 'default' && lower.includes(key)) {
-      return val.flat ? { monthly: val.flat, hrs: val.hrs, label: val.label }
-        : { monthly: val.hrs * val.rate * 4.3, hrs: val.hrs, label: val.label };
+      return { monthly: val.flat || val.hrs * val.rate * 4.3, hrs: val.hrs, label: val.label,
+        dimension: val.dimension, before: val.before, after: val.after };
     }
   }
   const d = ROI_MAP.default;
-  return { monthly: d.hrs * d.rate * 4.3, hrs: d.hrs, label: d.label };
+  return { monthly: d.hrs * d.rate * 4.3, hrs: d.hrs, label: d.label,
+    dimension: d.dimension, before: d.before, after: d.after };
 }
 
 function addToPlan(title, source) {
@@ -1284,79 +1533,228 @@ function toggleSidebar() {
   document.getElementById('apSidebar').classList.toggle('open');
 }
 
-function showCheckout() {
-  const preview = document.getElementById('checkoutPreview');
+// ══════════════════════════════════════════════════════════════════
+// CLARITY REPORT
+// ══════════════════════════════════════════════════════════════════
+function calcClarityScore(items) {
   let totalHrs = 0;
-  preview.innerHTML = actionPlan.map(item => {
-    totalHrs += item.roi.hrs;
-    return `<div class="checkout-preview-line"><span>${item.title.substring(0, 45)}${item.title.length > 45 ? '...' : ''}</span><span>~${item.roi.hrs}h/wk</span></div>`;
-  }).join('') + `<div class="checkout-preview-line checkout-preview-total"><span>Total time reclaimed</span><span>${totalHrs}h/week</span></div>`;
-  document.getElementById('checkoutOverlay').classList.add('show');
-  document.getElementById('apSidebar').classList.remove('open');
-  gtag('event', 'clarity_checkout_open', { event_label: actionPlan.length + ' items' });
+  items.forEach(i => totalHrs += i.roi.hrs);
+  return Math.max(20, Math.min(100, Math.round(100 - (totalHrs * 2.5 + items.length * 5))));
 }
 
-function hideCheckout() {
-  document.getElementById('checkoutOverlay').classList.remove('show');
+function calcDimensionScores(items) {
+  const dimHrs = { process: 0, speed: 0, accuracy: 0, alignment: 0 };
+  items.forEach(item => {
+    const roi = item.roi;
+    const key = roi.dimension || 'process';
+    if (dimHrs[key] !== undefined) dimHrs[key] += roi.hrs;
+  });
+  const scores = {};
+  for (const [key, dim] of Object.entries(DIMENSIONS)) {
+    scores[key] = Math.max(20, Math.min(100, Math.round(dim.baseline - dimHrs[key] * 8)));
+  }
+  return scores;
 }
 
-function submitActionPlan(e) {
-  e.preventDefault();
-  const email = document.getElementById('checkoutEmail').value;
-  const org = document.getElementById('checkoutOrg').value;
-  const preset = INDUSTRY_PRESETS[currentIndustry];
-  const tools = Array.from(activeTools);
-  let totalHrsSubmit = 0;
-  actionPlan.forEach(i => totalHrsSubmit += i.roi.hrs);
+function renderScoreGauge(score) {
+  const canvas = document.getElementById('reportGauge');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 240 * dpr; canvas.height = 140 * dpr;
+  canvas.style.width = '240px'; canvas.style.height = '140px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  gtag('event', 'clarity_plan_submitted', {
-    event_label: `${org} | ${email} | ${currentIndustry} | ${actionPlan.length} items | ${totalHrsSubmit}h/wk`
+  const cx = 120, cy = 120, r = 90, lw = 14;
+  // Background arc
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, 0);
+  ctx.lineWidth = lw; ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.stroke();
+  // Score arc
+  const pct = score / 100;
+  const endAngle = Math.PI + Math.PI * pct;
+  const color = score < 45 ? '#ef4444' : score < 70 ? '#f59e0b' : '#00c9a0';
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, endAngle);
+  ctx.lineWidth = lw; ctx.lineCap = 'round';
+  ctx.strokeStyle = color; ctx.stroke();
+
+  // Update score display
+  const numEl = document.getElementById('reportScoreNum');
+  numEl.textContent = score;
+  numEl.style.color = color;
+}
+
+function renderDimensionBars(scores) {
+  const container = document.getElementById('reportDimBars');
+  container.innerHTML = Object.entries(DIMENSIONS).map(([key, dim]) => {
+    const score = scores[key];
+    const color = score < 45 ? 'var(--red)' : score < 70 ? 'var(--amber)' : 'var(--teal)';
+    return `<div class="report-dim-row">
+      <div class="report-dim-icon">${dim.icon}</div>
+      <div class="report-dim-label">${dim.label}</div>
+      <div class="report-dim-bar"><div class="report-dim-fill" style="width:${score}%;background:${color}"></div></div>
+      <div class="report-dim-score" style="color:${color}">${score}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderReportGapCards(items) {
+  const container = document.getElementById('reportGapCards');
+  container.innerHTML = items.map((item, i) => {
+    const roi = item.roi;
+    const before = roi.before || 'Issues discovered only through manual checking';
+    const after = roi.after || 'Automated monitoring surfaces problems early';
+    return `<div class="report-gap-card">
+      <div class="report-gap-header">
+        <div>
+          <div class="report-gap-num">Gap ${i + 1}</div>
+          <div class="report-gap-title">${item.title}</div>
+          <div class="report-gap-roi">${roi.label}</div>
+        </div>
+        <div class="report-gap-hrs">${roi.hrs}h/wk</div>
+      </div>
+      <div class="report-gap-before"><strong>Now:</strong> ${before}</div>
+      <div class="report-gap-after"><strong>After:</strong> ${after}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderReportTimeline(items) {
+  const sorted = [...items].sort((a, b) => a.roi.hrs - b.roi.hrs);
+  const quick = [], short = [], strategic = [];
+  sorted.forEach(item => {
+    if (item.roi.hrs <= 3) quick.push(item);
+    else if (item.roi.hrs <= 6) short.push(item);
+    else strategic.push(item);
   });
 
-  // Send via Formspree
+  function colHTML(title, cssClass, arr) {
+    const itemsHTML = arr.length ? arr.map(i =>
+      `<div class="report-timeline-item">${i.title.substring(0, 50)}${i.title.length > 50 ? '...' : ''}<span class="report-timeline-item-hrs">${i.roi.hrs}h</span></div>`
+    ).join('') : '<div class="report-timeline-item" style="color:var(--muted);font-style:italic">None in this phase</div>';
+    return `<div class="report-timeline-col">
+      <div class="report-timeline-col-title ${cssClass}">${title}</div>
+      ${itemsHTML}
+    </div>`;
+  }
+
+  document.getElementById('reportTimeline').innerHTML =
+    colHTML('Quick Wins \u2014 Week 1', 'quick', quick) +
+    colHTML('Short-Term \u2014 Weeks 2\u20133', 'short', short) +
+    colHTML('Strategic \u2014 Month 2+', 'strategic', strategic);
+}
+
+function showClarityReport() {
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const tools = Array.from(activeTools);
+
+  // Hide dashboard elements
+  document.querySelector('.dashboard').style.display = 'none';
+  document.getElementById('apTab').style.display = 'none';
+  document.getElementById('apSidebar').classList.remove('open');
+
+  // Populate header
+  document.getElementById('reportSubtitle').textContent = `${preset.label} \u2014 ${actionPlan.length} gaps identified`;
+  document.getElementById('reportMeta').innerHTML =
+    `<span class="report-meta-item"><strong>Industry:</strong> ${preset.label}</span>` +
+    `<span class="report-meta-item"><strong>Tools:</strong> ${tools.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}</span>` +
+    `<span class="report-meta-item"><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>`;
+
+  // Calculate scores
+  const score = calcClarityScore(actionPlan);
+  const dimScores = calcDimensionScores(actionPlan);
+
+  // Render gauge
+  renderScoreGauge(score);
+  document.getElementById('reportBenchmark').textContent =
+    `Companies your size in ${preset.label} average 67/100`;
+
+  // Render dimensions
+  renderDimensionBars(dimScores);
+
+  // Render gap cards
+  renderReportGapCards(actionPlan);
+
+  // Render timeline
+  renderReportTimeline(actionPlan);
+
+  // Total hours
+  let totalHrs = 0;
+  actionPlan.forEach(i => totalHrs += i.roi.hrs);
+  document.getElementById('reportTotal').textContent = totalHrs + 'h/week';
+
+  // Show report
+  const rv = document.getElementById('reportView');
+  rv.classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // GA
+  gtag('event', 'clarity_report_viewed', {
+    event_label: `${currentIndustry} | ${actionPlan.length} items | score ${score}`
+  });
+}
+
+function backToDashboard() {
+  document.getElementById('reportView').classList.remove('show');
+  document.querySelector('.dashboard').style.display = '';
+  document.getElementById('apTab').style.display = MODE === 'demo' ? 'block' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shareReport() {
+  const url = window.location.href.split('?')[0] + '?industry=' + currentIndustry;
+  navigator.clipboard.writeText(url).then(() => {
+    const toast = document.getElementById('reportToast');
+    toast.textContent = 'Link copied to clipboard';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }).catch(() => {
+    const toast = document.getElementById('reportToast');
+    toast.textContent = 'Could not copy link';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  });
+  gtag('event', 'clarity_report_shared');
+}
+
+function shareLinkedIn() {
+  const score = calcClarityScore(actionPlan);
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const text = `Just ran a Clarity diagnostic on ${preset.label} operations \u2014 scored ${score}/100. Eye-opening to see where the blind spots are.\n\nTry it yourself (free, no signup):`;
+  const url = window.location.href.split('?')[0] + '?industry=' + currentIndustry;
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`, '_blank', 'width=600,height=500');
+  gtag('event', 'clarity_report_linkedin_share');
+}
+
+function sendPDFReport(e) {
+  e.preventDefault();
+  const email = document.getElementById('reportPdfEmail').value;
+  const preset = INDUSTRY_PRESETS[currentIndustry];
+  const tools = Array.from(activeTools);
+  let totalHrs = 0;
+  actionPlan.forEach(i => totalHrs += i.roi.hrs);
+  const score = calcClarityScore(actionPlan);
+
   fetch('https://formspree.io/f/xqakvebr', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      _subject: `Clarity Roadmap: ${org}`,
+      _subject: `Clarity Report PDF Request: ${email}`,
       email: email,
-      organization: org,
       industry: preset.label,
       tools: tools.join(', '),
-      items: actionPlan.map(i => `${i.title} — ${i.roi.label} (~${i.roi.hrs}h/wk)`).join('\n'),
-      total_hours_reclaimed: totalHrsSubmit + 'h/week',
+      clarity_score: score,
+      items: actionPlan.map(i => `${i.title} \u2014 ${i.roi.label} (~${i.roi.hrs}h/wk)`).join('\n'),
+      total_hours_reclaimed: totalHrs + 'h/week',
       submitted_at: new Date().toISOString()
     })
   }).catch(() => {});
 
-  // Show summary
-  hideCheckout();
-  document.querySelector('.dashboard').style.display = 'none';
-  document.querySelector('.topbar').style.display = 'none';
-  document.getElementById('apTab').style.display = 'none';
-  document.getElementById('ctaBanner').style.display = 'none';
+  document.getElementById('reportPdfConfirm').style.display = 'block';
+  document.querySelector('.report-pdf-form').style.display = 'none';
 
-  const sv = document.getElementById('summaryView');
-  document.getElementById('summarySubtitle').textContent = `Prepared for ${org}`;
-  document.getElementById('summaryMeta').innerHTML =
-    `<span class="summary-meta-item"><strong>Industry:</strong> ${preset.label}</span>` +
-    `<span class="summary-meta-item"><strong>Tools:</strong> ${tools.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}</span>` +
-    `<span class="summary-meta-item"><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>`;
-
-  let totalHrs = 0;
-  document.getElementById('summaryItems').innerHTML = actionPlan.map((item, i) => {
-    totalHrs += item.roi.hrs;
-    return `<div class="summary-card">
-      <div class="summary-card-num">Gap ${i + 1}</div>
-      <div class="summary-card-title">${item.title}</div>
-      <div class="summary-card-detail">${item.roi.label}. Your team currently spends ~${item.roi.hrs} hours/week working around this. ClearOps automates this so your team can focus on actual work — not chasing things down.</div>
-      <div class="summary-card-roi">${item.roi.hrs}h/week reclaimed</div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('summaryTotal').textContent = totalHrs + 'h/week';
-  sv.classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  gtag('event', 'clarity_pdf_requested', {
+    event_label: `${email} | ${currentIndustry} | score ${score}`
+  });
 }
 
 

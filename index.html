@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClearOps AI — Operational Intelligence for the DC Metro</title>
-<meta name="description" content="ClearOps AI helps associations, law firms, and professional services organizations in DC, Baltimore, and Richmond get operational clarity out of fragmented technology — connecting tools, automating reporting, and building visibility dashboards.">
+<title>ClearOps AI — Operational Intelligence for Mid-Market Organizations</title>
+<meta name="description" content="ClearOps AI helps associations, law firms, and professional services organizations get operational clarity out of fragmented technology — connecting tools, automating reporting, and building visibility dashboards.">
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
 <script>
@@ -142,6 +142,86 @@ h1 i { font-style: italic; color: var(--teal); }
   font-size: 11.5px; font-weight: 500; color: var(--soft);
   padding: 3px 10px; border-radius: 4px;
   background: var(--bg2); border: 1px solid var(--line2);
+}
+
+/* Hero CTAs */
+.hero-ctas { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-cta-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 10px; border: none;
+  background: var(--teal); color: var(--bg);
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: opacity .2s; box-shadow: 0 0 24px rgba(0,201,160,.2);
+}
+.hero-cta-primary:hover { opacity: .85; }
+.hero-cta-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 14px 24px; border-radius: 10px;
+  background: transparent; border: 1px solid var(--line2);
+  color: var(--soft); font-family: var(--sans); font-size: 14px; font-weight: 500;
+  text-decoration: none; transition: all .2s;
+}
+.hero-cta-secondary:hover { border-color: var(--teal); color: var(--text); }
+
+/* ─── Dashboard Preview ─── */
+.dash-preview {
+  margin-top: 48px; position: relative; border-radius: 16px;
+  overflow: hidden; border: 1px solid var(--line);
+  background: var(--bg2); cursor: pointer;
+  transition: border-color .3s, transform .3s;
+}
+.dash-preview:hover { border-color: rgba(0,201,160,.3); transform: translateY(-3px); }
+.dash-preview-inner {
+  padding: 28px 32px 24px;
+  background: linear-gradient(135deg, rgba(0,201,160,.04), rgba(61,126,255,.03));
+}
+.dash-preview-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  background: rgba(0,201,160,.12); color: var(--teal); margin-bottom: 16px;
+}
+.dash-preview-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
+  animation: blink 2.5s ease infinite;
+}
+.dash-preview-title {
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  margin-bottom: 6px;
+}
+.dash-preview-sub { font-size: 13px; color: var(--soft); margin-bottom: 20px; }
+.dash-preview-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 20px;
+}
+.dash-preview-metric {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px; text-align: center;
+}
+.dash-preview-metric-val {
+  font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--teal);
+}
+.dash-preview-metric-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.dash-preview-insights {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.dash-preview-insight {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+}
+.dash-preview-insight-icon { font-size: 18px; flex-shrink: 0; }
+.dash-preview-insight-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.dash-preview-insight-text { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.dash-preview-cta {
+  text-align: center; padding: 14px;
+  background: linear-gradient(to top, var(--bg2), transparent);
+  font-size: 14px; font-weight: 600; color: var(--teal);
+}
+
+@media (max-width: 768px) {
+  .dash-preview-metrics { grid-template-columns: 1fr 1fr; }
+  .dash-preview-insights { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; }
 }
 
 /* ─── Sections ─── */
@@ -646,9 +726,13 @@ footer a:hover { opacity: 1; }
 
   <!-- ── Hero ── -->
   <div class="hero">
-    <div class="tag"><div class="tag-dot"></div><span class="tag-text">Tech-Driven Ops Clarity &middot; DC &ndash; Baltimore &ndash; Richmond</span></div>
+    <div class="tag"><div class="tag-dot"></div><span class="tag-text">Operational Intelligence for Mid-Market Organizations</span></div>
     <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
-    <p class="hero-body">The average 150-person organization wastes 20+ hours per week on manual reporting across disconnected systems. ClearOps AI fixes that — connecting your tools, automating your reporting, and building the dashboards your leadership actually needs.</p>
+    <p class="hero-body">In every mid-market org I've worked with, teams waste 15&ndash;25 hours per week on manual reporting across disconnected systems. ClearOps AI fixes that &mdash; connecting your tools, automating your reporting, and building the dashboards your leadership actually needs.</p>
+    <div class="hero-ctas">
+      <a class="hero-cta-primary" href="/clarity.html">See What You're Missing &rarr;</a>
+      <a class="hero-cta-secondary" href="/snapshot.html">Take the 2-Min Ops Health Score</a>
+    </div>
     <div class="credbar">
       <span class="credbar-label">12+ years in enterprise ops at</span>
       <div class="credbar-pills">
@@ -659,6 +743,34 @@ footer a:hover { opacity: 1; }
         <span class="pill">Axoni</span>
       </div>
     </div>
+
+    <!-- Dashboard Preview -->
+    <a href="/clarity.html" style="text-decoration:none;color:inherit">
+    <div class="dash-preview">
+      <div class="dash-preview-inner">
+        <div class="dash-preview-badge"><span class="dot"></span> Live Interactive Demo</div>
+        <div class="dash-preview-title">Clarity Dashboard &mdash; Professional Services</div>
+        <div class="dash-preview-sub">See bottlenecks, AI insights, and your Clarity Score &mdash; built from your industry data</div>
+        <div class="dash-preview-metrics">
+          <div class="dash-preview-metric"><div class="dash-preview-metric-val">4,218</div><div class="dash-preview-metric-label">Total Requests</div></div>
+          <div class="dash-preview-metric"><div class="dash-preview-metric-val">3.2h</div><div class="dash-preview-metric-label">Avg Resolution</div></div>
+          <div class="dash-preview-metric"><div class="dash-preview-metric-val">91.2%</div><div class="dash-preview-metric-label">Resolution Rate</div></div>
+          <div class="dash-preview-metric"><div class="dash-preview-metric-val">14</div><div class="dash-preview-metric-label">Bottlenecks</div></div>
+        </div>
+        <div class="dash-preview-insights">
+          <div class="dash-preview-insight">
+            <div class="dash-preview-insight-icon">&#x26A1;</div>
+            <div><div class="dash-preview-insight-title">New Clients Falling Through the Cracks</div><div class="dash-preview-insight-text">Client info sits in Slack 6+ hours before CRM entry</div></div>
+          </div>
+          <div class="dash-preview-insight">
+            <div class="dash-preview-insight-icon">&#x1F6A8;</div>
+            <div><div class="dash-preview-insight-title">12 Renewals About to Lapse</div><div class="dash-preview-insight-text">Zero touchpoints in 60 days &mdash; 4 are top-20% revenue</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-preview-cta">Try the Interactive Demo &rarr;</div>
+    </div>
+    </a>
   </div>
 
   <!-- ── Before / After ── -->
@@ -703,6 +815,29 @@ footer a:hover { opacity: 1; }
   </section>
 
 </div><!-- /wrap -->
+
+<!-- ── Patterns We See (moved up for relatability) ── -->
+<div class="wrap">
+  <section class="reveal">
+    <div class="sec-label">Patterns We See</div>
+    <h2>Sound familiar? <i>You're not alone.</i></h2>
+    <p class="lead">After 12 years in enterprise ops, we see the same problems at every mid-market organization. Here's what we typically find.</p>
+    <div class="test-grid">
+      <div class="test-card">
+        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
+        <cite>120-person trade association</cite>
+      </div>
+      <div class="test-card">
+        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
+        <cite>90-person professional services firm</cite>
+      </div>
+      <div class="test-card">
+        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. Meanwhile, the data exists across three systems that don't talk to each other.</blockquote>
+        <cite>200-person membership organization</cite>
+      </div>
+    </div>
+  </section>
+</div>
 
 <!-- ── Dashboard Showcase (wide) ── -->
 <section class="reveal">
@@ -925,33 +1060,8 @@ footer a:hover { opacity: 1; }
         </div>
         <div class="deliv">
           <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Follow-Up Review Call</strong><span>Dedicated session to walk through findings and answer questions from your team.</span></div>
+          <div class="deliv-body"><strong>Follow-Up Review Call</strong><span>Dedicated session to walk through findings and answer questions from your team. Everything is handed off completely &mdash; yours to keep and act on.</span></div>
         </div>
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Yours to Keep</strong><span>All documentation is handed off completely. No dependency on us to act on the findings.</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Patterns We See ── -->
-  <section class="reveal">
-    <div class="sec-label">Patterns We See</div>
-    <h2>Sound familiar? <i>You're not alone.</i></h2>
-    <p class="lead">After 12 years in enterprise ops, we see the same problems at every mid-market organization. Here's what we typically find.</p>
-    <div class="test-grid">
-      <div class="test-card">
-        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
-        <cite>120-person trade association</cite>
-      </div>
-      <div class="test-card">
-        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
-        <cite>90-person professional services firm</cite>
-      </div>
-      <div class="test-card">
-        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. Meanwhile, the data exists across three systems that don't talk to each other.</blockquote>
-        <cite>200-person membership organization</cite>
       </div>
     </div>
   </section>
@@ -966,7 +1076,7 @@ footer a:hover { opacity: 1; }
         <div class="svc-n">&#9889;</div>
         <div>
           <h3>Operational Pattern Recognition</h3>
-          <p>AI analyzes how work actually flows through your organization — identifying bottlenecks, redundancies, and coordination gaps that would take weeks to surface manually.</p>
+          <p>AI analyzes how work actually flows through your organization &mdash; identifying bottlenecks, redundancies, and coordination gaps that would take weeks to surface manually. <strong>Example:</strong> For a 120-person trade association, pattern analysis revealed that new client info sat in Slack for 6+ hours before anyone entered it into the CRM &mdash; a handoff gap that was invisible until the data showed it.</p>
         </div>
       </div>
       <div class="svc">
@@ -1029,10 +1139,10 @@ footer a:hover { opacity: 1; }
         </div>
       </div>
       <div class="svc">
-        <div class="svc-n">$2.5K+</div>
+        <div class="svc-n">$2.5&ndash;5K</div>
         <div>
           <h3>Clarity Audit</h3>
-          <p>The full deep dive. We map every system, data flow, and reporting gap across your organization. You receive a written findings report, prioritized action roadmap, executive summary, and a follow-up review call. Fixed scope, fixed price.</p>
+          <p>The full deep dive. We map every system, data flow, and reporting gap across your organization. You receive a written findings report, prioritized action roadmap, executive summary, and a follow-up review call. Fixed scope, fixed price &mdash; scoped after the free snapshot so there are no surprises.</p>
         </div>
       </div>
       <div class="svc">
@@ -1093,20 +1203,20 @@ footer a:hover { opacity: 1; }
       </div>
       <div class="alt-cta" style="margin-top: 0; margin-bottom: 24px; text-align: left;">
         <p style="margin-bottom: 12px; color: var(--soft); font-size: 13px;">Prefer to skip the simulation? Email us your tools and top pain points directly:</p>
-        <p><a href="mailto:haseeb.clearopsai@gmail.com?subject=Ops%20Snapshot%20Request&body=Organization%3A%20%0ASize%20(approx.%20employees)%3A%20%0AIndustry%3A%20%0A%0ATools%20we%20use%3A%0A-%20%0A-%20%0A-%20%0A%0ABiggest%20operational%20pain%20points%3A%0A1.%20%0A2.%20%0A3.%20">haseeb.clearopsai@gmail.com &rarr;</a></p>
+        <p><a href="mailto:haseeb@clearopsai.com?subject=Ops%20Snapshot%20Request&body=Organization%3A%20%0ASize%20(approx.%20employees)%3A%20%0AIndustry%3A%20%0A%0ATools%20we%20use%3A%0A-%20%0A-%20%0A-%20%0A%0ABiggest%20operational%20pain%20points%3A%0A1.%20%0A2.%20%0A3.%20">haseeb@clearopsai.com &rarr;</a></p>
       </div>
       <p class="lead" style="font-size: 13px; margin-bottom: 16px;">Prefer to talk it through? Book a 20-minute call instead.</p>
       <div class="calendly-wrap">
         <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0" style="min-width:280px;height:640px;"></div>
       </div>
-      <p class="cta-email">Or email directly: <a href="mailto:haseeb.clearopsai@gmail.com">haseeb.clearopsai@gmail.com</a></p>
+      <p class="cta-email">Or email directly: <a href="mailto:haseeb@clearopsai.com">haseeb@clearopsai.com</a></p>
     </div>
   </section>
 
   <!-- ── Footer ── -->
   <footer>
-    <p>&copy; 2026 ClearOps AI &middot; Washington DC Metro</p>
-    <p><a href="mailto:haseeb.clearopsai@gmail.com">haseeb.clearopsai@gmail.com</a></p>
+    <p>&copy; 2026 ClearOps AI</p>
+    <p><a href="mailto:haseeb@clearopsai.com">haseeb@clearopsai.com</a></p>
   </footer>
 
 </div><!-- /wrap -->
