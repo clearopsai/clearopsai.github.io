@@ -255,8 +255,10 @@ body::after {
 .category-section { margin-bottom: 36px; }
 .category-section .panel-title { margin-bottom: 16px; }
 .cat-bar-item {
+  margin-bottom: 18px;
+}
+.cat-bar-top {
   display: flex; align-items: center; gap: 14px;
-  margin-bottom: 14px;
 }
 .cat-label {
   width: 160px; min-width: 160px; font-size: 13px; font-weight: 500;
@@ -273,6 +275,10 @@ body::after {
 .cat-score {
   width: 52px; min-width: 52px; text-align: right;
   font-size: 14px; font-weight: 700;
+}
+.cat-explain {
+  font-size: 12.5px; color: var(--soft); line-height: 1.55;
+  margin-top: 6px; padding-left: 174px;
 }
 
 /* ─── Shareable Badge ─── */
@@ -475,6 +481,7 @@ body::after {
   .snapshot-form .form-row { flex-direction: column; }
   .progress-steps { max-width: 280px; }
   .cat-label { width: 110px; min-width: 110px; font-size: 12px; }
+  .cat-explain { padding-left: 0; margin-top: 4px; }
   .score-ring-wrap { width: 160px; height: 160px; }
   .score-ring { width: 160px; height: 160px; }
   .score-ring-inner { inset: 14px; }
@@ -758,8 +765,8 @@ body::after {
 
     <!-- 3g: CTA Form -->
     <div class="snapshot-cta">
-      <h3>Want the full analysis?</h3>
-      <p>Get a detailed breakdown with specific recommendations for your organization — written by a human, not a template.</p>
+      <h3>Your score shows what's broken. The full analysis shows what to fix first.</h3>
+      <p>We'll review your results and send a personalized breakdown: which gaps are costing you the most time, what to fix in what order, and a concrete action plan &mdash; written specifically for your org, by a human.</p>
 
       <div class="snapshot-form" id="snapshotForm">
         <div class="form-row">
@@ -1113,6 +1120,29 @@ function generateResults() {
   document.getElementById('scoreVerdictSub').textContent = tier.sub;
 
   // ── 3b: Category Breakdown ──
+  const catExplain = {
+    'Integration Health': {
+      low: 'Your tools aren\u2019t connected \u2014 data lives in silos and staff manually copy information between systems. This is where handoff gaps and duplicate entries come from.',
+      mid: 'Some integrations exist but there are still gaps where data doesn\u2019t flow automatically between key systems.',
+      high: 'Your systems are well-connected. Data flows between tools with minimal manual intervention.'
+    },
+    'Reporting Automation': {
+      low: 'Your team is likely spending 5\u201310+ hours per week manually assembling reports from multiple tools. By the time leadership sees the data, it\u2019s already stale.',
+      mid: 'Some reporting is automated but key reports still require manual data pulls or spreadsheet reconciliation.',
+      high: 'Most reporting runs automatically. Your team spends minimal time on manual report assembly.'
+    },
+    'Data Visibility': {
+      low: 'Leadership can\u2019t see what\u2019s happening in real time. Questions like \u201Cwhat\u2019s our retention rate?\u201D or \u201Chow many items are overdue?\u201D require someone to dig through multiple systems to answer.',
+      mid: 'Some metrics are visible but there are blind spots \u2014 certain KPIs require manual lookups across systems.',
+      high: 'Your team has strong visibility into key metrics. Most operational questions can be answered quickly.'
+    },
+    'Workflow Efficiency': {
+      low: 'Manual handoffs, approval bottlenecks, and process gaps are consuming your team\u2019s time. Work gets stuck or lost between steps because there\u2019s no automated tracking.',
+      mid: 'Core workflows function but there are manual steps that slow things down and create risk of items falling through the cracks.',
+      high: 'Workflows are streamlined with good automation. Most processes run without manual intervention.'
+    }
+  };
+
   const categories = [
     { label: 'Integration Health', score: scores.integration, max: 25 },
     { label: 'Reporting Automation', score: scores.reporting, max: 25 },
@@ -1124,13 +1154,18 @@ function generateResults() {
   barsEl.innerHTML = categories.map(c => {
     const pct = (c.score / c.max) * 100;
     const color = getScoreColor((c.score / c.max) * 100);
+    const tier = pct <= 40 ? 'low' : pct <= 70 ? 'mid' : 'high';
+    const explain = catExplain[c.label] ? catExplain[c.label][tier] : '';
     return `
       <div class="cat-bar-item">
-        <div class="cat-label">${c.label}</div>
-        <div class="cat-track">
-          <div class="cat-fill" style="width:0%;background:${color};" data-width="${pct}%"></div>
+        <div class="cat-bar-top">
+          <div class="cat-label">${c.label}</div>
+          <div class="cat-track">
+            <div class="cat-fill" style="width:0%;background:${color};" data-width="${pct}%"></div>
+          </div>
+          <div class="cat-score" style="color:${color};">${c.score}/${c.max}</div>
         </div>
-        <div class="cat-score" style="color:${color};">${c.score}/${c.max}</div>
+        <div class="cat-explain">${explain}</div>
       </div>
     `;
   }).join('');
@@ -1272,7 +1307,7 @@ function generateResults() {
     'Score: ' + scores.total + '/100\nTools: ' + toolNames.join(', ') + '\nGaps found: ' + gapCount + '\nEst. hours/week: ' + adjustedHours + '\n\nI\'d like the full analysis.'
   );
   document.getElementById('ctaEmail').href =
-    'mailto:haseeb.clearopsai@gmail.com?subject=' + emailSubject + '&body=' + emailBody;
+    'mailto:haseeb@clearopsai.com?subject=' + emailSubject + '&body=' + emailBody;
 
   // Pre-fill hidden data for form submission
   window._snapshotData = {
