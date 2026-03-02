@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Clarity Audit — ClearOps AI</title>
+<meta name="description" content="See what a ClearOps Clarity Audit delivers. Sample findings report for a 150-person trade association with operational visibility gaps.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-D3V52Q2K1Q');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #080b12;
+  --bg2: #0d1120;
+  --bg3: #111828;
+  --line: #1a2236;
+  --line2: #1f2a40;
+  --teal: #00c9a0;
+  --teal-dim: rgba(0,201,160,.12);
+  --blue: #3d7eff;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --green: #22c55e;
+  --text: #dde3f0;
+  --soft: #7e8ea8;
+  --muted: #4a566e;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+/* ─── Top Bar ─── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,11,18,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-brand {
+  font-family: var(--serif); font-size: 16px; font-weight: 600;
+  color: var(--teal); text-decoration: none;
+}
+.topbar-brand span { color: var(--soft); font-weight: 300; font-size: 13px; margin-left: 8px; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.topbar-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  background: rgba(245,158,11,.12); color: var(--amber);
+}
+.topbar-link {
+  color: var(--soft); text-decoration: none; font-size: 13px;
+  transition: color .2s;
+}
+.topbar-link:hover { color: var(--teal); }
+
+/* ─── Report Header ─── */
+.report-header {
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 36px;
+}
+.report-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -.03em; margin-bottom: 12px;
+}
+.report-header h1 i { font-style: italic; color: var(--teal); }
+.report-subtitle { font-size: 15px; color: var(--soft); margin-bottom: 20px; }
+.report-meta {
+  display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--muted);
+}
+.report-meta strong { color: var(--text); }
+
+/* ─── Sections ─── */
+.section { padding: 32px 0; border-bottom: 1px solid var(--line); }
+.section:last-of-type { border-bottom: none; }
+.section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--teal);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--line2), transparent);
+  max-width: 80px;
+}
+.section h2 {
+  font-family: var(--serif); font-size: 20px; font-weight: 600;
+  letter-spacing: -.02em; margin-bottom: 14px;
+}
+
+/* ─── Score Display ─── */
+.score-display {
+  display: flex; align-items: center; gap: 28px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 28px; margin-bottom: 24px;
+}
+.score-circle {
+  width: 100px; height: 100px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; flex-shrink: 0;
+  border: 4px solid var(--amber);
+  background: rgba(245,158,11,.06);
+}
+.score-circle .num {
+  font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--amber);
+  line-height: 1;
+}
+.score-circle .of { font-size: 12px; color: var(--muted); }
+.score-detail h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--amber); }
+.score-detail p { font-size: 14px; color: var(--soft); }
+
+/* ─── Dimension Bars ─── */
+.dim-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 0;
+}
+.dim-label { width: 140px; min-width: 140px; font-size: 13px; font-weight: 500; }
+.dim-bar { flex: 1; height: 10px; background: var(--bg3); border-radius: 5px; overflow: hidden; }
+.dim-fill { height: 100%; border-radius: 5px; }
+.dim-score { width: 40px; text-align: right; font-family: var(--serif); font-size: 16px; font-weight: 700; }
+
+/* ─── Finding Cards ─── */
+.finding {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 24px; margin-bottom: 16px;
+}
+.finding-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  margin-bottom: 14px;
+}
+.finding-num {
+  font-family: var(--serif); font-size: 12px; font-weight: 600;
+  color: var(--teal); margin-bottom: 2px;
+}
+.finding-title { font-weight: 600; font-size: 16px; }
+.finding-severity {
+  padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  flex-shrink: 0; white-space: nowrap;
+}
+.sev-high { background: rgba(239,68,68,.12); color: var(--red); }
+.sev-medium { background: rgba(245,158,11,.12); color: var(--amber); }
+.finding-body { font-size: 14px; color: var(--soft); line-height: 1.65; margin-bottom: 14px; }
+.finding-before, .finding-after {
+  font-size: 13px; line-height: 1.5; padding: 10px 14px;
+  border-radius: 8px; margin-top: 6px;
+}
+.finding-before {
+  background: rgba(239,68,68,.06); border-left: 3px solid var(--red); color: var(--soft);
+}
+.finding-after {
+  background: rgba(34,197,94,.06); border-left: 3px solid var(--green); color: var(--text);
+}
+.finding-before strong, .finding-after strong {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .5px; display: block; margin-bottom: 2px;
+}
+.finding-impact {
+  margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--teal);
+}
+
+/* ─── Roadmap ─── */
+.roadmap-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+}
+.roadmap-col {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 20px;
+}
+.roadmap-col-title {
+  font-weight: 700; font-size: 12px; text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 14px;
+}
+.roadmap-col-title.quick { color: var(--green); }
+.roadmap-col-title.short { color: var(--amber); }
+.roadmap-col-title.strategic { color: var(--blue); }
+.roadmap-item {
+  font-size: 13px; color: var(--soft); padding: 8px 0;
+  border-bottom: 1px solid var(--line); line-height: 1.5;
+}
+.roadmap-item:last-child { border-bottom: none; }
+.roadmap-item strong { color: var(--text); font-weight: 500; display: block; }
+.roadmap-item .time { font-size: 11px; color: var(--teal); font-weight: 600; }
+
+/* ─── Total Impact ─── */
+.impact-box {
+  background: linear-gradient(135deg, rgba(0,201,160,.08), rgba(61,126,255,.06));
+  border: 1px solid var(--teal-dim); border-radius: 14px;
+  padding: 28px; text-align: center; margin: 28px 0;
+}
+.impact-value {
+  font-family: var(--serif); font-size: 42px; font-weight: 700; color: var(--teal);
+}
+.impact-label { font-size: 14px; color: var(--soft); margin-bottom: 4px; }
+.impact-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ─── CTA ─── */
+.report-cta {
+  background: var(--bg2); border: 1px solid rgba(0,201,160,.2);
+  border-radius: 16px; padding: 36px; text-align: center; margin: 32px 0;
+}
+.report-cta h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
+.report-cta p { font-size: 14px; color: var(--soft); margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 13px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  text-decoration: none; transition: opacity .2s; border: none; cursor: pointer;
+}
+.cta-btn.primary { background: var(--teal); color: var(--bg); }
+.cta-btn.secondary { background: transparent; border: 1px solid var(--line2); color: var(--text); }
+.cta-btn:hover { opacity: .85; }
+
+/* ─── Sample Banner ─── */
+.sample-banner {
+  background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2);
+  border-radius: 10px; padding: 14px 20px; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--amber);
+}
+.sample-banner-icon { font-size: 18px; flex-shrink: 0; }
+
+/* ─── Footer ─── */
+footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  font-size: 12px; color: var(--muted);
+}
+footer a { color: var(--teal); text-decoration: none; }
+
+/* ─── Print ─── */
+@media print {
+  body { background: #fff; color: #222; }
+  .topbar, .report-cta, .sample-banner, footer { display: none; }
+  .wrap { max-width: 100%; }
+  .finding, .roadmap-col, .score-display { border-color: #ddd; }
+  .finding-before, .finding-after { border-left-width: 2px; }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .score-display { flex-direction: column; text-align: center; }
+  .dim-label { width: 110px; min-width: 110px; }
+  .report-meta { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-brand">ClearOps AI<span>Sample Report</span></a>
+  <div class="topbar-right">
+    <span class="topbar-badge">Sample &mdash; Hypothetical Organization</span>
+    <a href="/" class="topbar-link">&larr; Back to ClearOps</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="report-header">
+    <h1>Clarity Audit &mdash; <i>Findings Report</i></h1>
+    <div class="report-subtitle">Operational Visibility Assessment for a Mid-Market Trade Association</div>
+    <div class="report-meta">
+      <span><strong>Organization:</strong> Sample &mdash; 150-Person Trade Association</span>
+      <span><strong>Systems Reviewed:</strong> Salesforce, Fonteva, Mailchimp, Asana, Google Workspace</span>
+      <span><strong>Audit Duration:</strong> 2.5 Weeks</span>
+    </div>
+  </div>
+
+  <div class="sample-banner">
+    <span class="sample-banner-icon">&#x1F4CB;</span>
+    This is a sample report based on composite patterns from 12+ years of enterprise operations work. It illustrates what a real Clarity Audit delivers &mdash; findings, analysis, and a prioritized roadmap your team can act on.
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="section">
+    <div class="section-label">Executive Summary</div>
+    <h2>Your operations run on 5 systems that don't talk to each other.</h2>
+    <p style="color:var(--soft);font-size:14px;line-height:1.7;margin-bottom:20px;">
+      This audit reviewed all operational workflows, data flows, and reporting processes across your technology stack.
+      We found <strong style="color:var(--text)">4 significant operational gaps</strong> consuming an estimated
+      <strong style="color:var(--teal)">22 hours per week</strong> of staff time &mdash; equivalent to over half a
+      full-time employee spent on work that should be automated. The most critical finding: your renewal pipeline
+      has no automated tracking, putting an estimated $38,000 in annual dues revenue at risk.
+    </p>
+
+    <div class="score-display">
+      <div class="score-circle">
+        <div class="num">41</div>
+        <div class="of">/ 100</div>
+      </div>
+      <div class="score-detail">
+        <h3>Clarity Score: At Risk</h3>
+        <p>Your team has limited visibility into day-to-day operations. Key metrics require manual assembly, handoffs lack tracking, and leadership decisions are based on data that's 2+ weeks stale. Organizations at this score level typically reclaim 15&ndash;25 hours/week after connecting their systems.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:8px;">
+      <div class="dim-row">
+        <div class="dim-label">Process Visibility</div>
+        <div class="dim-bar"><div class="dim-fill" style="width:35%;background:var(--red)"></div></div>
+        <div class="dim-score" style="color:var(--red)">35</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Response Speed</div>
+        <div class="dim-bar"><div class="dim-fill" style="width:48%;background:var(--amber)"></div></div>
+        <div class="dim-score" style="color:var(--amber)">48</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Data Accuracy</div>
+        <div class="dim-bar"><div class="dim-fill" style="width:38%;background:var(--red)"></div></div>
+        <div class="dim-score" style="color:var(--red)">38</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Team Alignment</div>
+        <div class="dim-bar"><div class="dim-fill" style="width:52%;background:var(--amber)"></div></div>
+        <div class="dim-score" style="color:var(--amber)">52</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Findings -->
+  <div class="section">
+    <div class="section-label">Key Findings</div>
+    <h2>4 operational gaps identified.</h2>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div>
+          <div class="finding-num">Finding 1</div>
+          <div class="finding-title">Renewal Pipeline Has No Automated Tracking</div>
+        </div>
+        <span class="finding-severity sev-high">High Severity</span>
+      </div>
+      <div class="finding-body">
+        142 membership renewals are due in the next 90 days. Of these, 23 have had zero staff touchpoints in 60+ days.
+        Renewal reminders are managed through a shared Google Sheet that's updated manually once a week. Four of the
+        at-risk members are in the top 20% by annual dues &mdash; representing $38,000 in potential lost revenue.
+        Staff currently spends 4 hours/week reconciling the spreadsheet with Fonteva records.
+      </div>
+      <div class="finding-before"><strong>Now:</strong> Renewals tracked in a shared spreadsheet, updated weekly by one person. No automated reminders. No escalation when members go quiet.</div>
+      <div class="finding-after"><strong>After:</strong> Automated renewal journey triggered 90 days before expiration. Health scoring flags at-risk members. Escalation alerts when high-value members go 30 days without touchpoint.</div>
+      <div class="finding-impact">~4h/week reclaimed &middot; $38K/year revenue protected</div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div>
+          <div class="finding-num">Finding 2</div>
+          <div class="finding-title">Board Reporting Requires 15+ Hours of Manual Assembly</div>
+        </div>
+        <span class="finding-severity sev-high">High Severity</span>
+      </div>
+      <div class="finding-body">
+        Every month, the COO pulls data from Salesforce (membership), Fonteva (events), Mailchimp (engagement),
+        and Google Sheets (financials) into a single board report. The process takes 15+ hours and the data is
+        always 2&ndash;3 weeks stale by the time the board sees it. Three staff members are involved, and formatting
+        inconsistencies require an additional review cycle. The board has explicitly asked for more current data.
+      </div>
+      <div class="finding-before"><strong>Now:</strong> Monthly board report assembled manually from 4 systems over 15+ hours. Data is 2&ndash;3 weeks old on delivery. Formatting requires extra review cycles.</div>
+      <div class="finding-after"><strong>After:</strong> Automated reporting pipeline pulls from all 4 systems on a schedule. Dashboard shows live data. Board report generated in minutes, not days.</div>
+      <div class="finding-impact">~15h/week reclaimed &middot; Real-time data for leadership decisions</div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div>
+          <div class="finding-num">Finding 3</div>
+          <div class="finding-title">Event Registrations Don't Flow Into the AMS</div>
+        </div>
+        <span class="finding-severity sev-medium">Medium Severity</span>
+      </div>
+      <div class="finding-body">
+        Event registration data lives in the events platform but isn't automatically synced to Fonteva.
+        After each event, a staff member manually enters attendee data &mdash; typically 3&ndash;5 days after the event.
+        During that gap, there's no visibility into who registered, who attended, or who needs follow-up.
+        The last annual conference had 340 registrants; manual entry took 8 hours.
+      </div>
+      <div class="finding-before"><strong>Now:</strong> Staff manually enters event registrations into AMS 3&ndash;5 days after each event. No real-time visibility into attendance or follow-up needs.</div>
+      <div class="finding-after"><strong>After:</strong> Registration data flows from events platform to AMS automatically. Attendance tracked in real time. Follow-up sequences triggered within 24 hours of event.</div>
+      <div class="finding-impact">~8h/event reclaimed &middot; 3&ndash;5 day data gap eliminated</div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-header">
+        <div>
+          <div class="finding-num">Finding 4</div>
+          <div class="finding-title">Committee Action Items Lost Between Meetings</div>
+        </div>
+        <span class="finding-severity sev-medium">Medium Severity</span>
+      </div>
+      <div class="finding-body">
+        The organization runs 6 standing committees. Action items are recorded in meeting notes (Google Docs)
+        but are not tracked in Asana or any project management tool. Follow-through rate on committee action items
+        is estimated at 40&ndash;50%. Committee chairs report spending the first 15 minutes of each meeting
+        re-establishing what was supposed to happen since the last meeting.
+      </div>
+      <div class="finding-before"><strong>Now:</strong> Action items recorded in Google Docs. No tracking. No accountability. Follow-through rate below 50%.</div>
+      <div class="finding-after"><strong>After:</strong> Committee action items automatically created as Asana tasks with owners and due dates. Completion tracked. Chairs get a status summary before each meeting.</div>
+      <div class="finding-impact">~3h/week reclaimed &middot; Committee effectiveness doubled</div>
+    </div>
+  </div>
+
+  <!-- Prioritized Roadmap -->
+  <div class="section">
+    <div class="section-label">Prioritized Roadmap</div>
+    <h2>What to fix, and when.</h2>
+    <p style="color:var(--soft);font-size:14px;margin-bottom:20px;">Items sorted by impact and implementation effort. Quick wins can be done in the first week.</p>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-col">
+        <div class="roadmap-col-title quick">Quick Wins &mdash; Week 1</div>
+        <div class="roadmap-item">
+          <strong>Committee &rarr; Asana integration</strong>
+          Connect Google Docs action items to Asana tasks. Low complexity, immediate impact on committee follow-through.
+          <div class="time">~2 days &middot; 3h/week saved</div>
+        </div>
+        <div class="roadmap-item">
+          <strong>Renewal alert automation</strong>
+          Set up automated renewal reminders in Fonteva for members approaching expiration. No custom integration needed.
+          <div class="time">~1 day &middot; $38K/year protected</div>
+        </div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-col-title short">Short-Term &mdash; Weeks 2&ndash;3</div>
+        <div class="roadmap-item">
+          <strong>Event &rarr; AMS sync pipeline</strong>
+          Build automated data flow from events platform to Fonteva. Eliminates manual entry and closes the 3&ndash;5 day data gap.
+          <div class="time">~1 week &middot; 8h/event saved</div>
+        </div>
+        <div class="roadmap-item">
+          <strong>Renewal health scoring</strong>
+          Add engagement-based health scores to member records. Flag at-risk renewals before they lapse silently.
+          <div class="time">~3 days &middot; Churn visibility</div>
+        </div>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-col-title strategic">Strategic &mdash; Month 2</div>
+        <div class="roadmap-item">
+          <strong>Automated board reporting</strong>
+          Build the pipeline connecting Salesforce + Fonteva + Mailchimp + Sheets into a live dashboard with scheduled report generation.
+          <div class="time">~2 weeks &middot; 15h/week saved</div>
+        </div>
+        <div class="roadmap-item">
+          <strong>Executive visibility dashboard</strong>
+          Single-pane view showing membership health, event pipeline, financial summary, and committee activity &mdash; updated daily.
+          <div class="time">~1 week &middot; Real-time ops view</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Impact -->
+  <div class="section">
+    <div class="section-label">Total Impact</div>
+    <div class="impact-box">
+      <div class="impact-label">Time Your Team Gets Back</div>
+      <div class="impact-value">22h/week</div>
+      <div class="impact-sub">Plus $38,000/year in protected membership revenue</div>
+    </div>
+    <p style="color:var(--soft);font-size:14px;text-align:center;">
+      That's the equivalent of a half-time employee &mdash; currently spent on manual data entry, report assembly,
+      and chasing things that should be automated. With these changes, your team focuses on member engagement and
+      program delivery instead of tool reconciliation.
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="report-cta">
+    <h3>This is what a Clarity Audit delivers.</h3>
+    <p>Real findings. Specific numbers. A prioritized plan your team can execute &mdash; whether or not we're involved in the implementation.</p>
+    <div class="cta-btns">
+      <a class="cta-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a Call &mdash; Get Yours &rarr;</a>
+      <a class="cta-btn secondary" href="/clarity.html">Try the Clarity Dashboard Demo</a>
+      <a class="cta-btn secondary" href="/snapshot.html">Take the Free Ops Health Score</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 ClearOps AI</p>
+    <p><a href="mailto:haseeb@clearopsai.com">haseeb@clearopsai.com</a></p>
+  </footer>
+
+</div>
+
+<script>
+gtag('event', 'page_view', { page_title: 'Sample Clarity Audit Report' });
+</script>
+</body>
+</html>
