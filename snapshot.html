@@ -778,12 +778,22 @@ body::after {
         <div class="form-row">
           <input type="text" id="formOrg" placeholder="Organization name">
         </div>
+        <div class="form-row">
+          <select id="formIndustry" style="flex:1;padding:12px 16px;border-radius:8px;background:var(--bg);border:1px solid var(--line2);color:var(--text);font-family:var(--sans);font-size:14px;outline:none;appearance:none;cursor:pointer;">
+            <option value="" disabled selected style="color:var(--muted)">Organization type</option>
+            <option value="association">Association / Membership Org</option>
+            <option value="law_firm">Law / Professional Services</option>
+            <option value="accounting">Accounting / CPA Firm</option>
+            <option value="healthcare">Healthcare / Behavioral Health</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
         <button class="btn btn-primary" id="formSubmit" type="button">Get Your Full Analysis &rarr;</button>
       </div>
 
       <div class="form-success" id="formSuccess">
-        <h4>Received.</h4>
-        <p>We'll review your results and send your personalized analysis within 48 hours.</p>
+        <h4>Got it &mdash; we're on it.</h4>
+        <p>We'll review your score, identify the highest-impact gaps, and send your personalized breakdown within 24 hours. Check your inbox.</p>
       </div>
 
       <div class="or-divider">or</div>
@@ -800,7 +810,7 @@ body::after {
   </div>
 
   <div class="snap-footer">
-    &copy; 2026 ClearOps AI &middot; Washington DC Metro &middot; <a href="/">clearopsai.com</a>
+    &copy; 2026 ClearOps AI &middot; <a href="/">clearopsai.com</a>
   </div>
 
 </div>
@@ -1288,12 +1298,19 @@ function generateResults() {
       <div class="dash-mini-tile"><div class="val">$1.2M</div><div class="lbl">Billed YTD</div></div>
       <div class="dash-mini-tile"><div class="val">94%</div><div class="lbl">Collection Rate</div></div>
     `;
+  } else if (tools.includes('quickbooks') || tools.includes('netsuite')) {
+    dashMetrics.innerHTML = `
+      <div class="dash-mini-tile"><div class="val">340</div><div class="lbl">Engagements</div></div>
+      <div class="dash-mini-tile"><div class="val">89%</div><div class="lbl">On-Time Delivery</div></div>
+      <div class="dash-mini-tile"><div class="val">5.6h</div><div class="lbl">Avg Turnaround</div></div>
+      <div class="dash-mini-tile"><div class="val">16</div><div class="lbl">Bottlenecks</div></div>
+    `;
   } else {
     dashMetrics.innerHTML = `
-      <div class="dash-mini-tile"><div class="val">24</div><div class="lbl">Active Projects</div></div>
-      <div class="dash-mini-tile"><div class="val">87%</div><div class="lbl">Utilization</div></div>
-      <div class="dash-mini-tile"><div class="val">96%</div><div class="lbl">On Track</div></div>
-      <div class="dash-mini-tile"><div class="val">$2.1M</div><div class="lbl">Pipeline</div></div>
+      <div class="dash-mini-tile"><div class="val">4,218</div><div class="lbl">Operations</div></div>
+      <div class="dash-mini-tile"><div class="val">91%</div><div class="lbl">Resolution Rate</div></div>
+      <div class="dash-mini-tile"><div class="val">3.2h</div><div class="lbl">Avg Response</div></div>
+      <div class="dash-mini-tile"><div class="val">14</div><div class="lbl">Bottlenecks</div></div>
     `;
   }
 
@@ -1347,10 +1364,12 @@ document.getElementById('formSubmit').addEventListener('click', function() {
 
   const data = window._snapshotData || {};
 
+  const industry = document.getElementById('formIndustry').value || '';
   const payload = {
     name: name,
     email: email,
     organization: org,
+    industry: industry,
     tools: data.tools,
     score: data.score,
     integration: data.integration,
