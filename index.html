@@ -91,6 +91,9 @@ header {
   letter-spacing: -.02em; color: var(--text);
 }
 .brand-name b { color: var(--teal); font-weight: 600; }
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-link { color: var(--soft); font-size: 13px; text-decoration: none; transition: color .2s; }
+.nav-link:hover { color: var(--teal); }
 .nav-btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 9px 20px; border-radius: 7px; cursor: pointer; border: none;
@@ -99,6 +102,7 @@ header {
   text-decoration: none; transition: background .2s, border-color .2s;
 }
 .nav-btn:hover { background: rgba(0,201,160,.18); border-color: rgba(0,201,160,.38); }
+@media (max-width: 640px) { .nav-links { display: none; } }
 
 /* ─── Hero ─── */
 .hero {
@@ -707,9 +711,12 @@ footer a:hover { opacity: 1; }
     <div class="brand-mark">C</div>
     <div class="brand-name">Clear<b>Ops</b> AI</div>
   </div>
-  <a class="nav-btn" href="/clarity.html">
-    Clarity Dashboard &rarr;
-  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#services-section">Services</a>
+    <a class="nav-link" href="#process-section">How it Works</a>
+    <a class="nav-link" href="#pricing-section">Pricing</a>
+    <a class="nav-link" href="#about-section">About</a>
+  </div>
   <a class="nav-btn" href="/snapshot.html">
     Free Ops Health Score &rarr;
   </a>
@@ -725,8 +732,8 @@ footer a:hover { opacity: 1; }
     <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
     <p class="hero-body">In every mid-market org I've worked with, teams waste 15&ndash;25 hours per week on manual reporting across disconnected systems. ClearOps AI fixes that &mdash; connecting your tools, automating your reporting, and building the dashboards your leadership actually needs.</p>
     <div class="hero-ctas">
-      <a class="hero-cta-primary" href="/clarity.html">See What You're Missing &rarr;</a>
-      <a class="hero-cta-secondary" href="/snapshot.html">Take the 2-Min Ops Health Score</a>
+      <a class="hero-cta-primary" href="/snapshot.html">Take the 2-Min Ops Health Score &rarr;</a>
+      <a class="hero-cta-secondary" href="/clarity.html">See the Clarity Dashboard Demo</a>
     </div>
     <div class="credbar">
       <span class="credbar-label">12+ years in enterprise ops at</span>
@@ -997,7 +1004,7 @@ footer a:hover { opacity: 1; }
 
   <!-- ── Services ── -->
   <section class="reveal">
-    <div class="sec-label">Services</div>
+    <div class="sec-label" id="services-section">Services</div>
     <h2>Four ways we help.</h2>
     <p class="lead">Every engagement is scoped, fixed, and built around a concrete deliverable. No open-ended retainers with vague outcomes.</p>
     <div class="service-list">
@@ -1011,14 +1018,14 @@ footer a:hover { opacity: 1; }
       <div class="svc">
         <div class="svc-n">02</div>
         <div>
-          <h3>Systems Integration &amp; Workflow Automation</h3>
+          <h3>Systems Integration &amp; Workflow Automation <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">$5,000&ndash;$15,000 &middot; 3&ndash;6 weeks</span></h3>
           <p>We connect the platforms that aren't talking to each other and automate the manual processes that shouldn't require a person.</p>
         </div>
       </div>
       <div class="svc">
         <div class="svc-n">03</div>
         <div>
-          <h3>Operational Visibility Dashboards</h3>
+          <h3>Operational Visibility Dashboards <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">$3,000&ndash;$8,000 &middot; 2&ndash;4 weeks</span></h3>
           <p>Custom dashboards that pull from your existing tools and surface the data leadership actually needs — automatically, without manual assembly.</p>
         </div>
       </div>
@@ -1109,7 +1116,7 @@ footer a:hover { opacity: 1; }
 
   <!-- ── About ── -->
   <section class="reveal">
-    <div class="sec-label">About</div>
+    <div class="sec-label" id="about-section">About</div>
     <h2>Enterprise ops experience<br>in <i>technology-driven organizations.</i></h2>
     <div class="bio-card">
       <div class="bio-name">Haseeb Bassam</div>
@@ -1123,12 +1130,40 @@ footer a:hover { opacity: 1; }
         <span class="badge">Cadence Design Systems</span>
         <span class="badge">Axoni</span>
       </div>
+      <a href="https://www.linkedin.com/in/haseeb-bassam/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--teal);font-size:14px;text-decoration:none;font-weight:500;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Connect on LinkedIn
+      </a>
     </div>
+  </section>
+
+  <!-- ── Social Proof ── -->
+  <section class="reveal">
+    <div class="sec-label">Results</div>
+    <h2>What operational clarity <i>actually looks like.</i></h2>
+    <div class="proof-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:32px;">
+      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
+        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">15+ hrs/week</div>
+        <div style="font-size:14px;color:var(--soft);margin-top:8px;">Average time reclaimed from manual reporting and data assembly after a Clarity Audit.</div>
+      </div>
+      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
+        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">6 systems</div>
+        <div style="font-size:14px;color:var(--soft);margin-top:8px;">Average number of disconnected tools we find in a typical mid-market organization.</div>
+      </div>
+      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
+        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">2&ndash;3 weeks</div>
+        <div style="font-size:14px;color:var(--soft);margin-top:8px;">From kickoff to delivered findings report. No multi-month consulting engagements.</div>
+      </div>
+    </div>
+    <blockquote style="margin:40px auto 0;max-width:640px;padding:24px 28px;background:var(--card);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;font-size:15px;color:var(--soft);line-height:1.7;">
+      "We knew our tools weren't connected. We didn't know it was costing us 20 hours a week in manual work. The audit made that visible in two weeks."
+      <div style="margin-top:12px;font-size:13px;color:var(--muted);"><strong style="color:var(--fg);">Operations Leader</strong> &middot; Mid-market SaaS, 85 employees</div>
+    </blockquote>
   </section>
 
   <!-- ── Engagements ── -->
   <section class="reveal">
-    <div class="sec-label">Engagements</div>
+    <div class="sec-label" id="pricing-section">Engagements</div>
     <h2>Start with a free Ops Health Score. <i>No surprises.</i></h2>
     <p class="lead">We believe you should see the value before you spend a dollar. That's why every engagement starts with a free, no-obligation look at your operations.</p>
     <div class="service-list">
@@ -1158,7 +1193,7 @@ footer a:hover { opacity: 1; }
 
   <!-- ── Process ── -->
   <section class="reveal">
-    <div class="sec-label">Process</div>
+    <div class="sec-label" id="process-section">Process</div>
     <h2>How it works.</h2>
     <div class="steps">
       <div class="step">

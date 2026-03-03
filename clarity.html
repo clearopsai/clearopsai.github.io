@@ -74,9 +74,10 @@ body::before {
 .topbar-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--soft); }
 .mode-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  letter-spacing: .3px;
 }
-.mode-badge.demo { background: rgba(245,158,11,.12); color: var(--amber); }
+.mode-badge.demo { background: rgba(245,158,11,.18); color: var(--amber); border: 1px solid rgba(245,158,11,.3); }
 .mode-badge.live { background: rgba(0,201,160,.12); color: var(--teal); }
 .mode-dot { width: 7px; height: 7px; border-radius: 50%; }
 .mode-badge.demo .mode-dot { background: var(--amber); }
@@ -584,7 +585,7 @@ body::before {
   <div class="topbar-right">
     <span id="modeBadge" class="mode-badge demo">
       <span class="mode-dot"></span>
-      <span id="modeText">Demo Mode</span>
+      <span id="modeText">Demo Mode — Sample Data</span>
     </span>
     <span id="lastRefreshed" style="font-size:12px;color:var(--muted)"></span>
     <a href="/" class="back-link">&larr; Back to ClearOps</a>
@@ -767,15 +768,15 @@ body::before {
 
   <!-- Actions Bar -->
   <div class="report-actions">
-    <button class="report-action-btn secondary" onclick="shareReport()">&#x1F517; Share with Team</button>
-    <button class="report-action-btn secondary" onclick="shareLinkedIn()">&#x1F310; Share on LinkedIn</button>
-    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">&#x1F4C5; Book a Call</a>
+    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank" style="font-size:16px;padding:14px 28px;">Start Your Clarity Audit &rarr;</a>
+    <button class="report-action-btn secondary" onclick="shareReport()">&#x1F517; Copy Link to Share</button>
+    <a class="report-action-btn secondary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">&#x1F4C5; Book a 15-Min Call</a>
   </div>
 
   <!-- PDF Soft-Gate -->
   <div class="report-pdf-section">
-    <h3>Want the full report with implementation details?</h3>
-    <p>We'll send a detailed PDF with benchmarks, ROI projections, and a step-by-step rollout plan.</p>
+    <h3>Get a detailed PDF with your full roadmap</h3>
+    <p>Includes benchmarks, ROI projections, and a step-by-step rollout plan you can share with your team.</p>
     <form class="report-pdf-form" onsubmit="sendPDFReport(event)">
       <input class="report-pdf-input" type="email" id="reportPdfEmail" placeholder="you@company.com" required>
       <button class="report-pdf-submit" type="submit">Send me the PDF &rarr;</button>
@@ -800,7 +801,7 @@ body::before {
   <!-- Bridge -->
   <div class="report-bridge">
     <p>This is based on industry benchmarks. With your real tools connected, Clarity shows exactly what's happening &mdash; live, in real time, across every channel.</p>
-    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a Call &mdash; See Your Live Data &rarr;</a>
+    <a class="report-action-btn primary" href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Start Your Clarity Audit &rarr;</a>
   </div>
 </div>
 
@@ -1303,7 +1304,8 @@ function renderBottlenecks(data) {
     const sevClass = b.severity === 'high' ? 'severity-high' : b.severity === 'medium' ? 'severity-medium' : 'severity-low';
     const statusClass = b.status === 'active' ? 'status-active' : b.status === 'monitoring' ? 'status-monitoring' : 'status-resolved';
     const added = inPlan.has(b.issue);
-    const planBtn = MODE === 'demo' ? `<button class="add-plan-btn ${added ? 'added' : ''}" data-title="${b.issue.replace(/"/g,'&quot;')}" onclick="this.classList.add('added');this.innerHTML='\\u2713 Added';addToPlan('${b.issue.replace(/'/g,"\\'")}','bottleneck')">${added ? '\u2713 Added' : '+ Add to Plan'}</button>` : '';
+    const isResolved = b.status === 'resolved';
+    const planBtn = (MODE === 'demo' && !isResolved) ? `<button class="add-plan-btn ${added ? 'added' : ''}" data-title="${b.issue.replace(/"/g,'&quot;')}" onclick="this.classList.add('added');this.innerHTML='\\u2713 Added';addToPlan('${b.issue.replace(/'/g,"\\'")}','bottleneck')">${added ? '\u2713 Added' : '+ Add to Plan'}</button>` : '';
     return `<tr><td><span class="severity-bar ${sevClass}"></span></td><td>${b.issue}</td><td>${b.count}</td>
       <td style="text-transform:capitalize">${b.severity}</td><td style="color:var(--soft)">${b.last_seen}</td>
       <td style="display:flex;align-items:center;gap:8px"><span class="status-chip ${statusClass}">${b.status}</span>${planBtn}</td></tr>`;
@@ -1378,7 +1380,15 @@ async function loadAIInsights(data) {
 // ══════════════════════════════════════════════════════════════════
 // ACTION PLAN
 // ══════════════════════════════════════════════════════════════════
-const actionPlan = [];
+const actionPlan = (() => {
+  try {
+    const saved = localStorage.getItem('clarity_action_plan');
+    return saved ? JSON.parse(saved) : [];
+  } catch (e) { return []; }
+})();
+function saveActionPlan() {
+  try { localStorage.setItem('clarity_action_plan', JSON.stringify(actionPlan)); } catch(e) {}
+}
 
 const DIMENSIONS = {
   process: { label: 'Process Visibility', icon: '\uD83D\uDC41\uFE0F', baseline: 72 },
@@ -1482,12 +1492,14 @@ function addToPlan(title, source) {
   if (actionPlan.find(i => i.title === title)) return;
   const roi = estimateROI(title);
   actionPlan.push({ title, source, roi });
+  saveActionPlan();
   gtag('event', 'clarity_add_to_plan', { event_label: title.substring(0, 50) });
   renderActionPlan();
 }
 
 function removeFromPlan(idx) {
   actionPlan.splice(idx, 1);
+  saveActionPlan();
   renderActionPlan();
   // Update button states
   document.querySelectorAll('.add-plan-btn.added').forEach(btn => {
@@ -1633,7 +1645,7 @@ function renderReportTimeline(items) {
   function colHTML(title, cssClass, arr) {
     const itemsHTML = arr.length ? arr.map(i =>
       `<div class="report-timeline-item">${i.title.substring(0, 50)}${i.title.length > 50 ? '...' : ''}<span class="report-timeline-item-hrs">${i.roi.hrs}h</span></div>`
-    ).join('') : '<div class="report-timeline-item" style="color:var(--muted);font-style:italic">None in this phase</div>';
+    ).join('') : '<div class="report-timeline-item" style="color:var(--muted);font-style:italic;font-size:12px">Add more items to your plan to populate this phase</div>';
     return `<div class="report-timeline-col">
       <div class="report-timeline-col-title ${cssClass}">${title}</div>
       ${itemsHTML}
@@ -1656,7 +1668,7 @@ function showClarityReport() {
   document.getElementById('apSidebar').classList.remove('open');
 
   // Populate header
-  document.getElementById('reportSubtitle').textContent = `${preset.label} \u2014 ${actionPlan.length} gaps identified`;
+  document.getElementById('reportSubtitle').textContent = `${preset.label} \u2014 ${actionPlan.length} ${actionPlan.length === 1 ? 'gap' : 'gaps'} identified`;
   document.getElementById('reportMeta').innerHTML =
     `<span class="report-meta-item"><strong>Industry:</strong> ${preset.label}</span>` +
     `<span class="report-meta-item"><strong>Tools:</strong> ${tools.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}</span>` +
