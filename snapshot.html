@@ -732,7 +732,7 @@ body::after {
           </div>
           <div class="badge-verdict" id="badgeVerdict"></div>
           <div class="badge-bars" id="badgeBars"></div>
-          <div class="badge-url">clearopsai.com/snapshot</div>
+          <div class="badge-url">clearopsai.io/snapshot</div>
         </div>
       </div>
       <div class="badge-actions">
@@ -809,12 +809,12 @@ body::after {
     <div class="fine-print">
       <p>Scores are based on industry benchmarks for common tool combinations and operational patterns.<br>
       Your full analysis includes a hands-on review of your specific workflows and data flows.</p>
-      <p style="margin-top: 8px;"><a href="/">Back to clearopsai.com</a></p>
+      <p style="margin-top: 8px;"><a href="/">Back to clearopsai.io</a></p>
     </div>
   </div>
 
   <div class="snap-footer">
-    &copy; 2026 ClearOps AI &middot; <a href="/">clearopsai.com</a>
+    &copy; 2026 ClearOps AI &middot; <a href="/">clearopsai.io</a>
   </div>
 
 </div>
@@ -1229,10 +1229,10 @@ function generateResults() {
     `Reporting Automation: ${scores.reporting}/25\n` +
     `Data Visibility: ${scores.visibility}/25\n` +
     `Workflow Efficiency: ${scores.workflow}/25\n\n` +
-    `Take yours free at clearopsai.com/snapshot`
+    `Take yours free at clearopsai.io/snapshot`
   );
   document.getElementById('shareLinkedIn').href =
-    'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://clearopsai.com/snapshot') +
+    'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://clearopsai.io/snapshot') +
     '&summary=' + shareText;
 
   // ── 3d: Integration Gaps ──
@@ -1328,7 +1328,7 @@ function generateResults() {
     'Score: ' + scores.total + '/100\nTools: ' + toolNames.join(', ') + '\nGaps found: ' + gapCount + '\nEst. hours/week: ' + adjustedHours + '\n\nI\'d like the full analysis.'
   );
   document.getElementById('ctaEmail').href =
-    'mailto:haseeb@clearopsai.com?subject=' + emailSubject + '&body=' + emailBody;
+    'mailto:haseeb@clearopsai.io?subject=' + emailSubject + '&body=' + emailBody;
 
   // Pre-fill hidden data for form submission
   window._snapshotData = {
