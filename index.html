@@ -426,7 +426,7 @@ footer a:hover { opacity: 1; }
     <div class="proof-grid">
       <div class="proof-card">
         <div class="proof-val">15+ hrs/week</div>
-        <div class="proof-desc">Average time reclaimed from manual reporting after a Clarity engagement.</div>
+        <div class="proof-desc">Average time reclaimed from manual reporting after a Clarity engagement. <strong style="color:var(--amber)">That's $78&ndash;120K/year in senior staff time spent assembling reports instead of strategy.</strong></div>
       </div>
       <div class="proof-card">
         <div class="proof-val">6 systems</div>
@@ -445,15 +445,15 @@ footer a:hover { opacity: 1; }
     <h2>Patterns we see at <i>every mid-market org.</i></h2>
     <div class="patterns-grid">
       <div class="pattern-card">
-        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
+        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week. <strong style="color:var(--teal)">We connected their systems in 11 days. The Monday report now builds itself Sunday night.</strong></blockquote>
         <cite>120-person trade association</cite>
       </div>
       <div class="pattern-card">
-        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
+        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind. <strong style="color:var(--teal)">We unified their project data into one dashboard. Status meetings dropped from 5/week to 1.</strong></blockquote>
         <cite>90-person professional services firm</cite>
       </div>
       <div class="pattern-card">
-        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. The data exists across three systems that don't talk to each other.</blockquote>
+        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. The data exists across three systems that don't talk to each other. <strong style="color:var(--teal)">We built a live retention dashboard. Answer time went from 2 days to 5 seconds.</strong></blockquote>
         <cite>200-person membership organization</cite>
       </div>
     </div>
@@ -519,6 +519,11 @@ footer a:hover { opacity: 1; }
             <div class="dash-ba-desc">Real-time dashboards, zero assembly</div>
           </div>
         </div>
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <a href="clarity.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;color:var(--teal);font-size:14px;font-weight:500;text-decoration:none;padding:10px 22px;border-radius:8px;background:rgba(0,201,160,.07);border:1px solid rgba(0,201,160,.15);transition:background .2s">
+          See the full interactive demo &rarr;
+        </a>
       </div>
     </div>
   </section>
@@ -612,6 +617,7 @@ footer a:hover { opacity: 1; }
       <div id="form-fields">
         <label>Describe your situation *</label>
         <textarea id="f-desc" placeholder="What tools are you using? What's broken or manual? What would you fix if you had an ops team tomorrow?"></textarea>
+        <p style="font-size:11.5px;color:var(--muted);margin:-10px 0 16px;line-height:1.6">For example: manual reporting across 5 systems, no real-time visibility for leadership, spending 30+ hours/month building internal dashboards, can't answer basic questions without a spreadsheet exercise.</p>
         <div class="form-row">
           <div><label>Your Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
           <div><label>Company *</label><input type="text" id="f-company" placeholder="Acme Corp"></div>
@@ -622,6 +628,7 @@ footer a:hover { opacity: 1; }
         </div>
         <button class="form-submit" id="submit-btn" onclick="submitInquiry()">Share My Situation</button>
         <p class="form-note">No payment. No commitment. We'll respond with thinking and options.</p>
+        <p class="form-note" style="margin-top:8px;color:var(--soft);font-size:12.5px;font-style:italic">We keep our client load intentionally small &mdash; typically 2&ndash;3 concurrent projects &mdash; so we can deliver depth, not templates.</p>
       </div>
 
       <div class="form-success" id="form-success">
