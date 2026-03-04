@@ -451,7 +451,21 @@ body::before {
 .ops-workload-person{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px}
 .ops-workload-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:6px}
 .ops-workload-fill{height:100%;border-radius:3px;transition:width .3s}
-@media(max-width:768px){.ops-kanban{grid-template-columns:1fr!important}.ops-list-row{grid-template-columns:1fr!important}}
+@media(max-width:768px){.ops-kanban{grid-template-columns:1fr!important}.ops-list-row{grid-template-columns:1fr!important}#crm-board{grid-template-columns:repeat(2,1fr)!important}#cmd-next-actions{grid-template-columns:1fr!important}}
+/* CRM */
+.crm-stage-col{background:var(--bg2);border-radius:6px;padding:8px;min-height:120px}
+.crm-stage-header{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:4px;margin-bottom:6px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+.crm-deal-card{background:var(--bg3);border:1px solid var(--line);border-radius:5px;padding:8px;margin-bottom:6px;cursor:pointer;transition:border-color .2s}
+.crm-deal-card:hover{border-color:var(--teal)}
+.crm-funnel-seg{flex:1;text-align:center;padding:6px;border-radius:4px;font-size:11px;font-weight:600;cursor:default}
+/* Analytics */
+.an-niche-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;font-size:12px;border-bottom:1px solid var(--line);align-items:center}
+.an-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:2px}
+.an-bar-fill{height:100%;border-radius:3px}
+.an-intent-row{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--line)}
+/* Command */
+.cmd-person-card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:10px}
+.cmd-person-card h4{font-size:13px;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -485,11 +499,14 @@ body::before {
   <!-- Tab Bar -->
   <div class="tab-bar">
     <button class="tab-btn active" data-tab="pipeline">Pipeline</button>
+    <button class="tab-btn" data-tab="crm">CRM</button>
+    <button class="tab-btn" data-tab="analytics">Analytics</button>
+    <button class="tab-btn" data-tab="ops">Ops</button>
+    <button class="tab-btn" data-tab="warroom">War Room</button>
     <button class="tab-btn" data-tab="followups" id="tab-btn-followups">Follow-ups</button>
     <button class="tab-btn" data-tab="batches">Batches</button>
-    <button class="tab-btn" data-tab="warroom">War Room</button>
+    <button class="tab-btn" data-tab="command">Command</button>
     <button class="tab-btn" data-tab="links">Quick Links</button>
-    <button class="tab-btn" data-tab="ops">Ops</button>
   </div>
 
   <!-- Tab: Pipeline -->
@@ -519,6 +536,107 @@ body::before {
           <tbody id="pipeline-body"></tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <!-- Tab: CRM -->
+  <div class="tab-panel" id="tab-crm">
+    <div class="panel" style="padding:16px">
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Pipeline Value</div><div class="value teal" id="crm-pipeline-val">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Won Revenue</div><div class="value green" id="crm-won-val">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Deals</div><div class="value" id="crm-total">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Avg Deal</div><div class="value" id="crm-avg">—</div></div>
+      </div>
+      <!-- Stage funnel -->
+      <div id="crm-funnel" style="display:flex;gap:6px;margin-bottom:16px;min-height:30px"></div>
+      <!-- Deal kanban -->
+      <div id="crm-board" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;min-height:200px"></div>
+      <!-- New deal button -->
+      <div style="margin-top:14px;display:flex;gap:8px">
+        <button class="research-btn" onclick="crmNewDeal()" style="font-size:12px;padding:5px 12px">+ New Deal</button>
+        <button class="research-btn" onclick="crmImport()" style="font-size:12px;padding:5px 12px;background:var(--bg3)">Import from Outreach</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Analytics -->
+  <div class="tab-panel" id="tab-analytics">
+    <div class="panel" style="padding:16px">
+      <!-- Sub-nav -->
+      <div style="display:flex;gap:4px;margin-bottom:16px;background:var(--bg2);border-radius:4px;padding:2px;flex-wrap:wrap">
+        <button class="ops-view-btn active" onclick="setAnalyticsView(this,'overview')">Overview</button>
+        <button class="ops-view-btn" onclick="setAnalyticsView(this,'niches')">Niches</button>
+        <button class="ops-view-btn" onclick="setAnalyticsView(this,'engagement')">Engagement</button>
+        <button class="ops-view-btn" onclick="setAnalyticsView(this,'velocity')">Velocity</button>
+      </div>
+      <div id="analytics-overview">
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Open Rate</div><div class="value teal" id="an-open-rate">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Reply Rate</div><div class="value green" id="an-reply-rate">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Bounce Rate</div><div class="value red" id="an-bounce-rate">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Hot Leads</div><div class="value amber" id="an-hot">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">A/B Winner</div><div class="value" id="an-ab-winner">—</div></div>
+        </div>
+        <!-- Intent scores -->
+        <div style="margin-bottom:16px"><h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Intent Signals</h4><div id="an-intent-list"></div></div>
+        <!-- Top openers -->
+        <div><h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Email Opens</h4><div id="an-opens-list"></div></div>
+      </div>
+      <div id="analytics-niches" style="display:none">
+        <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Performance by Niche</h4>
+        <div id="an-niche-table"></div>
+      </div>
+      <div id="analytics-engagement" style="display:none">
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+          <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Total Tracked</div><div class="value" id="an-tracked">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Unique Openers</div><div class="value teal" id="an-unique">—</div></div>
+          <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Total Opens</div><div class="value" id="an-total-opens">—</div></div>
+        </div>
+        <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">A/B Test Results</h4>
+        <div id="an-ab-table"></div>
+        <h4 style="font-size:13px;margin-top:16px;margin-bottom:8px;color:var(--soft)">Deliverability</h4>
+        <div id="an-deliverability"></div>
+      </div>
+      <div id="analytics-velocity" style="display:none">
+        <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Ops Velocity (Weekly)</h4>
+        <div id="an-velocity-chart"></div>
+        <h4 style="font-size:13px;margin-top:16px;margin-bottom:8px;color:var(--soft)">Throughput (30 days)</h4>
+        <div id="an-throughput"></div>
+        <h4 style="font-size:13px;margin-top:16px;margin-bottom:8px;color:var(--soft)">Type Distribution</h4>
+        <div id="an-type-dist"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Command Center -->
+  <div class="tab-panel" id="tab-command">
+    <div class="panel" style="padding:16px">
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">SLA Breaches</div><div class="value red" id="cmd-sla">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">WIP Violations</div><div class="value amber" id="cmd-wip">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Overdue</div><div class="value red" id="cmd-overdue">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Blocked</div><div class="value amber" id="cmd-blocked">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">P0 Open</div><div class="value red" id="cmd-p0">—</div></div>
+        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Grade</div><div class="value" id="cmd-grade" style="font-size:28px">—</div></div>
+      </div>
+      <!-- Action buttons -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="research-btn" onclick="cmdStandup()" style="font-size:12px;padding:5px 12px">Send Standup</button>
+        <button class="research-btn" onclick="cmdEnforce()" style="font-size:12px;padding:5px 12px;background:#f59e0b22;color:var(--amber)">Enforce SLAs</button>
+        <button class="research-btn" onclick="cmdAccountability()" style="font-size:12px;padding:5px 12px;background:#ef444422;color:var(--red)">Accountability Check</button>
+        <button class="research-btn" onclick="cmdGmailSync()" style="font-size:12px;padding:5px 12px;background:var(--bg3)">Gmail Sync</button>
+        <button class="research-btn" onclick="cmdFollowupCheck()" style="font-size:12px;padding:5px 12px;background:var(--bg3)">Followup Check</button>
+      </div>
+      <!-- Next actions per person -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px" id="cmd-next-actions"></div>
+      <!-- Standup report -->
+      <div style="background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:16px">
+        <h4 style="font-size:12px;margin-bottom:8px;color:var(--soft)">LATEST STANDUP</h4>
+        <pre id="cmd-standup" style="font-size:11px;line-height:1.5;color:var(--text);white-space:pre-wrap;margin:0;font-family:var(--sans)">Loading...</pre>
+      </div>
+      <!-- SLA breaches detail -->
+      <div id="cmd-sla-detail"></div>
     </div>
   </div>
 
@@ -1744,10 +1862,314 @@ async function createOpsTask() {
 
 // Load ops when switching to tab
 $$('.tab-btn').forEach(btn => {
-  if (btn.dataset.tab === 'ops') {
-    btn.addEventListener('click', () => loadOpsTasks());
-  }
+  if (btn.dataset.tab === 'ops') btn.addEventListener('click', () => loadOpsTasks());
+  if (btn.dataset.tab === 'crm') btn.addEventListener('click', () => loadCRM());
+  if (btn.dataset.tab === 'analytics') btn.addEventListener('click', () => loadAnalytics());
+  if (btn.dataset.tab === 'command') btn.addEventListener('click', () => loadCommand());
 });
+
+// ─── CRM ───
+async function loadCRM() {
+  try {
+    const d = await api('/api/crm/deals');
+    const deals = d.deals || [];
+    $('#crm-pipeline-val').textContent = '$' + ((d.pipeline_value||0)/1000).toFixed(1) + 'k';
+    $('#crm-won-val').textContent = '$' + ((d.won_value||0)/1000).toFixed(1) + 'k';
+    $('#crm-total').textContent = d.total || 0;
+    const avg = deals.length ? Math.round((d.pipeline_value||0)/deals.length) : 0;
+    $('#crm-avg').textContent = '$' + (avg/1000).toFixed(1) + 'k';
+
+    const stages = ['lead','qualified','proposal','negotiation','closed_won','closed_lost'];
+    const stageColors = {lead:'var(--soft)',qualified:'var(--blue)',proposal:'var(--amber)',negotiation:'var(--teal)',closed_won:'var(--green)',closed_lost:'var(--red)'};
+    const stageLabels = {lead:'Lead',qualified:'Qualified',proposal:'Proposal',negotiation:'Negotiation',closed_won:'Won',closed_lost:'Lost'};
+
+    // Funnel
+    const byStage = d.by_stage || {};
+    const maxStage = Math.max(...Object.values(byStage), 1);
+    $('#crm-funnel').innerHTML = stages.map(s => {
+      const cnt = byStage[s] || 0;
+      const pct = Math.max(20, cnt/maxStage*100);
+      return `<div class="crm-funnel-seg" style="background:${stageColors[s]}22;color:${stageColors[s]};flex:${pct/100}">${stageLabels[s]}<br><strong>${cnt}</strong></div>`;
+    }).join('');
+
+    // Kanban
+    $('#crm-board').innerHTML = stages.map(s => {
+      const stageDeals = deals.filter(d => d.stage === s);
+      return `<div class="crm-stage-col">
+        <div class="crm-stage-header"><span style="color:${stageColors[s]}">${stageLabels[s]}</span><span style="color:var(--muted)">${stageDeals.length}</span></div>
+        ${stageDeals.map(dl => `<div class="crm-deal-card" onclick="openCrmDeal('${dl.id}')">
+          <div style="font-size:12px;font-weight:500;margin-bottom:3px">${esc(dl.company)}</div>
+          <div style="font-size:11px;color:var(--soft)">${esc(dl.contact||'')}</div>
+          <div style="font-size:12px;color:var(--teal);font-weight:600;margin-top:3px">$${((dl.value||0)/1000).toFixed(1)}k</div>
+        </div>`).join('') || '<div style="color:var(--muted);font-size:11px;padding:8px;text-align:center">—</div>'}
+      </div>`;
+    }).join('');
+  } catch(e) { console.error('CRM error:', e); }
+}
+
+async function openCrmDeal(id) {
+  try {
+    const d = await api('/api/crm/deals');
+    const deal = (d.deals||[]).find(x => x.id === id);
+    if (!deal) return;
+    const stages = ['lead','qualified','proposal','negotiation','closed_won','closed_lost'];
+    const stageOpts = stages.map(s => `<option value="${s}"${s===deal.stage?' selected':''}>${s}</option>`).join('');
+    const history = (deal.history||[]).map(h => `<div style="font-size:11px;margin-bottom:4px"><span style="color:var(--muted)">${h.date?.slice(0,10)||''}</span> → ${h.stage}</div>`).join('');
+    document.getElementById('drawer-content').innerHTML = `
+      <h3 style="margin-bottom:4px">${esc(deal.company)}</h3>
+      <div style="color:var(--soft);font-size:12px;margin-bottom:14px">${esc(deal.contact)} · ${esc(deal.email||'')}</div>
+      <div style="font-size:22px;color:var(--teal);font-weight:700;margin-bottom:14px">$${(deal.value||0).toLocaleString()}</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Stage</label>
+          <select id="crm-deal-stage" style="${opsInputStyle}">${stageOpts}</select></div>
+        <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Value ($)</label>
+          <input type="number" id="crm-deal-value" value="${deal.value||0}" style="${opsInputStyle}"></div>
+      </div>
+      <div style="margin-bottom:12px"><label style="font-size:11px;color:var(--soft)">Notes</label>
+        <textarea id="crm-deal-notes" rows="3" style="${opsInputStyle};resize:vertical">${esc(deal.notes||'')}</textarea></div>
+      <button onclick="updateCrmDeal('${deal.id}')" style="${opsBtnStyle}">Update Deal</button>
+      <hr style="border-color:var(--line);margin:14px 0">
+      <h4 style="font-size:12px;color:var(--soft);margin-bottom:6px">HISTORY</h4>
+      ${history||'<div style="color:var(--muted);font-size:11px">No history</div>'}`;
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+async function updateCrmDeal(id) {
+  try {
+    await api('/api/crm/deals/' + id, {method:'PUT', body:JSON.stringify({
+      stage: document.getElementById('crm-deal-stage').value,
+      value: parseFloat(document.getElementById('crm-deal-value').value) || 0,
+      notes: document.getElementById('crm-deal-notes').value,
+    })});
+    toast('Deal updated');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    loadCRM();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+function crmNewDeal() {
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">New Deal</h3>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Company</label><input type="text" id="crm-new-company" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Contact Name</label><input type="text" id="crm-new-contact" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Email</label><input type="email" id="crm-new-email" style="${opsInputStyle}"></div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Value ($)</label><input type="number" id="crm-new-value" value="3000" style="${opsInputStyle}"></div>
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Niche</label><input type="text" id="crm-new-niche" style="${opsInputStyle}"></div>
+    </div>
+    <button onclick="createCrmDeal()" style="${opsBtnStyle}">Create Deal</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function createCrmDeal() {
+  const company = document.getElementById('crm-new-company').value.trim();
+  if (!company) { toast('Company required'); return; }
+  try {
+    await api('/api/crm/deals', {method:'POST', body:JSON.stringify({
+      company, contact: document.getElementById('crm-new-contact').value.trim(),
+      email: document.getElementById('crm-new-email').value.trim(),
+      value: parseFloat(document.getElementById('crm-new-value').value) || 0,
+      niche: document.getElementById('crm-new-niche').value.trim(),
+    })});
+    toast('Deal created');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    loadCRM();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+async function crmImport() {
+  try {
+    const r = await api('/api/crm/import-from-outreach', {method:'POST'});
+    toast(r.message || 'Imported ' + (r.imported||0) + ' deals');
+    loadCRM();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+// ─── Analytics ───
+let analyticsView = 'overview';
+function setAnalyticsView(btn, view) {
+  analyticsView = view;
+  btn.parentElement.querySelectorAll('.ops-view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','niches','engagement','velocity'].forEach(v => {
+    const el = document.getElementById('analytics-' + v);
+    if (el) el.style.display = v === view ? '' : 'none';
+  });
+  loadAnalytics();
+}
+
+async function loadAnalytics() {
+  try {
+    if (analyticsView === 'overview' || analyticsView === 'engagement') {
+      const [opens, intent, ab, stats] = await Promise.all([
+        api('/api/outreach/opens').catch(()=>({})),
+        api('/api/outreach/intent-scores').catch(()=>[]),
+        api('/api/outreach/ab-results').catch(()=>({})),
+        api('/api/outreach/stats').catch(()=>({})),
+      ]);
+      // Overview stats
+      $('#an-open-rate').textContent = (opens.open_rate||0).toFixed(1) + '%';
+      $('#an-reply-rate').textContent = (stats.reply_rate||0).toFixed(1) + '%';
+      const bounceRate = stats.total ? ((stats.bounced||0)/stats.total*100) : 0;
+      $('#an-bounce-rate').textContent = bounceRate.toFixed(1) + '%';
+      const hotLeads = Array.isArray(intent) ? intent.filter(i => i.intent === 'hot').length : 0;
+      $('#an-hot').textContent = hotLeads;
+      // A/B winner
+      const vars = ab.variants || {};
+      if (vars.A && vars.B) {
+        const winner = (vars.A.reply_rate||0) >= (vars.B.reply_rate||0) ? 'A' : 'B';
+        $('#an-ab-winner').textContent = winner + ' (' + (vars[winner].reply_rate||0).toFixed(1) + '%)';
+      }
+      // Intent list
+      const intents = Array.isArray(intent) ? intent.sort((a,b) => (b.score||0)-(a.score||0)).slice(0,15) : [];
+      $('#an-intent-list').innerHTML = intents.map(i => {
+        const color = i.intent === 'hot' ? 'var(--red)' : i.intent === 'warm' ? 'var(--amber)' : 'var(--muted)';
+        return `<div class="an-intent-row">
+          <span style="width:60px;font-weight:600;color:${color}">${i.score||0}</span>
+          <span style="width:50px;font-size:10px;padding:1px 5px;border-radius:3px;background:${color}22;color:${color};font-weight:600">${i.intent||'?'}</span>
+          <span style="flex:1">${esc(i.company||'')}</span>
+          <span style="color:var(--soft)">${esc(i.contact||'')}</span>
+          <span style="color:var(--muted);font-size:11px">${(i.signals||[]).join(', ')}</span>
+        </div>`;
+      }).join('') || '<div style="color:var(--muted);font-size:12px">No intent data yet</div>';
+      // Opens
+      const results = opens.results || [];
+      $('#an-opens-list').innerHTML = results.slice(0,10).map(o => `<div class="an-intent-row">
+        <span style="width:40px;font-weight:600;color:var(--teal)">${o.opens||0}x</span>
+        <span style="flex:1">${esc(o.company||'')}</span>
+        <span style="color:var(--soft)">${esc(o.email||'')}</span>
+        <span style="color:var(--muted);font-size:11px">${o.status||''}</span>
+      </div>`).join('') || '<div style="color:var(--muted);font-size:12px">No open data</div>';
+      // Engagement tab extras
+      $('#an-tracked').textContent = opens.total_tracked || 0;
+      $('#an-unique').textContent = opens.unique_openers || 0;
+      $('#an-total-opens').textContent = opens.total_opens || 0;
+      // A/B table
+      if (vars.A || vars.B) {
+        let abHtml = '<div class="an-niche-row" style="font-weight:600;color:var(--muted)"><div>Variant</div><div>Sent</div><div>Opened</div><div>Replied</div><div>Open %</div><div>Reply %</div></div>';
+        for (const [v, data] of Object.entries(vars)) {
+          abHtml += `<div class="an-niche-row"><div style="font-weight:600">${v}</div><div>${data.sent||0}</div><div>${data.opened||0}</div><div>${data.replied||0}</div><div>${(data.open_rate||0).toFixed(1)}%</div><div>${(data.reply_rate||0).toFixed(1)}%</div></div>`;
+        }
+        $('#an-ab-table').innerHTML = abHtml;
+      }
+      // Deliverability
+      try {
+        const del = await api('/api/outreach/deliverability');
+        $('#an-deliverability').innerHTML = `<div style="font-size:28px;font-weight:700;color:${(del.score||0) >= 80 ? 'var(--green)' : 'var(--amber)'};margin-bottom:8px">${del.score||'?'}/100</div>` +
+          (del.checks||[]).map(c => `<div style="font-size:12px;padding:3px 0;display:flex;gap:6px"><span>${c.pass?'✅':'❌'}</span><span style="flex:1">${esc(c.name||c.check||'')}</span><span style="color:var(--muted)">${esc(c.detail||c.value||'')}</span></div>`).join('');
+      } catch(e) { $('#an-deliverability').innerHTML = '<div style="color:var(--muted);font-size:12px">Could not load</div>'; }
+    }
+    if (analyticsView === 'niches') {
+      const ns = await api('/api/outreach/niche-stats').catch(()=>({}));
+      const niches = ns.niches || {};
+      let html = '<div class="an-niche-row" style="font-weight:600;color:var(--muted)"><div>Niche</div><div>Sent</div><div>Replied</div><div>Bounced</div><div>Reply %</div><div>Bounce %</div></div>';
+      for (const [name, data] of Object.entries(niches)) {
+        html += `<div class="an-niche-row"><div style="font-weight:500">${esc(name)}</div><div>${data.sent||0}</div><div style="color:var(--green)">${data.replied||0}</div><div style="color:var(--red)">${data.bounced||0}</div><div>${(data.reply_rate||0).toFixed(1)}%</div><div>${(data.bounce_rate||0).toFixed(1)}%</div></div>`;
+      }
+      $('#an-niche-table').innerHTML = html || '<div style="color:var(--muted)">No niche data</div>';
+    }
+    if (analyticsView === 'velocity') {
+      const m = await api('/api/ops/metrics').catch(()=>({}));
+      // Velocity chart (text-based bar chart)
+      const vel = m.velocity_weekly || [];
+      const maxDone = Math.max(...vel.map(v => v.done), 1);
+      $('#an-velocity-chart').innerHTML = vel.map(v => {
+        const pct = Math.max(2, v.done / maxDone * 100);
+        return `<div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;font-size:12px">
+          <span style="width:70px;color:var(--muted)">${v.week}</span>
+          <div class="an-bar" style="flex:1"><div class="an-bar-fill" style="width:${pct}%;background:var(--teal)"></div></div>
+          <span style="width:30px;text-align:right;font-weight:600">${v.done}</span>
+        </div>`;
+      }).join('') || '<div style="color:var(--muted);font-size:12px">No data yet</div>';
+      // Throughput
+      const tp = m.throughput_30d || {};
+      $('#an-throughput').innerHTML = Object.entries(tp).map(([person, data]) => `<div style="display:flex;gap:8px;align-items:center;padding:6px 0;font-size:12px;border-bottom:1px solid var(--line)">
+        <span style="width:80px;font-weight:500">${esc(person)}</span>
+        <span style="color:var(--teal)">${data.done_30d} done</span>
+        <span style="color:var(--soft)">${data.time_30d}h logged</span>
+        <span style="color:var(--muted)">${data.avg_cycle_days != null ? data.avg_cycle_days + 'd avg' : '—'}</span>
+      </div>`).join('') || '<div style="color:var(--muted);font-size:12px">No data</div>';
+      // Type dist
+      const td = m.type_distribution || {};
+      $('#an-type-dist').innerHTML = Object.entries(td).map(([type, data]) => {
+        const pct = data.total ? Math.round(data.done / data.total * 100) : 0;
+        return `<div style="display:flex;gap:8px;align-items:center;padding:4px 0;font-size:12px">
+          <span class="ops-type ops-type-${type}" style="width:80px;text-align:center">${type}</span>
+          <div class="an-bar" style="flex:1"><div class="an-bar-fill" style="width:${pct}%;background:var(--green)"></div></div>
+          <span style="width:80px;text-align:right;color:var(--soft)">${data.done}/${data.total} (${pct}%)</span>
+        </div>`;
+      }).join('');
+    }
+  } catch(e) { console.error('Analytics error:', e); }
+}
+
+// ─── Command Center ───
+async function loadCommand() {
+  try {
+    const [dash, sla, wip, standup] = await Promise.all([
+      api('/api/ops/dashboard'),
+      api('/api/ops/sla-status'),
+      api('/api/ops/wip-status'),
+      api('/api/ops/standup'),
+    ]);
+    $('#cmd-sla').textContent = sla.total || 0;
+    const wipOver = Object.values(wip.wip||{}).filter(w => w.over_limit).length;
+    $('#cmd-wip').textContent = wipOver;
+    $('#cmd-overdue').textContent = dash.overdue_count || 0;
+    $('#cmd-blocked').textContent = dash.blocked_count || 0;
+    const p0 = Object.values(dash.by_status||{}).reduce((a,b)=>a+b,0) - (dash.by_status?.done||0);
+    let p0Count = 0;
+    for (const t of (dash.overdue||[])) { if (t.priority === 'p0') p0Count++; }
+    // Count from dashboard by_assignee
+    p0Count = Object.values(dash.by_assignee||{}).reduce((a,v) => a + (v.bugs||0), 0); // approximate
+    $('#cmd-p0').textContent = dash.open_bugs_count || 0;
+    // Grade
+    const issues = (sla.total||0) + wipOver + (dash.overdue_count||0) + (dash.blocked_count||0);
+    const grade = issues === 0 ? 'A' : issues <= 3 ? 'B' : issues <= 6 ? 'C' : 'D';
+    const gradeColor = {A:'var(--green)',B:'var(--amber)',C:'var(--amber)',D:'var(--red)'}[grade];
+    $('#cmd-grade').textContent = grade;
+    $('#cmd-grade').style.color = gradeColor;
+    // Standup
+    $('#cmd-standup').textContent = standup.report || 'No standup generated yet';
+    // Next actions per person
+    const people = ['Haseeb', 'Claude', 'Jarvis'];
+    const actionsHtml = await Promise.all(people.map(async p => {
+      const r = await api('/api/ops/next-actions?assignee=' + p + '&limit=5').catch(()=>({actions:[]}));
+      return `<div class="cmd-person-card">
+        <h4>${p} <span style="color:var(--muted);font-weight:400;font-size:11px">${(r.actions||[]).length} queued</span></h4>
+        ${(r.actions||[]).slice(0,5).map((a,i) => `<div style="font-size:11px;padding:3px 0;display:flex;gap:4px;align-items:center;${i?'border-top:1px solid var(--line)':''}">
+          <span style="color:var(--muted);width:14px">${i+1}.</span>
+          <span class="ops-pill ops-pill-${a.priority}" style="font-size:9px">${a.priority.toUpperCase()}</span>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.title)}</span>
+          <span style="font-size:9px;color:var(--muted)">${a.reason}</span>
+        </div>`).join('')}
+      </div>`;
+    }));
+    $('#cmd-next-actions').innerHTML = actionsHtml.join('');
+    // SLA detail
+    if ((sla.breaches||[]).length) {
+      $('#cmd-sla-detail').innerHTML = `<h4 style="font-size:12px;color:var(--red);margin-bottom:8px">SLA BREACHES</h4>` +
+        (sla.breaches||[]).map(b => `<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--line);display:flex;gap:8px">
+          <span class="ops-badge">${esc(b.assignee)}</span>
+          <span style="flex:1">${esc(b.title)}</span>
+          <span style="color:var(--red)">${b.hours_in_status}h in "${b.status}" (limit ${b.sla_limit}h)</span>
+        </div>`).join('');
+    } else {
+      $('#cmd-sla-detail').innerHTML = '<div style="font-size:12px;color:var(--green)">All SLAs within limits</div>';
+    }
+  } catch(e) { console.error('Command error:', e); }
+}
+
+async function cmdStandup() { try { await api('/api/ops/standup/send',{method:'POST'}); toast('Standup sent!'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
+async function cmdEnforce() { try { const r = await api('/api/ops/enforce',{method:'POST'}); toast(r.report?.split('\n')[0] || 'Enforced'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
+async function cmdAccountability() { try { await api('/api/ops/accountability/send',{method:'POST'}); toast('Accountability sent!'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
+async function cmdGmailSync() { try { const r = await api('/api/outreach/sync',{method:'POST'}); toast('Gmail synced: '+(r.message||'')); } catch(e) { toast('Error: '+e.message); } }
+async function cmdFollowupCheck() { try { const r = await api('/api/outreach/followup-check',{method:'POST'}); toast('Followups checked'); } catch(e) { toast('Error: '+e.message); } }
 
 // ─── Init ───
 async function init() {
