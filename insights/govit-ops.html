@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ops Cost Analysis: Government IT Firms at the $30M-$50M Stage | ClearOps AI</title>
+<meta name="description" content="Where mid-market government IT firms lose 15+ hours per week to manual operations, and what the fix typically looks like.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-D3V52Q2K1Q');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080b12;--bg2:#0d1120;--bg3:#111828;--line:#1a2236;--line2:#1f2a40;--teal:#00c9a0;--blue:#3d7eff;--amber:#f59e0b;--red:#ef4444;--text:#dde3f0;--soft:#7e8ea8;--muted:#4a566e;--serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
+.wrap{max-width:720px;margin:0 auto;padding:0 32px}
+.topbar{padding:24px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.topbar a{color:var(--teal);text-decoration:none;font-size:13px;font-weight:500}
+.brand{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--soft)}
+.brand b{color:var(--teal)}
+.hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,201,160,.1);color:var(--teal);margin-bottom:24px}
+h1{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:300;line-height:1.15;letter-spacing:-.03em;margin-bottom:16px}
+h1 em{font-style:italic;color:var(--teal)}
+.subtitle{font-size:16px;color:var(--soft);font-weight:300;max-width:560px;line-height:1.7}
+section{padding:48px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-.02em;margin-bottom:16px}
+h2 em{font-style:italic;color:var(--teal)}
+.lead{font-size:15px;color:var(--soft);font-weight:300;line-height:1.75;margin-bottom:24px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.stat-card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:center}
+.stat-val{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--teal)}
+.stat-label{font-size:13px;color:var(--soft);margin-top:6px}
+.pattern-list{display:flex;flex-direction:column;gap:12px}
+.pattern{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:20px 24px}
+.pattern h3{font-family:var(--serif);font-size:15px;font-weight:600;margin-bottom:6px}
+.pattern p{font-size:14px;color:var(--soft);line-height:1.7;margin:0}
+.pattern .cost{font-size:13px;color:var(--amber);font-weight:500;margin-top:8px}
+.cost-table{width:100%;border-collapse:collapse;margin:20px 0}
+.cost-table th{text-align:left;font-size:12px;font-weight:600;color:var(--teal);padding:10px 14px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.08em}
+.cost-table td{font-size:14px;color:var(--soft);padding:12px 14px;border-bottom:1px solid var(--line)}
+.cost-table td:last-child{color:var(--amber);font-weight:600;text-align:right}
+.cta-card{background:var(--bg2);border:1px solid rgba(0,201,160,.2);border-radius:14px;padding:36px;text-align:center;margin-top:24px}
+.cta-card h2{text-align:center}
+.cta-card p{font-size:15px;color:var(--soft);margin:8px auto 20px;max-width:480px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;background:var(--teal);color:var(--bg);font-family:var(--sans);font-size:15px;font-weight:700;text-decoration:none;transition:all .2s}
+.cta-btn:hover{opacity:.85;transform:translateY(-1px)}
+footer{padding:24px 0;text-align:center}
+footer p{font-size:12px;color:var(--muted)}
+footer a{color:var(--teal);text-decoration:none}
+@media(max-width:640px){.stat-grid{grid-template-columns:1fr}.wrap{padding:0 20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="brand">Clear<b>Ops</b> AI</div>
+  <a href="https://clearopsai.io">clearopsai.io</a>
+</div>
+
+<div class="hero">
+  <div class="badge">Industry Insight</div>
+  <h1>Ops Cost Analysis:<br>Government IT Firms at the <em>$30M to $50M Stage</em></h1>
+  <p class="subtitle">Where mid-market government IT firms lose 15+ hours per week to manual operations, and what the typical cost structure looks like when you break it down.</p>
+</div>
+
+<section>
+  <h2>The <em>numbers</em> at a glance</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-val">15.4 hrs</div>
+      <div class="stat-label">Weekly hours spent on manual reporting (avg across firms 100 to 250 people)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">$78K to $120K</div>
+      <div class="stat-label">Annual cost of senior staff time spent assembling reports instead of strategy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">4.7 systems</div>
+      <div class="stat-label">Average number of disconnected tools feeding leadership reporting</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The five <em>patterns</em> we see repeatedly</h2>
+  <p class="lead">These are not hypothetical. They appear in nearly every government IT firm between $30M and $50M in revenue with 100 to 250 employees.</p>
+  <div class="pattern-list">
+    <div class="pattern">
+      <h3>1. The Monday Morning Assembly Line</h3>
+      <p>Someone on the ops team spends Friday afternoon or Monday morning pulling data from the CRM, the project management tool, the finance system, and HR into a single leadership report. This takes 3 to 5 hours every week and the data is already stale by the time it reaches the executive team.</p>
+      <div class="cost">Typical cost: $28K to $42K/year in senior staff time</div>
+    </div>
+    <div class="pattern">
+      <h3>2. Contract Performance Reporting by Spreadsheet</h3>
+      <p>Program managers track contract deliverables, burn rates, and milestones in individual spreadsheets. Rolling these up into a portfolio view for leadership requires manual aggregation from 5 to 15 separate trackers, depending on the number of active contracts.</p>
+      <div class="cost">Typical cost: $18K to $30K/year plus delayed decision-making on underperforming contracts</div>
+    </div>
+    <div class="pattern">
+      <h3>3. Compliance Tracking Across Multiple Frameworks</h3>
+      <p>NIST, FISMA, CMMC, and agency-specific requirements are tracked in disconnected documents. When audit season arrives, assembling evidence takes weeks instead of hours because there is no centralized compliance dashboard.</p>
+      <div class="cost">Typical cost: 2 to 4 weeks of audit prep time that could be reduced to 2 to 3 days</div>
+    </div>
+    <div class="pattern">
+      <h3>4. Utilization Rates Are a Black Box</h3>
+      <p>Leadership cannot answer "what is our utilization rate across the firm?" without a multi-day exercise. Billable vs. non-billable hours are tracked at the individual level but never rolled up automatically. This leads to overstaffing on some contracts and understaffing on others.</p>
+      <div class="cost">Typical cost: 8% to 15% revenue leakage from suboptimal resource allocation</div>
+    </div>
+    <div class="pattern">
+      <h3>5. The Hiring and Onboarding Gap</h3>
+      <p>Fast-growing firms add headcount faster than they can update their internal systems. New hires take 30 to 60 days longer than necessary to reach full productivity because onboarding workflows, system access provisioning, and clearance processing are not connected.</p>
+      <div class="cost">Typical cost: $8K to $15K per new hire in delayed productivity</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>What the <em>cost breakdown</em> typically looks like</h2>
+  <table class="cost-table">
+    <tr><th>Category</th><th>Hours/Week</th><th>Annual Cost</th></tr>
+    <tr><td>Leadership reporting assembly</td><td>3 to 5</td><td>$28K to $42K</td></tr>
+    <tr><td>Contract performance roll-ups</td><td>2 to 4</td><td>$18K to $30K</td></tr>
+    <tr><td>Compliance evidence gathering</td><td>1 to 3 (spikes quarterly)</td><td>$12K to $22K</td></tr>
+    <tr><td>Utilization tracking and resource planning</td><td>2 to 3</td><td>$15K to $25K</td></tr>
+    <tr><td>Onboarding and access provisioning</td><td>1 to 2</td><td>$8K to $15K</td></tr>
+  </table>
+  <p class="lead" style="margin-top:20px"><strong style="color:var(--text)">Total estimated annual cost: $81K to $134K</strong> in senior staff time spent on work that should be automated. This does not include the opportunity cost of delayed decisions, missed insights, or the leadership bandwidth consumed by manual processes.</p>
+</section>
+
+<section>
+  <h2>What the <em>fix</em> typically looks like</h2>
+  <p class="lead">The firms that solve this do not rip out their tools. They build a visibility layer on top of what already exists.</p>
+  <div class="pattern-list">
+    <div class="pattern">
+      <h3>Phase 1: Map the current state (1 to 2 weeks)</h3>
+      <p>Document every tool, data flow, and manual process. Identify the 3 to 5 highest cost bottlenecks. Produce a prioritized action roadmap with estimated ROI for each fix.</p>
+    </div>
+    <div class="pattern">
+      <h3>Phase 2: Connect and automate (3 to 6 weeks)</h3>
+      <p>Integrate the systems that matter most. Build automated dashboards for leadership reporting, contract performance, and utilization tracking. Eliminate the Monday morning assembly line.</p>
+    </div>
+    <div class="pattern">
+      <h3>Phase 3: Maintain and evolve (ongoing)</h3>
+      <p>As the firm grows and adds contracts, the visibility layer grows with it. Monthly monitoring ensures nothing breaks and new tools get integrated as they are adopted.</p>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="cta-card">
+    <h2>Want to see where <em>your firm</em> falls in this pattern?</h2>
+    <p>We offer a free Ops Snapshot for government IT firms. No commitment, no pitch. Just a clear picture of where the time is going.</p>
+    <a class="cta-btn" href="https://clearopsai.io/#get-started">Tell Us Your Situation</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 ClearOps AI | <a href="https://clearopsai.io">clearopsai.io</a> | <a href="mailto:haseeb@clearopsai.io">haseeb@clearopsai.io</a></p>
+</footer>
+
+</div>
+</body>
+</html>
