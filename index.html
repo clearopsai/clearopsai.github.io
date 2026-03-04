@@ -291,6 +291,78 @@ footer p { font-size: 12px; color: var(--muted); margin: 0; }
 footer a { color: var(--teal); text-decoration: none; opacity: .8; transition: opacity .2s; }
 footer a:hover { opacity: 1; }
 
+/* ─── Patterns Cards ─── */
+.patterns-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 8px;
+}
+.pattern-card {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px; padding: 22px;
+}
+.pattern-card blockquote {
+  font-size: 13.5px; line-height: 1.7; color: var(--text);
+  margin-bottom: 10px; font-style: italic;
+}
+.pattern-card cite {
+  font-size: 11.5px; color: var(--muted); font-style: normal;
+}
+
+/* ─── Dashboard Preview ─── */
+.dash-preview {
+  margin-top: 32px; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--bg2);
+  transition: border-color .3s;
+}
+.dash-preview:hover { border-color: rgba(0,201,160,.3); }
+.dash-preview-inner { padding: 24px 28px 20px; background: linear-gradient(135deg, rgba(0,201,160,.04), rgba(61,126,255,.03)); }
+.dash-preview-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  background: rgba(0,201,160,.12); color: var(--teal); margin-bottom: 14px;
+}
+.dash-preview-title { font-family: var(--serif); font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.dash-preview-sub { font-size: 12px; color: var(--soft); margin-bottom: 16px; }
+.dash-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.dash-metric {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 8px;
+  padding: 12px; text-align: center;
+}
+.dash-metric-val { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--teal); }
+.dash-metric-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.dash-before-after {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.dash-ba {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 8px;
+  padding: 14px; text-align: center;
+}
+.dash-ba-label { font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.dash-ba-before .dash-ba-label { color: var(--red); }
+.dash-ba-after .dash-ba-label { color: var(--teal); }
+.dash-ba-val { font-size: 20px; font-weight: 700; }
+.dash-ba-before .dash-ba-val { color: #fca5a5; }
+.dash-ba-after .dash-ba-val { color: var(--teal); }
+.dash-ba-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ─── Tools Strip ─── */
+.tools-strip {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; justify-content: center;
+}
+.tool-chip {
+  font-size: 12px; font-weight: 500; color: var(--soft);
+  padding: 5px 14px; border-radius: 6px;
+  background: var(--bg2); border: 1px solid var(--line2);
+  transition: border-color .2s;
+}
+.tool-chip:hover { border-color: rgba(0,201,160,.25); }
+
+@media (max-width: 768px) {
+  .patterns-grid { grid-template-columns: 1fr; }
+  .dash-metrics { grid-template-columns: 1fr 1fr; }
+  .dash-before-after { grid-template-columns: 1fr; }
+}
+
 /* ─── Scroll Reveal ─── */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -367,6 +439,26 @@ footer a:hover { opacity: 1; }
     </div>
   </section>
 
+  <!-- ── Patterns We See ── -->
+  <section class="reveal">
+    <div class="sec-label">Sound Familiar?</div>
+    <h2>Patterns we see at <i>every mid-market org.</i></h2>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
+        <cite>120-person trade association</cite>
+      </div>
+      <div class="pattern-card">
+        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
+        <cite>90-person professional services firm</cite>
+      </div>
+      <div class="pattern-card">
+        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. The data exists across three systems that don't talk to each other.</blockquote>
+        <cite>200-person membership organization</cite>
+      </div>
+    </div>
+  </section>
+
   <!-- ── What We Do ── -->
   <section class="reveal" id="what-we-do">
     <div class="sec-label">What We Do</div>
@@ -399,6 +491,33 @@ footer a:hover { opacity: 1; }
         <div>
           <h3>Ongoing Ops Intelligence</h3>
           <p>Continuous monitoring, reporting automation, and operational intelligence as your stack and team evolve. Your fractional ops team.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Preview -->
+    <div class="dash-preview">
+      <div class="dash-preview-inner">
+        <div class="dash-preview-badge"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2.5s ease infinite;display:inline-block"></span> Built by ClearOps</div>
+        <div class="dash-preview-title">Clarity Dashboard &mdash; Professional Services</div>
+        <div class="dash-preview-sub">Real metrics, pulled automatically from connected systems. No manual assembly.</div>
+        <div class="dash-metrics">
+          <div class="dash-metric"><div class="dash-metric-val">4,218</div><div class="dash-metric-label">Total Requests</div></div>
+          <div class="dash-metric"><div class="dash-metric-val">3.2h</div><div class="dash-metric-label">Avg Resolution</div></div>
+          <div class="dash-metric"><div class="dash-metric-val">91.2%</div><div class="dash-metric-label">Resolution Rate</div></div>
+          <div class="dash-metric"><div class="dash-metric-val">14</div><div class="dash-metric-label">Bottlenecks Found</div></div>
+        </div>
+        <div class="dash-before-after">
+          <div class="dash-ba dash-ba-before">
+            <div class="dash-ba-label">Before</div>
+            <div class="dash-ba-val">15 hrs/week</div>
+            <div class="dash-ba-desc">Manual reporting across 5 tools</div>
+          </div>
+          <div class="dash-ba dash-ba-after">
+            <div class="dash-ba-label">After</div>
+            <div class="dash-ba-val">Automated</div>
+            <div class="dash-ba-desc">Real-time dashboards, zero assembly</div>
+          </div>
         </div>
       </div>
     </div>
@@ -441,6 +560,23 @@ footer a:hover { opacity: 1; }
     </div>
     <div class="pricing-note">
       <p>Engagements typically run <strong>$2,500 for an Ops Snapshot, $5&ndash;15K for full clarity builds.</strong> Custom projects vary. Budget <strong>2&ndash;6 weeks</strong> from kickoff to delivery. Start with the free snapshot &mdash; no commitment required.</p>
+    </div>
+  </section>
+
+  <!-- ── Tools We Connect ── -->
+  <section class="reveal" style="text-align:center">
+    <div class="sec-label" style="justify-content:center">Integrations</div>
+    <h2>We work with the tools <i>you already have.</i></h2>
+    <p class="lead" style="margin:0 auto 24px;text-align:center">No rip-and-replace. We connect what's in your stack and build the visibility layer on top.</p>
+    <div class="tools-strip">
+      <span class="tool-chip">Salesforce</span>
+      <span class="tool-chip">HubSpot</span>
+      <span class="tool-chip">QuickBooks</span>
+      <span class="tool-chip">Slack</span>
+      <span class="tool-chip">Asana</span>
+      <span class="tool-chip">Google Workspace</span>
+      <span class="tool-chip">Microsoft 365</span>
+      <span class="tool-chip">Jira</span>
     </div>
   </section>
 
