@@ -466,6 +466,128 @@ body::before {
 /* Command */
 .cmd-person-card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:10px}
 .cmd-person-card h4{font-size:13px;margin-bottom:8px}
+
+/* ─── Splunk-Style Visuals ─── */
+.viz-ring{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.viz-ring svg{transform:rotate(-90deg)}
+.viz-ring-label{position:absolute;font-size:11px;font-weight:700;font-family:var(--serif)}
+.viz-gauge{position:relative;display:inline-block}
+.viz-gauge-label{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600}
+.viz-sparkline{display:inline-block;vertical-align:middle}
+.viz-heatmap{display:grid;gap:2px}
+.viz-heatmap-cell{border-radius:2px;aspect-ratio:1;min-width:12px;min-height:12px}
+.viz-bar-h{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px}
+.viz-bar-h-fill{height:8px;border-radius:4px;transition:width .4s ease}
+.viz-bar-h-track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.viz-metric-card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.viz-metric-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:100%;opacity:.06;background:linear-gradient(135deg,transparent 30%,var(--teal))}
+.viz-metric-card .metric-value{font-family:var(--serif);font-size:24px;font-weight:700}
+.viz-metric-card .metric-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--soft);margin-bottom:2px}
+.viz-metric-card .metric-delta{font-size:11px;font-weight:600;margin-top:2px}
+.viz-metric-card .metric-delta.up{color:var(--green)}
+.viz-metric-card .metric-delta.down{color:var(--red)}
+
+/* ─── Knowledge Base ─── */
+.kb-layout{display:grid;grid-template-columns:220px 1fr;gap:16px;min-height:500px}
+.kb-sidebar{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:12px}
+.kb-sidebar-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-weight:600}
+.kb-cat-btn{display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:var(--soft);font-size:12px;font-family:var(--sans);cursor:pointer;border-radius:4px;margin-bottom:2px;transition:all .15s}
+.kb-cat-btn:hover{background:var(--bg3);color:var(--text)}
+.kb-cat-btn.active{background:var(--teal-dim);color:var(--teal);font-weight:600}
+.kb-cat-count{float:right;font-size:10px;color:var(--muted);background:var(--bg);padding:1px 5px;border-radius:3px}
+.kb-main{min-height:400px}
+.kb-search{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:13px;margin-bottom:12px;font-family:var(--sans)}
+.kb-search:focus{outline:none;border-color:var(--teal)}
+.kb-article-list{display:flex;flex-direction:column;gap:8px}
+.kb-article-card{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;cursor:pointer;transition:border-color .15s}
+.kb-article-card:hover{border-color:var(--teal)}
+.kb-article-card.pinned{border-left:3px solid var(--amber)}
+.kb-article-title{font-size:14px;font-weight:500;margin-bottom:4px}
+.kb-article-meta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.kb-cat-badge{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:600;text-transform:uppercase}
+.kb-cat-runbook{background:#f59e0b22;color:#f59e0b}
+.kb-cat-sop{background:#3d7eff22;color:#3d7eff}
+.kb-cat-architecture{background:#8b5cf622;color:#8b5cf6}
+.kb-cat-meeting_notes{background:#06b6d422;color:#06b6d4}
+.kb-cat-decision_log{background:#ec489922;color:#ec4899}
+.kb-cat-project_notes{background:#22c55e22;color:#22c55e}
+.kb-cat-guide{background:#00c9a022;color:#00c9a0}
+.kb-cat-reference{background:#7e8ea822;color:#7e8ea8}
+.kb-preview{font-size:12px;color:var(--soft);margin-top:6px;line-height:1.5}
+.kb-tag{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--bg);color:var(--muted)}
+.kb-detail-content{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:20px 24px;line-height:1.7;font-size:14px}
+.kb-detail-content h1{font-family:var(--serif);font-size:20px;margin:20px 0 10px;color:var(--teal)}
+.kb-detail-content h2{font-size:16px;margin:16px 0 8px;color:var(--text);border-bottom:1px solid var(--line);padding-bottom:4px}
+.kb-detail-content h3{font-size:14px;margin:12px 0 6px;color:var(--text)}
+.kb-detail-content p{margin-bottom:10px}
+.kb-detail-content ul,.kb-detail-content ol{margin:8px 0 12px 20px}
+.kb-detail-content li{margin-bottom:4px}
+.kb-detail-content code{background:var(--bg);padding:2px 6px;border-radius:3px;font-size:12px;color:var(--teal)}
+.kb-detail-content pre{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;margin:10px 0;font-size:12px;line-height:1.5}
+.kb-detail-content pre code{background:none;padding:0}
+.kb-detail-content blockquote{border-left:3px solid var(--teal);padding:8px 14px;background:var(--teal-dim);border-radius:0 6px 6px 0;margin:10px 0;color:var(--soft);font-style:italic}
+.kb-detail-content strong{color:var(--text)}
+.kb-editor{width:100%;min-height:300px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:14px;color:var(--text);font-family:'DM Sans',monospace;font-size:13px;line-height:1.6;resize:vertical}
+.kb-editor:focus{outline:none;border-color:var(--teal)}
+
+/* ─── War Room Slack-style ─── */
+.wr-layout{display:grid;grid-template-columns:180px 1fr;gap:0;height:calc(100vh - 280px);min-height:500px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.wr-channels{background:var(--bg2);border-right:1px solid var(--line);padding:12px 0;overflow-y:auto}
+.wr-channel-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:4px 14px;font-weight:600}
+.wr-channel-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 14px;background:none;border:none;color:var(--soft);font-size:13px;font-family:var(--sans);cursor:pointer;transition:all .12s;text-align:left}
+.wr-channel-btn:hover{background:var(--bg3);color:var(--text)}
+.wr-channel-btn.active{background:var(--teal-dim);color:var(--teal);font-weight:600}
+.wr-channel-btn .wr-hash{color:var(--muted);font-weight:400}
+.wr-channel-btn .wr-unread{background:var(--red);color:white;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:auto}
+.wr-main{display:flex;flex-direction:column;background:var(--bg)}
+.wr-header{padding:10px 16px;border-bottom:1px solid var(--line);background:var(--bg2);display:flex;align-items:center;gap:10px}
+.wr-header-name{font-weight:600;font-size:14px}
+.wr-header-desc{font-size:11px;color:var(--muted)}
+.wr-header-actions{margin-left:auto;display:flex;gap:6px}
+.wr-pin-btn{font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--line);border-radius:4px;color:var(--soft);cursor:pointer;font-family:var(--sans)}
+.wr-pin-btn:hover{border-color:var(--teal);color:var(--teal)}
+.wr-messages{flex:1;overflow-y:auto;padding:12px 16px}
+.wr-msg{padding:6px 0;display:flex;gap:10px;border-radius:6px;transition:background .1s}
+.wr-msg:hover{background:rgba(255,255,255,.02)}
+.wr-msg.pinned-msg{background:rgba(245,158,11,.04);border-left:2px solid var(--amber);padding-left:8px}
+.wr-avatar{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;margin-top:2px}
+.wr-avatar.haseeb{background:#3d7eff22;color:var(--blue)}
+.wr-avatar.jarvis{background:var(--teal-dim);color:var(--teal)}
+.wr-avatar.claude{background:#c084fc22;color:#c084fc}
+.wr-avatar.system{background:#f59e0b22;color:var(--amber)}
+.wr-avatar.pm{background:#ec489922;color:#ec4899}
+.wr-msg-body{flex:1;min-width:0}
+.wr-msg-header{display:flex;gap:8px;align-items:baseline;margin-bottom:2px}
+.wr-msg-name{font-size:13px;font-weight:600}
+.wr-msg-name.haseeb{color:var(--blue)}
+.wr-msg-name.jarvis{color:var(--teal)}
+.wr-msg-name.claude{color:#c084fc}
+.wr-msg-name.system{color:var(--amber)}
+.wr-msg-name.pm{color:#ec4899}
+.wr-msg-time{font-size:10px;color:var(--muted)}
+.wr-msg-text{font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--text)}
+.wr-msg-text .mention{color:var(--blue);font-weight:600;background:rgba(61,126,255,.1);padding:1px 4px;border-radius:3px}
+.wr-msg-actions{display:none;position:absolute;top:-8px;right:4px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:2px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.wr-msg:hover .wr-msg-actions{display:flex;gap:1px}
+.wr-msg-action-btn{background:none;border:none;padding:3px 5px;cursor:pointer;font-size:13px;border-radius:3px;color:var(--soft)}
+.wr-msg-action-btn:hover{background:var(--bg3);color:var(--text)}
+.wr-reactions{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
+.wr-reaction{font-size:11px;padding:2px 6px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:3px;transition:all .1s}
+.wr-reaction:hover{border-color:var(--teal)}
+.wr-reaction.mine{background:var(--teal-dim);border-color:rgba(0,201,160,.3)}
+.wr-reaction .wr-r-count{font-size:10px;color:var(--soft);font-weight:600}
+.wr-thread-indicator{font-size:11px;color:var(--blue);cursor:pointer;margin-top:3px;display:flex;align-items:center;gap:4px}
+.wr-thread-indicator:hover{text-decoration:underline}
+.wr-thread-panel{margin-top:6px;padding:8px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;margin-left:42px}
+.wr-thread-msg{padding:4px 0;font-size:12px;border-bottom:1px solid var(--line)}
+.wr-thread-msg:last-child{border-bottom:none}
+.wr-input-bar{padding:10px 16px;border-top:1px solid var(--line);background:var(--bg2);display:flex;gap:8px;align-items:flex-end}
+.wr-input{flex:1;padding:8px 12px;background:var(--bg3);border:1px solid var(--line2);color:var(--text);border-radius:6px;font-family:var(--sans);font-size:13px;resize:none;min-height:38px;max-height:100px}
+.wr-input:focus{outline:none;border-color:var(--teal)}
+.wr-send-btn{padding:8px 16px;background:var(--teal-dim);border:1px solid rgba(0,201,160,.25);color:var(--teal);border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.wr-send-btn:hover{background:rgba(0,201,160,.2)}
+.wr-send-btn:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:768px){.kb-layout{grid-template-columns:1fr}.kb-sidebar{display:none}.wr-layout{grid-template-columns:1fr}.wr-channels{display:none}}
 </style>
 </head>
 <body>
@@ -483,14 +605,14 @@ body::before {
 
 <div class="dashboard">
 
-  <!-- Stats Row -->
+  <!-- Stats Row (Splunk-style) -->
   <div class="stats-row">
-    <div class="stat-card"><div class="label">Total Sent</div><div class="value" id="s-total">—</div></div>
-    <div class="stat-card"><div class="label">Awaiting Reply</div><div class="value amber" id="s-active">—</div></div>
-    <div class="stat-card"><div class="label">Replied</div><div class="value green" id="s-replied">—</div></div>
-    <div class="stat-card"><div class="label">Meetings</div><div class="value" id="s-meetings">—</div></div>
-    <div class="stat-card"><div class="label">Bounced</div><div class="value red" id="s-bounced">—</div></div>
-    <div class="stat-card"><div class="label">Reply Rate</div><div class="value" id="s-rate">—</div></div>
+    <div class="viz-metric-card"><div class="metric-label">Total Sent</div><div class="metric-value" id="s-total" style="color:var(--teal)">—</div><div id="s-total-spark"></div></div>
+    <div class="viz-metric-card"><div class="metric-label">Awaiting Reply</div><div class="metric-value" id="s-active" style="color:var(--amber)">—</div></div>
+    <div class="viz-metric-card"><div class="metric-label">Replied</div><div class="metric-value" id="s-replied" style="color:var(--green)">—</div></div>
+    <div class="viz-metric-card"><div class="metric-label">Meetings</div><div class="metric-value" id="s-meetings" style="color:var(--teal)">—</div></div>
+    <div class="viz-metric-card"><div class="metric-label">Bounced</div><div class="metric-value" id="s-bounced" style="color:var(--red)">—</div></div>
+    <div class="viz-metric-card"><div class="metric-label">Reply Rate</div><div id="s-rate-ring" style="display:flex;align-items:center;gap:8px"></div></div>
   </div>
 
   <!-- Niche breakdown -->
@@ -506,6 +628,7 @@ body::before {
     <button class="tab-btn" data-tab="followups" id="tab-btn-followups">Follow-ups</button>
     <button class="tab-btn" data-tab="batches">Batches</button>
     <button class="tab-btn" data-tab="command">Command</button>
+    <button class="tab-btn" data-tab="kb">KB</button>
     <button class="tab-btn" data-tab="links">Quick Links</button>
   </div>
 
@@ -571,12 +694,12 @@ body::before {
         <button class="ops-view-btn" onclick="setAnalyticsView(this,'velocity')">Velocity</button>
       </div>
       <div id="analytics-overview">
-        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Open Rate</div><div class="value teal" id="an-open-rate">—</div></div>
-          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Reply Rate</div><div class="value green" id="an-reply-rate">—</div></div>
-          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Bounce Rate</div><div class="value red" id="an-bounce-rate">—</div></div>
-          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Hot Leads</div><div class="value amber" id="an-hot">—</div></div>
-          <div class="stat-card" style="flex:1;min-width:80px"><div class="label">A/B Winner</div><div class="value" id="an-ab-winner">—</div></div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+          <div class="viz-metric-card" style="flex:1;min-width:90px;text-align:center"><div class="metric-label">Open Rate</div><div id="an-open-ring" style="display:flex;justify-content:center;padding:4px 0"></div></div>
+          <div class="viz-metric-card" style="flex:1;min-width:90px;text-align:center"><div class="metric-label">Reply Rate</div><div id="an-reply-ring" style="display:flex;justify-content:center;padding:4px 0"></div></div>
+          <div class="viz-metric-card" style="flex:1;min-width:90px;text-align:center"><div class="metric-label">Bounce Rate</div><div id="an-bounce-ring" style="display:flex;justify-content:center;padding:4px 0"></div></div>
+          <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Hot Leads</div><div class="metric-value" id="an-hot" style="color:var(--amber)">—</div></div>
+          <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">A/B Winner</div><div class="metric-value" id="an-ab-winner" style="color:var(--teal);font-size:18px">—</div></div>
         </div>
         <!-- Intent scores -->
         <div style="margin-bottom:16px"><h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Intent Signals</h4><div id="an-intent-list"></div></div>
@@ -613,12 +736,12 @@ body::before {
   <div class="tab-panel" id="tab-command">
     <div class="panel" style="padding:16px">
       <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">SLA Breaches</div><div class="value red" id="cmd-sla">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">WIP Violations</div><div class="value amber" id="cmd-wip">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Overdue</div><div class="value red" id="cmd-overdue">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Blocked</div><div class="value amber" id="cmd-blocked">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">P0 Open</div><div class="value red" id="cmd-p0">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:90px"><div class="label">Grade</div><div class="value" id="cmd-grade" style="font-size:28px">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px"><div class="metric-label">SLA Breaches</div><div class="metric-value" id="cmd-sla" style="color:var(--red)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px"><div class="metric-label">WIP Violations</div><div class="metric-value" id="cmd-wip" style="color:var(--amber)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px"><div class="metric-label">Overdue</div><div class="metric-value" id="cmd-overdue" style="color:var(--red)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px"><div class="metric-label">Blocked</div><div class="metric-value" id="cmd-blocked" style="color:var(--amber)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px"><div class="metric-label">P0 Open</div><div class="metric-value" id="cmd-p0" style="color:var(--red)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:90px;text-align:center"><div class="metric-label">Health Score</div><div id="cmd-grade-ring" style="display:flex;justify-content:center;padding:4px 0"></div></div>
       </div>
       <!-- Action buttons -->
       <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
@@ -676,18 +799,60 @@ body::before {
     </div>
   </div>
 
-  <!-- Tab: War Room -->
+  <!-- Tab: War Room (Slack-style) -->
   <div class="tab-panel" id="tab-warroom">
-    <div class="chat-container">
-      <div class="chat-messages" id="chat-messages"></div>
-      <div class="chat-target-bar">
-        <button class="chat-target-btn active" data-target="all" onclick="setChatTarget(this,'all')">Everyone</button>
-        <button class="chat-target-btn" data-target="jarvis" onclick="setChatTarget(this,'jarvis')">Jarvis only</button>
-        <button class="chat-target-btn" data-target="claude" onclick="setChatTarget(this,'claude')">Claude only</button>
+    <div class="wr-layout">
+      <div class="wr-channels">
+        <div class="wr-channel-title">Channels</div>
+        <button class="wr-channel-btn active" onclick="wrSetChannel(this,'general')"><span class="wr-hash">#</span> general</button>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'alerts')"><span class="wr-hash">#</span> alerts</button>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'outreach')"><span class="wr-hash">#</span> outreach</button>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'engineering')"><span class="wr-hash">#</span> engineering</button>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'standup')"><span class="wr-hash">#</span> standup</button>
+        <div style="border-top:1px solid var(--line);margin:10px 14px"></div>
+        <div class="wr-channel-title">Direct</div>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'jarvis')"><span class="wr-hash">@</span> Jarvis</button>
+        <button class="wr-channel-btn" onclick="wrSetChannel(this,'claude')"><span class="wr-hash">@</span> Claude</button>
       </div>
-      <div class="chat-input-bar">
-        <textarea class="chat-input" id="chat-input" placeholder="Type a message..." rows="1"></textarea>
-        <button class="chat-send-btn" id="chat-send" onclick="sendChatMessage()">Send</button>
+      <div class="wr-main">
+        <div class="wr-header">
+          <span class="wr-header-name" id="wr-channel-name"># general</span>
+          <span class="wr-header-desc" id="wr-channel-desc">General discussion</span>
+          <div class="wr-header-actions">
+            <button class="wr-pin-btn" onclick="wrShowPinned()">Pins</button>
+          </div>
+        </div>
+        <div class="wr-messages" id="wr-messages"></div>
+        <div class="wr-input-bar">
+          <textarea class="wr-input" id="wr-input" placeholder="Message #general... (@ to mention)" rows="1"></textarea>
+          <button class="wr-send-btn" id="wr-send" onclick="wrSendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Knowledge Base -->
+  <div class="tab-panel" id="tab-kb">
+    <div class="panel" style="padding:16px">
+      <div class="kb-layout">
+        <div class="kb-sidebar">
+          <div class="kb-sidebar-title">Categories</div>
+          <button class="kb-cat-btn active" onclick="kbSetCategory(this,'')">All Articles <span class="kb-cat-count" id="kb-cnt-all">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'runbook')">Runbooks <span class="kb-cat-count" id="kb-cnt-runbook">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'sop')">SOPs <span class="kb-cat-count" id="kb-cnt-sop">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'architecture')">Architecture <span class="kb-cat-count" id="kb-cnt-architecture">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'guide')">Guides <span class="kb-cat-count" id="kb-cnt-guide">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'decision_log')">Decisions <span class="kb-cat-count" id="kb-cnt-decision_log">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'meeting_notes')">Meetings <span class="kb-cat-count" id="kb-cnt-meeting_notes">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'project_notes')">Projects <span class="kb-cat-count" id="kb-cnt-project_notes">0</span></button>
+          <button class="kb-cat-btn" onclick="kbSetCategory(this,'reference')">Reference <span class="kb-cat-count" id="kb-cnt-reference">0</span></button>
+          <div style="border-top:1px solid var(--line);margin:12px 0"></div>
+          <button class="research-btn" onclick="kbNewArticle()" style="width:100%;font-size:11px;padding:6px">+ New Article</button>
+        </div>
+        <div class="kb-main">
+          <input class="kb-search" id="kb-search" placeholder="Search articles..." oninput="kbFilterArticles()">
+          <div class="kb-article-list" id="kb-article-list"><div style="color:var(--muted);font-size:13px;padding:20px;text-align:center">Loading...</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -702,12 +867,12 @@ body::before {
     <div class="panel" style="padding:16px">
       <!-- Stats row -->
       <div class="ops-stats-row" style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Open</div><div class="value" id="ops-open">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">In Progress</div><div class="value teal" id="ops-progress">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Done (week)</div><div class="value green" id="ops-done-week">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Overdue</div><div class="value red" id="ops-overdue">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Bugs</div><div class="value amber" id="ops-bugs">—</div></div>
-        <div class="stat-card" style="flex:1;min-width:80px"><div class="label">Cycle Time</div><div class="value" id="ops-cycle">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Open</div><div class="metric-value" id="ops-open" style="color:var(--text)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">In Progress</div><div class="metric-value" id="ops-progress" style="color:var(--teal)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Done (week)</div><div class="metric-value" id="ops-done-week" style="color:var(--green)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Overdue</div><div class="metric-value" id="ops-overdue" style="color:var(--red)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Bugs</div><div class="metric-value" id="ops-bugs" style="color:var(--amber)">—</div></div>
+        <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Cycle Time</div><div class="metric-value" id="ops-cycle" style="color:var(--teal)">—</div></div>
       </div>
       <!-- Sprint bar -->
       <div id="ops-sprint-bar" style="display:none;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:14px">
@@ -839,6 +1004,42 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ─── Visualization Helpers ───
+function vizProgressRing(pct, size=48, stroke=5, color='var(--teal)') {
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const offset = circ * (1 - Math.min(pct, 100) / 100);
+  return `<div class="viz-ring" style="width:${size}px;height:${size}px">
+    <svg width="${size}" height="${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--bg)" stroke-width="${stroke}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round" style="transition:stroke-dashoffset .6s ease"/></svg>
+    <span class="viz-ring-label" style="color:${color}">${Math.round(pct)}%</span>
+  </div>`;
+}
+
+function vizSparkline(values, width=80, height=24, color='var(--teal)') {
+  if (!values || !values.length) return '';
+  const max = Math.max(...values, 1);
+  const min = Math.min(...values, 0);
+  const range = max - min || 1;
+  const step = width / Math.max(values.length - 1, 1);
+  const pts = values.map((v, i) => `${i * step},${height - ((v - min) / range) * (height - 4) - 2}`).join(' ');
+  return `<svg class="viz-sparkline" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function vizGauge(pct, size=52, color='var(--teal)') {
+  const r = (size - 6) / 2;
+  const circ = Math.PI * r; // semicircle
+  const offset = circ * (1 - Math.min(pct, 100) / 100);
+  return `<div class="viz-gauge" style="width:${size}px;height:${size/2+8}px">
+    <svg width="${size}" height="${size/2+4}" viewBox="0 0 ${size} ${size/2+4}"><path d="M3,${size/2+2} A${r},${r} 0 0,1 ${size-3},${size/2+2}" fill="none" stroke="var(--bg)" stroke-width="5" stroke-linecap="round"/><path d="M3,${size/2+2} A${r},${r} 0 0,1 ${size-3},${size/2+2}" fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${offset}" style="transition:stroke-dashoffset .6s ease"/></svg>
+    <div class="viz-gauge-label" style="color:${color}">${Math.round(pct)}%</div>
+  </div>`;
+}
+
+function vizHorizontalBar(label, value, max, color='var(--teal)') {
+  const pct = max ? Math.min(100, value / max * 100) : 0;
+  return `<div class="viz-bar-h"><span style="width:80px;color:var(--soft)">${esc(label)}</span><div class="viz-bar-h-track"><div class="viz-bar-h-fill" style="width:${pct}%;background:${color}"></div></div><span style="width:30px;text-align:right;font-weight:600;color:${color}">${value}</span></div>`;
+}
+
 // ─── Load Stats ───
 async function loadStats() {
   stats = await api('/api/outreach/stats');
@@ -847,7 +1048,11 @@ async function loadStats() {
   $('#s-replied').textContent = stats.replied;
   $('#s-meetings').textContent = stats.meetings;
   $('#s-bounced').textContent = stats.bounced;
-  $('#s-rate').textContent = stats.reply_rate + '%';
+
+  // Reply rate as progress ring
+  const rate = parseFloat(stats.reply_rate) || 0;
+  const ringColor = rate >= 20 ? 'var(--green)' : rate >= 10 ? 'var(--amber)' : 'var(--red)';
+  $('#s-rate-ring').innerHTML = vizProgressRing(rate, 44, 4, ringColor) + `<span style="font-size:10px;color:var(--soft)">Reply<br>Rate</span>`;
 
   // Last send indicator
   const ls = $('#last-send');
@@ -858,7 +1063,6 @@ async function loadStats() {
   }
 
   // Follow-up tab badge
-  const totalDue = (stats.followups_due || 0) + (stats.followups_upcoming || 0);
   const btn = $('#tab-btn-followups');
   if (stats.followups_due > 0) {
     btn.innerHTML = `Follow-ups <span class="tab-badge red">${stats.followups_due} due</span>`;
@@ -868,18 +1072,15 @@ async function loadStats() {
     btn.innerHTML = 'Follow-ups';
   }
 
-  // Niche breakdown
+  // Niche breakdown with mini bars
   const bar = $('#niche-bar');
   const niches = stats.by_niche || {};
-  const batches = stats.by_batch || {};
+  const maxNiche = Math.max(...Object.values(niches), 1);
   bar.innerHTML = `<span class="niche-label">By niche:</span>` +
-    Object.entries(niches).sort((a,b) => b[1]-a[1]).map(([n,c]) =>
-      `<span class="niche-chip">${esc(n)}<span class="ct">${c}</span></span>`
-    ).join('') +
-    `<span style="margin-left:auto" class="niche-label">By batch:</span>` +
-    Object.entries(batches).sort((a,b) => b[1]-a[1]).map(([b,c]) =>
-      `<span class="niche-chip">${esc(niceName(b))}<span class="ct">${c}</span></span>`
-    ).join('');
+    Object.entries(niches).sort((a,b) => b[1]-a[1]).map(([n,c]) => {
+      const pct = Math.max(8, c/maxNiche*100);
+      return `<span class="niche-chip" style="position:relative;overflow:hidden">${esc(n)}<span class="ct">${c}</span><span style="position:absolute;bottom:0;left:0;height:2px;width:${pct}%;background:var(--teal);border-radius:1px"></span></span>`;
+    }).join('');
 
   updateTabTitle();
 }
@@ -1413,116 +1614,240 @@ function renderLinks() {
   `).join('');
 }
 
-// ─── War Room ───
-let chatTarget = 'all';
-let chatMsgCount = 0;
-let chatPollTimer = null;
+// ─── War Room (Slack-style) ───
+let wrChannel = 'general';
+let wrMsgCount = 0;
+let wrPollTimer = null;
+let wrAllMessages = [];
 
-function setChatTarget(btn, target) {
-  chatTarget = target;
-  $$('.chat-target-btn').forEach(b => b.classList.remove('active'));
+const wrChannelDescs = {general:'General discussion',alerts:'System alerts & notifications',outreach:'Sales & outreach updates',engineering:'Engineering & development',standup:'Daily standups & accountability'};
+const wrAvatarLetters = {haseeb:'H',jarvis:'J',claude:'C',system:'!',pm:'PM'};
+const wrSpeakerNames = {haseeb:'Haseeb',jarvis:'Jarvis',claude:'Claude',system:'System',pm:'PM Bot'};
+
+function wrSetChannel(btn, ch) {
+  wrChannel = ch;
+  $$('.wr-channel-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  const isDirectMsg = ['jarvis','claude'].includes(ch);
+  $('#wr-channel-name').textContent = isDirectMsg ? `@ ${ch.charAt(0).toUpperCase()+ch.slice(1)}` : `# ${ch}`;
+  $('#wr-channel-desc').textContent = wrChannelDescs[ch] || (isDirectMsg ? 'Direct message' : '');
+  $('#wr-input').placeholder = isDirectMsg ? `Message @${ch}...` : `Message #${ch}... (@ to mention)`;
+  wrRenderMessages();
 }
 
-async function loadChatMessages(scroll = false) {
-  try {
-    const data = await api(`/api/warroom/messages?after=0`);
-    const container = $('#chat-messages');
-    const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 50;
-
-    if (data.total !== chatMsgCount) {
-      chatMsgCount = data.total;
-      container.innerHTML = data.messages.map(renderChatMsg).join('');
-      if (scroll || wasAtBottom) container.scrollTop = container.scrollHeight;
-    }
-  } catch (e) { /* silent */ }
-}
-
-function renderChatMsg(m) {
-  const ts = m.timestamp ? new Date(m.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
-  const speakers = { haseeb: 'You', jarvis: 'Jarvis', claude: 'Claude', system: 'System' };
-  const isFileContent = m.speaker === 'system' && m.content.startsWith('[FILE CONTENT:');
-  const isOutreach = m.speaker === 'system' && (m.content.startsWith('[OUTREACH]') || m.content.startsWith('[BATCH READY]') || m.content.startsWith('[BATCH ERROR]'));
-  const speaker = isFileContent ? 'File Loaded' : isOutreach ? 'Outreach Pipeline' : (speakers[m.speaker] || m.speaker);
-  let bubble, extraCls = '';
-  if (isFileContent) {
-    const pathMatch = m.content.match(/\[FILE CONTENT: (.+?)\]/);
-    const fpath = pathMatch ? pathMatch[1] : 'unknown';
-    const fname = fpath.split('/').pop();
-    bubble = `<details style="cursor:pointer"><summary style="font-weight:600;color:var(--teal)">📄 ${esc(fname)}</summary><pre style="white-space:pre-wrap;font-size:.75rem;max-height:300px;overflow:auto;margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.3);border-radius:6px">${esc(m.content.slice(m.content.indexOf('\n') + 1))}</pre></details>`;
-  } else if (isOutreach) {
-    bubble = esc(m.content); extraCls = ' outreach-note';
-  } else {
-    bubble = esc(m.content);
+function wrGetFilteredMessages() {
+  if (['jarvis','claude'].includes(wrChannel)) {
+    // DMs: show messages from/to that speaker
+    return wrAllMessages.filter((m,i) => m.speaker === wrChannel || (m.speaker === 'haseeb' && wrAllMessages[i+1]?.speaker === wrChannel));
   }
-  return `<div class="chat-msg ${m.speaker}">
-    <div class="chat-speaker">${speaker}</div>
-    <div class="chat-bubble${extraCls}">${bubble}</div>
-    <div class="chat-time">${ts}</div>
-  </div>`;
+  // Channel filter: system messages auto-route by content
+  return wrAllMessages.filter(m => {
+    const ch = m.channel || 'general';
+    if (ch === wrChannel) return true;
+    // Auto-route system messages
+    if (m.speaker === 'system') {
+      if (wrChannel === 'outreach' && /\[OUTREACH\]|\[BATCH/.test(m.content)) return true;
+      if (wrChannel === 'alerts' && /alert|error|warning|critical/i.test(m.content)) return true;
+    }
+    if (m.speaker === 'pm' && wrChannel === 'standup') return true;
+    return false;
+  });
 }
 
-async function sendChatMessage() {
-  const input = $('#chat-input');
+function wrFormatContent(text) {
+  let s = esc(text);
+  // @mentions
+  s = s.replace(/@(haseeb|jarvis|claude|all|everyone)/gi, '<span class="mention">@$1</span>');
+  return s;
+}
+
+function wrRenderMessages() {
+  const msgs = wrGetFilteredMessages();
+  const container = $('#wr-messages');
+  if (!msgs.length) {
+    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px;font-size:13px">No messages in this channel yet</div>';
+    return;
+  }
+  let html = '';
+  let lastDate = '';
+  msgs.forEach((m, localIdx) => {
+    const globalIdx = wrAllMessages.indexOf(m);
+    const ts = m.timestamp ? new Date(m.timestamp) : null;
+    const dateStr = ts ? ts.toLocaleDateString('en-US', {weekday:'long', month:'short', day:'numeric'}) : '';
+    if (dateStr !== lastDate) {
+      lastDate = dateStr;
+      html += `<div style="text-align:center;margin:12px 0 8px;font-size:11px;color:var(--muted);position:relative"><span style="background:var(--bg);padding:0 12px;position:relative;z-index:1">${dateStr}</span><div style="position:absolute;top:50%;left:0;right:0;border-top:1px solid var(--line);z-index:0"></div></div>`;
+    }
+    const timeStr = ts ? ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) : '';
+    const sp = m.speaker || 'system';
+    const name = wrSpeakerNames[sp] || sp;
+    const avatar = wrAvatarLetters[sp] || sp.charAt(0).toUpperCase();
+    const isPinned = m.pinned ? ' pinned-msg' : '';
+    const reactions = m.reactions || {};
+    const threadCount = m.thread_count || (m.thread||[]).length || 0;
+
+    // Content formatting
+    let content;
+    const isFile = sp === 'system' && m.content.startsWith('[FILE CONTENT:');
+    const isOutreach = sp === 'system' && /^\[(OUTREACH|BATCH)/.test(m.content);
+    if (isFile) {
+      const pathMatch = m.content.match(/\[FILE CONTENT: (.+?)\]/);
+      const fname = pathMatch ? pathMatch[1].split('/').pop() : 'file';
+      content = `<details style="cursor:pointer"><summary style="font-weight:500;color:var(--teal)">Loaded: ${esc(fname)}</summary><pre style="white-space:pre-wrap;font-size:11px;max-height:200px;overflow:auto;margin-top:6px;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:4px">${esc(m.content.slice(m.content.indexOf('\n')+1))}</pre></details>`;
+    } else {
+      content = wrFormatContent(m.content);
+    }
+
+    html += `<div class="wr-msg${isPinned}" style="position:relative" data-idx="${globalIdx}">
+      <div class="wr-avatar ${sp}">${avatar}</div>
+      <div class="wr-msg-body">
+        <div class="wr-msg-header">
+          <span class="wr-msg-name ${sp}">${name}</span>
+          <span class="wr-msg-time">${timeStr}</span>
+          ${m.pinned ? '<span style="font-size:10px;color:var(--amber)">pinned</span>' : ''}
+        </div>
+        <div class="wr-msg-text">${content}</div>
+        ${Object.keys(reactions).length ? `<div class="wr-reactions">${Object.entries(reactions).map(([emoji,users])=>`<span class="wr-reaction${users.includes('haseeb')?' mine':''}" onclick="wrReact(${globalIdx},'${emoji}')">${emoji} <span class="wr-r-count">${users.length}</span></span>`).join('')}</div>` : ''}
+        ${threadCount ? `<div class="wr-thread-indicator" onclick="wrToggleThread(${globalIdx})">&#x1F4AC; ${threadCount} ${threadCount===1?'reply':'replies'}</div>` : ''}
+        <div id="wr-thread-${globalIdx}"></div>
+      </div>
+      <div class="wr-msg-actions">
+        <button class="wr-msg-action-btn" onclick="wrReactPicker(${globalIdx})" title="React">&#128578;</button>
+        <button class="wr-msg-action-btn" onclick="wrStartThread(${globalIdx})" title="Thread">&#128172;</button>
+        <button class="wr-msg-action-btn" onclick="wrPinMsg(${globalIdx})" title="Pin">${m.pinned?'Unpin':'Pin'}</button>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+  container.scrollTop = container.scrollHeight;
+}
+
+async function wrLoadMessages(scroll=false) {
+  try {
+    const data = await api('/api/warroom/messages?after=0');
+    if (data.total !== wrMsgCount) {
+      wrMsgCount = data.total;
+      wrAllMessages = data.messages;
+      wrRenderMessages();
+    }
+  } catch(e) {}
+}
+
+async function wrSendMessage() {
+  const input = $('#wr-input');
   let content = input.value.trim();
   if (!content) return;
-
-  // Auto-detect @claude or @jarvis prefix
-  let target = chatTarget;
-  if (/^@claude\b/i.test(content)) {
+  let target = 'all';
+  if (['jarvis','claude'].includes(wrChannel)) {
+    target = wrChannel;
+  } else if (/^@claude\b/i.test(content)) {
     target = 'claude';
-    content = content.replace(/^@claude\s*/i, '').trim() || content;
   } else if (/^@jarvis\b/i.test(content)) {
     target = 'jarvis';
-    content = content.replace(/^@jarvis\s*/i, '').trim() || content;
-  } else if (/^@(all|everyone|both)\b/i.test(content)) {
-    target = 'all';
-    content = content.replace(/^@(all|everyone|both)\s*/i, '').trim() || content;
   }
-
-  const btn = $('#chat-send');
-  btn.disabled = true; btn.textContent = '...';
-  input.value = '';
-
+  const btn = $('#wr-send');
+  btn.disabled = true; input.value = '';
   try {
-    await api('/api/warroom/send', {
-      method: 'POST',
-      body: JSON.stringify({ speaker: 'haseeb', content, target }),
-    });
-    await loadChatMessages(true);
-  } catch (e) {
-    toast('Error: ' + e.message);
-  }
-  btn.disabled = false; btn.textContent = 'Send';
+    await api('/api/warroom/send', {method:'POST', body:JSON.stringify({speaker:'haseeb', content, target, channel:wrChannel})});
+    await wrLoadMessages(true);
+  } catch(e) { toast('Error: '+e.message); }
+  btn.disabled = false;
   input.focus();
 }
 
-// Enter to send, Shift+Enter for newline
-$('#chat-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendChatMessage();
-  }
-});
+async function wrReact(idx, emoji) {
+  try {
+    await api(`/api/warroom/messages/${idx}/react`, {method:'POST', body:JSON.stringify({emoji, user:'haseeb'})});
+    await wrLoadMessages();
+  } catch(e) { toast('Error: '+e.message); }
+}
 
-// Auto-resize textarea
-$('#chat-input').addEventListener('input', function() {
+function wrReactPicker(idx) {
+  const emojis = ['👍','👎','❤️','🔥','👀','✅','🚀','💡'];
+  const el = document.querySelector(`[data-idx="${idx}"] .wr-msg-body`);
+  if (el.querySelector('.wr-emoji-picker')) { el.querySelector('.wr-emoji-picker').remove(); return; }
+  const picker = document.createElement('div');
+  picker.className = 'wr-emoji-picker';
+  picker.style.cssText = 'display:flex;gap:2px;margin-top:4px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:4px';
+  picker.innerHTML = emojis.map(e => `<button style="background:none;border:none;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:3px" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'" onclick="wrReact(${idx},'${e}');this.parentElement.remove()">${e}</button>`).join('');
+  el.appendChild(picker);
+}
+
+async function wrPinMsg(idx) {
+  try {
+    await api(`/api/warroom/messages/${idx}/pin`, {method:'POST'});
+    await wrLoadMessages();
+    toast('Message pin toggled');
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function wrStartThread(idx) {
+  wrToggleThread(idx, true);
+}
+
+async function wrToggleThread(idx, forceOpen=false) {
+  const el = document.getElementById('wr-thread-'+idx);
+  if (!el) return;
+  if (el.innerHTML && !forceOpen) { el.innerHTML = ''; return; }
+  const msg = wrAllMessages[idx];
+  const thread = msg?.thread || [];
+  let html = `<div class="wr-thread-panel">`;
+  thread.forEach(t => {
+    const ts = t.timestamp ? new Date(t.timestamp).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) : '';
+    html += `<div class="wr-thread-msg"><span style="color:${t.speaker==='haseeb'?'var(--blue)':t.speaker==='jarvis'?'var(--teal)':'#c084fc'};font-weight:500">${wrSpeakerNames[t.speaker]||t.speaker}</span> <span style="color:var(--muted);font-size:10px">${ts}</span><div style="margin-top:2px">${wrFormatContent(t.content)}</div></div>`;
+  });
+  html += `<div style="display:flex;gap:6px;margin-top:6px"><input id="wr-thread-input-${idx}" style="flex:1;padding:5px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;color:var(--text);font-size:12px" placeholder="Reply in thread..." onkeydown="if(event.key==='Enter'){wrSendThreadReply(${idx});event.preventDefault()}"><button style="padding:5px 10px;background:var(--teal-dim);border:1px solid rgba(0,201,160,.25);color:var(--teal);border-radius:4px;font-size:11px;cursor:pointer;font-weight:600" onclick="wrSendThreadReply(${idx})">Reply</button></div></div>`;
+  el.innerHTML = html;
+}
+
+async function wrSendThreadReply(idx) {
+  const input = document.getElementById('wr-thread-input-'+idx);
+  if (!input) return;
+  const content = input.value.trim();
+  if (!content) return;
+  input.value = '';
+  try {
+    await api(`/api/warroom/messages/${idx}/thread`, {method:'POST', body:JSON.stringify({content, speaker:'haseeb'})});
+    await wrLoadMessages();
+    wrToggleThread(idx, true);
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function wrShowPinned() {
+  try {
+    const data = await api('/api/warroom/pinned');
+    const pinned = data.pinned || [];
+    if (!pinned.length) { toast('No pinned messages'); return; }
+    let html = '<h3 style="margin-bottom:12px;font-size:15px">Pinned Messages</h3>';
+    pinned.forEach(m => {
+      const ts = m.timestamp ? new Date(m.timestamp).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) : '';
+      html += `<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:12px"><span style="font-weight:600;color:var(--teal)">${wrSpeakerNames[m.speaker]||m.speaker}</span> <span style="color:var(--muted)">${ts}</span><div style="margin-top:3px;color:var(--text)">${esc(m.content).slice(0,200)}</div></div>`;
+    });
+    document.getElementById('drawer-content').innerHTML = html;
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+// War Room input handlers
+$('#wr-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); wrSendMessage(); }
+});
+$('#wr-input').addEventListener('input', function() {
   this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
 });
 
-// Poll for new messages when war room tab is active
 function startChatPoll() {
-  if (chatPollTimer) return;
-  loadChatMessages(true);
-  chatPollTimer = setInterval(() => loadChatMessages(), 3000);
+  if (wrPollTimer) return;
+  wrLoadMessages(true);
+  wrPollTimer = setInterval(() => wrLoadMessages(), 3000);
 }
 function stopChatPoll() {
-  if (chatPollTimer) { clearInterval(chatPollTimer); chatPollTimer = null; }
+  if (wrPollTimer) { clearInterval(wrPollTimer); wrPollTimer = null; }
 }
 
 // Hook into tab switching
-const origTabClick = $$('.tab-btn').forEach.bind($$('.tab-btn'));
 $$('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.dataset.tab === 'warroom') startChatPoll();
@@ -1866,6 +2191,7 @@ $$('.tab-btn').forEach(btn => {
   if (btn.dataset.tab === 'crm') btn.addEventListener('click', () => loadCRM());
   if (btn.dataset.tab === 'analytics') btn.addEventListener('click', () => loadAnalytics());
   if (btn.dataset.tab === 'command') btn.addEventListener('click', () => loadCommand());
+  if (btn.dataset.tab === 'kb') btn.addEventListener('click', () => loadKB());
 });
 
 // ─── CRM ───
@@ -2012,11 +2338,13 @@ async function loadAnalytics() {
         api('/api/outreach/ab-results').catch(()=>({})),
         api('/api/outreach/stats').catch(()=>({})),
       ]);
-      // Overview stats
-      $('#an-open-rate').textContent = (opens.open_rate||0).toFixed(1) + '%';
-      $('#an-reply-rate').textContent = (stats.reply_rate||0).toFixed(1) + '%';
+      // Overview stats — progress rings
+      const openRate = opens.open_rate||0;
+      const replyRate = stats.reply_rate||0;
       const bounceRate = stats.total ? ((stats.bounced||0)/stats.total*100) : 0;
-      $('#an-bounce-rate').textContent = bounceRate.toFixed(1) + '%';
+      $('#an-open-ring').innerHTML = vizProgressRing(openRate, 52, 5, 'var(--teal)');
+      $('#an-reply-ring').innerHTML = vizProgressRing(replyRate, 52, 5, 'var(--green)');
+      $('#an-bounce-ring').innerHTML = vizProgressRing(bounceRate, 52, 5, 'var(--red)');
       const hotLeads = Array.isArray(intent) ? intent.filter(i => i.intent === 'hot').length : 0;
       $('#an-hot').textContent = hotLeads;
       // A/B winner
@@ -2132,8 +2460,8 @@ async function loadCommand() {
     const issues = (sla.total||0) + wipOver + (dash.overdue_count||0) + (dash.blocked_count||0);
     const grade = issues === 0 ? 'A' : issues <= 3 ? 'B' : issues <= 6 ? 'C' : 'D';
     const gradeColor = {A:'var(--green)',B:'var(--amber)',C:'var(--amber)',D:'var(--red)'}[grade];
-    $('#cmd-grade').textContent = grade;
-    $('#cmd-grade').style.color = gradeColor;
+    const gradePct = {A:100,B:75,C:50,D:25}[grade];
+    $('#cmd-grade-ring').innerHTML = vizProgressRing(gradePct, 52, 5, gradeColor).replace(/\d+%/, grade);
     // Standup
     $('#cmd-standup').textContent = standup.report || 'No standup generated yet';
     // Next actions per person
@@ -2170,6 +2498,222 @@ async function cmdEnforce() { try { const r = await api('/api/ops/enforce',{meth
 async function cmdAccountability() { try { await api('/api/ops/accountability/send',{method:'POST'}); toast('Accountability sent!'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
 async function cmdGmailSync() { try { const r = await api('/api/outreach/sync',{method:'POST'}); toast('Gmail synced: '+(r.message||'')); } catch(e) { toast('Error: '+e.message); } }
 async function cmdFollowupCheck() { try { const r = await api('/api/outreach/followup-check',{method:'POST'}); toast('Followups checked'); } catch(e) { toast('Error: '+e.message); } }
+
+// ─── Knowledge Base ───
+let kbArticles = [];
+let kbCategory = '';
+let kbViewingId = null;
+
+async function loadKB() {
+  try {
+    const data = await api('/api/kb/articles' + (kbCategory ? '?category='+kbCategory : ''));
+    kbArticles = data.articles || [];
+    // Count by category
+    const allData = await api('/api/kb/articles');
+    const all = allData.articles || [];
+    const el = id => document.getElementById(id);
+    if (el('kb-cnt-all')) el('kb-cnt-all').textContent = all.length;
+    const cats = {};
+    all.forEach(a => { cats[a.category] = (cats[a.category]||0)+1; });
+    ['runbook','sop','architecture','guide','decision_log','meeting_notes','project_notes','reference'].forEach(c => {
+      if (el('kb-cnt-'+c)) el('kb-cnt-'+c).textContent = cats[c]||0;
+    });
+    kbRenderArticles();
+  } catch(e) {
+    $('#kb-article-list').innerHTML = `<div style="color:var(--red);font-size:13px">Error loading KB: ${e.message}. <button class="research-btn" onclick="kbSeedAndLoad()" style="font-size:11px;padding:4px 10px;margin-left:8px">Seed KB</button></div>`;
+  }
+}
+
+async function kbSeedAndLoad() {
+  try {
+    await api('/api/kb/seed', {method:'POST'});
+    toast('KB seeded with articles!');
+    loadKB();
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+function kbSetCategory(btn, cat) {
+  kbCategory = cat;
+  $$('.kb-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  kbViewingId = null;
+  loadKB();
+}
+
+function kbFilterArticles() {
+  const q = ($('#kb-search').value||'').toLowerCase();
+  const filtered = q ? kbArticles.filter(a => (a.title+' '+a.content_preview+' '+(a.tags||[]).join(' ')).toLowerCase().includes(q)) : kbArticles;
+  kbRenderArticles(filtered);
+}
+
+function kbRenderArticles(articles) {
+  articles = articles || kbArticles;
+  if (kbViewingId) { kbShowArticle(kbViewingId); return; }
+  // Sort pinned first
+  articles.sort((a,b) => (b.pinned?1:0)-(a.pinned?1:0));
+  const container = $('#kb-article-list');
+  if (!articles.length) {
+    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:30px;font-size:13px">No articles found. <button class="research-btn" onclick="kbSeedAndLoad()" style="font-size:11px;padding:4px 10px;margin-left:8px">Seed KB</button></div>';
+    return;
+  }
+  container.innerHTML = articles.map(a => {
+    const updated = a.updated_at ? new Date(a.updated_at).toLocaleDateString() : '';
+    const catClass = 'kb-cat-badge kb-cat-' + (a.category||'reference');
+    const tags = (a.tags||[]).slice(0,4).map(t => `<span class="kb-tag">${esc(t)}</span>`).join(' ');
+    return `<div class="kb-article-card${a.pinned?' pinned':''}" onclick="kbShowArticle('${a.id}')">
+      <div class="kb-article-title">${a.pinned?'&#x1F4CC; ':''}${esc(a.title)}</div>
+      <div class="kb-article-meta">
+        <span class="${catClass}">${a.category||'reference'}</span>
+        <span>by ${esc(a.author||'?')}</span>
+        <span>${updated}</span>
+        <span>v${a.version_count||1}</span>
+        ${tags}
+      </div>
+      ${a.content_preview ? `<div class="kb-preview">${esc(a.content_preview)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function kbShowArticle(id) {
+  kbViewingId = id;
+  try {
+    const a = await api('/api/kb/articles/'+id);
+    const catClass = 'kb-cat-badge kb-cat-' + (a.category||'reference');
+    const tags = (a.tags||[]).map(t => `<span class="kb-tag" style="font-size:11px">${esc(t)}</span>`).join(' ');
+    const versions = (a.versions||[]).slice().reverse().map(v =>
+      `<div style="font-size:11px;padding:3px 0;border-bottom:1px solid var(--line)"><span style="color:var(--muted)">v${v.version}</span> <span style="color:var(--teal)">${esc(v.author)}</span> <span style="color:var(--muted)">${v.timestamp?.slice(0,16)||''}</span> — ${esc(v.summary)}</div>`
+    ).join('');
+
+    const container = $('#kb-article-list');
+    container.innerHTML = `
+      <button onclick="kbViewingId=null;loadKB()" style="background:none;border:none;color:var(--teal);font-size:12px;cursor:pointer;margin-bottom:12px;font-family:var(--sans)">&#8592; Back to articles</button>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+        <span class="${catClass}" style="font-size:11px">${a.category||'reference'}</span>
+        <span style="font-size:11px;color:var(--muted)">by ${esc(a.author)} | Updated ${a.updated_at?.slice(0,10)||''}</span>
+        ${tags}
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="wr-pin-btn" onclick="kbEditArticle('${a.id}')">Edit</button>
+          <button class="wr-pin-btn" onclick="kbTogglePin('${a.id}',${!a.pinned})">${a.pinned?'Unpin':'Pin'}</button>
+        </div>
+      </div>
+      <div class="kb-detail-content">${kbRenderMarkdown(a.content||'')}</div>
+      <details style="margin-top:14px"><summary style="font-size:12px;color:var(--soft);cursor:pointer">Version History (${(a.versions||[]).length})</summary>${versions}</details>
+    `;
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+function kbRenderMarkdown(md) {
+  // Simple markdown renderer
+  let html = md;
+  // Code blocks
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Headers
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  // Bold/italic
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Lists
+  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+  // Blockquotes
+  html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+  // Paragraphs (double newline)
+  html = html.replace(/\n\n/g, '</p><p>');
+  html = '<p>' + html + '</p>';
+  // Clean up empty paragraphs
+  html = html.replace(/<p>\s*<\/p>/g, '');
+  html = html.replace(/<p>\s*(<h[123]>)/g, '$1');
+  html = html.replace(/(<\/h[123]>)\s*<\/p>/g, '$1');
+  html = html.replace(/<p>\s*(<pre>)/g, '$1');
+  html = html.replace(/(<\/pre>)\s*<\/p>/g, '$1');
+  html = html.replace(/<p>\s*(<ul>)/g, '$1');
+  html = html.replace(/(<\/ul>)\s*<\/p>/g, '$1');
+  html = html.replace(/<p>\s*(<blockquote>)/g, '$1');
+  return html;
+}
+
+function kbNewArticle() {
+  const catOpts = ['runbook','sop','architecture','guide','decision_log','meeting_notes','project_notes','reference'].map(c => `<option value="${c}">${c}</option>`).join('');
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">New Article</h3>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:2"><label style="font-size:11px;color:var(--soft)">Title</label><input type="text" id="kb-new-title" style="${opsInputStyle}"></div>
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Category</label><select id="kb-new-cat" style="${opsInputStyle}">${catOpts}</select></div>
+    </div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Tags (comma-sep)</label><input type="text" id="kb-new-tags" placeholder="runbook, api, deployment" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Content (Markdown)</label><textarea class="kb-editor" id="kb-new-content" placeholder="# Title&#10;&#10;Write your article in markdown..."></textarea></div>
+    <div style="display:flex;gap:8px">
+      <button onclick="kbCreateArticle()" style="${opsBtnStyle}">Create</button>
+    </div>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function kbCreateArticle() {
+  const title = document.getElementById('kb-new-title').value.trim();
+  if (!title) { toast('Title required'); return; }
+  try {
+    await api('/api/kb/articles', {method:'POST', body:JSON.stringify({
+      title,
+      category: document.getElementById('kb-new-cat').value,
+      tags: document.getElementById('kb-new-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+      content: document.getElementById('kb-new-content').value,
+      author: 'Haseeb',
+    })});
+    toast('Article created!');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    loadKB();
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function kbEditArticle(id) {
+  const a = await api('/api/kb/articles/'+id);
+  const catOpts = ['runbook','sop','architecture','guide','decision_log','meeting_notes','project_notes','reference'].map(c => `<option value="${c}"${c===a.category?' selected':''}>${c}</option>`).join('');
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">Edit Article</h3>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:2"><label style="font-size:11px;color:var(--soft)">Title</label><input type="text" id="kb-edit-title" value="${esc(a.title)}" style="${opsInputStyle}"></div>
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Category</label><select id="kb-edit-cat" style="${opsInputStyle}">${catOpts}</select></div>
+    </div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Tags</label><input type="text" id="kb-edit-tags" value="${(a.tags||[]).join(', ')}" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Content (Markdown)</label><textarea class="kb-editor" id="kb-edit-content">${esc(a.content||'')}</textarea></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Version Note</label><input type="text" id="kb-edit-summary" placeholder="What changed?" style="${opsInputStyle}"></div>
+    <button onclick="kbSaveEdit('${id}')" style="${opsBtnStyle}">Save</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function kbSaveEdit(id) {
+  try {
+    await api('/api/kb/articles/'+id, {method:'PUT', body:JSON.stringify({
+      title: document.getElementById('kb-edit-title').value.trim(),
+      category: document.getElementById('kb-edit-cat').value,
+      tags: document.getElementById('kb-edit-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+      content: document.getElementById('kb-edit-content').value,
+      version_summary: document.getElementById('kb-edit-summary').value.trim() || 'Updated',
+      author: 'Haseeb',
+    })});
+    toast('Article updated!');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    kbShowArticle(id);
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function kbTogglePin(id, pin) {
+  try {
+    await api('/api/kb/articles/'+id, {method:'PUT', body:JSON.stringify({pinned:pin, author:'Haseeb'})});
+    toast(pin ? 'Pinned!' : 'Unpinned');
+    kbShowArticle(id);
+  } catch(e) { toast('Error: '+e.message); }
+}
 
 // ─── Init ───
 async function init() {
