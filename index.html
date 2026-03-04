@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClearOps AI — Operational Intelligence for Mid-Market Organizations</title>
-<meta name="description" content="ClearOps AI helps associations, law firms, and professional services organizations get operational clarity out of fragmented technology — connecting tools, automating reporting, and building visibility dashboards.">
-<!-- Google Analytics -->
+<meta name="description" content="We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours/week. Tell us your situation — we'll respond with options in 24 hours.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -15,8 +14,6 @@ gtag('config', 'G-D3V52Q2K1Q');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <style>
 
 /* ─── Reset ─── */
@@ -36,6 +33,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   --blue:     #3d7eff;
   --amber:    #f59e0b;
   --red:      #ef4444;
+  --green:    #22c55e;
   --text:     #dde3f0;
   --soft:     #7e8ea8;
   --muted:    #4a566e;
@@ -52,7 +50,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Noise overlay */
 body::after {
   content: '';
   position: fixed; inset: 0; pointer-events: none; z-index: 999;
@@ -60,9 +57,7 @@ body::after {
   opacity: .5;
 }
 
-/* ─── Layout ─── */
 .wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
-.wrap-wide { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
 
 /* ─── Nav ─── */
 header {
@@ -75,9 +70,7 @@ header {
   padding-bottom: 22px;
   border-bottom: 1px solid var(--line);
 }
-.brand {
-  display: flex; align-items: center; gap: 12px;
-}
+.brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
   width: 36px; height: 36px; border-radius: 8px;
   background: linear-gradient(135deg, var(--teal), var(--blue));
@@ -96,7 +89,7 @@ header {
 .nav-link:hover { color: var(--teal); }
 .nav-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 20px; border-radius: 7px; cursor: pointer; border: none;
+  padding: 9px 20px; border-radius: 7px; cursor: pointer;
   background: rgba(0,201,160,.1); border: 1px solid rgba(0,201,160,.2);
   color: var(--teal); font-family: var(--sans); font-size: 13px; font-weight: 500;
   text-decoration: none; transition: background .2s, border-color .2s;
@@ -109,10 +102,7 @@ header {
   padding: 80px 0 72px;
   border-bottom: 1px solid var(--line);
 }
-.tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-bottom: 28px;
-}
+.tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; }
 .tag-dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--teal); box-shadow: 0 0 10px var(--teal);
@@ -126,20 +116,28 @@ header {
 
 h1 {
   font-family: var(--serif);
-  font-size: clamp(38px, 6vw, 62px);
-  font-weight: 300; line-height: 1.05;
+  font-size: clamp(34px, 5.5vw, 56px);
+  font-weight: 300; line-height: 1.08;
   letter-spacing: -.04em; margin-bottom: 24px;
 }
 h1 i { font-style: italic; color: var(--teal); }
 
 .hero-body {
   font-size: 17px; color: var(--soft); font-weight: 300;
-  max-width: 540px; line-height: 1.72; margin-bottom: 36px;
+  max-width: 560px; line-height: 1.72; margin-bottom: 36px;
 }
 
-.credbar {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 32px; border-radius: 10px; border: none;
+  background: var(--teal); color: var(--bg);
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: all .2s; box-shadow: 0 0 24px rgba(0,201,160,.2);
 }
+.hero-cta:hover { opacity: .85; transform: translateY(-1px); }
+
+.credbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
 .credbar-label { font-size: 11.5px; color: var(--muted); }
 .credbar-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .pill {
@@ -148,91 +146,8 @@ h1 i { font-style: italic; color: var(--teal); }
   background: var(--bg2); border: 1px solid var(--line2);
 }
 
-/* Hero CTAs */
-.hero-ctas { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
-.hero-cta-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px; border-radius: 10px; border: none;
-  background: var(--teal); color: var(--bg);
-  font-family: var(--sans); font-size: 16px; font-weight: 700;
-  text-decoration: none; cursor: pointer;
-  transition: opacity .2s; box-shadow: 0 0 24px rgba(0,201,160,.2);
-}
-.hero-cta-primary:hover { opacity: .85; }
-.hero-cta-secondary {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 14px 24px; border-radius: 10px;
-  background: transparent; border: 1px solid var(--line2);
-  color: var(--soft); font-family: var(--sans); font-size: 14px; font-weight: 500;
-  text-decoration: none; transition: all .2s;
-}
-.hero-cta-secondary:hover { border-color: var(--teal); color: var(--text); }
-
-/* ─── Dashboard Preview ─── */
-.dash-preview {
-  margin-top: 48px; position: relative; border-radius: 16px;
-  overflow: hidden; border: 1px solid var(--line);
-  background: var(--bg2); cursor: pointer;
-  transition: border-color .3s, transform .3s;
-}
-.dash-preview:hover { border-color: rgba(0,201,160,.3); transform: translateY(-3px); }
-.dash-preview-inner {
-  padding: 28px 32px 24px;
-  background: linear-gradient(135deg, rgba(0,201,160,.04), rgba(61,126,255,.03));
-}
-.dash-preview-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
-  background: rgba(0,201,160,.12); color: var(--teal); margin-bottom: 16px;
-}
-.dash-preview-badge .dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
-  animation: blink 2.5s ease infinite;
-}
-.dash-preview-title {
-  font-family: var(--serif); font-size: 18px; font-weight: 600;
-  margin-bottom: 6px;
-}
-.dash-preview-sub { font-size: 13px; color: var(--soft); margin-bottom: 20px; }
-.dash-preview-metrics {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-  margin-bottom: 20px;
-}
-.dash-preview-metric {
-  background: var(--bg3); border: 1px solid var(--line); border-radius: 10px;
-  padding: 14px; text-align: center;
-}
-.dash-preview-metric-val {
-  font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--teal);
-}
-.dash-preview-metric-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.dash-preview-insights {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-}
-.dash-preview-insight {
-  background: var(--bg3); border: 1px solid var(--line); border-radius: 10px;
-  padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
-}
-.dash-preview-insight-icon { font-size: 18px; flex-shrink: 0; }
-.dash-preview-insight-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
-.dash-preview-insight-text { font-size: 11px; color: var(--muted); line-height: 1.4; }
-.dash-preview-cta {
-  text-align: center; padding: 14px;
-  background: linear-gradient(to top, var(--bg2), transparent);
-  font-size: 14px; font-weight: 600; color: var(--teal);
-}
-
-@media (max-width: 768px) {
-  .dash-preview-metrics { grid-template-columns: 1fr 1fr; }
-  .dash-preview-insights { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; align-items: flex-start; }
-}
-
 /* ─── Sections ─── */
-section {
-  padding: 72px 0;
-  border-bottom: 1px solid var(--line);
-}
+section { padding: 72px 0; border-bottom: 1px solid var(--line); }
 .sec-label {
   font-size: 10.5px; font-weight: 500; letter-spacing: .15em;
   text-transform: uppercase; color: var(--teal);
@@ -255,238 +170,7 @@ h2 i { font-style: italic; color: var(--teal); }
   max-width: 600px; margin-bottom: 32px;
 }
 
-/* ─── Before / After ─── */
-.ba-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-  margin-top: 8px;
-}
-.ba-panel {
-  border-radius: 16px; padding: 28px 24px;
-  position: relative; overflow: hidden;
-  transition: transform .3s;
-}
-.ba-panel:hover { transform: translateY(-3px); }
-.ba-before {
-  background: linear-gradient(135deg, rgba(239,68,68,.06), rgba(245,158,11,.04));
-  border: 1px solid rgba(239,68,68,.18);
-}
-.ba-after {
-  background: linear-gradient(135deg, rgba(0,201,160,.06), rgba(61,126,255,.04));
-  border: 1px solid rgba(0,201,160,.18);
-}
-.ba-label {
-  font-size: 10px; font-weight: 600; letter-spacing: .18em;
-  text-transform: uppercase; margin-bottom: 18px;
-}
-.ba-before .ba-label { color: var(--red); }
-.ba-after .ba-label { color: var(--teal); }
-.ba-tools {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
-}
-.ba-tool {
-  padding: 4px 10px; border-radius: 6px;
-  font-size: 11px; font-weight: 500;
-}
-.ba-before .ba-tool {
-  background: rgba(239,68,68,.08);
-  border: 1px dashed rgba(239,68,68,.25);
-  color: #fca5a5;
-}
-.ba-after .ba-tool {
-  background: rgba(0,201,160,.08);
-  border: 1px solid rgba(0,201,160,.25);
-  color: #6ee7b7;
-}
-.ba-metrics {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  margin-bottom: 14px;
-}
-.ba-metric {
-  padding: 10px 8px; border-radius: 8px; text-align: center;
-}
-.ba-before .ba-metric {
-  background: rgba(239,68,68,.05);
-  border: 1px solid rgba(239,68,68,.1);
-}
-.ba-after .ba-metric {
-  background: rgba(0,201,160,.05);
-  border: 1px solid rgba(0,201,160,.1);
-}
-.ba-metric-val {
-  font-family: var(--sans); font-size: 1.3rem; font-weight: 700;
-}
-.ba-before .ba-metric-val { color: #fca5a5; }
-.ba-after .ba-metric-val { color: var(--teal); }
-.ba-metric-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
-.ba-caption { font-size: 13px; font-weight: 500; }
-.ba-before .ba-caption { color: #fca5a5; }
-.ba-after .ba-caption { color: #6ee7b7; }
-
-/* After flow nodes */
-.ba-flow {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0; margin-bottom: 16px; flex-wrap: wrap;
-}
-.ba-flow-node {
-  padding: 4px 9px; background: rgba(0,201,160,.08);
-  border: 1px solid rgba(0,201,160,.25); border-radius: 6px;
-  font-size: 10px; font-weight: 600; color: #6ee7b7;
-}
-.ba-flow-line {
-  width: 24px; height: 2px;
-  background: linear-gradient(90deg, var(--teal), var(--blue));
-  position: relative;
-}
-.ba-flow-line::after {
-  content: ''; position: absolute; right: -2px; top: -2px;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal);
-  animation: pulse-dot 1.5s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity: .4; transform: scale(.8); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* ─── Dashboard Showcase ─── */
-.showcase-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px; margin-top: 8px;
-}
-.dash-panel {
-  background: var(--bg2); border: 1px solid var(--line);
-  border-radius: 14px; padding: 22px;
-  transition: transform .3s, border-color .3s;
-}
-.dash-panel:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0,201,160,.2);
-}
-.dash-panel-title {
-  font-size: 10px; font-weight: 600; letter-spacing: .15em;
-  text-transform: uppercase; color: var(--teal); margin-bottom: 16px;
-}
-
-/* Panel A: Ops Dashboard */
-.ops-metrics {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 6px; margin-bottom: 14px;
-}
-.ops-tile {
-  background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 8px; padding: 8px 10px;
-}
-.ops-tile .val {
-  font-size: 1.25rem; font-weight: 700; color: var(--teal);
-}
-.ops-tile .lbl { font-size: 10px; color: var(--muted); }
-.ops-charts { display: flex; gap: 14px; align-items: flex-end; }
-.bar-chart {
-  display: flex; align-items: flex-end; gap: 4px; height: 72px; flex: 1;
-}
-.bar {
-  flex: 1; border-radius: 3px 3px 0 0;
-  background: linear-gradient(to top, var(--teal), var(--blue));
-}
-.donut-wrap { width: 72px; height: 72px; position: relative; flex-shrink: 0; }
-.donut {
-  width: 100%; height: 100%; border-radius: 50%;
-  background: conic-gradient(var(--teal) 0% 72%, var(--amber) 72% 90%, var(--red) 90% 100%);
-  position: relative;
-}
-.donut::after {
-  content: '72%'; position: absolute; inset: 16px;
-  background: var(--bg2); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: var(--teal);
-}
-.donut-legend {
-  display: flex; gap: 6px; margin-top: 6px; font-size: 9px; color: var(--muted);
-}
-.donut-legend span::before {
-  content: ''; display: inline-block; width: 5px; height: 5px;
-  border-radius: 50%; margin-right: 2px; vertical-align: middle;
-}
-.leg-teal::before { background: var(--teal); }
-.leg-amber::before { background: var(--amber); }
-.leg-red::before { background: var(--red); }
-
-/* Panel B: Executive Report */
-.exec-report {
-  background: var(--bg3); border-radius: 8px; padding: 16px;
-  font-family: var(--serif); border-left: 3px solid var(--teal);
-}
-.exec-section { margin-bottom: 10px; }
-.exec-section:last-child { margin-bottom: 0; }
-.exec-section-title {
-  font-size: 9px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--muted); margin-bottom: 4px;
-  font-family: var(--sans);
-}
-.exec-report ul { list-style: none; padding: 0; }
-.exec-report li {
-  font-size: 11px; color: var(--soft); padding: 2px 0 2px 14px;
-  position: relative; font-family: var(--sans); line-height: 1.5;
-}
-.exec-report li::before {
-  content: '→'; position: absolute; left: 0; color: var(--teal);
-}
-.exec-report .risk-item::before { color: var(--amber); content: '⚠'; }
-
-/* Panel C: Integration Map */
-.int-map {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; position: relative;
-}
-.int-node {
-  background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 10px; padding: 10px; text-align: center;
-  position: relative; z-index: 1;
-}
-.int-node-icon { font-size: 1.2rem; margin-bottom: 2px; }
-.int-node-name { font-size: 11px; font-weight: 600; }
-.int-node-status {
-  font-size: 9px; margin-top: 3px; padding: 2px 6px;
-  border-radius: 100px; display: inline-block;
-}
-.status-connected { background: rgba(0,201,160,.12); color: var(--teal); }
-.status-syncing { background: rgba(61,126,255,.12); color: var(--blue); }
-.int-center {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 42px; height: 42px; background: var(--teal);
-  border-radius: 50%; display: flex; align-items: center;
-  justify-content: center; font-size: 9px; font-weight: 700;
-  color: var(--bg); z-index: 2;
-  box-shadow: 0 0 16px rgba(0,201,160,.35);
-}
-.int-stats {
-  margin-top: 10px; display: flex; gap: 5px;
-  justify-content: center; flex-wrap: wrap;
-}
-.int-stat {
-  font-size: 9px; padding: 3px 7px;
-  background: var(--bg3); border: 1px solid var(--line);
-  border-radius: 100px; color: var(--muted);
-}
-.int-stat strong { color: var(--teal); }
-
-/* ─── Who We Serve Grid ─── */
-.serve-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-}
-.serve-tile {
-  background: var(--bg2); border: 1px solid var(--line);
-  border-radius: 13px; padding: 26px;
-}
-.serve-icon { font-size: 22px; margin-bottom: 12px; display: block; }
-.serve-tile h3 {
-  font-family: var(--serif); font-size: 15px; font-weight: 600;
-  letter-spacing: -.01em; margin-bottom: 7px;
-}
-.serve-tile p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
-
-/* ─── Services List ─── */
+/* ─── Services ─── */
 .service-list { display: flex; flex-direction: column; gap: 8px; }
 .svc {
   display: grid; grid-template-columns: 40px 1fr;
@@ -506,58 +190,17 @@ h2 i { font-style: italic; color: var(--teal); }
 }
 .svc p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.65; }
 
-/* ─── Deliverables ─── */
-.deliv-card {
-  background: var(--bg2); border: 1px solid var(--line2);
-  border-radius: 16px; padding: 38px 42px;
+/* ─── Proof Stats ─── */
+.proof-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px;
 }
-.deliv-intro {
-  font-family: var(--serif); font-size: 16px; font-style: italic;
-  font-weight: 300; color: var(--soft); line-height: 1.75;
-  margin-bottom: 30px; padding-bottom: 24px;
-  border-bottom: 1px solid var(--line);
+.proof-card {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 28px;
 }
-.deliv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.deliv { display: flex; gap: 14px; align-items: flex-start; }
-.deliv-check {
-  width: 22px; height: 22px; min-width: 22px; border-radius: 50%;
-  background: rgba(0,201,160,.09); border: 1px solid rgba(0,201,160,.22);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; color: var(--teal); margin-top: 2px;
-}
-.deliv-body strong { display: block; font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-.deliv-body span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.proof-val { font-size: 36px; font-weight: 700; color: var(--teal); line-height: 1; }
+.proof-desc { font-size: 14px; color: var(--soft); margin-top: 8px; }
 
-/* ─── Testimonials ─── */
-.test-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
-}
-.test-card {
-  background: var(--bg2); border: 1px solid var(--line);
-  border-left: 3px solid var(--teal);
-  border-radius: 12px; padding: 24px;
-}
-.test-card blockquote {
-  font-size: 13.5px; line-height: 1.7; color: var(--text);
-  margin-bottom: 12px; font-style: italic;
-}
-.test-card cite {
-  font-size: 11.5px; color: var(--muted); font-style: normal;
-}
-
-/* ─── Engagement Note ─── */
-.engage-note {
-  background: linear-gradient(135deg, rgba(0,201,160,.05), rgba(61,126,255,.05));
-  border: 1px solid rgba(0,201,160,.15); border-radius: 14px;
-  padding: 28px 34px;
-}
-.engage-note p {
-  font-size: 15px; color: var(--soft); line-height: 1.75;
-  font-family: var(--serif); font-style: italic; font-weight: 300; margin: 0;
-}
-.engage-note strong { font-style: normal; font-weight: 600; color: var(--text); }
-
-/* ─── Bio Card ─── */
+/* ─── Bio ─── */
 .bio-card {
   background: var(--bg2); border: 1px solid var(--line2);
   border-radius: 16px; padding: 38px 42px;
@@ -567,18 +210,12 @@ h2 i { font-style: italic; color: var(--teal); }
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--teal), var(--blue), transparent);
 }
-.bio-name {
-  font-family: var(--serif); font-size: 19px; font-weight: 600;
-  letter-spacing: -.02em; margin-bottom: 3px;
-}
+.bio-name { font-family: var(--serif); font-size: 19px; font-weight: 600; margin-bottom: 3px; }
 .bio-role {
   font-size: 11.5px; font-weight: 500; letter-spacing: .1em;
   text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
 }
-.bio-text {
-  font-size: 15px; color: var(--soft); font-weight: 300;
-  line-height: 1.8; margin-bottom: 14px;
-}
+.bio-text { font-size: 15px; color: var(--soft); font-weight: 300; line-height: 1.8; margin-bottom: 14px; }
 .bio-text strong { color: var(--text); font-weight: 500; }
 .bio-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .badge {
@@ -587,59 +224,61 @@ h2 i { font-style: italic; color: var(--teal); }
   background: rgba(0,201,160,.07); border: 1px solid rgba(0,201,160,.16);
 }
 
-/* ─── Process Steps ─── */
-.steps { display: flex; flex-direction: column; gap: 0; position: relative; }
-.steps::before {
-  content: ''; position: absolute;
-  left: 18px; top: 36px; bottom: 36px; width: 1px;
-  background: linear-gradient(to bottom, rgba(0,201,160,.25), transparent);
-}
-.step { display: flex; gap: 22px; padding: 18px 0; }
-.step-n {
-  width: 38px; height: 38px; min-width: 38px; border-radius: 50%;
-  background: var(--bg2); border: 1px solid var(--line2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-size: 13px; font-weight: 600;
-  color: var(--teal); z-index: 1; position: relative;
-  box-shadow: 0 0 0 4px var(--bg);
-}
-.step-body h3 {
-  font-family: var(--serif); font-size: 15px; font-weight: 600;
-  margin-bottom: 5px; margin-top: 9px; letter-spacing: -.01em;
-}
-.step-body p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.65; }
-
-/* ─── CTA ─── */
-.cta-section { padding: 80px 0 96px; border-bottom: none; text-align: center; }
-.cta-box {
+/* ─── Inline Form ─── */
+.form-card {
   background: var(--bg2); border: 1px solid rgba(0,201,160,.2);
-  border-radius: 20px; padding: 56px 48px;
-  position: relative; overflow: hidden;
+  border-radius: 16px; padding: 40px; position: relative; overflow: hidden;
 }
-.cta-box::before {
+.form-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--teal), transparent);
-  opacity: .4;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent); opacity: .4;
 }
-.cta-glow {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 500px; height: 300px; pointer-events: none;
-  background: radial-gradient(ellipse, rgba(0,201,160,.055), transparent 70%);
+.form-card h2 { text-align: center; margin-bottom: 8px; position: relative; }
+.form-card .lead { text-align: center; max-width: 500px; margin: 0 auto 28px; position: relative; }
+.form-card label { font-size: 13px; font-weight: 500; color: var(--soft); display: block; margin-bottom: 6px; }
+.form-card input, .form-card textarea {
+  width: 100%; background: var(--bg3); border: 1px solid var(--line);
+  border-radius: 8px; padding: 12px 16px; color: var(--text);
+  font-family: var(--sans); font-size: 14px; margin-bottom: 16px;
+  outline: none; transition: border .15s;
 }
-.cta-box h2 {
-  font-size: clamp(26px, 4vw, 38px); margin-bottom: 14px; position: relative;
+.form-card input:focus, .form-card textarea:focus { border-color: var(--teal); }
+.form-card textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-submit {
+  background: var(--teal); color: #080b12; border: none; border-radius: 8px;
+  padding: 14px 32px; font-family: var(--sans); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all .15s; width: 100%; margin-top: 4px;
 }
-.cta-box .lead { max-width: 480px; margin: 0 auto 32px; position: relative; }
-.calendly-wrap {
-  border-radius: 12px; overflow: hidden;
-  border: 1px solid var(--line2); position: relative;
+.form-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 24px rgba(0,201,160,.25); }
+.form-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
+.form-success { text-align: center; padding: 40px 20px; display: none; }
+.form-success h3 { font-family: var(--serif); color: var(--green); font-size: 24px; margin-bottom: 10px; }
+.form-success p { color: var(--soft); margin-bottom: 8px; }
+.form-success .tid {
+  font-family: monospace; font-size: 16px; color: var(--teal);
+  background: var(--bg3); padding: 8px 20px; border-radius: 8px; display: inline-block; margin: 12px 0;
 }
-.cta-email {
-  margin-top: 18px !important;
-  font-size: 12px !important; color: var(--muted) !important;
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--bg3); color: var(--text); padding: 12px 24px; border-radius: 8px;
+  border: 1px solid var(--line); font-size: 14px; opacity: 0;
+  transition: opacity .3s; z-index: 1000; pointer-events: none;
 }
-.cta-email a { color: var(--teal); text-decoration: none; }
-.cta-email a:hover { text-decoration: underline; }
+.toast.show { opacity: 1; }
+
+/* ─── Pricing ─── */
+.pricing-note {
+  background: linear-gradient(135deg, rgba(0,201,160,.05), rgba(61,126,255,.05));
+  border: 1px solid rgba(0,201,160,.15); border-radius: 14px;
+  padding: 28px 34px; margin-top: 24px;
+}
+.pricing-note p {
+  font-size: 15px; color: var(--soft); line-height: 1.75;
+  font-family: var(--serif); font-style: italic; font-weight: 300; margin: 0;
+}
+.pricing-note strong { font-style: normal; font-weight: 600; color: var(--text); }
 
 /* ─── Footer ─── */
 footer {
@@ -652,51 +291,18 @@ footer p { font-size: 12px; color: var(--muted); margin: 0; }
 footer a { color: var(--teal); text-decoration: none; opacity: .8; transition: opacity .2s; }
 footer a:hover { opacity: 1; }
 
-/* ─── Systems Strip ─── */
-.sys-strip {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-top: 16px;
-}
-.sys-chip {
-  font-size: 12px; font-weight: 500; color: var(--soft);
-  padding: 5px 14px; border-radius: 6px;
-  background: var(--bg2); border: 1px solid var(--line2);
-  transition: border-color .2s;
-}
-.sys-chip:hover { border-color: rgba(0,201,160,.25); }
-
-/* ─── Low-friction CTA ─── */
-.alt-cta {
-  margin-top: 24px; padding: 24px 28px;
-  background: var(--bg2); border: 1px solid var(--line2);
-  border-radius: 12px; text-align: center;
-}
-.alt-cta p {
-  font-size: 14px; color: var(--soft); margin-bottom: 8px;
-}
-.alt-cta a {
-  color: var(--teal); text-decoration: none; font-weight: 500;
-}
-.alt-cta a:hover { text-decoration: underline; }
-
 /* ─── Scroll Reveal ─── */
-.reveal {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity .6s ease, transform .6s ease;
-}
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .wrap { padding: 0 20px; }
-  .wrap-wide { padding: 0 20px; }
-  .ba-grid { grid-template-columns: 1fr; }
-  .showcase-grid { grid-template-columns: 1fr; }
-  .test-grid { grid-template-columns: 1fr; }
-  .serve-grid { grid-template-columns: 1fr; }
-  .deliv-grid { grid-template-columns: 1fr; }
-  .cta-box { padding: 36px 22px; }
-  .bio-card, .deliv-card { padding: 28px 24px; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .bio-card { padding: 28px 24px; }
+  .form-card { padding: 28px 20px; }
+  .hero { padding: 48px 0 56px; }
 }
 
 </style>
@@ -712,14 +318,12 @@ footer a:hover { opacity: 1; }
     <div class="brand-name">Clear<b>Ops</b> AI</div>
   </div>
   <div class="nav-links">
-    <a class="nav-link" href="#services-section">Services</a>
-    <a class="nav-link" href="#process-section">How it Works</a>
-    <a class="nav-link" href="#pricing-section">Pricing</a>
-    <a class="nav-link" href="#about-section">About</a>
-    <a class="nav-link" href="/request.html" style="color:var(--teal);font-weight:500">Request Services</a>
+    <a class="nav-link" href="#what-we-do">What We Do</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-link" href="#about">About</a>
   </div>
-  <a class="nav-btn" href="/snapshot.html">
-    Free Ops Health Score &rarr;
+  <a class="nav-btn" href="#get-started">
+    Get Started &rarr;
   </a>
 </nav>
 </div>
@@ -729,14 +333,10 @@ footer a:hover { opacity: 1; }
 
   <!-- ── Hero ── -->
   <div class="hero">
-    <div class="tag"><div class="tag-dot"></div><span class="tag-text">Operational Intelligence for Mid-Market Organizations</span></div>
+    <div class="tag"><div class="tag-dot"></div><span class="tag-text">Operational Intelligence</span></div>
     <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
-    <p class="hero-body">In every mid-market org I've worked with, teams waste 15&ndash;25 hours per week on manual reporting across disconnected systems. ClearOps AI fixes that &mdash; connecting your tools, automating your reporting, and building the dashboards your leadership actually needs.</p>
-    <div class="hero-ctas">
-      <a class="hero-cta-primary" href="/snapshot.html">Take the 2-Min Ops Health Score &rarr;</a>
-      <a class="hero-cta-secondary" href="/request.html">Request Services &rarr;</a>
-      <a class="hero-cta-secondary" href="/clarity.html">See the Clarity Dashboard Demo</a>
-    </div>
+    <p class="hero-body">We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours per week. Tell us what you're dealing with &mdash; we'll respond with options in 24 hours.</p>
+    <a class="hero-cta" href="#get-started">Tell Us Your Situation &rarr;</a>
     <div class="credbar">
       <span class="credbar-label">12+ years in enterprise ops at</span>
       <div class="credbar-pills">
@@ -747,384 +347,112 @@ footer a:hover { opacity: 1; }
         <span class="pill">Axoni</span>
       </div>
     </div>
-
-    <!-- Dashboard Preview -->
-    <a href="/clarity.html" style="text-decoration:none;color:inherit">
-    <div class="dash-preview">
-      <div class="dash-preview-inner">
-        <div class="dash-preview-badge"><span class="dot"></span> Live Interactive Demo</div>
-        <div class="dash-preview-title">Clarity Dashboard &mdash; Professional Services</div>
-        <div class="dash-preview-sub">See bottlenecks, AI insights, and your Clarity Score &mdash; built from your industry data</div>
-        <div class="dash-preview-metrics">
-          <div class="dash-preview-metric"><div class="dash-preview-metric-val">4,218</div><div class="dash-preview-metric-label">Total Requests</div></div>
-          <div class="dash-preview-metric"><div class="dash-preview-metric-val">3.2h</div><div class="dash-preview-metric-label">Avg Resolution</div></div>
-          <div class="dash-preview-metric"><div class="dash-preview-metric-val">91.2%</div><div class="dash-preview-metric-label">Resolution Rate</div></div>
-          <div class="dash-preview-metric"><div class="dash-preview-metric-val">14</div><div class="dash-preview-metric-label">Bottlenecks</div></div>
-        </div>
-        <div class="dash-preview-insights">
-          <div class="dash-preview-insight">
-            <div class="dash-preview-insight-icon">&#x26A1;</div>
-            <div><div class="dash-preview-insight-title">New Clients Falling Through the Cracks</div><div class="dash-preview-insight-text">Client info sits in Slack 6+ hours before CRM entry</div></div>
-          </div>
-          <div class="dash-preview-insight">
-            <div class="dash-preview-insight-icon">&#x1F6A8;</div>
-            <div><div class="dash-preview-insight-title">12 Renewals About to Lapse</div><div class="dash-preview-insight-text">Zero touchpoints in 60 days &mdash; 4 are top-20% revenue</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="dash-preview-cta">Try the Interactive Demo &rarr;</div>
-    </div>
-    </a>
   </div>
 
-  <!-- ── Before / After ── -->
+  <!-- ── Social Proof ── -->
   <section class="reveal">
-    <div class="sec-label">The Difference</div>
-    <h2>From scattered tools to <i>one clear view.</i></h2>
-    <div class="ba-grid">
-      <div class="ba-panel ba-before">
-        <div class="ba-label">Before ClearOps</div>
-        <div class="ba-tools">
-          <div class="ba-tool">Salesforce</div>
-          <div class="ba-tool">Google Sheets</div>
-          <div class="ba-tool">Mailchimp</div>
-          <div class="ba-tool">Asana</div>
-          <div class="ba-tool">Fonteva</div>
-        </div>
-        <div class="ba-metrics">
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Member retention</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Event revenue</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Program outcomes</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">?</div><div class="ba-metric-label">Non-dues revenue</div></div>
-        </div>
-        <div class="ba-caption">Five systems. Manual reports. Three days. Still incomplete.</div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-val">15+ hrs/week</div>
+        <div class="proof-desc">Average time reclaimed from manual reporting after a Clarity engagement.</div>
       </div>
-      <div class="ba-panel ba-after">
-        <div class="ba-label">After ClearOps</div>
-        <div class="ba-flow">
-          <div class="ba-flow-node">CRM</div><div class="ba-flow-line"></div>
-          <div class="ba-flow-node">PM</div><div class="ba-flow-line"></div>
-          <div class="ba-flow-node">Dashboard</div><div class="ba-flow-line"></div>
-          <div class="ba-flow-node">Finance</div>
-        </div>
-        <div class="ba-metrics">
-          <div class="ba-metric"><div class="ba-metric-val">91%</div><div class="ba-metric-label">Member retention</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">$340K</div><div class="ba-metric-label">Event revenue</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">96%</div><div class="ba-metric-label">Program outcomes</div></div>
-          <div class="ba-metric"><div class="ba-metric-val">$89K</div><div class="ba-metric-label">Non-dues revenue</div></div>
-        </div>
-        <div class="ba-caption">Automated. Real-time. One view.</div>
+      <div class="proof-card">
+        <div class="proof-val">6 systems</div>
+        <div class="proof-desc">Average number of disconnected tools we find at a typical mid-market org.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-val">2&ndash;3 weeks</div>
+        <div class="proof-desc">From kickoff to delivered findings. No multi-month consulting engagements.</div>
       </div>
     </div>
   </section>
 
-</div><!-- /wrap -->
-
-<!-- ── Patterns We See (moved up for relatability) ── -->
-<div class="wrap">
-  <section class="reveal">
-    <div class="sec-label">Patterns We See</div>
-    <h2>Sound familiar? <i>You're not alone.</i></h2>
-    <p class="lead">After 12 years in enterprise ops, we see the same problems at every mid-market organization. Here's what we typically find.</p>
-    <div class="test-grid">
-      <div class="test-card">
-        <blockquote>The COO spends every Friday pulling data from Salesforce, the AMS, and Google Sheets into a single report for Monday's board meeting. 15+ hours per week, every week.</blockquote>
-        <cite>120-person trade association</cite>
-      </div>
-      <div class="test-card">
-        <blockquote>Four different teams use four different project tools. Nobody knows the real status of anything until someone asks in a meeting. Leadership is flying blind.</blockquote>
-        <cite>90-person professional services firm</cite>
-      </div>
-      <div class="test-card">
-        <blockquote>The membership team can't answer "what's our retention rate?" without a two-day spreadsheet exercise. Meanwhile, the data exists across three systems that don't talk to each other.</blockquote>
-        <cite>200-person membership organization</cite>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ── Dashboard Showcase (wide) ── -->
-<section class="reveal">
-<div class="wrap-wide">
-  <div class="sec-label">What You Get</div>
-  <h2>Dashboards, reports, and integrations — <i>built for you.</i></h2>
-  <p class="lead">Not generic templates. Custom visibility layers built on top of the tools you already have.</p>
-  <div class="showcase-grid">
-
-    <!-- Panel A: Ops Dashboard -->
-    <div class="dash-panel">
-      <div class="dash-panel-title">Membership &amp; Programs Dashboard</div>
-      <div class="ops-metrics">
-        <div class="ops-tile"><div class="val">2,847</div><div class="lbl">Active Members</div></div>
-        <div class="ops-tile"><div class="val">91%</div><div class="lbl">Renewal Rate</div></div>
-        <div class="ops-tile"><div class="val">$340K</div><div class="lbl">Event Revenue</div></div>
-        <div class="ops-tile"><div class="val">$89K</div><div class="lbl">Non-Dues Rev</div></div>
-      </div>
-      <div class="ops-charts">
-        <div class="bar-chart">
-          <div class="bar" style="height:65%"></div>
-          <div class="bar" style="height:85%"></div>
-          <div class="bar" style="height:45%"></div>
-          <div class="bar" style="height:92%"></div>
-          <div class="bar" style="height:70%"></div>
-        </div>
-        <div class="donut-wrap">
-          <div class="donut"></div>
-          <div class="donut-legend">
-            <span class="leg-teal">Track</span>
-            <span class="leg-amber">Risk</span>
-            <span class="leg-red">Late</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Panel B: Executive Report -->
-    <div class="dash-panel">
-      <div class="dash-panel-title">Executive Report</div>
-      <div class="exec-report">
-        <div class="exec-section">
-          <div class="exec-section-title">Key Findings</div>
-          <ul>
-            <li>Member retention up to 91% after onboarding flow redesign</li>
-            <li>Annual conference registrations tracking 22% ahead of last year</li>
-            <li>Non-dues revenue diversified across 4 streams vs. 2 last quarter</li>
-          </ul>
-        </div>
-        <div class="exec-section">
-          <div class="exec-section-title">Risk Areas</div>
-          <ul>
-            <li class="risk-item">Lapsed member recovery rate below 15% target</li>
-            <li class="risk-item">Grant reporting deadline in 3 weeks — data still in 2 systems</li>
-          </ul>
-        </div>
-        <div class="exec-section">
-          <div class="exec-section-title">Next Steps</div>
-          <ul>
-            <li>Launch automated lapsed-member reengagement sequence</li>
-            <li>Consolidate grant data into unified reporting view</li>
-            <li>Prep board packet with updated membership trends</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Panel C: Integration Map -->
-    <div class="dash-panel">
-      <div class="dash-panel-title">Systems Integration Map</div>
-      <div class="int-map">
-        <div class="int-node">
-          <div class="int-node-icon">📊</div>
-          <div class="int-node-name">Salesforce</div>
-          <span class="int-node-status status-connected">Connected</span>
-        </div>
-        <div class="int-node">
-          <div class="int-node-icon">📋</div>
-          <div class="int-node-name">Fonteva</div>
-          <span class="int-node-status status-connected">Connected</span>
-        </div>
-        <div class="int-node">
-          <div class="int-node-icon">📧</div>
-          <div class="int-node-name">Mailchimp</div>
-          <span class="int-node-status status-syncing">Syncing</span>
-        </div>
-        <div class="int-node">
-          <div class="int-node-icon">✅</div>
-          <div class="int-node-name">Asana</div>
-          <span class="int-node-status status-connected">Connected</span>
-        </div>
-        <div class="int-center">HUB</div>
-      </div>
-      <div class="int-stats">
-        <span class="int-stat"><strong>4</strong> systems</span>
-        <span class="int-stat"><strong>24</strong> points/day</span>
-        <span class="int-stat"><strong>Real-time</strong></span>
-      </div>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:20px;">
-    <a href="/clarity.html" style="color:var(--teal);font-size:14px;font-weight:600;text-decoration:none;">See this dashboard live &mdash; interactive demo with your industry data &rarr;</a>
-  </div>
-</div>
-</section>
-
-<div class="wrap">
-
-  <!-- ── Who We Serve ── -->
-  <section class="reveal">
-    <div class="sec-label">Who We Serve</div>
-    <h2>For organizations where the<br>operational mess <i>lives in technology.</i></h2>
-    <p class="lead">You already have the tools. They're just not connected, not visible, and not working for you.</p>
-    <div class="serve-grid">
-      <div class="serve-tile">
-        <span class="serve-icon">🏛️</span>
-        <h3>Associations &amp; Membership Orgs</h3>
-        <p>AMS, events platform, LMS, CRM, email tool — all siloed. We connect them and build the visibility layer.</p>
-      </div>
-      <div class="serve-tile">
-        <span class="serve-icon">⚖️</span>
-        <h3>Law &amp; Professional Services</h3>
-        <p>Practice management, billing, conflicts, document management — we surface what's actually happening across the firm.</p>
-      </div>
-      <div class="serve-tile">
-        <span class="serve-icon">🏥</span>
-        <h3>Healthcare &amp; Behavioral Health</h3>
-        <p>EHR, billing, care coordination, grant reporting — operational visibility in regulated environments, made reliable.</p>
-      </div>
-      <div class="serve-tile">
-        <span class="serve-icon">🏦</span>
-        <h3>Financial &amp; Professional Services</h3>
-        <p>CRMs, compliance platforms, reporting tools that don't talk to each other. We build the layer that ties them together.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Systems We Connect ── -->
-  <section class="reveal">
-    <div class="sec-label">Integrations</div>
-    <h2>We work with the tools <i>you already have.</i></h2>
-    <p class="lead">No rip-and-replace. We connect what's already in your stack and build the visibility layer on top.</p>
-    <div class="sys-strip">
-      <span class="sys-chip">Salesforce</span>
-      <span class="sys-chip">Fonteva</span>
-      <span class="sys-chip">iMIS</span>
-      <span class="sys-chip">MemberSuite</span>
-      <span class="sys-chip">Mailchimp</span>
-      <span class="sys-chip">Constant Contact</span>
-      <span class="sys-chip">Asana</span>
-      <span class="sys-chip">Monday.com</span>
-      <span class="sys-chip">QuickBooks</span>
-      <span class="sys-chip">NetSuite</span>
-      <span class="sys-chip">Google Workspace</span>
-      <span class="sys-chip">Microsoft 365</span>
-      <span class="sys-chip">Slack</span>
-      <span class="sys-chip">HubSpot</span>
-      <span class="sys-chip">Jira</span>
-      <span class="sys-chip">Clio</span>
-    </div>
-  </section>
-
-  <!-- ── Services ── -->
-  <section class="reveal">
-    <div class="sec-label" id="services-section">Services</div>
-    <h2>Four ways we help.</h2>
-    <p class="lead">Every engagement is scoped, fixed, and built around a concrete deliverable. No open-ended retainers with vague outcomes.</p>
+  <!-- ── What We Do ── -->
+  <section class="reveal" id="what-we-do">
+    <div class="sec-label">What We Do</div>
+    <h2>We connect your tools, automate your reporting,<br>and build the dashboards <i>leadership actually needs.</i></h2>
+    <p class="lead">Not generic templates. Custom visibility layers built on top of the tools you already have &mdash; Salesforce, HubSpot, QuickBooks, Asana, Slack, and everything else.</p>
     <div class="service-list">
       <div class="svc">
         <div class="svc-n">01</div>
         <div>
-          <h3>Operational Clarity Audit <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">$2,500&ndash;$5,000 &middot; 2&ndash;3 weeks</span></h3>
-          <p>We map every tool, workflow, and data flow &mdash; identifying where systems are fragmented, where reporting is manual, and where the visibility gaps are costing you.</p>
+          <h3>Operational Clarity Audit</h3>
+          <p>We map every tool, workflow, and data flow &mdash; identifying where systems are fragmented, where reporting is manual, and where visibility gaps are costing you. Delivered as a written report with a prioritized action roadmap.</p>
         </div>
       </div>
       <div class="svc">
         <div class="svc-n">02</div>
         <div>
-          <h3>Systems Integration &amp; Workflow Automation <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">$5,000&ndash;$15,000 &middot; 3&ndash;6 weeks</span></h3>
-          <p>We connect the platforms that aren't talking to each other and automate the manual processes that shouldn't require a person.</p>
+          <h3>Systems Integration &amp; Automation</h3>
+          <p>We connect the platforms that aren't talking to each other and automate the manual processes that shouldn't require a person. CRM to PM to finance to dashboard &mdash; one connected flow.</p>
         </div>
       </div>
       <div class="svc">
         <div class="svc-n">03</div>
         <div>
-          <h3>Operational Visibility Dashboards <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">$3,000&ndash;$8,000 &middot; 2&ndash;4 weeks</span></h3>
-          <p>Custom dashboards that pull from your existing tools and surface the data leadership actually needs — automatically, without manual assembly.</p>
+          <h3>Visibility Dashboards</h3>
+          <p>Custom dashboards that pull from your existing tools and surface the data leadership actually needs &mdash; automatically, without manual assembly. Real-time, always current.</p>
         </div>
       </div>
       <div class="svc">
         <div class="svc-n">04</div>
         <div>
-          <h3>Ongoing Ops Intelligence Retainer <span style="font-size:12px;font-weight:500;color:var(--teal);margin-left:8px;">From $1,500/mo</span></h3>
-          <p>Monthly partnership for continuous monitoring, reporting automation, and operational intelligence as your stack and team evolve.</p>
+          <h3>Ongoing Ops Intelligence</h3>
+          <p>Continuous monitoring, reporting automation, and operational intelligence as your stack and team evolve. Your fractional ops team.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Deliverables ── -->
-  <section class="reveal">
-    <div class="sec-label">What You Get</div>
-    <h2>The Clarity Audit, <i>in detail.</i></h2>
-    <p class="lead">The audit is designed to be valuable on its own — regardless of what you decide to do next.</p>
-    <div class="deliv-card">
-      <p class="deliv-intro">What you get: a clear picture of where your operations are working, where they're not, and exactly what to do about it &mdash; in writing, in plain language, with a plan your team can execute whether or not we're involved.</p>
-      <div class="deliv-grid">
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Workflow &amp; Tools Audit</strong><span>Structured review of your current processes, systems, and the gaps between them.</span></div>
-        </div>
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Written Findings Report</strong><span>Plain-language document describing what we found, why it matters, and what it's costing you.</span></div>
-        </div>
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Prioritized Action Roadmap</strong><span>Fixes ranked by impact and effort — starting with the highest-leverage items.</span></div>
-        </div>
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Executive Summary</strong><span>One-page version for leadership review, board presentations, or internal alignment.</span></div>
-        </div>
-        <div class="deliv">
-          <div class="deliv-check">&#10003;</div>
-          <div class="deliv-body"><strong>Follow-Up Review Call</strong><span>Dedicated session to walk through findings and answer questions from your team. Everything is handed off completely &mdash; yours to keep and act on.</span></div>
-        </div>
-        <div style="text-align:center; margin-top:24px;">
-          <a href="/sample-report.html" style="color:#2dd4bf; font-weight:600; text-decoration:none; border-bottom:1px solid rgba(45,212,191,.3);">See a sample findings report &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Where AI Comes In ── -->
-  <section class="reveal">
-    <div class="sec-label">Where AI Comes In</div>
-    <h2>The "AI" in ClearOps AI<br>does <i>real work.</i></h2>
-    <p class="lead">Not a buzzword. Not a chatbot bolted onto a spreadsheet. Here's exactly what AI is doing in every engagement.</p>
+  <!-- ── Pricing ── -->
+  <section class="reveal" id="pricing">
+    <div class="sec-label">Pricing</div>
+    <h2>Transparent pricing. <i>No surprises.</i></h2>
+    <p class="lead">Every engagement is scoped, fixed, and built around a concrete deliverable.</p>
     <div class="service-list">
       <div class="svc">
-        <div class="svc-n">&#9889;</div>
+        <div class="svc-n" style="color: var(--teal); opacity: 1;">Free</div>
         <div>
-          <h3>Operational Pattern Recognition</h3>
-          <p>AI analyzes how work actually flows through your organization &mdash; identifying bottlenecks, redundancies, and coordination gaps that would take weeks to surface manually. <strong>Example:</strong> For a 120-person trade association, pattern analysis revealed that new client info sat in Slack for 6+ hours before anyone entered it into the CRM &mdash; a handoff gap that was invisible until the data showed it.</p>
+          <h3>Ops Snapshot</h3>
+          <p>A focused look at your current tools and workflows. We identify your top bottlenecks and estimate what they're costing you. No strings attached.</p>
         </div>
       </div>
       <div class="svc">
-        <div class="svc-n">&#128202;</div>
+        <div class="svc-n">$2.5&ndash;5K</div>
         <div>
-          <h3>Automated Reporting &amp; Dashboards</h3>
-          <p>AI-assisted reporting pipelines that pull from your CRM, project management, email, and spreadsheets &mdash; surfacing operational data leadership needs, on a schedule, without manual assembly. <strong>Example:</strong> We built a pipeline that pulls membership data from Salesforce, event revenue from Fonteva, and engagement metrics from Mailchimp into a single dashboard &mdash; replacing a 15-hour/week manual report assembly process.</p>
+          <h3>Clarity Audit</h3>
+          <p>Full deep dive. Written findings report, prioritized action roadmap, executive summary, and a review call. Fixed scope, fixed price.</p>
         </div>
       </div>
       <div class="svc">
-        <div class="svc-n">&#128269;</div>
+        <div class="svc-n">$5&ndash;15K</div>
         <div>
-          <h3>Research &amp; Due Diligence</h3>
-          <p>Before any engagement, we use AI to deeply research your organization — your programs, partners, and operational footprint — so the first conversation is informed, not exploratory.</p>
+          <h3>Build &amp; Deploy</h3>
+          <p>Dashboards, integrations, workflow automation &mdash; scoped after the audit, when we both know exactly what needs to be built. 3&ndash;6 weeks.</p>
         </div>
       </div>
       <div class="svc">
-        <div class="svc-n">&#128257;</div>
+        <div class="svc-n">From $1.5K/mo</div>
         <div>
-          <h3>Workflow Intelligence &amp; Monitoring</h3>
-          <p>After workflows are redesigned, AI monitors them continuously &mdash; flagging anomalies, tracking completion rates, and alerting leadership when something drifts before it becomes a problem. <strong>Example:</strong> For a CPA firm, workflow monitoring flagged that client document uploads weren't triggering staff notifications &mdash; 10 uploads sat unnoticed for days. The fix took hours, but without monitoring, no one would have known.</p>
+          <h3>Ongoing Retainer</h3>
+          <p>Monthly partnership for continuous monitoring, reporting automation, and ops intelligence as your organization scales.</p>
         </div>
       </div>
     </div>
-    <div class="engage-note" style="margin-top: 20px;">
-      <p>The bottom line: <strong>AI compresses the time it takes to find problems and build solutions.</strong> What would require a 3-month internal ops review gets done in weeks. You get enterprise-grade ops intelligence at a fraction of the cost of building it in-house.</p>
+    <div class="pricing-note">
+      <p>Engagements typically run <strong>$2,500 for an Ops Snapshot, $5&ndash;15K for full clarity builds.</strong> Custom projects vary. Budget <strong>2&ndash;6 weeks</strong> from kickoff to delivery. Start with the free snapshot &mdash; no commitment required.</p>
     </div>
   </section>
 
   <!-- ── About ── -->
-  <section class="reveal">
-    <div class="sec-label" id="about-section">About</div>
-    <h2>Enterprise ops experience<br>in <i>technology-driven organizations.</i></h2>
+  <section class="reveal" id="about">
+    <div class="sec-label">About</div>
+    <h2>Enterprise ops experience, <i>applied to your organization.</i></h2>
     <div class="bio-card">
       <div class="bio-name">Haseeb Bassam</div>
       <div class="bio-role">Founder &amp; Principal, ClearOps AI</div>
-      <p class="bio-text">I spent <strong>12 years in operations and infrastructure roles at eBay, Splunk, Cadence Design Systems, CoreSite Data Centers, and Axoni</strong> — building monitoring systems, managing cloud and data center operations at scale, and connecting the dots between fragmented tools so leadership could actually see what was happening.</p>
-      <p class="bio-text">The problem I kept seeing: <strong>organizations running on five or six platforms that don't talk to each other, assembling reports by hand every month, with no real visibility layer tying it all together.</strong> That gap is expensive — in time, in errors, and in decisions made without the right data.</p>
+      <p class="bio-text">12 years in operations and infrastructure at <strong>eBay, Splunk, Cadence Design Systems, CoreSite Data Centers, and Axoni</strong> &mdash; building monitoring systems, managing cloud and data center ops at scale, and connecting fragmented tools so leadership could actually see what was happening.</p>
+      <p class="bio-text">The problem I kept seeing: <strong>organizations running on five or six platforms that don't talk to each other, assembling reports by hand every month, with no real visibility layer.</strong> That gap is expensive. ClearOps fixes it.</p>
       <div class="bio-badges">
         <span class="badge">eBay</span>
         <span class="badge">Splunk</span>
@@ -1139,116 +467,38 @@ footer a:hover { opacity: 1; }
     </div>
   </section>
 
-  <!-- ── Social Proof ── -->
-  <section class="reveal">
-    <div class="sec-label">Results</div>
-    <h2>What operational clarity <i>actually looks like.</i></h2>
-    <div class="proof-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:32px;">
-      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
-        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">15+ hrs/week</div>
-        <div style="font-size:14px;color:var(--soft);margin-top:8px;">Average time reclaimed from manual reporting and data assembly after a Clarity Audit.</div>
+  <!-- ── Get Started (Inline Form) ── -->
+  <section class="reveal" id="get-started" style="border-bottom: none; padding-bottom: 40px;">
+    <div class="form-card" id="form-card">
+      <h2>What's your biggest <i>operational bottleneck?</i></h2>
+      <p class="lead">No service to pick. No commitment. Just tell us what you're dealing with and we'll respond within 24 hours with tailored options.</p>
+
+      <div id="form-fields">
+        <label>Describe your situation *</label>
+        <textarea id="f-desc" placeholder="What tools are you using? What's broken or manual? What would you fix if you had an ops team tomorrow?"></textarea>
+        <div class="form-row">
+          <div><label>Your Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
+          <div><label>Company *</label><input type="text" id="f-company" placeholder="Acme Corp"></div>
+        </div>
+        <div class="form-row">
+          <div><label>Work Email *</label><input type="email" id="f-email" placeholder="jane@acme.com"></div>
+          <div><label>Phone <span style="color:var(--muted)">(optional)</span></label><input type="tel" id="f-phone" placeholder="(202) 555-0100"></div>
+        </div>
+        <button class="form-submit" id="submit-btn" onclick="submitInquiry()">Share My Situation</button>
+        <p class="form-note">No payment. No commitment. We'll respond with thinking and options.</p>
       </div>
-      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
-        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">6 systems</div>
-        <div style="font-size:14px;color:var(--soft);margin-top:8px;">Average number of disconnected tools we find in a typical mid-market organization.</div>
-      </div>
-      <div class="proof-card" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;">
-        <div style="font-size:36px;font-weight:700;color:var(--teal);line-height:1;">2&ndash;3 weeks</div>
-        <div style="font-size:14px;color:var(--soft);margin-top:8px;">From kickoff to delivered findings report. No multi-month consulting engagements.</div>
+
+      <div class="form-success" id="form-success">
+        <h3>Got it. We're on it.</h3>
+        <p>We'll review your situation and respond within 24 hours with options and next steps.</p>
+        <div class="tid" id="result-tid"></div>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px">Bookmark this to track progress:</p>
+        <a id="result-link" href="#" style="color:var(--teal);font-size:14px" target="_blank"></a>
       </div>
     </div>
-    <blockquote style="margin:40px auto 0;max-width:640px;padding:24px 28px;background:var(--card);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;font-size:15px;color:var(--soft);line-height:1.7;">
-      "We knew our tools weren't connected. We didn't know it was costing us 20 hours a week in manual work. The audit made that visible in two weeks."
-      <div style="margin-top:12px;font-size:13px;color:var(--muted);"><strong style="color:var(--fg);">Operations Leader</strong> &middot; Mid-market SaaS, 85 employees</div>
-    </blockquote>
-  </section>
 
-  <!-- ── Engagements ── -->
-  <section class="reveal">
-    <div class="sec-label" id="pricing-section">Engagements</div>
-    <h2>Start with a free Ops Health Score. <i>No surprises.</i></h2>
-    <p class="lead">We believe you should see the value before you spend a dollar. That's why every engagement starts with a free, no-obligation look at your operations.</p>
-    <div class="service-list">
-      <div class="svc">
-        <div class="svc-n" style="color: var(--teal); opacity: 1;">Free</div>
-        <div>
-          <h3>Ops Snapshot</h3>
-          <p>A focused review of your current tools and workflows. We identify your top 1–2 operational bottlenecks and estimate what they're costing you — in hours, dollars, or both. Delivered as a concise written briefing. No strings attached.</p>
-        </div>
-      </div>
-      <div class="svc">
-        <div class="svc-n">$2.5&ndash;5K</div>
-        <div>
-          <h3>Clarity Audit</h3>
-          <p>The full deep dive. We map every system, data flow, and reporting gap across your organization. You receive a written findings report, prioritized action roadmap, executive summary, and a follow-up review call. Fixed scope, fixed price &mdash; scoped after the free snapshot so there are no surprises.</p>
-        </div>
-      </div>
-      <div class="svc">
-        <div class="svc-n">Custom</div>
-        <div>
-          <h3>Build &amp; Deploy</h3>
-          <p>Implementation — dashboards, integrations, workflow automation — scoped after the audit, when we both know exactly what needs to be built. Your team is involved at every step.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Process ── -->
-  <section class="reveal">
-    <div class="sec-label" id="process-section">Process</div>
-    <h2>How it works.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div class="step-body">
-          <h3>Try Your Free Ops Health Score</h3>
-          <p>Select your tools, answer 5 questions, get a score out of 100 with category breakdowns showing exactly where your operations need attention. Takes under 2 minutes. <a href="/snapshot.html" style="color: var(--teal);">Start now &rarr;</a></p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="step-body">
-          <h3>Review the Findings</h3>
-          <p>You'll see exactly where your systems are disconnected and where time is being lost. One association director discovered that lapsed-member reengagement emails had been going to 3-year-old addresses for months &mdash; that's the kind of blind spot that only surfaces when you actually look.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="step-body">
-          <h3>Go Deeper (Optional)</h3>
-          <p>If the Snapshot reveals enough to act on, we scope a full Clarity Audit — the comprehensive analysis with a prioritized roadmap your team can execute. Fixed price, fixed timeline.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">4</div>
-        <div class="step-body">
-          <h3>Build &amp; Support (Optional)</h3>
-          <p>From audit to implementation — dashboards, integrations, automation. Or stay on retainer for continuous ops intelligence as your organization scales.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── CTA ── -->
-  <section class="cta-section reveal" id="cta">
-    <div class="cta-box">
-      <div class="cta-glow"></div>
-      <h2>Get your free <i>Ops Health Score.</i></h2>
-      <p class="lead">Score your operations out of 100 &mdash; in under 2 minutes. Select your tools, answer 5 questions, and get a score with category breakdowns and integration gap analysis.</p>
-      <div style="margin-bottom: 24px; text-align: center;">
-        <a class="nav-btn" href="/snapshot.html" style="display: inline-block; padding: 14px 32px; font-size: 16px; text-decoration: none;">Try the Free Ops Health Score &rarr;</a>
-        <a class="nav-btn" href="/clarity.html" style="display: inline-block; padding: 14px 32px; font-size: 16px; text-decoration: none; margin-left: 12px;">See Clarity Dashboard Demo &rarr;</a>
-        <a class="nav-btn" href="/request.html" style="display: inline-block; padding: 14px 32px; font-size: 16px; text-decoration: none; margin-left: 12px; background: rgba(0,201,160,.15); border-color: var(--teal); color: var(--teal);">Request Services &rarr;</a>
-      </div>
-      <div class="alt-cta" style="margin-top: 0; margin-bottom: 24px; text-align: left;">
-        <p style="margin-bottom: 12px; color: var(--soft); font-size: 13px;">Prefer to skip the simulation? Email us your tools and top pain points directly:</p>
-        <p><a href="mailto:haseeb@clearopsai.io?subject=Ops%20Snapshot%20Request&body=Organization%3A%20%0ASize%20(approx.%20employees)%3A%20%0AIndustry%3A%20%0A%0ATools%20we%20use%3A%0A-%20%0A-%20%0A-%20%0A%0ABiggest%20operational%20pain%20points%3A%0A1.%20%0A2.%20%0A3.%20">haseeb@clearopsai.io &rarr;</a></p>
-      </div>
-      <p class="lead" style="font-size: 13px; margin-bottom: 16px;">Prefer to talk it through? Book a 20-minute call instead.</p>
-      <div class="calendly-wrap">
-        <div class="calendly-inline-widget" data-url="https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0" style="min-width:280px;height:640px;"></div>
-      </div>
-      <p class="cta-email">Or email directly: <a href="mailto:haseeb@clearopsai.io">haseeb@clearopsai.io</a></p>
+    <div style="text-align:center;margin-top:20px;">
+      <p class="form-note">Or email directly: <a href="mailto:haseeb@clearopsai.io" style="color:var(--teal);text-decoration:none">haseeb@clearopsai.io</a></p>
     </div>
   </section>
 
@@ -1260,15 +510,61 @@ footer a:hover { opacity: 1; }
 
 </div><!-- /wrap -->
 
+<div class="toast" id="toast"></div>
+
 <script>
-window.addEventListener('load', function() {
-  if (window.Calendly) {
-    Calendly.initInlineWidget({
-      url: 'https://calendly.com/haseeb-clearopsai/30min?hide_gdpr_banner=1&background_color=0d1120&text_color=dde3f0&primary_color=00c9a0',
-      parentElement: document.querySelector('.calendly-inline-widget')
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+async function submitInquiry() {
+  const desc = document.getElementById('f-desc').value.trim();
+  const name = document.getElementById('f-name').value.trim();
+  const company = document.getElementById('f-company').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  if (!desc) { toast('Please describe your situation'); document.getElementById('f-desc').focus(); return; }
+  if (!name || !company || !email) { toast('Please fill in name, company, and email'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const res = await fetch('https://jarvis-core.tail231924.ts.net/api/tickets', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        client_name: name,
+        client_email: email,
+        company: company,
+        phone: document.getElementById('f-phone').value.trim(),
+        description: desc,
+      }),
     });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.detail || 'Submission failed');
+
+    document.getElementById('form-fields').style.display = 'none';
+    const success = document.getElementById('form-success');
+    success.style.display = 'block';
+    document.getElementById('result-tid').textContent = data.ticket_id;
+    const link = document.getElementById('result-link');
+    const url = 'https://jarvis-core.tail231924.ts.net' + data.status_url;
+    link.href = url;
+    link.textContent = url;
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'inquiry_submitted', { event_category: 'conversion', event_label: company });
+    }
+  } catch(e) {
+    toast('Error: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'Share My Situation';
   }
-});
+}
 
 // Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
