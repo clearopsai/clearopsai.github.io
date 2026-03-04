@@ -531,7 +531,7 @@ body::before {
 .kb-editor:focus{outline:none;border-color:var(--teal)}
 
 /* ─── War Room Slack-style ─── */
-.wr-layout{display:grid;grid-template-columns:180px 1fr;gap:0;height:calc(100vh - 280px);min-height:500px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.wr-layout{display:grid;grid-template-columns:180px 1fr;gap:0;height:calc(100vh - 240px);min-height:500px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .wr-channels{background:var(--bg2);border-right:1px solid var(--line);padding:12px 0;overflow-y:auto}
 .wr-channel-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:4px 14px;font-weight:600}
 .wr-channel-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 14px;background:none;border:none;color:var(--soft);font-size:13px;font-family:var(--sans);cursor:pointer;transition:all .12s;text-align:left}
@@ -539,14 +539,14 @@ body::before {
 .wr-channel-btn.active{background:var(--teal-dim);color:var(--teal);font-weight:600}
 .wr-channel-btn .wr-hash{color:var(--muted);font-weight:400}
 .wr-channel-btn .wr-unread{background:var(--red);color:white;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:auto}
-.wr-main{display:flex;flex-direction:column;background:var(--bg)}
+.wr-main{display:flex;flex-direction:column;background:var(--bg);min-height:0}
 .wr-header{padding:10px 16px;border-bottom:1px solid var(--line);background:var(--bg2);display:flex;align-items:center;gap:10px}
 .wr-header-name{font-weight:600;font-size:14px}
 .wr-header-desc{font-size:11px;color:var(--muted)}
 .wr-header-actions{margin-left:auto;display:flex;gap:6px}
 .wr-pin-btn{font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--line);border-radius:4px;color:var(--soft);cursor:pointer;font-family:var(--sans)}
 .wr-pin-btn:hover{border-color:var(--teal);color:var(--teal)}
-.wr-messages{flex:1;overflow-y:auto;padding:12px 16px}
+.wr-messages{flex:1;overflow-y:auto;padding:12px 16px;min-height:0}
 .wr-msg{padding:6px 0;display:flex;gap:10px;border-radius:6px;transition:background .1s}
 .wr-msg:hover{background:rgba(255,255,255,.02)}
 .wr-msg.pinned-msg{background:rgba(245,158,11,.04);border-left:2px solid var(--amber);padding-left:8px}
@@ -556,6 +556,11 @@ body::before {
 .wr-avatar.claude{background:#c084fc22;color:#c084fc}
 .wr-avatar.system{background:#f59e0b22;color:var(--amber)}
 .wr-avatar.pm{background:#ec489922;color:#ec4899}
+.wr-avatar.atlas{background:#8b5cf622;color:#8b5cf6}
+.wr-avatar.nova{background:#ec489922;color:#ec4899}
+.wr-avatar.cipher{background:#ef444422;color:#ef4444}
+.wr-avatar.sage{background:#f59e0b22;color:#f59e0b}
+.wr-avatar.relay{background:#22c55e22;color:#22c55e}
 .wr-msg-body{flex:1;min-width:0}
 .wr-msg-header{display:flex;gap:8px;align-items:baseline;margin-bottom:2px}
 .wr-msg-name{font-size:13px;font-weight:600}
@@ -564,6 +569,11 @@ body::before {
 .wr-msg-name.claude{color:#c084fc}
 .wr-msg-name.system{color:var(--amber)}
 .wr-msg-name.pm{color:#ec4899}
+.wr-msg-name.atlas{color:#8b5cf6}
+.wr-msg-name.nova{color:#ec4899}
+.wr-msg-name.cipher{color:#ef4444}
+.wr-msg-name.sage{color:#f59e0b}
+.wr-msg-name.relay{color:#22c55e}
 .wr-msg-time{font-size:10px;color:var(--muted)}
 .wr-msg-text{font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--text)}
 .wr-msg-text .mention{color:var(--blue);font-weight:600;background:rgba(61,126,255,.1);padding:1px 4px;border-radius:3px}
@@ -760,6 +770,14 @@ body::before {
       </div>
       <!-- SLA breaches detail -->
       <div id="cmd-sla-detail"></div>
+      <!-- Context log -->
+      <div style="margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <h4 style="font-size:12px;color:var(--soft)">RECENT CONTEXT (48h)</h4>
+          <button class="wr-pin-btn" onclick="cmdLoadContext()">Refresh</button>
+        </div>
+        <div id="cmd-context-log" style="font-size:12px;color:var(--muted)">Click refresh to load...</div>
+      </div>
     </div>
   </div>
 
@@ -819,7 +837,10 @@ body::before {
           <span class="wr-header-name" id="wr-channel-name"># general</span>
           <span class="wr-header-desc" id="wr-channel-desc">General discussion</span>
           <div class="wr-header-actions">
+            <button class="wr-pin-btn" onclick="wrAgentPulse()" title="All agents post updates">Team Pulse</button>
             <button class="wr-pin-btn" onclick="wrShowPinned()">Pins</button>
+            <button class="wr-pin-btn" onclick="wrShowAgentPicker()" title="Summon a specific agent">@ Agent</button>
+            <button class="wr-pin-btn" onclick="wrAutoLog()" title="Auto-summarize recent conversation">Save Context</button>
           </div>
         </div>
         <div class="wr-messages" id="wr-messages"></div>
@@ -1621,8 +1642,9 @@ let wrPollTimer = null;
 let wrAllMessages = [];
 
 const wrChannelDescs = {general:'General discussion',alerts:'System alerts & notifications',outreach:'Sales & outreach updates',engineering:'Engineering & development',standup:'Daily standups & accountability'};
-const wrAvatarLetters = {haseeb:'H',jarvis:'J',claude:'C',system:'!',pm:'PM'};
-const wrSpeakerNames = {haseeb:'Haseeb',jarvis:'Jarvis',claude:'Claude',system:'System',pm:'PM Bot'};
+const wrAvatarLetters = {haseeb:'H',jarvis:'J',claude:'C',system:'!',pm:'PM',atlas:'A',nova:'N',cipher:'Ci',sage:'S',relay:'R'};
+const wrSpeakerNames = {haseeb:'Haseeb',jarvis:'Jarvis',claude:'Claude',system:'System',pm:'PM Bot',atlas:'Atlas (Eng Lead)',nova:'Nova (PM)',cipher:'Cipher (Security)',sage:'Sage (Strategy)',relay:'Relay (Sales)'};
+const wrAgentColors = {atlas:'#8b5cf6',nova:'#ec4899',cipher:'#ef4444',sage:'#f59e0b',relay:'#22c55e'};
 
 function wrSetChannel(btn, ch) {
   wrChannel = ch;
@@ -1826,6 +1848,57 @@ async function wrShowPinned() {
     document.getElementById('drawer-content').innerHTML = html;
     document.getElementById('drawer').classList.add('open');
     document.getElementById('drawer-overlay').classList.add('open');
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function wrAgentPulse() {
+  toast('Triggering team pulse...');
+  try {
+    const r = await api('/api/warroom/agent-pulse', {method:'POST', body:JSON.stringify({channel:wrChannel})});
+    toast(`${r.posted} agents responded`);
+    await wrLoadMessages(true);
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+function wrShowAgentPicker() {
+  const agents = [
+    {id:'atlas',name:'Atlas',title:'Engineering Lead',color:'#8b5cf6'},
+    {id:'nova',name:'Nova',title:'Project Manager',color:'#ec4899'},
+    {id:'cipher',name:'Cipher',title:'Security Auditor',color:'#ef4444'},
+    {id:'sage',name:'Sage',title:'Strategy Analyst',color:'#f59e0b'},
+    {id:'relay',name:'Relay',title:'Sales Lead',color:'#22c55e'},
+  ];
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:12px">Summon an Agent</h3>
+    <p style="font-size:12px;color:var(--soft);margin-bottom:16px">Ask a specific AI team member to weigh in on the current conversation.</p>
+    ${agents.map(a => `<div style="display:flex;align-items:center;gap:10px;padding:10px;margin-bottom:6px;background:var(--bg3);border:1px solid var(--line);border-radius:6px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='${a.color}'" onmouseout="this.style.borderColor='var(--line)'" onclick="wrSummonAgent('${a.id}')">
+      <div class="wr-avatar ${a.id}" style="width:36px;height:36px;font-size:14px">${a.name[0]}</div>
+      <div><div style="font-weight:600;font-size:13px;color:${a.color}">${a.name}</div><div style="font-size:11px;color:var(--soft)">${a.title}</div></div>
+    </div>`).join('')}
+    <div style="margin-top:14px"><label style="font-size:11px;color:var(--soft)">Topic (optional)</label>
+    <input type="text" id="wr-agent-topic" placeholder="What should they focus on?" style="${opsInputStyle}"></div>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function wrSummonAgent(agentId) {
+  const topic = (document.getElementById('wr-agent-topic')?.value || '').trim();
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+  toast(`Summoning ${wrSpeakerNames[agentId] || agentId}...`);
+  try {
+    const r = await api('/api/warroom/agent-respond', {method:'POST', body:JSON.stringify({agent:agentId, channel:wrChannel, topic})});
+    toast(`${wrSpeakerNames[agentId]} responded`);
+    await wrLoadMessages(true);
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+async function wrAutoLog() {
+  toast('Saving session context...');
+  try {
+    const r = await api('/api/context/auto-log', {method:'POST', body:JSON.stringify({agent:'warroom', user:'haseeb'})});
+    if (r.error) { toast('Error: '+r.error); return; }
+    toast(`Context saved: ${r.summary?.slice(0,60)||'OK'}...`);
   } catch(e) { toast('Error: '+e.message); }
 }
 
@@ -2496,6 +2569,27 @@ async function loadCommand() {
 async function cmdStandup() { try { await api('/api/ops/standup/send',{method:'POST'}); toast('Standup sent!'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
 async function cmdEnforce() { try { const r = await api('/api/ops/enforce',{method:'POST'}); toast(r.report?.split('\n')[0] || 'Enforced'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
 async function cmdAccountability() { try { await api('/api/ops/accountability/send',{method:'POST'}); toast('Accountability sent!'); loadCommand(); } catch(e) { toast('Error: '+e.message); } }
+async function cmdLoadContext() {
+  try {
+    const r = await api('/api/context/briefing?hours=48');
+    let html = '';
+    if (r.recent_sessions?.length) {
+      html += '<div style="margin-bottom:10px"><strong style="color:var(--teal)">Sessions ('+r.total_sessions+')</strong></div>';
+      r.recent_sessions.forEach(s => {
+        html += `<div style="padding:4px 0;border-bottom:1px solid var(--line)"><span style="color:var(--muted)">${s.timestamp?.slice(0,16)||''}</span> <span style="color:var(--teal)">[${s.agent}]</span> ${esc(s.summary||s.topic||'—')}</div>`;
+      });
+    }
+    if (r.recent_decisions?.length) {
+      html += '<div style="margin-top:10px"><strong style="color:var(--amber)">Decisions</strong></div>';
+      r.recent_decisions.forEach(d => { html += `<div style="padding:2px 0">• ${esc(d)}</div>`; });
+    }
+    if (r.open_action_items?.length) {
+      html += '<div style="margin-top:10px"><strong style="color:var(--green)">Action Items</strong></div>';
+      r.open_action_items.forEach(a => { html += `<div style="padding:2px 0">• ${esc(a)}</div>`; });
+    }
+    $('#cmd-context-log').innerHTML = html || '<div style="color:var(--muted)">No context logs yet. Use "Save Context" in the War Room.</div>';
+  } catch(e) { $('#cmd-context-log').innerHTML = '<div style="color:var(--red)">Error: '+e.message+'</div>'; }
+}
 async function cmdGmailSync() { try { const r = await api('/api/outreach/sync',{method:'POST'}); toast('Gmail synced: '+(r.message||'')); } catch(e) { toast('Error: '+e.message); } }
 async function cmdFollowupCheck() { try { const r = await api('/api/outreach/followup-check',{method:'POST'}); toast('Followups checked'); } catch(e) { toast('Error: '+e.message); } }
 
