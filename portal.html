@@ -2867,7 +2867,7 @@ async function wrAgentFeedback(agentId, feedback) {
   } catch(e) { /* silent */ }
 }
 
-function startChatPoll() {
+async function startChatPoll() {
   if (wrPollTimer) return;
   await wrPollUnread();
   wrLoadChannels();
