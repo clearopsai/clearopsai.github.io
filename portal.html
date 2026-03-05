@@ -3737,6 +3737,12 @@ function kbRenderMarkdown(md) {
   html = html.replace(/<p>\s*(<ul>)/g, '$1');
   html = html.replace(/(<\/ul>)\s*<\/p>/g, '$1');
   html = html.replace(/<p>\s*(<blockquote>)/g, '$1');
+  // KB article references → clickable green links
+  html = html.replace(/\b(KB-\d{10,})\b/g, '<a href="#" onclick="kbShowArticle(\'$1\');return false;" style="color:#4ade80;text-decoration:underline;cursor:pointer;font-family:monospace;font-size:0.9em">$1</a>');
+  // Ticket links: OPS-xxxxx, BUG-xxxxx, etc. → clickable teal links
+  html = html.replace(/\b(OPS|BUG|FTR|PRJ|EPC|IMP|SPK|REC|MIL|DEL)-([a-f0-9]{6,})\b/gi, (match, prefix, hash) => {
+    return `<a href="#ops/${prefix}-${hash}" onclick="openOpsTicketLink('${prefix}-${hash}');switchToTab('ops');return false;" style="color:var(--teal);text-decoration:underline;cursor:pointer;font-family:monospace;font-size:0.9em">${prefix}-${hash}</a>`;
+  });
   return html;
 }
 
