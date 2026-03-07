@@ -80,8 +80,8 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
  --bg:       #080b12;
  --bg2:      #0d1120;
  --bg3:      #111828;
- --line:     #1a2236;
- --line2:    #1f2a40;
+ --line:     #1e2840;
+ --line2:    #263044;
  --teal:     #00c9a0;
  --teal-dim: rgba(0,201,160,.12);
  --teal-glow:rgba(0,201,160,.22);
@@ -91,7 +91,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
  --green:    #22c55e;
  --text:     #dde3f0;
  --soft:     #7e8ea8;
- --muted:    #4a566e;
+ --muted:    #6b7a94;
  --serif:    'Fraunces', Georgia, serif;
  --sans:     'DM Sans', system-ui, sans-serif;
 }
@@ -396,7 +396,7 @@ h1 i { font-style: italic; color: var(--teal); }
 
 /* ─── Full-bleed section backgrounds ─── */
 .section-dark { background: var(--bg); }
-.section-alt { background: linear-gradient(180deg, rgba(13,17,32,.6) 0%, var(--bg) 100%); }
+.section-alt { background: var(--bg2); }
 .section-glow {
   background: var(--bg);
   position: relative;
@@ -404,7 +404,7 @@ h1 i { font-style: italic; color: var(--teal); }
 .section-glow::before {
   content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 600px; height: 300px;
-  background: radial-gradient(ellipse, rgba(0,201,160,.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(0,201,160,.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -467,7 +467,7 @@ h2 i { font-style: italic; color: var(--teal); }
   margin-bottom: 10px; font-style: italic;
 }
 .pattern-card cite {
-  font-size: 11.5px; color: var(--muted); font-style: normal;
+  font-size: 11.5px; color: var(--soft); font-style: normal;
 }
 
 /* ─── How It Works (3-step) ─── */
@@ -497,7 +497,7 @@ h2 i { font-style: italic; color: var(--teal); }
 .step-icon svg { width: 32px; height: 32px; stroke: var(--teal); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .step-num { font-family: var(--serif); font-size: 11px; color: var(--teal); font-weight: 600; margin-bottom: 8px; letter-spacing: .1em; }
 .step h3 { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 8px; }
-.step p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+.step p { font-size: 13.5px; color: var(--soft); line-height: 1.6; }
 
 /* ─── Services ─── */
 .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -523,7 +523,7 @@ h2 i { font-style: italic; color: var(--teal); }
   font-family: var(--serif); font-size: 16px; font-weight: 600;
   letter-spacing: -.01em; margin-bottom: 8px;
 }
-.svc p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.65; }
+.svc p { font-size: 13.5px; color: var(--soft); margin: 0; line-height: 1.65; }
 
 /* ─── Dashboard Preview ─── */
 .dash-preview {
@@ -586,7 +586,7 @@ h2 i { font-style: italic; color: var(--teal); }
   margin-bottom: 4px;
 }
 .price-name { font-family: var(--serif); font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-.price-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; min-height: 60px; }
+.price-desc { font-size: 13px; color: var(--soft); line-height: 1.6; margin-bottom: 16px; min-height: 60px; }
 .price-cta {
   display: block; width: 100%; padding: 10px; border-radius: 8px;
   text-decoration: none; font-size: 13px; font-weight: 600;
@@ -594,8 +594,8 @@ h2 i { font-style: italic; color: var(--teal); }
 }
 .price-cta-primary { background: var(--teal); color: var(--bg); }
 .price-cta-primary:hover { box-shadow: 0 4px 16px rgba(0,201,160,.25); }
-.price-cta-outline { background: transparent; border: 1px solid rgba(0,201,160,.2); color: var(--teal); }
-.price-cta-outline:hover { background: rgba(0,201,160,.06); }
+.price-cta-outline { background: rgba(0,201,160,.06); border: 1px solid rgba(0,201,160,.25); color: var(--teal); }
+.price-cta-outline:hover { background: rgba(0,201,160,.12); border-color: rgba(0,201,160,.4); }
 
 .pricing-note {
   background: linear-gradient(135deg, rgba(0,201,160,.05), rgba(61,126,255,.05));
@@ -611,7 +611,7 @@ h2 i { font-style: italic; color: var(--teal); }
 /* ─── FAQ ─── */
 .faq-grid { max-width: 720px; margin: 0 auto; }
 .faq-item {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line2);
 }
 .faq-q {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -628,7 +628,7 @@ h2 i { font-style: italic; color: var(--teal); }
 .faq-item.open .faq-q { color: var(--teal); }
 .faq-a {
   max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s ease;
-  font-size: 14px; color: var(--soft); line-height: 1.7;
+  font-size: 14px; color: var(--soft); line-height: 1.75;
 }
 .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
 
@@ -638,13 +638,13 @@ h2 i { font-style: italic; color: var(--teal); }
 }
 .tool-card {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  background: rgba(13,17,32,.5); border: 1px solid var(--line);
+  background: rgba(13,17,32,.7); border: 1px solid var(--line2);
   border-radius: 12px; padding: 20px 12px;
   transition: all .2s; cursor: default;
 }
 .tool-card:hover { border-color: rgba(0,201,160,.2); transform: translateY(-2px); }
-.tool-card svg { width: 28px; height: 28px; fill: var(--teal); opacity: .7; }
-.tool-card span { font-size: 12px; font-weight: 500; color: var(--soft); }
+.tool-card svg { width: 28px; height: 28px; fill: var(--teal); opacity: .85; }
+.tool-card span { font-size: 12px; font-weight: 500; color: var(--text); }
 
 /* ─── Bio ─── */
 .bio-card {
@@ -731,7 +731,7 @@ footer {
 .footer-brand .brand-name { font-size: 15px; margin-bottom: 8px; }
 .footer-desc { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 260px; }
 .footer-col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--soft); margin-bottom: 12px; font-weight: 600; }
-.footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color .2s; }
+.footer-col a { display: block; font-size: 13px; color: var(--soft); text-decoration: none; margin-bottom: 8px; transition: color .2s; }
 .footer-col a:hover { color: var(--teal); }
 .footer-bottom {
   display: flex; align-items: center; justify-content: space-between;
@@ -750,7 +750,7 @@ footer {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ─── Divider ─── */
-.section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+.section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--line2), transparent); }
 
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
