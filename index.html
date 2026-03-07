@@ -5,6 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClearOps AI | Operational Intelligence for Mid-Market Organizations</title>
 <meta name="description" content="We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours/week. Tell us your situation and we'll respond with options in 24 hours.">
+<link rel="canonical" href="https://clearopsai.io/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="ClearOps AI | Operational Intelligence for Mid-Market Organizations">
+<meta property="og:description" content="We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours/week.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearopsai.io/">
+<meta property="og:site_name" content="ClearOps AI">
+<meta property="og:image" content="https://clearopsai.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ClearOps AI | Operational Intelligence for Mid-Market Organizations">
+<meta name="twitter:description" content="We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours/week.">
+<meta name="twitter:image" content="https://clearopsai.io/og-image.png">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ClearOps AI",
+  "url": "https://clearopsai.io",
+  "description": "Operational intelligence consulting for mid-market organizations. Dashboards, integrations, and reporting automation.",
+  "founder": {
+    "@type": "Person",
+    "name": "Haseeb Bassam",
+    "jobTitle": "Founder & Principal",
+    "sameAs": "https://www.linkedin.com/in/haseebbassam/"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "haseeb@clearopsai.io",
+    "contactType": "sales"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Operational Intelligence Consulting",
+  "provider": { "@type": "Organization", "name": "ClearOps AI" },
+  "areaServed": "US",
+  "offers": [
+    { "@type": "Offer", "name": "Ops Snapshot", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Clarity Audit", "price": "2500", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Build & Deploy", "price": "5000", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Retainer", "price": "1500", "priceCurrency": "USD" }
+  ]
+}
+</script>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3V52Q2K1Q"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -164,14 +219,16 @@ h1 i { font-style: italic; color: var(--teal); }
 }
 .hero-cta-secondary:hover { background: rgba(0,201,160,.06); border-color: rgba(0,201,160,.35); }
 
-.credbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-.credbar-label { font-size: 11.5px; color: var(--muted); }
-.credbar-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-.pill {
-  font-size: 11.5px; font-weight: 500; color: var(--soft);
-  padding: 3px 10px; border-radius: 4px;
-  background: var(--bg2); border: 1px solid var(--line2);
+.credbar { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.credbar-label { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.credbar-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.credbar-logo {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,.35);
+  transition: color .3s;
 }
+.credbar-logo:hover { color: rgba(255,255,255,.7); }
+.credbar-logo svg { width: 18px; height: 18px; fill: currentColor; opacity: .6; }
 
 /* Hero visual */
 .hero-visual {
@@ -705,7 +762,7 @@ footer {
     <a class="nav-link" href="#resources">Resources</a>
     <a class="nav-link" href="#about">About</a>
   </div>
-  <a class="nav-btn" href="#get-started">Get Started</a>
+  <a class="nav-btn" href="#get-started">Request a Briefing</a>
   <button class="mobile-menu" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
@@ -719,19 +776,19 @@ footer {
     <div class="hero-text">
       <div class="tag"><div class="tag-dot"></div><span class="tag-text">Operational Intelligence</span></div>
       <h1>Your tools don't talk.<br>Your reports are manual.<br>Your ops layer is <i>invisible.</i></h1>
-      <p class="hero-body">We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours per week. Tell us what you're dealing with and we'll respond with options in 24 hours.</p>
+      <p class="hero-body">We map your tools, build dashboards, and automate reporting. Mid-market companies reclaim 15+ hours per week. Enterprise methodology, built for organizations that move fast.</p>
       <div>
-        <a class="hero-cta" href="#get-started">Tell Us Your Situation &rarr;</a>
+        <a class="hero-cta" href="#get-started">Request a Briefing &rarr;</a>
         <a class="hero-cta-secondary" href="#how-it-works">See How It Works</a>
       </div>
       <div class="credbar">
-        <span class="credbar-label">12+ years in enterprise ops at</span>
-        <div class="credbar-pills">
-          <span class="pill">eBay</span>
-          <span class="pill">Splunk</span>
-          <span class="pill">CoreSite</span>
-          <span class="pill">Cadence</span>
-          <span class="pill">Axoni</span>
+        <span class="credbar-label">Built by an engineer from</span>
+        <div class="credbar-logos">
+          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M6.154 1.398C3.937 2.69 2.312 5.097 2.312 8.137c0 1.076.264 2.083.694 3.006L7.655.864a4.84 4.84 0 0 0-1.5.534zM18.73 6.89c0-1.663-.876-2.813-1.624-3.707C16.258 2.197 15.5 1.36 15.5.398c0-1.077.818-2.08 1.972-2.08h.15C15.7-3.395 13.15-4 12-4S8.298-3.395 6.377-1.683h.15c1.154 0 1.973 1.004 1.973 2.081 0 .962-.556 1.776-1.174 2.74-.43.672-.916 1.538-.916 2.79 0 .868.335 1.874.92 3.335l1.207 3.598L4.57 20.46c-.563 1.597-1.374 3.06-2.063 4.172C4.562 25.86 6.69 26.6 9 27c.563-1.018 1.2-2.3 1.648-3.713l2.228-6.78c.079-.24.146-.483.202-.73.056.247.123.49.202.73l2.228 6.78C15.956 24.7 16.594 25.982 17.156 27c2.31-.4 4.438-1.14 6.493-2.368-.69-1.112-1.5-2.575-2.063-4.172L17.62 10.86l1.207-3.598c.585-1.46.92-2.467.92-3.335 0-.038-.005-.073-.005-.111" transform="translate(0 4) scale(1)"/></svg>eBay</span>
+          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M12.014 0C5.392 0 0 5.392 0 12.014s5.392 12.014 12.014 12.014S24.028 18.636 24.028 12.014 18.636 0 12.014 0zm5.21 17.596h-2.082l-.004-3.746c0-1.464-.769-1.852-1.286-1.852-.661 0-1.407.499-1.407 1.908v3.69H10.37V9.514h1.97v1.103h.027c.329-.658 1.145-1.287 2.339-1.287 2.528 0 2.518 2.36 2.518 3.766v4.5z"/></svg>Splunk</span>
+          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>CoreSite</span>
+          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h8v2H8v-2z"/></svg>Cadence</span>
+          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Axoni</span>
         </div>
       </div>
     </div>
@@ -1143,28 +1200,25 @@ footer {
 <section class="section-glow reveal" id="get-started" style="padding-bottom: 40px;">
 <div class="wrap-narrow">
   <div class="form-card" id="form-card">
-    <h2>What's your biggest <i>operational bottleneck?</i></h2>
-    <p class="lead">No service to pick. No commitment. Just tell us what you're dealing with and we'll respond within 24 hours with tailored options.</p>
+    <h2>Request a <i>Briefing</i></h2>
+    <p class="lead">Tell us what you're working with. Haseeb reviews every request personally and responds within 24 hours with a tailored assessment of your options.</p>
 
     <div id="form-fields">
-      <label>Describe your situation *</label>
-      <textarea id="f-desc" placeholder="What tools are you using? What's broken or manual? What would you fix if you had an ops team tomorrow?"></textarea>
-      <p style="font-size:11.5px;color:var(--muted);margin:-10px 0 16px;line-height:1.6">For example: manual reporting across 5 systems, no real-time visibility for leadership, spending 30+ hours/month building internal dashboards.</p>
       <div class="form-row">
         <div><label>Your Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
-        <div><label>Company *</label><input type="text" id="f-company" placeholder="Acme Corp"></div>
-      </div>
-      <div class="form-row">
         <div><label>Work Email *</label><input type="email" id="f-email" placeholder="jane@acme.com"></div>
-        <div><label>Phone <span style="color:var(--muted)">(optional)</span></label><input type="tel" id="f-phone" placeholder="(202) 555-0100"></div>
       </div>
-      <button class="form-submit" id="submit-btn" onclick="submitInquiry()">Share My Situation &rarr;</button>
-      <p class="form-note">No payment. No commitment. We'll respond with thinking and options.</p>
+      <label>Company *</label>
+      <input type="text" id="f-company" placeholder="Acme Corp">
+      <label>What are you dealing with? *</label>
+      <textarea id="f-desc" placeholder="What tools are you using? What's manual or broken? What would better visibility change for your team?"></textarea>
+      <button class="form-submit" id="submit-btn" onclick="submitInquiry()">Request Briefing &rarr;</button>
+      <p class="form-note">No payment. No commitment. Every request gets a personal response with tailored recommendations.</p>
     </div>
 
     <div class="form-success" id="form-success">
-      <h3>Got it. We're on it.</h3>
-      <p>We'll review your situation and respond within 24 hours with options and next steps.</p>
+      <h3>Briefing request received.</h3>
+      <p>Haseeb will personally review your situation and respond within 24 hours with a tailored assessment.</p>
       <div class="tid" id="result-tid"></div>
       <p style="font-size:13px;color:var(--muted);margin-top:12px">Bookmark this to track progress:</p>
       <a id="result-link" href="#" style="color:var(--teal);font-size:14px" target="_blank"></a>
@@ -1259,7 +1313,6 @@ async function submitInquiry() {
         client_name: name,
         client_email: email,
         company: company,
-        phone: document.getElementById('f-phone').value.trim(),
         description: desc,
       }),
     });
@@ -1276,12 +1329,12 @@ async function submitInquiry() {
     link.textContent = url;
 
     if (typeof gtag === 'function') {
-      gtag('event', 'inquiry_submitted', { event_category: 'conversion', event_label: company });
+      gtag('event', 'briefing_requested', { event_category: 'conversion', event_label: company });
     }
   } catch(e) {
     toast('Error: ' + e.message);
     btn.disabled = false;
-    btn.textContent = 'Share My Situation \u2192';
+    btn.textContent = 'Request Briefing \u2192';
   }
 }
 
