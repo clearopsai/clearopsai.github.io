@@ -1,4 +1,4 @@
-<!-- Last auto-modified: 2026-03-05 -->
+<!-- Last auto-modified: 2026-03-07 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,106 +6,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClearOps Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --bg: #080b12;
-  --bg2: #0d1120;
-  --bg3: #111828;
-  --line: #1a2236;
-  --line2: #1f2a40;
-  --teal: #00c9a0;
-  --teal-dim: rgba(0,201,160,.12);
-  --teal-glow: rgba(0,201,160,.22);
-  --blue: #3d7eff;
+  --bg: #020617;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --line: #1e293b;
+  --line2: #334155;
+  --teal: #2dd4bf;
+  --teal-dim: rgba(45,212,191,.10);
+  --teal-glow: rgba(45,212,191,.25);
+  --blue: #60a5fa;
   --amber: #f59e0b;
   --red: #ef4444;
   --green: #22c55e;
-  --text: #dde3f0;
-  --soft: #7e8ea8;
-  --muted: #4a566e;
-  --serif: 'Fraunces', Georgia, serif;
-  --sans: 'DM Sans', system-ui, sans-serif;
+  --purple: #a78bfa;
+  --text: #f8fafc;
+  --soft: #94a3b8;
+  --muted: #475569;
+  --serif: 'Fira Code', 'Fira Mono', monospace;
+  --sans: 'Fira Sans', 'Inter', system-ui, sans-serif;
+  --sidebar-w: 220px;
 }
 
 body {
   background: var(--bg); color: var(--text);
-  font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh;
+  font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh;
+  background-image: radial-gradient(rgba(45,212,191,.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
-body::before {
-  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(45,212,191,.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(45,212,191,.25); }
+
+/* === PREMIUM ANIMATIONS === */
+@keyframes fadeSlideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes glowPulse { 0%,100%{box-shadow:0 0 12px rgba(45,212,191,.08)} 50%{box-shadow:0 0 20px rgba(45,212,191,.15)} }
+@keyframes slideInLeft { from{opacity:0;transform:translateX(-12px)} to{opacity:1;transform:translateX(0)} }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+
+/* === GLASSMORPHISM === */
+.glass { background:rgba(15,23,42,.65); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(45,212,191,.1); }
+.glass-glow { background:rgba(15,23,42,.65); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(45,212,191,.18); box-shadow:0 0 15px rgba(45,212,191,.06),inset 0 1px 0 rgba(255,255,255,.03); }
 
 /* ─── Top Bar ─── */
 .topbar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(8,11,18,.92); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line); padding: 12px 24px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 52px;
+  background: rgba(2,6,23,.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(45,212,191,.08); padding: 0 24px;
   display: flex; align-items: center; justify-content: space-between;
 }
 .topbar-left { display: flex; align-items: center; gap: 14px; }
-.topbar-logo { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--teal); text-decoration: none; }
-.topbar-logo span { color: var(--soft); font-weight: 300; margin-left: 6px; font-size: 14px; }
-.topbar-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--soft); }
-.mode-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-.mode-badge.live { background: rgba(0,201,160,.12); color: var(--teal); }
-.mode-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-.last-send-indicator { font-size: 12px; padding: 4px 12px; border-radius: 12px; font-weight: 500; }
-.last-send-indicator.stale { background: rgba(239,68,68,.12); color: var(--red); }
-.last-send-indicator.recent { background: rgba(34,197,94,.12); color: var(--green); }
-.last-send-indicator.warm { background: rgba(245,158,11,.12); color: var(--amber); }
+.topbar-logo { font-family: var(--sans); font-size: 17px; font-weight: 700; color: var(--teal); text-decoration: none; letter-spacing: -0.5px; }
+.topbar-logo span { color: var(--soft); font-weight: 300; margin-left: 4px; font-size: 13px; }
+.topbar-right { display: flex; align-items: center; gap: 14px; font-size: 12px; color: var(--soft); }
+.mode-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.mode-badge.live { background: rgba(45,212,191,.1); color: var(--teal); }
+.mode-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.last-send-indicator { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 500; }
+.last-send-indicator.stale { background: rgba(239,68,68,.1); color: var(--red); }
+.last-send-indicator.recent { background: rgba(34,197,94,.1); color: var(--green); }
+.last-send-indicator.warm { background: rgba(245,158,11,.1); color: var(--amber); }
 
-.dashboard { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 24px 20px 60px; }
+/* ─── Sidebar ─── */
+.sidebar {
+  position: fixed; top: 52px; left: 0; bottom: 0; width: var(--sidebar-w);
+  background: rgba(15,23,42,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(45,212,191,.08); z-index: 90;
+  overflow-y: auto; overflow-x: hidden; padding: 12px 0 20px;
+  transition: width .2s ease;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+.nav-group { margin-bottom: 4px; }
+.nav-group-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted);
+  padding: 12px 16px 4px; font-weight: 700; display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none; transition: color .15s;
+}
+.nav-group-label:hover { color: var(--soft); }
+.nav-group-label .nav-chevron { font-size: 8px; transition: transform .2s; }
+.nav-group-label .nav-chevron.collapsed { transform: rotate(-90deg); }
+.nav-group-items { overflow: hidden; transition: max-height .25s ease; }
+.nav-group-items.collapsed { max-height: 0 !important; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 7px 16px; background: none; border: none;
+  color: var(--soft); font-family: var(--sans); font-size: 13px; font-weight: 400;
+  cursor: pointer; transition: all .15s; text-align: left; border-left: 3px solid transparent;
+  position: relative;
+}
+.nav-item:hover { color: var(--text); background: rgba(45,212,191,.04); }
+.nav-item.active {
+  color: var(--teal); background: rgba(45,212,191,.08);
+  border-left-color: var(--teal); font-weight: 600;
+}
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+.nav-item.active svg { opacity: 1; }
+.nav-item .nav-badge {
+  margin-left: auto; font-size: 9px; padding: 1px 6px; border-radius: 8px; font-weight: 700;
+  min-width: 16px; text-align: center;
+}
+.nav-badge.red { background: rgba(239,68,68,.2); color: var(--red); }
+.nav-badge.amber { background: rgba(245,158,11,.2); color: var(--amber); }
+.nav-badge.teal { background: rgba(45,212,191,.15); color: var(--teal); }
+
+/* ─── Main Content Area ─── */
+.dashboard { position: relative; z-index: 1; margin-left: var(--sidebar-w); margin-top: 52px; padding: 20px 28px 60px; animation: fadeIn .4s ease; }
 
 /* ─── Stats Row ─── */
-.stats-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 14px; }
-.stat-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 14px; text-align: center; }
-.stat-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--soft); margin-bottom: 4px; }
-.stat-card .value { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--teal); }
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.stat-card { background: rgba(15,23,42,.6); backdrop-filter: blur(12px); border: 1px solid rgba(45,212,191,.08); border-radius: 12px; padding: 16px 14px; text-align: center; transition: transform .2s, box-shadow .2s; cursor: default; }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+.stat-card .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
+.stat-card .value { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--teal); }
 .stat-card .value.amber { color: var(--amber); }
 .stat-card .value.red { color: var(--red); }
 .stat-card .value.green { color: var(--green); }
-.stat-card .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.stat-card .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
 /* ─── Niche breakdown bar ─── */
 .niche-bar {
-  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  background: var(--bg2); border: 1px solid var(--line); border-radius: 10px;
-  padding: 10px 16px; margin-bottom: 20px; font-size: 12px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  background: rgba(15,23,42,.5); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.06); border-radius: 10px;
+  padding: 8px 14px; margin-bottom: 16px; font-size: 11px;
 }
-.niche-bar .niche-label { color: var(--soft); font-weight: 500; text-transform: uppercase; letter-spacing: .5px; font-size: 10px; }
-.niche-chip { padding: 3px 10px; border-radius: 8px; background: var(--bg3); color: var(--text); border: 1px solid var(--line2); }
+.niche-bar .niche-label { color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; font-size: 9px; }
+.niche-chip { padding: 3px 10px; border-radius: 8px; background: var(--bg3); color: var(--text); border: 1px solid var(--line); font-size: 11px; }
 .niche-chip .ct { color: var(--teal); font-weight: 600; margin-left: 4px; }
 
-/* ─── Tab Bar ─── */
-.tab-bar { display: flex; gap: 4px; background: var(--bg2); border: 1px solid var(--line); border-radius: 10px; padding: 4px; margin-bottom: 20px; }
-.tab-btn {
-  flex: 1; padding: 10px 16px; background: transparent; border: none; border-radius: 8px;
-  color: var(--soft); font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: all .2s;
-}
-.tab-btn:hover { color: var(--text); background: var(--bg3); }
-.tab-btn.active { background: var(--teal-dim); color: var(--teal); }
+/* ─── Tab Bar (hidden — sidebar replaces it) ─── */
+.tab-bar { display: none; }
 .tab-badge { display: inline-block; padding: 1px 7px; border-radius: 8px; font-size: 11px; font-weight: 700; margin-left: 6px; }
 .tab-badge.red { background: rgba(239,68,68,.2); color: var(--red); }
 .tab-badge.amber { background: rgba(245,158,11,.2); color: var(--amber); }
 
-.tab-panel { display: none; }
+.tab-panel { display: none; animation: fadeSlideUp .35s ease; }
 .tab-panel.active { display: block; }
 
 /* ─── Panel ─── */
-.panel { background: var(--bg2); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+.panel { background: rgba(15,23,42,.6); backdrop-filter: blur(12px); border: 1px solid rgba(45,212,191,.08); border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
 
 /* ─── Filter + Search Bar ─── */
 .filter-bar { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
 .filter-bar select, .filter-bar input {
-  background: var(--bg3); border: 1px solid var(--line2); color: var(--text);
-  padding: 8px 12px; border-radius: 8px; font-family: var(--sans); font-size: 13px;
+  background: rgba(15,23,42,.6); border: 1px solid rgba(45,212,191,.1); color: var(--text);
+  padding: 8px 12px; border-radius: 8px; font-family: var(--sans); font-size: 13px; transition: border-color .2s;
 }
 .filter-bar input { width: 220px; }
 .filter-bar input::placeholder { color: var(--muted); }
@@ -115,12 +172,12 @@ body::before {
 /* ─── Pipeline Table ─── */
 .pipeline-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .pipeline-table th {
-  text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line2);
-  color: var(--soft); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+  text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line);
+  color: var(--muted); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
 }
-.pipeline-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-.pipeline-table tr { cursor: pointer; }
-.pipeline-table tr:hover { background: var(--bg3); }
+.pipeline-table td { padding: 9px 10px; border-bottom: 1px solid rgba(30,41,59,.5); vertical-align: middle; }
+.pipeline-table tr { cursor: pointer; transition: background .1s; }
+.pipeline-table tr:hover { background: rgba(45,212,191,.03); }
 .pipeline-table tr.overdue { background: rgba(239,68,68,.06); }
 .pipeline-table tr.overdue:hover { background: rgba(239,68,68,.1); }
 .pipeline-table tr.upcoming { background: rgba(245,158,11,.04); }
@@ -160,13 +217,15 @@ body::before {
 /* ─── Contact Drawer ─── */
 .drawer-overlay {
   display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,.5); z-index: 150;
+  background: rgba(2,6,23,.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 150;
 }
 .drawer-overlay.open { display: block; }
 .drawer {
   position: fixed; top: 0; right: -440px; width: 420px; height: 100%;
-  background: var(--bg2); border-left: 1px solid var(--line); z-index: 160;
-  overflow-y: auto; transition: right .25s ease; padding: 24px;
+  background: rgba(15,23,42,.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(45,212,191,.12); z-index: 160;
+  overflow-y: auto; transition: right .3s cubic-bezier(.4,0,.2,1); padding: 24px;
+  box-shadow: -8px 0 32px rgba(0,0,0,.4);
 }
 .drawer.open { right: 0; }
 .drawer-close {
@@ -203,7 +262,8 @@ body::before {
 /* ─── Follow-up Cards ─── */
 .followup-section-title { font-family: var(--serif); font-size: 15px; color: var(--soft); margin: 16px 0 12px; font-weight: 400; }
 .followup-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
-.followup-card { background: var(--bg3); border: 1px solid var(--line2); border-radius: 12px; padding: 18px; }
+.followup-card { background: rgba(15,23,42,.6); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.08); border-radius: 12px; padding: 18px; transition: transform .2s, box-shadow .2s; }
+.followup-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
 .followup-card .fc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
 .followup-card .fc-company { font-weight: 600; font-size: 15px; }
 .followup-card .fc-contact { color: var(--soft); font-size: 13px; margin-bottom: 4px; }
@@ -224,7 +284,8 @@ body::before {
 .followup-btn:disabled { opacity: .4; cursor: not-allowed; }
 
 /* ─── Batch Panels ─── */
-.batch-item { background: var(--bg3); border: 1px solid var(--line2); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+.batch-item { background: rgba(15,23,42,.6); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.06); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: border-color .2s; }
+.batch-item:hover { border-color: rgba(45,212,191,.15); }
 .batch-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; user-select: none; }
 .batch-header:hover { background: var(--bg2); }
 .batch-name { font-weight: 600; font-size: 14px; }
@@ -239,7 +300,8 @@ body::before {
 .batch-content hr { border: none; border-top: 1px solid var(--line2); margin: 16px 0; }
 .batch-content .batch-meta-block { font-size: 13px; color: var(--soft); line-height: 1.8; margin: 8px 0 16px; }
 
-.prospect-card { background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; margin: 16px 0; overflow: hidden; }
+.prospect-card { background: rgba(15,23,42,.6); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.06); border-radius: 12px; margin: 16px 0; overflow: hidden; transition: border-color .2s; }
+.prospect-card:hover { border-color: rgba(45,212,191,.12); }
 .prospect-card-header { padding: 14px 18px; background: var(--bg); border-bottom: 1px solid var(--line2); font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--text); }
 .prospect-card-body { padding: 16px 18px; }
 .prospect-card table { width: 100%; border-collapse: collapse; margin: 0 0 14px; }
@@ -251,7 +313,7 @@ body::before {
 .prospect-email .email-sig { margin-top: 8px; color: var(--soft); font-size: 12px; }
 
 /* ─── Structured Batch Research Panel ─── */
-.research-panel { background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+.research-panel { background: rgba(15,23,42,.6); backdrop-filter: blur(12px); border: 1px solid rgba(45,212,191,.08); border-radius: 14px; padding: 18px; margin-bottom: 20px; }
 .research-panel h3 { font-family: var(--serif); font-size: 17px; color: var(--text); margin-bottom: 14px; font-weight: 600; }
 .research-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .research-row select, .research-row input[type=text], .research-row input[type=number] {
@@ -272,7 +334,8 @@ body::before {
 .struct-batch-section h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--soft); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
 .legacy-section h4 { margin-top: 24px; }
 
-.sbatch-item { background: var(--bg3); border: 1px solid var(--line2); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+.sbatch-item { background: rgba(15,23,42,.6); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.06); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: border-color .2s; }
+.sbatch-item:hover { border-color: rgba(45,212,191,.12); }
 .sbatch-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; user-select: none; transition: background .15s; }
 .sbatch-header:hover { background: var(--bg2); }
 .sbatch-title { font-weight: 600; font-size: 14px; }
@@ -325,25 +388,29 @@ body::before {
 
 /* ─── Quick Links ─── */
 .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.link-card { display: flex; align-items: center; gap: 12px; background: var(--bg3); border: 1px solid var(--line2); border-radius: 10px; padding: 16px; text-decoration: none; color: var(--text); transition: all .2s; }
-.link-card:hover { border-color: var(--teal); background: var(--bg2); transform: translateY(-1px); }
-.link-icon { font-size: 22px; width: 36px; text-align: center; }
-.link-label { font-size: 14px; font-weight: 500; }
-.link-desc { font-size: 11px; color: var(--soft); margin-top: 2px; }
+.link-card { display: flex; align-items: center; gap: 12px; background: rgba(15,23,42,.5); backdrop-filter: blur(8px); border: 1px solid rgba(45,212,191,.06); border-radius: 10px; padding: 14px; text-decoration: none; color: var(--text); transition: all .2s; cursor: pointer; }
+.link-card:hover { border-color: rgba(45,212,191,.2); background: rgba(15,23,42,.7); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.link-card.link-highlight { border-color: rgba(45,212,191,.25); background: rgba(45,212,191,.06); }
+.link-card.link-highlight:hover { background: rgba(45,212,191,.12); }
+.link-icon { font-size: 20px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(45,212,191,.08); color: var(--teal); flex-shrink: 0; }
+.link-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.link-label { font-size: 13px; font-weight: 500; }
+.link-desc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.links-section-label { grid-column: 1 / -1; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-top: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
 
 /* ─── Empty / Toast ─── */
 .empty-state { text-align: center; padding: 48px 24px; color: var(--soft); }
-.empty-state .emoji { font-size: 36px; margin-bottom: 12px; }
-.empty-state .msg { font-size: 15px; }
+.empty-state .emoji { font-size: 36px; margin-bottom: 12px; opacity: .5; }
+.empty-state .msg { font-size: 15px; color: var(--muted); }
 
-.toast { position: fixed; bottom: 24px; right: 24px; z-index: 200; background: var(--bg2); border: 1px solid var(--teal); color: var(--teal); padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.4); transform: translateY(100px); opacity: 0; transition: all .3s; }
+.toast { position: fixed; bottom: 24px; right: 24px; z-index: 200; background: rgba(15,23,42,.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(45,212,191,.25); color: var(--teal); padding: 14px 22px; border-radius: 12px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 12px rgba(45,212,191,.1); transform: translateY(100px); opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); }
 .toast.show { transform: translateY(0); opacity: 1; }
 
 /* ─── War Room Chat ─── */
-.chat-container { display: flex; flex-direction: column; height: calc(100vh - 280px); min-height: 400px; }
+.chat-container { display: flex; flex-direction: column; height: calc(100vh - 200px); min-height: 400px; }
 .chat-messages {
   flex: 1; overflow-y: auto; padding: 16px;
-  background: var(--bg); border: 1px solid var(--line); border-radius: 12px 12px 0 0;
+  background: rgba(2,6,23,.6); border: 1px solid rgba(45,212,191,.06); border-radius: 12px 12px 0 0;
 }
 .chat-msg { margin-bottom: 14px; max-width: 85%; }
 .chat-msg.haseeb { margin-left: auto; }
@@ -371,7 +438,7 @@ body::before {
 
 .chat-input-bar {
   display: flex; gap: 8px; padding: 12px;
-  background: var(--bg2); border: 1px solid var(--line); border-top: none;
+  background: rgba(15,23,42,.7); border: 1px solid rgba(45,212,191,.06); border-top: none;
   border-radius: 0 0 12px 12px;
 }
 .chat-input {
@@ -389,8 +456,8 @@ body::before {
 .chat-send-btn:hover { background: rgba(0,201,160,.2); }
 .chat-send-btn:disabled { opacity: .4; cursor: not-allowed; }
 .chat-target-bar {
-  display: flex; gap: 6px; padding: 8px 12px; background: var(--bg2);
-  border: 1px solid var(--line); border-top: none; border-bottom: none;
+  display: flex; gap: 6px; padding: 8px 12px; background: rgba(15,23,42,.7);
+  border: 1px solid rgba(45,212,191,.06); border-top: none; border-bottom: none;
 }
 .chat-target-btn {
   padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
@@ -401,10 +468,17 @@ body::before {
 .chat-target-btn:hover { border-color: var(--teal); color: var(--teal); }
 
 /* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .sidebar { width: 56px; overflow: visible; }
+  .sidebar .nav-group-label span, .sidebar .nav-item span, .sidebar .nav-badge { display: none; }
+  .sidebar .nav-item { padding: 8px 0; justify-content: center; }
+  .sidebar .nav-group-label { padding: 8px 0; justify-content: center; }
+  .dashboard { margin-left: 56px; }
+}
 @media (max-width: 768px) {
+  .sidebar { display: none; }
+  .dashboard { margin-left: 0; }
   .stats-row { grid-template-columns: repeat(3, 1fr); }
-  .tab-bar { flex-wrap: wrap; }
-  .tab-btn { flex: none; }
   .pipeline-table { font-size: 12px; }
   .pipeline-table .col-notes, .pipeline-table .col-batch { display: none; }
   .followup-grid { grid-template-columns: 1fr; }
@@ -416,11 +490,11 @@ body::before {
   .links-grid { grid-template-columns: 1fr; }
 }
 /* Ops Kanban */
-.ops-col{background:var(--bg2);border-radius:8px;padding:8px;min-height:200px}
-.ops-col-header{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:6px 4px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.ops-col{background:rgba(15,23,42,.4);border:1px solid rgba(45,212,191,.06);border-radius:10px;padding:10px;min-height:calc(100vh - 380px)}
+.ops-col-header{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:6px 4px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .ops-col-body{display:flex;flex-direction:column;gap:8px}
-.ops-card{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer;transition:border-color .2s}
-.ops-card:hover{border-color:var(--teal)}
+.ops-card{background:rgba(15,23,42,.6);backdrop-filter:blur(6px);border:1px solid rgba(45,212,191,.06);border-radius:8px;padding:10px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s}
+.ops-card:hover{border-color:rgba(45,212,191,.2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
 .ops-card-title{font-size:13px;font-weight:500;margin-bottom:6px;line-height:1.3}
 .ops-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .ops-pill{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
@@ -456,8 +530,8 @@ body::before {
 /* CRM */
 .crm-stage-col{background:var(--bg2);border-radius:6px;padding:8px;min-height:120px}
 .crm-stage-header{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:4px;margin-bottom:6px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
-.crm-deal-card{background:var(--bg3);border:1px solid var(--line);border-radius:5px;padding:8px;margin-bottom:6px;cursor:pointer;transition:border-color .2s}
-.crm-deal-card:hover{border-color:var(--teal)}
+.crm-deal-card{background:rgba(15,23,42,.5);backdrop-filter:blur(6px);border:1px solid rgba(45,212,191,.06);border-radius:8px;padding:8px;margin-bottom:6px;cursor:pointer;transition:all .2s}
+.crm-deal-card:hover{border-color:rgba(45,212,191,.2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
 .crm-funnel-seg{flex:1;text-align:center;padding:6px;border-radius:4px;font-size:11px;font-weight:600;cursor:default}
 /* Analytics */
 .an-niche-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;font-size:12px;border-bottom:1px solid var(--line);align-items:center}
@@ -465,7 +539,8 @@ body::before {
 .an-bar-fill{height:100%;border-radius:3px}
 .an-intent-row{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--line)}
 /* Command */
-.cmd-person-card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:10px}
+.cmd-person-card{background:rgba(15,23,42,.5);backdrop-filter:blur(6px);border:1px solid rgba(45,212,191,.06);border-radius:8px;padding:10px;transition:border-color .2s}
+.cmd-person-card:hover{border-color:rgba(45,212,191,.12)}
 .cmd-person-card h4{font-size:13px;margin-bottom:8px}
 
 /* ─── Splunk-Style Visuals ─── */
@@ -480,17 +555,18 @@ body::before {
 .viz-bar-h{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px}
 .viz-bar-h-fill{height:8px;border-radius:4px;transition:width .4s ease}
 .viz-bar-h-track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
-.viz-metric-card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;position:relative;overflow:hidden}
-.viz-metric-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:100%;opacity:.06;background:linear-gradient(135deg,transparent 30%,var(--teal))}
-.viz-metric-card .metric-value{font-family:var(--serif);font-size:24px;font-weight:700}
-.viz-metric-card .metric-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--soft);margin-bottom:2px}
+.viz-metric-card{background:rgba(15,23,42,.6);backdrop-filter:blur(8px);border:1px solid rgba(45,212,191,.08);border-radius:10px;padding:14px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:default}
+.viz-metric-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.viz-metric-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:100%;opacity:.04;background:linear-gradient(135deg,transparent 30%,var(--teal))}
+.viz-metric-card .metric-value{font-family:var(--serif);font-size:22px;font-weight:700}
+.viz-metric-card .metric-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:2px;font-weight:500}
 .viz-metric-card .metric-delta{font-size:11px;font-weight:600;margin-top:2px}
 .viz-metric-card .metric-delta.up{color:var(--green)}
 .viz-metric-card .metric-delta.down{color:var(--red)}
 
 /* ─── Knowledge Base ─── */
 .kb-layout{display:grid;grid-template-columns:220px 1fr;gap:16px;min-height:500px}
-.kb-sidebar{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:12px}
+.kb-sidebar{background:rgba(15,23,42,.6);backdrop-filter:blur(8px);border:1px solid rgba(45,212,191,.06);border-radius:10px;padding:12px}
 .kb-sidebar-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-weight:600}
 .kb-cat-btn{display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:var(--soft);font-size:12px;font-family:var(--sans);cursor:pointer;border-radius:4px;margin-bottom:2px;transition:all .15s}
 .kb-cat-btn:hover{background:var(--bg3);color:var(--text)}
@@ -500,8 +576,8 @@ body::before {
 .kb-search{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:13px;margin-bottom:12px;font-family:var(--sans)}
 .kb-search:focus{outline:none;border-color:var(--teal)}
 .kb-article-list{display:flex;flex-direction:column;gap:8px}
-.kb-article-card{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;cursor:pointer;transition:border-color .15s}
-.kb-article-card:hover{border-color:var(--teal)}
+.kb-article-card{background:rgba(15,23,42,.5);backdrop-filter:blur(6px);border:1px solid rgba(45,212,191,.06);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s}
+.kb-article-card:hover{border-color:rgba(45,212,191,.2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
 .kb-article-card.pinned{border-left:3px solid var(--amber)}
 .kb-article-title{font-size:14px;font-weight:500;margin-bottom:4px}
 .kb-article-meta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -532,8 +608,8 @@ body::before {
 .kb-editor:focus{outline:none;border-color:var(--teal)}
 
 /* ─── War Room Slack-style ─── */
-.wr-layout{display:grid;grid-template-columns:180px 1fr;gap:0;height:calc(100vh - 240px);min-height:500px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.wr-channels{background:var(--bg2);border-right:1px solid var(--line);padding:12px 0;overflow-y:auto}
+.wr-layout{display:grid;grid-template-columns:180px 1fr;gap:0;height:calc(100vh - 160px);min-height:500px;border:1px solid rgba(45,212,191,.1);border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.wr-channels{background:rgba(15,23,42,.7);border-right:1px solid rgba(45,212,191,.06);padding:12px 0;overflow-y:auto}
 .wr-channel-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:4px 14px;font-weight:600}
 .wr-channel-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 14px;background:none;border:none;color:var(--soft);font-size:13px;font-family:var(--sans);cursor:pointer;transition:all .12s;text-align:left}
 .wr-channel-btn:hover{background:var(--bg3);color:var(--text)}
@@ -541,12 +617,12 @@ body::before {
 .wr-channel-btn .wr-hash{color:var(--muted);font-weight:400}
 .wr-channel-btn .wr-unread{background:var(--red);color:white;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;margin-left:auto}
 .wr-main{display:flex;flex-direction:column;background:var(--bg);min-height:0}
-.wr-header{padding:10px 16px;border-bottom:1px solid var(--line);background:var(--bg2);display:flex;align-items:center;gap:10px}
+.wr-header{padding:10px 16px;border-bottom:1px solid rgba(45,212,191,.06);background:rgba(15,23,42,.7);display:flex;align-items:center;gap:10px}
 .wr-header-name{font-weight:600;font-size:14px}
 .wr-header-desc{font-size:11px;color:var(--muted)}
-.wr-header-actions{margin-left:auto;display:flex;gap:6px}
-.wr-pin-btn{font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--line);border-radius:4px;color:var(--soft);cursor:pointer;font-family:var(--sans)}
-.wr-pin-btn:hover{border-color:var(--teal);color:var(--teal)}
+.wr-header-actions{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:60%}
+.wr-pin-btn{font-size:10px;padding:3px 7px;background:rgba(15,23,42,.5);border:1px solid rgba(45,212,191,.08);border-radius:5px;color:var(--soft);cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap}
+.wr-pin-btn:hover{border-color:rgba(45,212,191,.25);color:var(--teal);background:rgba(45,212,191,.06)}
 .wr-messages{flex:1;overflow-y:auto;padding:12px 16px;min-height:0}
 .wr-msg{padding:6px 0;display:flex;gap:10px;border-radius:6px;transition:background .1s}
 .wr-msg:hover{background:rgba(255,255,255,.02)}
@@ -639,31 +715,125 @@ body::before {
 .wr-thread-panel{margin-top:6px;padding:8px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;margin-left:42px}
 .wr-thread-msg{padding:4px 0;font-size:12px;border-bottom:1px solid var(--line)}
 .wr-thread-msg:last-child{border-bottom:none}
-.wr-input-bar{padding:10px 16px;border-top:1px solid var(--line);background:var(--bg2);display:flex;gap:8px;align-items:flex-end}
+.wr-input-bar{padding:10px 16px;border-top:1px solid rgba(45,212,191,.06);background:rgba(15,23,42,.7);display:flex;gap:8px;align-items:flex-end}
 .wr-input{flex:1;padding:8px 12px;background:var(--bg3);border:1px solid var(--line2);color:var(--text);border-radius:6px;font-family:var(--sans);font-size:13px;resize:none;min-height:38px;max-height:100px}
 .wr-input:focus{outline:none;border-color:var(--teal)}
 .wr-send-btn{padding:8px 16px;background:var(--teal-dim);border:1px solid rgba(0,201,160,.25);color:var(--teal);border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .wr-send-btn:hover{background:rgba(0,201,160,.2)}
 .wr-send-btn:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:768px){.kb-layout{grid-template-columns:1fr}.kb-sidebar{display:none}.wr-layout{grid-template-columns:1fr}.wr-channels{display:none}}
+/* ─── Quick Action CTAs ─── */
+.cta-bar{display:flex;gap:8px;margin:10px 0 6px;flex-wrap:wrap}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .18s;letter-spacing:.2px}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.cta-btn:active{transform:translateY(0)}
+.cta-btn.cta-primary{background:var(--teal);color:#020617}
+.cta-btn.cta-primary:hover{background:#5eead4}
+.cta-btn.cta-secondary{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.2)}
+.cta-btn.cta-secondary:hover{background:rgba(96,165,250,.2)}
+.cta-btn.cta-warn{background:rgba(245,158,11,.08);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.cta-btn.cta-warn:hover{background:rgba(245,158,11,.18)}
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="topbar-left">
-    <a class="topbar-logo" href="/portal">ClearOps<span>Portal</span></a>
+    <a class="topbar-logo" href="/portal">ClearOps<span>AI</span></a>
   </div>
   <div class="topbar-right">
     <span class="last-send-indicator" id="last-send"></span>
     <span class="mode-badge live"><span class="mode-dot"></span> Live</span>
-    <span id="clock"></span>
+    <span id="clock" style="font-family:var(--serif);font-size:12px;color:var(--muted)"></span>
   </div>
 </div>
 
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <!-- Overview -->
+  <div class="nav-group">
+    <div class="nav-group-label" onclick="toggleNavGroup(this)"><span class="nav-chevron">&#9662;</span> <span>Overview</span></div>
+    <div class="nav-group-items" style="max-height:200px">
+      <button class="nav-item active" onclick="navTo(this,'pipeline')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span>Pipeline</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'command')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span>Command</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'analytics')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Analytics</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Operations -->
+  <div class="nav-group">
+    <div class="nav-group-label" onclick="toggleNavGroup(this)"><span class="nav-chevron">&#9662;</span> <span>Operations</span></div>
+    <div class="nav-group-items" style="max-height:200px">
+      <button class="nav-item" onclick="navTo(this,'warroom')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>War Room</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'ops')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Ops Board</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'kb')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Knowledge</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'activity')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Activity</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Clients -->
+  <div class="nav-group">
+    <div class="nav-group-label" onclick="toggleNavGroup(this)"><span class="nav-chevron">&#9662;</span> <span>Clients</span></div>
+    <div class="nav-group-items" style="max-height:200px">
+      <button class="nav-item" onclick="navTo(this,'clients')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Workspaces</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'crm')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>CRM</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'followups')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span>Follow-ups</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Intelligence -->
+  <div class="nav-group">
+    <div class="nav-group-label" onclick="toggleNavGroup(this)"><span class="nav-chevron">&#9662;</span> <span>Intelligence</span></div>
+    <div class="nav-group-items" style="max-height:200px">
+      <button class="nav-item" onclick="navTo(this,'research')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Research</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'batches')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        <span>Batches</span>
+      </button>
+      <button class="nav-item" onclick="navTo(this,'links')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span>Quick Links</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
 <div class="dashboard">
 
-  <!-- Stats Row (Splunk-style) -->
+  <!-- Stats Row -->
   <div class="stats-row">
     <div class="viz-metric-card"><div class="metric-label">Total Sent</div><div class="metric-value" id="s-total" style="color:var(--teal)">—</div><div id="s-total-spark"></div></div>
     <div class="viz-metric-card"><div class="metric-label">Awaiting Reply</div><div class="metric-value" id="s-active" style="color:var(--amber)">—</div></div>
@@ -676,18 +846,21 @@ body::before {
   <!-- Niche breakdown -->
   <div class="niche-bar" id="niche-bar"></div>
 
-  <!-- Tab Bar -->
+  <!-- Quick Action CTAs -->
+  <div class="cta-bar">
+    <button class="cta-btn cta-primary" onclick="trackClick('Research Prospects');switchToTab('batches');triggerResearch()">Research Prospects</button>
+    <button class="cta-btn cta-secondary" onclick="trackClick('Gmail Sync');cmdGmailSync()">Sync Gmail</button>
+    <button class="cta-btn cta-warn" onclick="trackClick('Follow-up Check');cmdFollowupCheck()">Check Follow-ups</button>
+    <button class="cta-btn cta-secondary" onclick="trackClick('New Deal');switchToTab('crm');crmNewDeal()">+ New Deal</button>
+  </div>
+
+  <!-- Tab Bar (hidden, kept for JS compatibility) -->
   <div class="tab-bar">
     <button class="tab-btn active" data-tab="pipeline">Pipeline</button>
-    <button class="tab-btn" data-tab="crm">CRM</button>
-    <button class="tab-btn" data-tab="analytics">Analytics</button>
-    <button class="tab-btn" data-tab="ops">Ops</button>
     <button class="tab-btn" data-tab="warroom">War Room</button>
-    <button class="tab-btn" data-tab="followups" id="tab-btn-followups">Follow-ups</button>
-    <button class="tab-btn" data-tab="batches">Batches</button>
-    <button class="tab-btn" data-tab="command">Command</button>
-    <button class="tab-btn" data-tab="kb">KB</button>
-    <button class="tab-btn" data-tab="activity">Activity</button>
+    <button class="tab-btn" data-tab="ops">Ops</button>
+    <button class="tab-btn" data-tab="crm">CRM</button>
+    <button class="tab-btn" data-tab="research">Research</button>
     <button class="tab-btn" data-tab="links">Quick Links</button>
   </div>
 
@@ -984,6 +1157,29 @@ body::before {
   </div>
 
   <!-- Tab: Activity Feed -->
+  <!-- Tab: Clients -->
+  <div class="tab-panel" id="tab-clients">
+    <div class="panel" style="padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="margin:0;font-family:var(--serif);font-size:18px" id="clients-header">Client Workspaces</h3>
+        <div style="display:flex;gap:8px">
+          <button class="research-btn" onclick="clientsBackToList()" id="clients-back-btn" style="display:none;font-size:11px;padding:4px 10px">&#8592; Back</button>
+          <button class="research-btn" onclick="clientNewWorkspace()" style="font-size:11px;padding:4px 10px">+ New Client</button>
+          <button class="research-btn" onclick="loadClients()" style="font-size:11px;padding:4px 10px">Refresh</button>
+        </div>
+      </div>
+      <!-- Client list view -->
+      <div id="clients-list-view">
+        <div id="clients-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+          <div style="color:var(--muted);font-size:13px;padding:20px;text-align:center">Loading...</div>
+        </div>
+      </div>
+      <!-- Client detail view (hidden by default) -->
+      <div id="clients-detail-view" style="display:none">
+        <div id="clients-detail-content"></div>
+      </div>
+    </div>
+  </div>
   <div class="tab-panel" id="tab-activity">
     <div class="panel" style="padding:16px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
@@ -1003,6 +1199,114 @@ body::before {
       <div style="font-size:12px;color:var(--soft);margin-bottom:12px">Real-time log of what Claude Code, Jarvis, agents, and Haseeb are working on. Auto-updated by sessions and sweeps.</div>
       <div id="activity-feed-list"><div style="color:var(--muted);font-size:13px;padding:20px;text-align:center">Loading...</div></div>
     </div>
+  </div>
+
+  <!-- Tab: Research Center -->
+  <div class="tab-panel" id="tab-research">
+
+    <!-- Quick Actions Row -->
+    <div class="links-grid" style="margin-bottom:20px">
+      <div class="links-section-label">Quick Actions</div>
+      <div class="link-card link-highlight" onclick="document.getElementById('rc-company-input').focus()">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div><div class="link-label">New Research</div><div class="link-desc">Deep multi-source company intel</div></div>
+      </div>
+      <div class="link-card" onclick="rcBatchFromPipeline()">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+        <div><div class="link-label">Research Pipeline</div><div class="link-desc">Auto-research all unresearched prospects</div></div>
+      </div>
+      <div class="link-card" onclick="rcShowGaps()">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <div><div class="link-label">Coverage Gaps</div><div class="link-desc">Companies needing more intel</div></div>
+      </div>
+      <div class="link-card" onclick="rcGovLookup()">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg></div>
+        <div><div class="link-label">Gov Contract Lookup</div><div class="link-desc">SAM.gov + USASpending data</div></div>
+      </div>
+
+      <div class="links-section-label">Data Sources</div>
+      <div class="link-card" style="cursor:default;opacity:.85">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M12 8V4H20V8"/><rect x="2" y="4" width="10" height="4" rx="1"/><path d="M12 14V10H20V14"/><rect x="2" y="10" width="10" height="4" rx="1"/><path d="M12 20V16H20V20"/><rect x="2" y="16" width="10" height="4" rx="1"/></svg></div>
+        <div><div class="link-label">LLM Intelligence</div><div class="link-desc">Gemini + Groq multi-step analysis</div></div>
+      </div>
+      <div class="link-card" style="cursor:default;opacity:.85">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg></div>
+        <div><div class="link-label">SAM.gov</div><div class="link-desc">Entity registration, CAGE, NAICS</div></div>
+      </div>
+      <div class="link-card" style="cursor:default;opacity:.85">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div><div class="link-label">USASpending</div><div class="link-desc">Federal contract awards + obligations</div></div>
+      </div>
+      <div class="link-card" style="cursor:default;opacity:.85">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div><div class="link-label">Security Scanner</div><div class="link-desc">SSL, headers, DNS, email security</div></div>
+      </div>
+      <div class="link-card" style="cursor:default;opacity:.85">
+        <div class="link-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div><div class="link-label">Outreach History</div><div class="link-desc">Emails, replies, intent signals</div></div>
+      </div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="panel" style="padding:20px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text)">Intelligence Dashboard</div>
+        <button class="research-btn" onclick="rcRefresh()" style="font-size:11px;padding:5px 14px">Refresh</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+        <div class="viz-metric-card"><div class="metric-label">Total Profiles</div><div class="metric-value" id="rc-total" style="color:var(--teal)">—</div></div>
+        <div class="viz-metric-card"><div class="metric-label">Avg Score</div><div class="metric-value" id="rc-avg" style="color:var(--text)">—</div></div>
+        <div class="viz-metric-card"><div class="metric-label">Grade A/B</div><div class="metric-value" id="rc-high" style="color:var(--green)">—</div></div>
+        <div class="viz-metric-card"><div class="metric-label">Low Coverage</div><div class="metric-value" id="rc-low" style="color:var(--red)">—</div></div>
+        <div class="viz-metric-card"><div class="metric-label">Jobs Active</div><div class="metric-value" id="rc-queued" style="color:var(--amber)">—</div></div>
+      </div>
+      <!-- Grade distribution bar -->
+      <div id="rc-grade-bar" style="margin-top:14px;display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--bg)"></div>
+      <div id="rc-grade-legend" style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--soft)"></div>
+    </div>
+
+    <!-- New Research Form -->
+    <div class="panel" style="padding:20px;margin-bottom:20px">
+      <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text);margin-bottom:14px">Launch Research</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div style="position:relative;flex:1;min-width:220px">
+          <input type="text" id="rc-company-input" placeholder="Enter company name..." style="width:100%;font-size:14px;padding:10px 14px;background:var(--bg);border:1px solid var(--line2);border-radius:10px;color:var(--text);font-family:var(--sans)">
+        </div>
+        <select id="rc-depth" style="font-size:13px;padding:10px 14px;background:var(--bg);border:1px solid var(--line2);border-radius:10px;color:var(--text);font-family:var(--sans);cursor:pointer">
+          <option value="quick">Quick — 1 LLM call</option>
+          <option value="standard" selected>Standard — LLM + Gov Data</option>
+          <option value="deep">Deep — LLM + Gov + Security + Web</option>
+        </select>
+        <button class="research-btn" onclick="rcStartResearch()" style="font-size:14px;padding:10px 24px;border-radius:10px">Research</button>
+      </div>
+    </div>
+
+    <!-- Profiles Grid -->
+    <div class="panel" style="padding:20px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text)">Company Profiles</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" id="rc-search" placeholder="Search..." onkeyup="rcFilterProfiles()" style="font-size:13px;padding:8px 12px;background:var(--bg);border:1px solid var(--line2);border-radius:8px;color:var(--text);width:180px;font-family:var(--sans)">
+          <select id="rc-sort" onchange="rcSortProfiles()" style="font-size:12px;padding:8px 10px;background:var(--bg);border:1px solid var(--line2);border-radius:8px;color:var(--text);font-family:var(--sans)">
+            <option value="score">Score (high first)</option>
+            <option value="recent">Most Recent</option>
+            <option value="name">A-Z</option>
+          </select>
+        </div>
+      </div>
+      <div id="rc-profiles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
+      <div id="rc-profiles-empty" style="display:none" class="empty-state">
+        <div class="emoji">🔬</div>
+        <div class="msg">No research profiles yet. Enter a company name above to start deep intelligence gathering.</div>
+      </div>
+    </div>
+
+    <!-- Active Jobs -->
+    <div class="panel" style="padding:20px" id="rc-jobs-panel">
+      <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text);margin-bottom:14px">Research Queue</div>
+      <div id="rc-jobs"></div>
+    </div>
+
   </div>
 
   <!-- Tab: Quick Links -->
@@ -1042,7 +1346,7 @@ body::before {
           <option value="">All Types</option><option value="project">Project</option><option value="epic">Epic</option><option value="task">Task</option><option value="bug">Bug</option><option value="improvement">Improvement</option><option value="feature">Feature</option><option value="spike">Spike</option>
         </select>
         <select id="ops-filter-assignee" onchange="renderOpsView()" style="font-size:12px;padding:4px 8px;background:var(--bg2);border:1px solid var(--line);border-radius:4px;color:var(--text)">
-          <option value="">All Assignees</option><option value="Haseeb">Haseeb</option><option value="Claude">Claude</option><option value="Jarvis">Jarvis</option>
+          <option value="">All Assignees</option><option value="Haseeb">Haseeb</option><option value="Claude">Claude</option><option value="Jarvis">Jarvis</option><option value="nova">Nova</option><option value="relay">Relay</option><option value="echo">Echo</option><option value="sage">Sage</option><option value="sentinel">Sentinel</option><option value="cipher">Cipher</option><option value="docker">Docker</option><option value="pixel">Pixel</option><option value="scribe">Scribe</option><option value="atlas">Atlas</option>
         </select>
         <select id="ops-filter-priority" onchange="renderOpsView()" style="font-size:12px;padding:4px 8px;background:var(--bg2);border:1px solid var(--line);border-radius:4px;color:var(--text)">
           <option value="">All Priorities</option><option value="p0">P0</option><option value="p1">P1</option><option value="p2">P2</option><option value="p3">P3</option>
@@ -1068,6 +1372,42 @@ body::before {
   </div>
 </div>
 
+<!-- Full-page deliverable viewer (OUTSIDE dashboard to avoid stacking context) -->
+<div id="deliverable-viewer" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#0a0e17">
+  <!-- Top bar -->
+  <div style="position:absolute;top:0;left:0;right:0;height:52px;background:#0d1120;border-bottom:1px solid #30363d;padding:0 20px;display:flex;align-items:center;justify-content:space-between;z-index:10;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:14px">
+      <button onclick="closeDeliverableViewer()" style="background:#2dd4bf;border:none;color:#0a0e17;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 2px 12px rgba(45,212,191,0.4);transition:opacity 0.15s;letter-spacing:0.3px" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">&#10005; Close</button>
+      <div>
+        <div id="dv-title" style="font-size:15px;font-weight:600;color:#e7e9ea"></div>
+        <div id="dv-meta" style="font-size:11px;color:#6e7681;margin-top:2px"></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span id="dv-status" style="font-size:10px;padding:3px 10px;border-radius:12px"></span>
+      <div style="position:relative;display:inline-block" id="dv-export-wrap">
+        <button onclick="document.getElementById('dv-export-menu').style.display=document.getElementById('dv-export-menu').style.display==='block'?'none':'block'" style="background:rgba(45,212,191,0.1);border:1px solid #2dd4bf;color:#2dd4bf;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500">Export &#9662;</button>
+        <div id="dv-export-menu" style="display:none;position:absolute;right:0;top:36px;background:#0d1120;border:1px solid #30363d;border-radius:8px;min-width:170px;box-shadow:0 8px 32px rgba(0,0,0,0.6);z-index:100;overflow:hidden">
+          <div onclick="dvExportMd()" style="padding:10px 16px;font-size:12px;color:#e7e9ea;cursor:pointer;border-bottom:1px solid #1a2236" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">Download .md</div>
+          <div onclick="dvExportHtml()" style="padding:10px 16px;font-size:12px;color:#e7e9ea;cursor:pointer;border-bottom:1px solid #1a2236" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">Download .html</div>
+          <div onclick="dvPrint()" style="padding:10px 16px;font-size:12px;color:#e7e9ea;cursor:pointer;border-bottom:1px solid #1a2236" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">Print / Save as PDF</div>
+          <div onclick="dvCopy()" style="padding:10px 16px;font-size:12px;color:#e7e9ea;cursor:pointer" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">Copy to Clipboard</div>
+        </div>
+      </div>
+      <button onclick="dvRegenerate()" style="background:rgba(245,158,11,0.1);border:1px solid #f59e0b;color:#f59e0b;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500">Regenerate</button>
+    </div>
+  </div>
+  <!-- Content area: TOC sidebar + centered reading area -->
+  <div style="display:flex;position:absolute;top:52px;left:0;right:0;bottom:3px">
+    <nav id="dv-toc" style="width:220px;min-width:220px;background:#0d1120;border-right:1px solid #30363d;overflow-y:auto;padding:16px 0;font-size:12px"></nav>
+    <div style="flex:1;overflow-y:auto;display:flex;justify-content:center" id="dv-content-scroll">
+      <main id="dv-content" style="max-width:760px;width:100%;padding:40px 48px"></main>
+    </div>
+  </div>
+  <!-- Scroll progress bar -->
+  <div id="dv-progress" style="position:absolute;bottom:0;left:0;height:3px;background:#2dd4bf;transition:width 0.15s;width:0;z-index:10"></div>
+</div>
+
 <!-- Contact Drawer -->
 <div class="drawer-overlay" id="drawer-overlay"></div>
 <div class="drawer" id="drawer">
@@ -1078,6 +1418,40 @@ body::before {
 <div class="toast" id="toast"></div>
 
 <script>
+/* === SIDEBAR NAVIGATION === */
+function navTo(btn, tabName) {
+  // Update sidebar active state
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  btn.classList.add('active');
+  // Switch tab (reuses existing switchToTab)
+  switchToTab(tabName);
+}
+function toggleNavGroup(label) {
+  const items = label.nextElementSibling;
+  const chevron = label.querySelector('.nav-chevron');
+  if (items.classList.contains('collapsed')) {
+    items.classList.remove('collapsed');
+    items.style.maxHeight = items.scrollHeight + 'px';
+    if (chevron) chevron.classList.remove('collapsed');
+  } else {
+    items.classList.add('collapsed');
+    if (chevron) chevron.classList.add('collapsed');
+  }
+}
+// Sync sidebar with switchToTab calls from other places
+const _origSwitchToTab = typeof switchToTab === 'function' ? switchToTab : null;
+function syncSidebarActive(tabName) {
+  document.querySelectorAll('.nav-item').forEach(n => {
+    const onclick = n.getAttribute('onclick') || '';
+    const match = onclick.match(/navTo\(this,'([^']+)'\)/);
+    if (match && match[1] === tabName) n.classList.add('active');
+    else n.classList.remove('active');
+  });
+}
+
+function trackClick(ctaName) {
+  console.log('CTA Clicked: ' + ctaName);
+}
 const AUTH = 'Bearer jarvis';
 let allContacts = [];
 let stats = {};
@@ -1184,13 +1558,29 @@ function switchToTab(tabName) {
   if (btn) btn.classList.add('active');
   const panel = $(`#tab-${tabName}`);
   if (panel) panel.classList.add('active');
+  // Load data for each tab on switch
+  const loaders = {
+    ops: () => typeof loadOpsTasks === 'function' && loadOpsTasks(),
+    crm: () => typeof loadCRM === 'function' && loadCRM(),
+    analytics: () => typeof loadAnalytics === 'function' && loadAnalytics(),
+    command: () => typeof loadCommand === 'function' && loadCommand(),
+    kb: () => typeof loadKB === 'function' && loadKB(),
+    activity: () => typeof loadActivityFeed === 'function' && loadActivityFeed(),
+    clients: () => typeof loadClients === 'function' && loadClients(),
+    research: () => typeof rcRefresh === 'function' && rcRefresh(),
+    warroom: () => typeof wrLoadMessages === 'function' && wrLoadMessages(true),
+    followups: () => typeof loadFollowups === 'function' && loadFollowups(),
+    batches: () => typeof loadBatches === 'function' && loadBatches(),
+    links: () => typeof renderLinks === 'function' && renderLinks(),
+  };
+  if (loaders[tabName]) loaders[tabName]();
+  // Sync sidebar highlight
+  syncSidebarActive(tabName);
+  if (location.hash.slice(1) !== tabName) history.replaceState(null, '', '#' + tabName);
 }
 
 $$('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    switchToTab(btn.dataset.tab);
-    location.hash = btn.dataset.tab;
-  });
+  btn.addEventListener('click', () => switchToTab(btn.dataset.tab));
 });
 
 // Deep link: open ticket from hash (#ops/OPS-xxxxx)
@@ -1296,14 +1686,16 @@ async function loadStats() {
     ls.className = 'last-send-indicator ' + (d <= 1 ? 'recent' : d <= 4 ? 'warm' : 'stale');
   }
 
-  // Follow-up tab badge
-  const btn = $('#tab-btn-followups');
-  if (stats.followups_due > 0) {
-    btn.innerHTML = `Follow-ups <span class="tab-badge red">${stats.followups_due} due</span>`;
-  } else if (stats.followups_upcoming > 0) {
-    btn.innerHTML = `Follow-ups <span class="tab-badge amber">${stats.followups_upcoming} soon</span>`;
-  } else {
-    btn.innerHTML = 'Follow-ups';
+  // Follow-up tab badge (only if tab exists in tab bar)
+  const fuBtn = $('#tab-btn-followups');
+  if (fuBtn) {
+    if (stats.followups_due > 0) {
+      fuBtn.innerHTML = `Follow-ups <span class="tab-badge red">${stats.followups_due} due</span>`;
+    } else if (stats.followups_upcoming > 0) {
+      fuBtn.innerHTML = `Follow-ups <span class="tab-badge amber">${stats.followups_upcoming} soon</span>`;
+    } else {
+      fuBtn.innerHTML = 'Follow-ups';
+    }
   }
 
   // Niche breakdown with mini bars
@@ -1829,43 +2221,65 @@ function renderProspectCard(text, title) {
 // ─── Quick Links ───
 function renderLinks() {
   const base = location.origin;
+  const _si = (d) => `<svg viewBox="0 0 24 24">${d}</svg>`;
   const links = [
-    { icon: '\u26A1', label: 'Jarvis Chat', desc: 'Inter-Jarvis chat', url: `${base}/inter-jarvis` },
-    { icon: '\uD83D\uDCC8', label: 'Clarity Dashboard', desc: 'Operational intelligence', url: `${base}/clarity` },
-    { icon: '\uD83D\uDCCB', label: 'Daily Briefing', desc: 'Morning briefing', url: `${base}/briefing` },
-    { icon: '\uD83D\uDC9A', label: 'API Health', desc: 'System health check', url: `${base}/health` },
-    { icon: '\uD83C\uDF10', label: 'ClearOps Website', desc: 'clearopsai.io', url: 'https://clearopsai.io' },
-    { icon: '\uD83D\uDCE7', label: 'Gmail', desc: 'ClearOps inbox', url: 'https://mail.google.com/mail/u/0/#inbox' },
-    { icon: '\uD83D\uDCC5', label: 'Calendly', desc: 'Booking page', url: 'https://calendly.com/clearopsai' },
-    { icon: '\uD83D\uDCCA', label: 'Google Analytics', desc: 'Website traffic', url: 'https://analytics.google.com' },
-    { icon: '\uD83D\uDCE8', label: 'Formspree', desc: 'Form submissions', url: 'https://formspree.io' },
+    { icon: _si('<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/>'), label: 'Agent Radar', desc: 'Live agent activity monitor', url: `${base}/radar`, highlight: true },
+    { icon: _si('<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'), label: 'Blocker Dashboard', desc: 'Live blocked/unblocked ticket tracker', url: `${base}/blockers`, highlight: true },
+    { icon: _si('<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'), label: 'Jarvis Chat', desc: 'Inter-Jarvis chat', url: `${base}/inter-jarvis` },
+    { icon: _si('<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'), label: 'Clarity Dashboard', desc: 'Operational intelligence', url: `${base}/clarity` },
+    { icon: _si('<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/>'), label: 'Daily Briefing', desc: 'Morning briefing', url: `${base}/briefing` },
+    { icon: _si('<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'), label: 'API Health', desc: 'System health check', url: `${base}/health` },
+    { icon: _si('<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>'), label: 'Mobile Dashboard', desc: 'Phone-friendly view', url: `${base}/mobile` },
+    { icon: _si('<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/>'), label: 'Gmail', desc: 'ClearOps inbox', url: 'https://mail.google.com/mail/u/0/#inbox' },
+    { icon: _si('<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>'), label: 'ClearOps Website', desc: 'clearopsai.io', url: 'https://clearopsai.io' },
+    { icon: _si('<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'), label: 'Calendly', desc: 'Booking page', url: 'https://calendly.com/clearopsai' },
+    { icon: _si('<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>'), label: 'Google Analytics', desc: 'Website traffic', url: 'https://analytics.google.com' },
+    { icon: _si('<polyline points="22 12 16 12 14 15 10 9 8 12 2 12"/>'), label: 'Formspree', desc: 'Form submissions', url: 'https://formspree.io' },
   ];
-  $('#links-grid').innerHTML = links.map(l => `
-    <a class="link-card" href="${l.url}" target="_blank" rel="noopener">
+  const portalTabs = [
+    { icon: _si('<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>'), label: 'Analytics', desc: 'Outreach analytics & A/B results', tab: 'analytics' },
+    { icon: _si('<polyline points="22 12 16 12 14 15 10 9 8 12 2 12"/>'), label: 'Follow-ups', desc: 'Follow-up queue & status', tab: 'followups' },
+    { icon: _si('<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>'), label: 'Batches', desc: 'Outreach batch management', tab: 'batches' },
+    { icon: _si('<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>'), label: 'Command Center', desc: 'API actions & tools', tab: 'command' },
+    { icon: _si('<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>'), label: 'Knowledge Base', desc: 'Team documentation', tab: 'kb' },
+    { icon: _si('<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'), label: 'Clients', desc: 'Client details & contacts', tab: 'clients' },
+    { icon: _si('<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'), label: 'Activity Feed', desc: 'System activity log', tab: 'activity' },
+    { icon: _si('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'), label: 'Research Center', desc: 'Deep company intelligence & profiling', tab: 'research' },
+  ];
+  const externalHtml = links.map(l => `
+    <a class="link-card${l.highlight ? ' link-highlight' : ''}" href="${l.url}" target="_blank" rel="noopener">
       <div class="link-icon">${l.icon}</div>
       <div><div class="link-label">${l.label}</div><div class="link-desc">${l.desc}</div></div>
     </a>
   `).join('');
+  const tabHtml = portalTabs.map(l => `
+    <a class="link-card" href="#" onclick="event.preventDefault();switchToTab('${l.tab}')">
+      <div class="link-icon">${l.icon}</div>
+      <div><div class="link-label">${l.label}</div><div class="link-desc">${l.desc}</div></div>
+    </a>
+  `).join('');
+  $('#links-grid').innerHTML = '<div class="links-section-label">External</div>' + externalHtml + '<div class="links-section-label">Portal Views</div>' + tabHtml;
 }
 
 // ─── War Room (Slack-style) ───
 let wrChannel = localStorage.getItem('wr-channel') || 'general';
 let wrMsgCount = 0;
+let wrLastMsgTs = '';
 let wrPollTimer = null;
 let wrAllMessages = [];
 
 const wrChannelDescs = {general:'General discussion',alerts:'System alerts & notifications',outreach:'Sales & outreach updates',engineering:'Engineering & development',standup:'Daily standups & accountability'};
-const wrAvatarLetters = {haseeb:'H',jarvis:'J',claude:'C',system:'!',pm:'PM',atlas:'A',nova:'N',cipher:'Ci',sage:'S',relay:'R',docker:'D',pixel:'Px',scribe:'Sc',echo:'E',sentinel:'Se'};
-const wrSpeakerNames = {haseeb:'Haseeb',jarvis:'Jarvis',claude:'Claude',system:'System',pm:'PM Bot',atlas:'Atlas (Eng Lead)',nova:'Nova (VP Ops)',cipher:'Cipher (Security)',sage:'Sage (Strategy)',relay:'Relay (Sales)',docker:'Docker (DevOps)',pixel:'Pixel (QA)',scribe:'Scribe (Content)',echo:'Echo (EA)',sentinel:'Sentinel (Ops Controller)'};
-const wrSpeakerColors = {haseeb:'#3b82f6',jarvis:'#a78bfa',claude:'#60a5fa',atlas:'#8b5cf6',nova:'#ec4899',cipher:'#ef4444',sage:'#f59e0b',relay:'#22c55e',docker:'#06b6d4',pixel:'#14b8a6',scribe:'#a3e635',echo:'#f472b6',sentinel:'#dc2626',system:'#6b7280'};
-const wrTeams = {engineering:{name:'Engineering',members:['claude','atlas','cipher','docker','pixel']},security:{name:'Security',members:['cipher','claude']},sales:{name:'Sales',members:['relay','scribe','sage']},operations:{name:'Operations',members:['nova','sage','relay']},strategy:{name:'Strategy',members:['sage','jarvis']},leadership:{name:'Leadership',members:['haseeb','claude','jarvis','nova','sentinel']},devops:{name:'DevOps',members:['docker','atlas','claude']}};
+const wrAvatarLetters = {haseeb:'H',jarvis:'J',claude:'C',system:'!',pm:'PM',atlas:'A',nova:'N',cipher:'Ci',sage:'S',relay:'R',docker:'D',pixel:'Px',scribe:'Sc',echo:'E',sentinel:'Se',nexus:'Nx',prism:'Pr',forge:'Fg'};
+const wrSpeakerNames = {haseeb:'Haseeb',jarvis:'Jarvis',claude:'Claude',system:'System',pm:'PM Bot',atlas:'Atlas (Eng Lead)',nova:'Nova (VP Ops)',cipher:'Cipher (Security)',sage:'Sage (Strategy)',relay:'Relay (Sales)',docker:'Docker (DevOps)',pixel:'Pixel (QA)',scribe:'Scribe (Content)',echo:'Echo (EA)',sentinel:'Sentinel (Ops Controller)',nexus:'Nexus (Reports)',prism:'Prism (Dashboards)',forge:'Forge (Delivery)'};
+const wrSpeakerColors = {haseeb:'#3b82f6',jarvis:'#a78bfa',claude:'#60a5fa',atlas:'#8b5cf6',nova:'#ec4899',cipher:'#ef4444',sage:'#f59e0b',relay:'#22c55e',docker:'#06b6d4',pixel:'#14b8a6',scribe:'#a3e635',echo:'#f472b6',sentinel:'#dc2626',system:'#6b7280',nexus:'#f97316',prism:'#06b6d4',forge:'#eab308'};
+const wrTeams = {engineering:{name:'Engineering',members:['claude','atlas','cipher','docker','pixel']},security:{name:'Security',members:['cipher','claude']},sales:{name:'Sales',members:['relay','scribe','sage']},operations:{name:'Operations',members:['nova','sage','relay']},strategy:{name:'Strategy',members:['sage','jarvis']},leadership:{name:'Leadership',members:['haseeb','claude','jarvis','nova','sentinel']},devops:{name:'DevOps',members:['docker','atlas','claude']},delivery:{name:'Client Delivery',members:['forge','nexus','prism']}};
 const wrAllMentions = [
   ...Object.entries(wrSpeakerNames).filter(([k])=>k!=='system'&&k!=='pm').map(([id,name])=>({id,name:name.split(' (')[0],type:'person',color:wrSpeakerColors[id]||'#888'})),
   ...Object.entries(wrTeams).map(([id,t])=>({id,name:t.name,type:'team',color:'#6b7280'})),
   {id:'everyone',name:'everyone',type:'special',color:'#f59e0b'},
   {id:'here',name:'here',type:'special',color:'#22c55e'},
 ];
-const wrAgentColors = {atlas:'#8b5cf6',nova:'#ec4899',cipher:'#ef4444',sage:'#f59e0b',relay:'#22c55e',docker:'#06b6d4',pixel:'#14b8a6',scribe:'#a3e635',echo:'#f472b6'};
+const wrAgentColors = {atlas:'#8b5cf6',nova:'#ec4899',cipher:'#ef4444',sage:'#f59e0b',relay:'#22c55e',docker:'#06b6d4',pixel:'#14b8a6',scribe:'#a3e635',echo:'#f472b6',nexus:'#f97316',prism:'#06b6d4',forge:'#eab308'};
 let wrChannelsData = {};
 
 async function wrLoadChannels() {
@@ -2240,17 +2654,27 @@ function wrRenderMessages() {
       </div>
     </div>`;
   });
+  const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
   container.innerHTML = html;
-  container.scrollTop = container.scrollHeight;
+  // Only auto-scroll if user was already at the bottom
+  if (wasAtBottom) container.scrollTop = container.scrollHeight;
+  // Restore any threads that were open before re-render
+  for (const idx of _wrOpenThreads) {
+    if (document.getElementById('wr-thread-'+idx)) wrToggleThread(idx, true);
+  }
 }
 
 let _wrLastNotifiedIdx = 0;
+const _wrOpenThreads = new Set(); // Track which thread indices are expanded
 async function wrLoadMessages(scroll=false) {
   try {
     const data = await api('/api/warroom/messages?after=0');
-    if (data.total !== wrMsgCount) {
+    const lastTs = data.messages?.length ? data.messages[data.messages.length - 1].timestamp || '' : '';
+    const changed = data.total !== wrMsgCount || lastTs !== wrLastMsgTs || scroll;
+    if (changed) {
       const oldCount = wrMsgCount;
       wrMsgCount = data.total;
+      wrLastMsgTs = lastTs;
       wrAllMessages = data.messages;
       wrRenderMessages();
       // Check new messages for @haseeb mentions — notify via toast
@@ -2308,7 +2732,10 @@ async function wrSendMessage() {
 async function wrReact(idx, emoji) {
   try {
     await api(`/api/warroom/messages/${idx}/react`, {method:'POST', body:JSON.stringify({emoji, user:'haseeb'})});
-    await wrLoadMessages();
+    const data = await api('/api/warroom/messages?after=0');
+    wrAllMessages = data.messages;
+    wrMsgCount = data.total;
+    wrRenderMessages();
   } catch(e) { toast('Error: '+e.message); }
 }
 
@@ -2321,6 +2748,103 @@ function wrReactPicker(idx) {
   picker.style.cssText = 'display:flex;gap:2px;margin-top:4px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:4px';
   picker.innerHTML = emojis.map(e => `<button style="background:none;border:none;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:3px" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'" onclick="wrReact(${idx},'${e}');this.parentElement.remove()">${e}</button>`).join('');
   el.appendChild(picker);
+}
+
+function wrThreadReactPicker(msgIdx, replyIdx) {
+  const emojis = ['👍','👎','❤️','🔥','👀','✅','🚀','💡'];
+  const threadPanel = document.getElementById('wr-thread-'+msgIdx);
+  const replyEls = threadPanel.querySelectorAll('.wr-thread-msg');
+  const el = replyEls[replyIdx];
+  if (!el) return;
+  if (el.querySelector('.wr-emoji-picker')) { el.querySelector('.wr-emoji-picker').remove(); return; }
+  const picker = document.createElement('div');
+  picker.className = 'wr-emoji-picker';
+  picker.style.cssText = 'display:flex;gap:2px;margin-top:4px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:4px';
+  picker.innerHTML = emojis.map(e => `<button style="background:none;border:none;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:3px" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='none'" onclick="wrThreadReact(${msgIdx},${replyIdx},'${e}');this.parentElement.remove()">${e}</button>`).join('');
+  el.appendChild(picker);
+}
+
+async function wrThreadReact(msgIdx, replyIdx, emoji) {
+  try {
+    await api(`/api/warroom/messages/${msgIdx}/thread/${replyIdx}/react`, {method:'POST', body:JSON.stringify({emoji, user:'haseeb'})});
+    const data = await api('/api/warroom/messages?after=0');
+    wrAllMessages = data.messages;
+    wrMsgCount = data.total;
+    wrRenderMessages();
+    wrToggleThread(msgIdx, true);
+  } catch(e) { toast('Error: '+e.message); }
+}
+
+let _wrThreadMentionActive = false, _wrThreadMentionIdx = 0, _wrThreadMentionFiltered = [], _wrThreadMentionTarget = null;
+
+function wrThreadMentionUpdate(threadIdx) {
+  const input = document.getElementById('wr-thread-input-'+threadIdx);
+  const popup = document.getElementById('wr-thread-mention-popup-'+threadIdx);
+  if (!input || !popup) return;
+  const val = input.value;
+  const caret = input.selectionStart;
+  const before = val.slice(0, caret);
+  const atMatch = before.match(/@(\w*)$/);
+  if (!atMatch) { popup.classList.remove('open'); _wrThreadMentionActive = false; return; }
+  const query = atMatch[1].toLowerCase();
+  _wrThreadMentionFiltered = wrAllMentions.filter(m => m.name.toLowerCase().startsWith(query) || m.id.toLowerCase().startsWith(query));
+  if (!_wrThreadMentionFiltered.length) { popup.classList.remove('open'); _wrThreadMentionActive = false; return; }
+  _wrThreadMentionIdx = 0;
+  _wrThreadMentionActive = true;
+  _wrThreadMentionTarget = threadIdx;
+  popup.innerHTML = _wrThreadMentionFiltered.map((m, i) => {
+    const typeTag = m.type !== 'person' ? `<span class="m-type ${m.type}">${m.type}</span>` : '';
+    return `<div class="wr-mention-item${i===0?' active':''}" data-idx="${i}" onmousedown="wrThreadInsertMention(${threadIdx},${i})">
+      <div class="m-avatar" style="background:${m.color}22;color:${m.color}">${m.name[0].toUpperCase()}</div>
+      <div style="flex:1"><span class="m-name" style="color:${m.color}">@${m.name}</span> ${typeTag}</div>
+    </div>`;
+  }).join('');
+  popup.classList.add('open');
+}
+
+function wrThreadInsertMention(threadIdx, idx) {
+  const m = _wrThreadMentionFiltered[idx];
+  if (!m) return;
+  const input = document.getElementById('wr-thread-input-'+threadIdx);
+  const popup = document.getElementById('wr-thread-mention-popup-'+threadIdx);
+  const val = input.value;
+  const caret = input.selectionStart;
+  const before = val.slice(0, caret);
+  const atPos = before.lastIndexOf('@');
+  const after = val.slice(caret);
+  const mentionText = `@${m.name}`;
+  input.value = before.slice(0, atPos) + mentionText + ' ' + after;
+  const newPos = atPos + mentionText.length + 1;
+  input.setSelectionRange(newPos, newPos);
+  input.focus();
+  popup.classList.remove('open');
+  _wrThreadMentionActive = false;
+}
+
+function wrThreadMentionKeyHandler(event, threadIdx) {
+  if (event.key === 'Enter' && !_wrThreadMentionActive) {
+    wrSendThreadReply(threadIdx);
+    event.preventDefault();
+    return;
+  }
+  if (!_wrThreadMentionActive) return;
+  const popup = document.getElementById('wr-thread-mention-popup-'+threadIdx);
+  if (!popup) return;
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    _wrThreadMentionIdx = Math.min(_wrThreadMentionIdx + 1, _wrThreadMentionFiltered.length - 1);
+    popup.querySelectorAll('.wr-mention-item').forEach((el, i) => el.classList.toggle('active', i === _wrThreadMentionIdx));
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    _wrThreadMentionIdx = Math.max(_wrThreadMentionIdx - 1, 0);
+    popup.querySelectorAll('.wr-mention-item').forEach((el, i) => el.classList.toggle('active', i === _wrThreadMentionIdx));
+  } else if (event.key === 'Enter' || event.key === 'Tab') {
+    event.preventDefault();
+    wrThreadInsertMention(threadIdx, _wrThreadMentionIdx);
+  } else if (event.key === 'Escape') {
+    popup.classList.remove('open');
+    _wrThreadMentionActive = false;
+  }
 }
 
 async function wrPinMsg(idx) {
@@ -2338,15 +2862,19 @@ async function wrStartThread(idx) {
 async function wrToggleThread(idx, forceOpen=false) {
   const el = document.getElementById('wr-thread-'+idx);
   if (!el) return;
-  if (el.innerHTML && !forceOpen) { el.innerHTML = ''; return; }
+  if (el.innerHTML && !forceOpen) { el.innerHTML = ''; _wrOpenThreads.delete(idx); return; }
+  _wrOpenThreads.add(idx);
   const msg = wrAllMessages[idx];
   const thread = msg?.thread || [];
   let html = `<div class="wr-thread-panel">`;
-  thread.forEach(t => {
+  thread.forEach((t, ri) => {
     const ts = fmtTime(t.timestamp, {timeOnly:true});
-    html += `<div class="wr-thread-msg"><span style="color:${t.speaker==='haseeb'?'var(--blue)':t.speaker==='jarvis'?'var(--teal)':'#c084fc'};font-weight:500">${wrSpeakerNames[t.speaker]||t.speaker}</span> <span style="color:var(--muted);font-size:10px">${ts}</span><div style="margin-top:2px">${wrFormatContent(t.content)}</div></div>`;
+    const spColor = wrSpeakerColors[t.speaker] || (t.speaker==='haseeb'?'var(--blue)':t.speaker==='jarvis'?'var(--teal)':'#c084fc');
+    const tReactions = t.reactions || {};
+    const reactionsHtml = Object.keys(tReactions).length ? `<div class="wr-reactions" style="margin-top:3px">${Object.entries(tReactions).map(([emoji,users])=>`<span class="wr-reaction${users.includes('haseeb')?' mine':''}" onclick="wrThreadReact(${idx},${ri},'${emoji}')">${emoji} <span class="wr-r-count">${users.length}</span></span>`).join('')}</div>` : '';
+    html += `<div class="wr-thread-msg" style="position:relative" onmouseenter="this.querySelector('.wr-thread-actions').style.opacity=1" onmouseleave="this.querySelector('.wr-thread-actions').style.opacity=0"><span style="color:${spColor};font-weight:500">${wrSpeakerNames[t.speaker]||t.speaker}</span> <span style="color:var(--muted);font-size:10px">${ts}</span><div class="wr-thread-actions" style="position:absolute;right:4px;top:2px;opacity:0;transition:opacity .15s"><button style="background:none;border:none;cursor:pointer;font-size:13px;padding:1px 3px" onclick="wrThreadReactPicker(${idx},${ri})" title="React">&#128578;</button></div><div style="margin-top:2px">${wrFormatContent(t.content)}</div>${reactionsHtml}</div>`;
   });
-  html += `<div style="display:flex;gap:6px;margin-top:6px"><input id="wr-thread-input-${idx}" style="flex:1;padding:5px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;color:var(--text);font-size:12px" placeholder="Reply in thread..." onkeydown="if(event.key==='Enter'){wrSendThreadReply(${idx});event.preventDefault()}"><button style="padding:5px 10px;background:var(--teal-dim);border:1px solid rgba(0,201,160,.25);color:var(--teal);border-radius:4px;font-size:11px;cursor:pointer;font-weight:600" onclick="wrSendThreadReply(${idx})">Reply</button></div></div>`;
+  html += `<div style="display:flex;gap:6px;margin-top:6px;position:relative"><input id="wr-thread-input-${idx}" style="flex:1;padding:5px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;color:var(--text);font-size:12px" placeholder="Reply in thread..." oninput="wrThreadMentionUpdate(${idx})" onkeydown="wrThreadMentionKeyHandler(event,${idx})"><div id="wr-thread-mention-popup-${idx}" class="wr-mention-popup" style="bottom:32px;left:0;max-width:240px"></div><button style="padding:5px 10px;background:var(--teal-dim);border:1px solid rgba(0,201,160,.25);color:var(--teal);border-radius:4px;font-size:11px;cursor:pointer;font-weight:600" onclick="wrSendThreadReply(${idx})">Reply</button></div></div>`;
   el.innerHTML = html;
 }
 
@@ -2358,7 +2886,11 @@ async function wrSendThreadReply(idx) {
   input.value = '';
   try {
     await api(`/api/warroom/messages/${idx}/thread`, {method:'POST', body:JSON.stringify({content, speaker:'haseeb'})});
-    await wrLoadMessages();
+    // Force reload — thread replies don't change total/lastTs so normal change detection misses them
+    const data = await api('/api/warroom/messages?after=0');
+    wrAllMessages = data.messages;
+    wrMsgCount = data.total;
+    wrRenderMessages();
     wrToggleThread(idx, true);
   } catch(e) { toast('Error: '+e.message); }
 }
@@ -3265,7 +3797,336 @@ $$('.tab-btn').forEach(btn => {
   if (btn.dataset.tab === 'command') btn.addEventListener('click', () => loadCommand());
   if (btn.dataset.tab === 'kb') btn.addEventListener('click', () => loadKB());
   if (btn.dataset.tab === 'activity') btn.addEventListener('click', () => loadActivityFeed());
+  if (btn.dataset.tab === 'clients') btn.addEventListener('click', () => loadClients());
+  if (btn.dataset.tab === 'research') btn.addEventListener('click', () => rcRefresh());
 });
+
+// ─── RESEARCH CENTER ───
+let _rcProfiles = [];
+const _rcCatLabels = {
+  company_overview: {icon:'🏢', label:'Company Overview'},
+  leadership: {icon:'👤', label:'Leadership'},
+  financial: {icon:'💰', label:'Financial'},
+  security_posture: {icon:'🔒', label:'Security Posture'},
+  government: {icon:'🏛️', label:'Government'},
+  technology: {icon:'⚙️', label:'Technology'},
+  competitive: {icon:'📊', label:'Competitive'},
+  pain_points: {icon:'🎯', label:'Pain Points'},
+  outreach_history: {icon:'📧', label:'Outreach History'},
+};
+const _rcGradeColors = {A:'var(--green)',B:'var(--teal)',C:'var(--amber)',D:'var(--red)',F:'var(--red)'};
+const _rcSourceIcons = {llm_inference:'🤖',web_fetch:'🌐',security_scan:'🔒',sam_gov:'🏛️',usaspending:'💰',existing_research:'📁',outreach_history:'📧',dns_records:'🌍',job_postings:'💼'};
+
+async function rcRefresh() {
+  try {
+    const [stats, profiles, jobs] = await Promise.all([
+      api('/api/research/stats'),
+      api('/api/research/profiles?limit=50'),
+      api('/api/research/jobs?limit=10'),
+    ]);
+    if (stats.ok) {
+      $('#rc-total').textContent = stats.total_profiles || 0;
+      $('#rc-avg').textContent = (stats.avg_completeness_score || 0).toFixed(0);
+      const gd = stats.grade_distribution || {};
+      $('#rc-high').textContent = (gd.A || 0) + (gd.B || 0);
+      $('#rc-low').textContent = stats.low_coverage_companies || 0;
+      const active = (stats.queued_jobs || 0) + (stats.running_jobs || 0);
+      $('#rc-queued').textContent = active;
+      // Grade distribution bar
+      const total = Object.values(gd).reduce((a,b)=>a+b,0) || 1;
+      const gradeBar = $('#rc-grade-bar');
+      const gradeLegend = $('#rc-grade-legend');
+      if (gradeBar) {
+        let barHtml = '', legendHtml = '';
+        for (const [g,c] of [['A','var(--green)'],['B','var(--teal)'],['C','var(--amber)'],['D','var(--red)'],['F','#666']]) {
+          const pct = ((gd[g]||0)/total*100).toFixed(1);
+          if (gd[g]) {
+            barHtml += `<div style="width:${pct}%;background:${c};transition:width .4s"></div>`;
+            legendHtml += `<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${c};margin-right:4px"></span>${g}: ${gd[g]}</span>`;
+          }
+        }
+        gradeBar.innerHTML = barHtml;
+        gradeLegend.innerHTML = legendHtml;
+      }
+    }
+    if (profiles.ok) {
+      _rcProfiles = profiles.profiles || [];
+      rcApplySort();
+    }
+    if (jobs.ok) {
+      const activeJobs = (jobs.jobs || []).filter(j => j.status !== 'completed' || (Date.now() - new Date(j.completed_at||0).getTime() < 3600000));
+      if (!activeJobs.length) {
+        $('#rc-jobs').innerHTML = '<div style="text-align:center;color:var(--muted);font-size:13px;padding:12px">No active research jobs</div>';
+      } else {
+        $('#rc-jobs').innerHTML = `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="border-bottom:1px solid var(--line2)">
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);font-weight:500">Status</th>
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);font-weight:500">Company</th>
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);font-weight:500">Depth</th>
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);font-weight:500">Requested By</th>
+            <th style="text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);font-weight:500">Step</th>
+          </tr></thead><tbody>` +
+          activeJobs.map(j => {
+            const sc = j.status==='completed'?'var(--green)':j.status==='running'?'var(--teal)':j.status==='failed'?'var(--red)':'var(--amber)';
+            const bg = j.status==='running'?'rgba(0,201,160,.04)':'transparent';
+            return `<tr style="border-bottom:1px solid var(--line);background:${bg}">
+              <td style="padding:8px 10px"><span class="status-badge" style="background:${sc}22;color:${sc}">${j.status}</span></td>
+              <td style="padding:8px 10px;font-weight:500">${j.company}</td>
+              <td style="padding:8px 10px;color:var(--soft)">${j.depth}</td>
+              <td style="padding:8px 10px;color:var(--soft)">${j.requested_by}</td>
+              <td style="padding:8px 10px;color:var(--muted);font-size:12px">${j.current_step || '—'}</td>
+            </tr>`;
+          }).join('') + '</tbody></table></div>';
+      }
+    }
+  } catch (e) { console.error('Research refresh:', e); }
+}
+
+function rcApplySort() {
+  const sort = ($('#rc-sort')||{}).value || 'score';
+  let sorted = [..._rcProfiles];
+  if (sort === 'score') sorted.sort((a,b) => b.completeness_score - a.completeness_score);
+  else if (sort === 'recent') sorted.sort((a,b) => (b.last_research_at||'').localeCompare(a.last_research_at||''));
+  else if (sort === 'name') sorted.sort((a,b) => a.company.localeCompare(b.company));
+  rcRenderProfiles(sorted);
+}
+function rcSortProfiles() { rcApplySort(); }
+
+function rcRenderProfiles(profiles) {
+  const grid = $('#rc-profiles-grid');
+  const empty = $('#rc-profiles-empty');
+  if (!profiles.length) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  grid.innerHTML = profiles.map(p => {
+    const gc = _rcGradeColors[p.completeness_grade] || 'var(--red)';
+    const sources = (p.sources_used || '').split(',').filter(Boolean);
+    const bar = Math.min(p.completeness_score, 100);
+    const sourceChips = sources.map(s => `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 6px;background:var(--bg);border-radius:4px;font-size:10px;color:var(--soft)">${_rcSourceIcons[s]||'📌'} ${s.replace(/_/g,' ')}</span>`).join('');
+    const date = p.last_research_at ? new Date(p.last_research_at) : null;
+    const dateStr = date ? date.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+    return `<div class="link-card" style="display:block;padding:0;overflow:hidden" onclick="rcViewProfile('${p.slug}')">
+      <div style="padding:16px 18px 12px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div>
+            <div style="font-weight:600;font-size:15px;line-height:1.3">${p.company}</div>
+            ${p.domain ? `<div style="font-size:11px;color:var(--muted);margin-top:2px">${p.domain}</div>` : ''}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;min-width:44px">
+            <div style="font-family:var(--serif);font-size:24px;font-weight:700;color:${gc};line-height:1">${p.completeness_grade}</div>
+            <div style="font-size:10px;color:var(--soft);margin-top:1px">${p.completeness_score}/100</div>
+          </div>
+        </div>
+        <div style="background:var(--bg);border-radius:4px;height:5px;margin-bottom:10px;overflow:hidden">
+          <div style="height:100%;width:${bar}%;background:linear-gradient(90deg,${gc},${gc}aa);border-radius:4px;transition:width .4s"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${sourceChips}</div>
+      </div>
+      <div style="padding:8px 18px;background:var(--bg);border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">
+        <span>${sources.length} source${sources.length!==1?'s':''}</span>
+        <span>Researched ${dateStr}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function rcFilterProfiles() {
+  const q = ($('#rc-search').value || '').toLowerCase();
+  if (!q) { rcApplySort(); return; }
+  const filtered = _rcProfiles.filter(p => p.company.toLowerCase().includes(q) || (p.domain||'').toLowerCase().includes(q) || (p.sources_used||'').toLowerCase().includes(q));
+  rcRenderProfiles(filtered);
+}
+
+async function rcStartResearch() {
+  const company = ($('#rc-company-input').value || '').trim();
+  if (!company) { $('#rc-company-input').focus(); return; }
+  const depth = $('#rc-depth').value;
+  const btn = event.target;
+  btn.disabled = true; btn.textContent = 'Queuing...';
+  try {
+    const r = await api('/api/research/deep', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company,depth,sync:false})});
+    if (r.ok) {
+      showToast(`Research queued: ${company} (${depth})`);
+      $('#rc-company-input').value = '';
+      setTimeout(rcRefresh, 1000);
+    } else {
+      showToast('Error: ' + (r.error||'Unknown'), true);
+    }
+  } catch(e) { showToast('Error: '+e.message, true); }
+  btn.disabled = false; btn.textContent = 'Research';
+}
+
+async function rcBatchFromPipeline() {
+  if (!confirm('Queue research for all unresearched pipeline prospects?')) return;
+  try {
+    // Get pipeline prospects and find ones without research
+    const profiles = await api('/api/research/profiles?limit=200');
+    const researched = new Set((profiles.profiles||[]).map(p => p.company.toLowerCase()));
+    // We don't have a direct "all prospects" endpoint, so queue common defense contractors
+    const defaults = ['Northrop Grumman','Raytheon','General Dynamics','L3Harris','BAE Systems','Lockheed Martin','Maximus','ICF International','Guidehouse','Accenture Federal'];
+    const toResearch = defaults.filter(c => !researched.has(c.toLowerCase()));
+    if (!toResearch.length) { showToast('All common targets already researched'); return; }
+    const r = await api('/api/research/batch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({companies:toResearch,depth:'standard'})});
+    if (r.ok) showToast(`Queued ${r.queued} companies for research`);
+    setTimeout(rcRefresh, 1000);
+  } catch(e) { showToast('Error: '+e.message, true); }
+}
+
+async function rcShowGaps() {
+  try {
+    const r = await api('/api/research/gaps');
+    if (!r.ok || !r.companies_with_gaps?.length) { showToast('No coverage gaps found'); return; }
+    rcCloseModal();
+    const html = `<div style="font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:16px;color:var(--text)">Coverage Gaps</div>
+    <div style="font-size:12px;color:var(--soft);margin-bottom:14px">Companies needing deeper research. Click to queue deep research.</div>
+    ${r.companies_with_gaps.map(g => `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)">
+      <div style="flex:1">
+        <div style="font-weight:500;font-size:14px">${g.company}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Missing: ${(g.missing_categories||[]).join(', ')}</div>
+      </div>
+      <div style="font-family:var(--serif);font-size:18px;font-weight:700;color:${_rcGradeColors[g.completeness_grade]||'var(--red)'}">${g.completeness_grade}</div>
+      <button class="research-btn" onclick="rcDeepResearch('${g.company}')" style="font-size:11px;padding:5px 12px;border-radius:6px">Research</button>
+    </div>`).join('')}
+    <div style="margin-top:16px;text-align:right"><button class="research-btn" onclick="rcCloseModal()" style="font-size:12px;padding:6px 16px;background:var(--bg2);border:1px solid var(--line)">Close</button></div>`;
+    rcShowModal(html);
+  } catch(e) { showToast('Error: '+e.message, true); }
+}
+
+async function rcGovLookup() {
+  const company = prompt('Enter company name for government data lookup:');
+  if (!company) return;
+  showToast('Looking up government data...');
+  try {
+    const r = await api('/api/research/government-lookup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company})});
+    if (!r.ok) { showToast('Lookup failed', true); return; }
+    const g = r.government_data;
+    rcCloseModal();
+    const contracts = (g.active_contracts||[]).filter(c => typeof c === 'object');
+    const html = `<div style="font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:4px;color:var(--text)">🏛️ ${company}</div>
+    <div style="font-size:12px;color:var(--soft);margin-bottom:16px">Government Contract Intelligence</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+      <div class="viz-metric-card"><div class="metric-label">SAM.gov</div><div class="metric-value" style="font-size:16px;color:${g.sam_registration==='active'||g.sam_registration==='unknown'?'var(--teal)':'var(--muted)'}">${g.sam_registration||'unknown'}</div></div>
+      <div class="viz-metric-card"><div class="metric-label">CAGE Code</div><div class="metric-value" style="font-size:14px;color:var(--text)">${g.cage_code||'—'}</div></div>
+      <div class="viz-metric-card"><div class="metric-label">Total Obligations</div><div class="metric-value" style="font-size:14px;color:var(--green)">$${((g.total_obligations||0)/1e6).toFixed(1)}M</div></div>
+    </div>
+    ${(g.naics_codes||[]).length ? `<div style="margin-bottom:12px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);margin-bottom:6px">NAICS Codes</div><div style="display:flex;flex-wrap:wrap;gap:4px">${g.naics_codes.map(n=>`<span style="padding:3px 8px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;font-size:12px">${n}</span>`).join('')}</div></div>` : ''}
+    ${contracts.length ? `<div style="margin-bottom:12px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);margin-bottom:6px">Top Contracts</div>
+    ${contracts.slice(0,5).map(c=>`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:12px">
+      <div style="display:flex;justify-content:space-between"><span style="font-weight:500">${c.award_id||'—'}</span><span style="color:var(--green);font-weight:600">$${((c.amount||0)/1e6).toFixed(1)}M</span></div>
+      <div style="color:var(--muted);margin-top:2px">${(c.description||'').substring(0,100)}</div>
+    </div>`).join('')}</div>` : ''}
+    <div style="margin-top:16px;text-align:right"><button class="research-btn" onclick="rcCloseModal()" style="font-size:12px;padding:6px 16px;background:var(--bg2);border:1px solid var(--line)">Close</button></div>`;
+    rcShowModal(html, 520);
+  } catch(e) { showToast('Error: '+e.message, true); }
+}
+
+function rcShowModal(html, maxW) {
+  rcCloseModal();
+  const overlay = document.createElement('div');
+  overlay.id = 'rc-modal-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+  overlay.onclick = e => { if (e.target === overlay) rcCloseModal(); };
+  const modal = document.createElement('div');
+  modal.style.cssText = `background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:24px;max-width:${maxW||640}px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.6)`;
+  modal.innerHTML = html;
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
+function rcCloseModal() { document.getElementById('rc-modal-overlay')?.remove(); }
+
+async function rcViewProfile(slug) {
+  try {
+    const r = await api(`/api/research/profile/${slug}`);
+    if (!r.ok) { showToast('Profile not found', true); return; }
+    const p = r.profile || {};
+    const gc = _rcGradeColors[r.completeness_grade] || 'var(--red)';
+    const sources = (r.sources_used||'').split(',').filter(Boolean);
+    const cats = Object.keys(_rcCatLabels);
+
+    // Header
+    let html = `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+      <div>
+        <div style="font-family:var(--serif);font-size:20px;font-weight:600">${r.company}</div>
+        <div style="font-size:12px;color:var(--soft);margin-top:4px">Last researched: ${r.last_research_at ? new Date(r.last_research_at).toLocaleString() : '—'}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">${sources.map(s=>`<span style="display:inline-flex;align-items:center;gap:3px;padding:3px 8px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;font-size:11px;color:var(--soft)">${_rcSourceIcons[s]||'📌'} ${s.replace(/_/g,' ')}</span>`).join('')}</div>
+      </div>
+      <div style="text-align:center;min-width:64px">
+        <div style="font-family:var(--serif);font-size:36px;font-weight:700;color:${gc};line-height:1">${r.completeness_grade}</div>
+        <div style="font-size:12px;color:var(--soft)">${r.completeness_score}/100</div>
+        <div style="background:var(--bg2);border-radius:4px;height:5px;margin-top:6px;width:64px;overflow:hidden"><div style="height:100%;width:${r.completeness_score}%;background:${gc};border-radius:4px"></div></div>
+      </div>
+    </div>`;
+
+    // Category cards
+    for (const cat of cats) {
+      const data = p[cat];
+      const info = _rcCatLabels[cat];
+      const hasData = data && (typeof data === 'object' ? Object.values(data).some(v => v && v !== 'unknown' && v !== 'N/A') : true);
+      html += `<div style="margin-bottom:14px;background:var(--bg2);border:1px solid ${hasData?'var(--line)':'var(--line)'};border-radius:10px;overflow:hidden;${hasData?'':'opacity:.5'}">
+        <div style="padding:10px 14px;background:${hasData?'rgba(0,201,160,.03)':'var(--bg)'};border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px">
+          <span style="font-size:15px">${info.icon}</span>
+          <span style="font-size:13px;font-weight:600;color:${hasData?'var(--teal)':'var(--muted)'}">${info.label}</span>
+          ${!hasData?'<span style="margin-left:auto;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">No data</span>':''}
+        </div>`;
+      if (hasData && typeof data === 'object' && !Array.isArray(data)) {
+        html += '<div style="padding:10px 14px">';
+        for (const [k,v] of Object.entries(data)) {
+          if (!v || v === 'unknown' || v === 'N/A' || v === 'none') continue;
+          let display;
+          if (Array.isArray(v)) {
+            if (v.length && typeof v[0] === 'object') {
+              // Contract/contact objects
+              display = v.slice(0,5).map(item => {
+                if (item.amount) return `<div style="padding:4px 0;border-bottom:1px solid var(--line)"><span style="color:var(--green);font-weight:500">$${(item.amount/1e6).toFixed(1)}M</span> ${item.award_id||''} <span style="color:var(--muted)">${(item.description||'').substring(0,60)}</span></div>`;
+                if (item.name) return `<span style="padding:2px 8px;background:var(--bg);border-radius:4px;font-size:12px;display:inline-block;margin:2px">${item.name}${item.title?' — '+item.title:''}</span>`;
+                return `<span style="padding:2px 8px;background:var(--bg);border-radius:4px;font-size:12px;display:inline-block;margin:2px">${JSON.stringify(item).substring(0,80)}</span>`;
+              }).join('');
+            } else {
+              display = v.map(i=>`<span style="padding:2px 8px;background:var(--bg);border-radius:4px;font-size:12px;display:inline-block;margin:2px">${i}</span>`).join('');
+            }
+          } else if (typeof v === 'object') {
+            display = JSON.stringify(v);
+          } else {
+            display = String(v);
+          }
+          html += `<div style="padding:4px 0;font-size:13px;line-height:1.5"><span style="color:var(--soft);font-size:11px;text-transform:uppercase;letter-spacing:.3px">${k.replace(/_/g,' ')}</span><div style="margin-top:2px">${display}</div></div>`;
+        }
+        html += '</div>';
+      } else if (hasData) {
+        html += `<div style="padding:10px 14px;font-size:13px">${typeof data==='string'?data:JSON.stringify(data)}</div>`;
+      }
+      html += '</div>';
+    }
+
+    // Actions
+    html += `<div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+      <button class="research-btn" onclick="rcDeepResearch('${r.company}')" style="font-size:12px;padding:7px 16px;border-radius:8px">Re-research (Deep)</button>
+      <button class="research-btn" onclick="rcCloseModal()" style="font-size:12px;padding:7px 16px;border-radius:8px;background:var(--bg2);border:1px solid var(--line);color:var(--text)">Close</button>
+    </div>`;
+    rcShowModal(html, 660);
+  } catch (e) { showToast('Error: '+e.message, true); }
+}
+
+async function rcDeepResearch(company) {
+  try {
+    await api('/api/research/deep',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company,depth:'deep',sync:false})});
+    showToast(`Deep research queued: ${company}`);
+    rcCloseModal();
+    setTimeout(rcRefresh, 1000);
+  } catch(e) { showToast('Error: '+e.message, true); }
+}
+
+function showToast(msg, isError) {
+  let t = document.querySelector('.toast');
+  if (!t) { t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t); }
+  if (isError) { t.style.borderColor = 'var(--red)'; t.style.color = 'var(--red)'; }
+  else { t.style.borderColor = 'var(--teal)'; t.style.color = 'var(--teal)'; }
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tid); t._tid = setTimeout(() => t.classList.remove('show'), 3500);
+}
 
 // ─── CRM ───
 async function loadCRM() {
@@ -3386,6 +4247,655 @@ async function crmImport() {
     const r = await api('/api/crm/import-from-outreach', {method:'POST'});
     toast(r.message || 'Imported ' + (r.imported||0) + ' deals');
     loadCRM();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+// ─── Client Workspaces ───
+let _clientsCache = [];
+let _currentWsId = null;
+
+async function loadClients() {
+  try {
+    const data = await api('/api/client-workspaces');
+    _clientsCache = data.workspaces || [];
+    renderClientsList();
+  } catch(e) { console.error('loadClients:', e); }
+}
+
+function _industryStyle(ind) {
+  const m = {
+    'Defense':'background:#1e3a5f;color:#60a5fa','Defense / Federal IT':'background:#312e81;color:#a5b4fc',
+    'Federal':'background:#312e81;color:#a5b4fc','Healthcare':'background:#064e3b;color:#34d399',
+    'Managed Service Provider':'background:#4c1d95;color:#c4b5fd','MSP':'background:#4c1d95;color:#c4b5fd',
+    'IT':'background:#134e4a;color:#5eead4','Cybersecurity':'background:#164e63;color:#67e8f9'
+  };
+  return m[ind] || 'background:#1e2536;color:#8b949e';
+}
+
+function renderClientsList() {
+  const grid = document.getElementById('clients-grid');
+  if (!_clientsCache.length) {
+    grid.innerHTML = '<div style="color:#6e7681;font-size:13px;padding:60px 20px;text-align:center;grid-column:1/-1">No client workspaces yet. Click "+ New Client" to create one.</div>';
+    return;
+  }
+  grid.innerHTML = _clientsCache.map(ws => {
+    const total = ws.deliverable_count || 0;
+    const done = ws.delivered_count || 0;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const services = (ws.services || []).slice(0, 3).join(' · ') || 'No services';
+    return `<div onclick="openClientWorkspace('${ws.workspace_id}')" style="background:#0d1120;border:1px solid #1e2536;border-radius:10px;padding:18px 20px;cursor:pointer;transition:transform 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease;position:relative;overflow:hidden" onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='#2dd4bf';this.style.boxShadow='0 4px 16px rgba(45,212,191,0.12)'" onmouseout="this.style.transform='';this.style.borderColor='#1e2536';this.style.boxShadow='none'">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-weight:600;font-size:16px;color:#e7e9ea;letter-spacing:-0.2px">${ws.client_name || 'Unnamed'}</div>
+        <span style="font-size:10px;padding:3px 10px;border-radius:20px;font-weight:500;${_industryStyle(ws.industry)}">${ws.industry || 'General'}</span>
+      </div>
+      <div style="font-size:12px;color:#8b949e;margin-bottom:14px;line-height:1.4">${services}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;gap:14px;font-size:11px;color:#6e7681">
+          <span><strong style="color:#8b949e">${total}</strong> deliverables</span>
+          <span><strong style="color:#8b949e">${ws.document_count||0}</strong> docs</span>
+        </div>
+        <span style="font-size:11px;color:${pct>0?'#2dd4bf':'#6e7681'};font-weight:500">${pct}%</span>
+      </div>
+      <div style="background:#1e2536;border-radius:4px;height:3px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#2dd4bf,#34d399);border-radius:4px;transition:width 0.4s ease"></div>
+      </div>
+      <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:#30363d;font-size:18px;transition:transform 0.2s ease,color 0.2s ease" class="card-chevron">&#8250;</div>
+    </div>`;
+  }).join('');
+  // Animate chevrons on hover via parent delegation
+  grid.querySelectorAll('[onclick]').forEach(card => {
+    const chev = card.querySelector('.card-chevron');
+    if (!chev) return;
+    card.addEventListener('mouseenter', () => { chev.style.transform = 'translateY(-50%) translateX(4px)'; chev.style.color = '#2dd4bf'; });
+    card.addEventListener('mouseleave', () => { chev.style.transform = 'translateY(-50%)'; chev.style.color = '#30363d'; });
+  });
+}
+
+async function openClientWorkspace(wsId) {
+  _currentWsId = wsId;
+  try {
+    const ws = await api('/api/client-workspaces/' + wsId);
+    document.getElementById('clients-list-view').style.display = 'none';
+    document.getElementById('clients-detail-view').style.display = '';
+    document.getElementById('clients-back-btn').style.display = '';
+    document.getElementById('clients-header').textContent = ws.client_profile?.name || 'Workspace';
+    renderClientDetail(ws);
+  } catch(e) { toast('Error loading workspace: ' + e.message); }
+}
+
+function clientOpenDashboard(wsId, type) {
+  const ws = _clientsCache.find(w => w.workspace_id === wsId);
+  const name = (ws && ws.client_name) ? ws.client_name : 'client';
+  const slug = name.toLowerCase().replace(/\s+/g, '-');
+  const suffix = type || 'ops-health';
+  window.open('/dashboard/' + slug + '-' + suffix, '_blank');
+}
+
+function clientsBackToList() {
+  _currentWsId = null;
+  document.getElementById('clients-list-view').style.display = '';
+  document.getElementById('clients-detail-view').style.display = 'none';
+  document.getElementById('clients-back-btn').style.display = 'none';
+  document.getElementById('clients-header').textContent = 'Client Workspaces';
+  loadClients();
+}
+
+function renderClientDetail(ws) {
+  const p = ws.client_profile || {};
+  const dels = ws.deliverables || [];
+  const docs = ws.documents || [];
+  const timeline = (ws.activity_timeline || []).slice(-15).reverse();
+  const statusColors = {draft:'#6B7280',in_progress:'#F59E0B',in_review:'#2dd4bf',review:'#2dd4bf',approved:'#22c55e',delivered:'#60a5fa'};
+  const statusBg = {draft:'rgba(107,114,128,0.15)',in_progress:'rgba(245,158,11,0.15)',in_review:'rgba(45,212,191,0.15)',review:'rgba(45,212,191,0.15)',approved:'rgba(34,197,94,0.15)',delivered:'rgba(96,165,250,0.15)'};
+  const statusBorder = {draft:'#6B7280',in_progress:'#F59E0B',in_review:'#2dd4bf',review:'#2dd4bf',approved:'#22c55e',delivered:'#60a5fa'};
+  const typeLabels = {vulnerability_assessment:'Vuln Assessment',pentest_report:'Pentest Report',security_architecture_review:'Security Architecture',compliance_gap_analysis:'Compliance Gap',incident_response_plan:'IR Plan',risk_register:'Risk Register',security_awareness_training:'Security Training',remediation_plan:'Remediation Plan',sow:'SOW',status_report:'Status Report',other:'Other'};
+
+  // Compute stats
+  const totalDels = dels.length;
+  const withContent = dels.filter(d => (d.content||'').length > 0).length;
+  const delivered = dels.filter(d => d.status === 'delivered').length;
+  const inReview = dels.filter(d => d.status === 'in_review' || d.status === 'review').length;
+  const inProgress = dels.filter(d => d.status === 'in_progress').length;
+  const drafts = dels.filter(d => d.status === 'draft').length;
+  const completionPct = totalDels ? Math.round((withContent / totalDels) * 100) : 0;
+  const totalChars = dels.reduce((sum, d) => sum + (d.content||'').length, 0);
+  const totalPages = Math.round(totalChars / 250);
+
+  // SVG progress ring
+  const ringSize = 80, ringR = 32, ringC = 2 * Math.PI * ringR;
+  const ringOffset = ringC * (1 - completionPct / 100);
+  const progressRing = `<svg width="${ringSize}" height="${ringSize}" viewBox="0 0 ${ringSize} ${ringSize}">
+    <circle cx="${ringSize/2}" cy="${ringSize/2}" r="${ringR}" fill="none" stroke="#1a2236" stroke-width="5"/>
+    <circle cx="${ringSize/2}" cy="${ringSize/2}" r="${ringR}" fill="none" stroke="#2dd4bf" stroke-width="5"
+      stroke-dasharray="${ringC}" stroke-dashoffset="${ringOffset}" stroke-linecap="round"
+      style="transition:stroke-dashoffset 0.6s ease;transform:rotate(-90deg);transform-origin:50% 50%"/>
+    <text x="${ringSize/2}" y="${ringSize/2+1}" font-size="18" font-weight="700" fill="#e7e9ea" text-anchor="middle" dominant-baseline="middle">${completionPct}%</text>
+  </svg>`;
+
+  document.getElementById('clients-detail-content').innerHTML = `
+    <!-- Hero Card -->
+    <div style="background:linear-gradient(135deg,#0d1120 0%,rgba(45,212,191,0.06) 100%);border:1px solid #1a2236;border-radius:12px;padding:24px 28px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span style="font-size:10px;padding:4px 12px;border-radius:20px;background:rgba(45,212,191,0.12);color:#2dd4bf;font-weight:600;text-transform:uppercase;letter-spacing:0.5px">${p.industry || 'General'}</span>
+          <span style="font-size:10px;color:#4a566e">${(p.services||[]).length} services</span>
+        </div>
+        <div style="font-size:14px;color:#7e8ea8;margin-bottom:6px;line-height:1.5">${(p.services||[]).join(' · ') || 'No services defined'}</div>
+        <div style="font-size:11px;color:#4a566e;margin-top:8px">
+          ${(p.contacts||[]).map(c => typeof c === 'string' ? c : (c.name||'')).filter(Boolean).join(', ') || 'No contacts'}
+          ${p.contract_start ? ' · ' + p.contract_start + ' → ' + (p.contract_end||'ongoing') : ''}
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button onclick="clientOpenDashboard('${ws.workspace_id}')" style="font-size:11px;padding:6px 16px;background:#2dd4bf;border:none;color:#0a0e17;border-radius:6px;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(45,212,191,0.3);transition:opacity 0.15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Ops Health</button>
+          <button onclick="clientOpenDashboard('${ws.workspace_id}','risk-ecosystem')" style="font-size:11px;padding:6px 16px;background:#f59e0b;border:none;color:#0a0e17;border-radius:6px;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(245,158,11,0.3);transition:opacity 0.15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Risk & Ecosystem</button>
+          <button onclick="clientEditProfile('${ws.workspace_id}')" style="font-size:10px;padding:5px 14px;background:#111828;border:1px solid #1a2236;color:#7e8ea8;border-radius:6px;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#2dd4bf'" onmouseout="this.style.borderColor='#1a2236'">Edit Profile</button>
+          <button onclick="clientEditNotes('${ws.workspace_id}')" style="font-size:10px;padding:5px 14px;background:#111828;border:1px solid #1a2236;color:#7e8ea8;border-radius:6px;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#2dd4bf'" onmouseout="this.style.borderColor='#1a2236'">Edit Notes</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-left:28px">
+        ${progressRing}
+        <div style="font-size:10px;color:#4a566e;margin-top:6px;font-weight:500">Content Ready</div>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px">
+      ${[
+        {label:'Total', value:totalDels, color:'#e7e9ea', border:'#1a2236'},
+        {label:'Content Ready', value:withContent, color:'#22c55e', border:'#22c55e'},
+        {label:'In Review', value:inReview, color:'#2dd4bf', border:'#2dd4bf'},
+        {label:'In Progress', value:inProgress, color:'#F59E0B', border:'#F59E0B'},
+        {label:'Est. Pages', value:totalPages, color:'#7e8ea8', border:'#1a2236'},
+      ].map(m => `<div style="background:#0d1120;border:1px solid #1a2236;border-top:3px solid ${m.border};border-radius:8px;padding:16px 14px;text-align:center;transition:transform 0.15s,box-shadow 0.15s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+        <div style="font-size:28px;font-weight:700;color:${m.color};letter-spacing:-1px">${m.value}</div>
+        <div style="font-size:10px;color:#4a566e;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">${m.label}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Deliverable Cards -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:600;color:#e7e9ea;letter-spacing:-0.2px">Deliverables</div>
+      <div style="display:flex;gap:8px">
+        <div style="position:relative;display:inline-block">
+          <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'" style="font-size:11px;padding:5px 14px;background:rgba(45,212,191,0.1);border:1px solid #2dd4bf;color:#2dd4bf;border-radius:6px;cursor:pointer;font-weight:500">Export All &#9662;</button>
+          <div style="display:none;position:absolute;right:0;top:32px;background:#0d1120;border:1px solid #1a2236;border-radius:8px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:50;overflow:hidden">
+            <div onclick="dvBulkExport('${ws.workspace_id}','md');this.parentElement.style.display='none'" style="padding:9px 16px;font-size:12px;color:#e7e9ea;cursor:pointer;border-bottom:1px solid #1a2236" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">All as .md</div>
+            <div onclick="dvBulkExport('${ws.workspace_id}','html');this.parentElement.style.display='none'" style="padding:9px 16px;font-size:12px;color:#e7e9ea;cursor:pointer" onmouseover="this.style.background='#111828'" onmouseout="this.style.background=''">All as .html (PDF)</div>
+          </div>
+        </div>
+        <button class="research-btn" onclick="clientAddDeliverable('${ws.workspace_id}')" style="font-size:11px;padding:5px 14px">+ Add Deliverable</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:24px">
+      ${dels.length ? dels.map(d => {
+        const contentLen = (d.content||'').length;
+        const hasContent = contentLen > 0;
+        const charLabel = hasContent ? (contentLen > 10000 ? Math.round(contentLen/1000)+'K' : contentLen.toLocaleString()) + ' chars' : 'No content';
+        const preview = hasContent ? (d.content||'').replace(/[#*`\n]/g,' ').substring(0,140).trim()+'...' : d.description || 'Empty deliverable — click Generate to create content';
+        const borderClr = statusBorder[d.status] || '#6B7280';
+        return `<div style="background:#0d1120;border:1px solid #1a2236;border-left:4px solid ${borderClr};border-radius:10px;padding:20px;display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.2)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 8px rgba(0,0,0,0.2)'">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+            <div style="font-size:14px;font-weight:600;color:#e7e9ea;flex:1;line-height:1.35;letter-spacing:-0.2px">${d.title}</div>
+            <span style="font-size:10px;padding:3px 10px;border-radius:20px;background:${statusBg[d.status]||'rgba(107,114,128,0.15)'};color:${statusColors[d.status]||'#e7e9ea'};white-space:nowrap;margin-left:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.3px">${(d.status||'draft').replace('_',' ')}</span>
+          </div>
+          <div style="font-size:11px;color:#4a566e;margin-bottom:8px;font-weight:500">${typeLabels[d.type] || d.type}${d.assignee ? ' · <span style="color:#7e8ea8">' + d.assignee + '</span>' : ''}</div>
+          <div style="font-size:12px;color:#7e8ea8;line-height:1.6;flex:1;margin-bottom:14px;opacity:0.85">${preview}</div>
+          <div style="margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#4a566e;margin-bottom:4px">
+              <span>${charLabel}</span>
+              <span>v${d.version||1}</span>
+            </div>
+            <div style="background:#111828;border-radius:4px;height:4px;overflow:hidden">
+              <div style="height:100%;width:${hasContent?100:0}%;background:${hasContent?'linear-gradient(90deg,#2dd4bf,#22c55e)':'#4a566e'};border-radius:4px;transition:width 0.4s ease"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            ${hasContent
+              ? `<button onclick="clientViewContent('${ws.workspace_id}','${d.id}')" style="flex:1;font-size:12px;padding:8px 0;background:#2dd4bf;border:none;color:#0a0e17;border-radius:6px;cursor:pointer;font-weight:600;transition:opacity 0.15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">View Report</button>`
+              : `<button onclick="clientGenerateContent('${ws.workspace_id}','${d.id}')" style="flex:1;font-size:12px;padding:8px 0;background:rgba(245,158,11,0.15);border:1px solid #F59E0B;color:#F59E0B;border-radius:6px;cursor:pointer;font-weight:600;transition:opacity 0.15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Generate</button>`}
+            <button onclick="clientDeleteDel('${ws.workspace_id}','${d.id}')" style="font-size:12px;padding:8px 12px;background:none;border:1px solid #1a2236;color:#4a566e;border-radius:6px;cursor:pointer;transition:border-color 0.15s,color 0.15s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='#1a2236';this.style.color='#4a566e'">&#x2715;</button>
+          </div>
+        </div>`;}).join('') : '<div style="color:#4a566e;font-size:13px;padding:40px;text-align:center;grid-column:1/-1;background:#0d1120;border-radius:10px;border:1px dashed #1a2236">No deliverables yet. Click "+ Add Deliverable" to create one.</div>'}
+    </div>
+
+    <!-- Bottom row: Documents + Activity Timeline -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div style="background:#0d1120;border:1px solid #1a2236;border-radius:10px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-size:12px;color:#7e8ea8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Documents (${docs.length})</div>
+          <button class="research-btn" onclick="clientAddDocument('${ws.workspace_id}')" style="font-size:11px;padding:4px 12px">+ Add</button>
+        </div>
+        ${docs.length ? docs.map(d => `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #111828">
+          <div>
+            <div style="font-size:12px;color:#e7e9ea">${d.url ? '<a href="'+d.url+'" target="_blank" style="color:#2dd4bf;text-decoration:none">'+d.title+'</a>' : d.title}</div>
+            <div style="font-size:10px;color:#4a566e;margin-top:2px">${d.category} · ${d.created_by}</div>
+          </div>
+          <button onclick="clientDeleteDoc('${ws.workspace_id}','${d.id}')" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:11px;opacity:0.6;transition:opacity 0.15s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">x</button>
+        </div>`).join('') : '<div style="color:#4a566e;font-size:12px;padding:16px;text-align:center">No documents</div>'}
+      </div>
+
+      <!-- Activity Timeline -->
+      <div style="background:#0d1120;border:1px solid #1a2236;border-radius:10px;padding:16px">
+        <div style="font-size:12px;color:#7e8ea8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">Recent Activity</div>
+        <div style="max-height:220px;overflow-y:auto">
+          ${timeline.length ? timeline.map((e,i) => `<div style="display:flex;gap:10px;padding:8px 0;${i<timeline.length-1?'border-bottom:1px solid #111828':''}">
+            <div style="width:8px;height:8px;border-radius:50%;background:#2dd4bf;margin-top:4px;flex-shrink:0;opacity:${i===0?'1':'0.4'}"></div>
+            <div style="flex:1">
+              <div style="font-size:11px"><span style="color:#2dd4bf;font-weight:500">${e.actor}</span> <span style="color:#7e8ea8">${e.event.replace(/_/g,' ')}</span></div>
+              ${e.details ? '<div style="color:#4a566e;font-size:10px;margin-top:2px;line-height:1.4">'+e.details+'</div>' : ''}
+              <div style="color:#4a566e;font-size:10px;margin-top:2px">${new Date(e.timestamp).toLocaleString()}</div>
+            </div>
+          </div>`).join('') : '<div style="color:#4a566e;font-size:12px;padding:16px;text-align:center">No activity</div>'}
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete workspace -->
+    <div style="margin-top:20px;text-align:right">
+      <button onclick="clientDeleteWorkspace('${ws.workspace_id}')" style="font-size:11px;padding:5px 14px;background:none;border:1px solid rgba(239,68,68,0.3);color:#ef4444;border-radius:6px;cursor:pointer;opacity:0.7;transition:opacity 0.15s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Delete Workspace</button>
+    </div>`;
+}
+
+function clientNewWorkspace() {
+  const opsInputStyle = 'width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:4px;font-size:13px;font-family:var(--sans);box-sizing:border-box';
+  const opsBtnStyle = 'width:100%;padding:8px;background:var(--teal-dim);color:var(--teal);border:none;border-radius:4px;cursor:pointer;font-size:13px;font-family:var(--sans)';
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">New Client Workspace</h3>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Client Name *</label><input type="text" id="ws-new-name" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Industry</label><input type="text" id="ws-new-industry" placeholder="e.g. Healthcare, Finance, Government" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Services (comma-separated)</label><input type="text" id="ws-new-services" placeholder="e.g. Pentest, vCISO, Compliance" style="${opsInputStyle}"></div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Contract Start</label><input type="date" id="ws-new-start" style="${opsInputStyle}"></div>
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Contract End</label><input type="date" id="ws-new-end" style="${opsInputStyle}"></div>
+    </div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Notes</label><textarea id="ws-new-notes" rows="3" style="${opsInputStyle}"></textarea></div>
+    <button onclick="createClientWorkspace()" style="${opsBtnStyle}">Create Workspace</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function createClientWorkspace() {
+  const name = document.getElementById('ws-new-name').value.trim();
+  if (!name) { toast('Client name required'); return; }
+  const services = document.getElementById('ws-new-services').value.split(',').map(s => s.trim()).filter(Boolean);
+  try {
+    await api('/api/client-workspaces', {method:'POST', body:JSON.stringify({
+      name, industry: document.getElementById('ws-new-industry').value.trim(),
+      services, contract_start: document.getElementById('ws-new-start').value,
+      contract_end: document.getElementById('ws-new-end').value,
+      notes: document.getElementById('ws-new-notes').value.trim(),
+    })});
+    toast('Workspace created');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    loadClients();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+function clientAddDeliverable(wsId) {
+  const opsInputStyle = 'width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:4px;font-size:13px;font-family:var(--sans);box-sizing:border-box';
+  const opsBtnStyle = 'width:100%;padding:8px;background:var(--teal-dim);color:var(--teal);border:none;border-radius:4px;cursor:pointer;font-size:13px;font-family:var(--sans)';
+  const types = ['vulnerability_assessment','pentest_report','security_architecture_review','compliance_gap_analysis','incident_response_plan','risk_register','security_awareness_training','remediation_plan','sow','status_report','other'];
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">Add Deliverable</h3>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Title *</label><input type="text" id="del-new-title" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Type</label><select id="del-new-type" style="${opsInputStyle}">${types.map(t => '<option value="'+t+'">'+t.replace(/_/g,' ')+'</option>').join('')}</select></div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Due Date</label><input type="date" id="del-new-due" style="${opsInputStyle}"></div>
+      <div style="flex:1"><label style="font-size:11px;color:var(--soft)">Assignee</label><input type="text" id="del-new-assignee" placeholder="e.g. haseeb, echo" style="${opsInputStyle}"></div>
+    </div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Description</label><textarea id="del-new-desc" rows="3" style="${opsInputStyle}"></textarea></div>
+    <button onclick="createDeliverable('${wsId}')" style="${opsBtnStyle}">Add Deliverable</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function createDeliverable(wsId) {
+  const title = document.getElementById('del-new-title').value.trim();
+  if (!title) { toast('Title required'); return; }
+  try {
+    await api('/api/client-workspaces/' + wsId + '/deliverables', {method:'POST', body:JSON.stringify({
+      title, type: document.getElementById('del-new-type').value,
+      due_date: document.getElementById('del-new-due').value,
+      assignee: document.getElementById('del-new-assignee').value.trim(),
+      description: document.getElementById('del-new-desc').value.trim(),
+    })});
+    toast('Deliverable added');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+async function clientUpdateDelStatus(wsId, delId, status) {
+  try {
+    await api('/api/client-workspaces/' + wsId + '/deliverables/' + delId, {method:'PUT', body:JSON.stringify({status})});
+    toast('Status updated');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+let _dvWsId = '', _dvDelId = '';
+
+function _renderMarkdown(md) {
+  let html = md.replace(/```markdown\n?/g,'').replace(/```\n?$/g,'');
+  // Code blocks first (before other replacements)
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:12px;line-height:1.5;margin:12px 0"><code>$2</code></pre>');
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code style="background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:12px">$1</code>');
+  // Headers
+  html = html.replace(/^#### (.*$)/gm, '<h4 id="h-$1" style="color:var(--soft);font-size:13px;font-weight:600;margin:18px 0 8px;text-transform:uppercase;letter-spacing:0.3px">$1</h4>');
+  html = html.replace(/^### (.*$)/gm, '<h3 id="h-$1" style="color:var(--teal);font-size:15px;font-weight:600;margin:24px 0 10px">$1</h3>');
+  html = html.replace(/^## (.*$)/gm, '<h2 id="h-$1" style="color:var(--text);font-size:18px;font-weight:600;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)">$1</h2>');
+  html = html.replace(/^# (.*$)/gm, '<h1 id="h-$1" style="color:var(--text);font-size:22px;font-weight:700;margin:36px 0 16px">$1</h1>');
+  // Bold / italic
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--text)">$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  // Horizontal rule
+  html = html.replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--line);margin:24px 0">');
+  // Blockquote
+  html = html.replace(/^> (.*$)/gm, '<blockquote style="border-left:3px solid var(--teal);margin:12px 0;padding:8px 16px;color:var(--soft);background:var(--teal-dim);border-radius:0 6px 6px 0">$1</blockquote>');
+  // Tables
+  html = html.replace(/^\|(.+)\|$/gm, (match, content) => {
+    const cells = content.split('|').map(c => c.trim());
+    if (cells.every(c => /^[-:]+$/.test(c))) return '';
+    const tag = cells.some(c => /^[-:]+$/.test(c)) ? 'th' : 'td';
+    return '<tr>' + cells.map(c => `<${tag} style="padding:8px 12px;border:1px solid var(--line);font-size:12px">${c}</${tag}>`).join('') + '</tr>';
+  });
+  html = html.replace(/(<tr>.*<\/tr>\s*)+/g, match => `<table style="width:100%;border-collapse:collapse;margin:12px 0;background:var(--bg2);border-radius:6px;overflow:hidden">${match}</table>`);
+  // Lists
+  html = html.replace(/^- (.*$)/gm, '<li style="margin:3px 0;margin-left:20px;line-height:1.6">$1</li>');
+  html = html.replace(/^\d+\. (.*$)/gm, '<li style="margin:3px 0;margin-left:20px;line-height:1.6;list-style:decimal">$1</li>');
+  // Paragraphs
+  html = html.replace(/\n\n/g, '</p><p style="margin:10px 0;line-height:1.7">');
+  html = html.replace(/\n/g, '<br>');
+  return '<p style="margin:10px 0;line-height:1.7">' + html + '</p>';
+}
+
+function _buildTOC(md) {
+  const headers = [];
+  const re = /^(#{1,3}) (.+)$/gm;
+  let m;
+  while ((m = re.exec(md)) !== null) {
+    headers.push({ level: m[1].length, text: m[2].replace(/\*\*/g,'') });
+  }
+  if (!headers.length) return '<div style="padding:12px;color:var(--muted);font-size:11px">No sections</div>';
+  return '<div style="padding:8px 0">' + headers.map(h => {
+    const indent = (h.level - 1) * 14;
+    const weight = h.level === 1 ? '600' : '400';
+    const size = h.level === 1 ? '12px' : '11px';
+    const color = h.level === 1 ? 'var(--text)' : 'var(--soft)';
+    return `<a href="#h-${h.text}" onclick="event.preventDefault();document.getElementById('h-${h.text}')?.scrollIntoView({behavior:'smooth',block:'start'})" style="display:block;padding:5px 16px 5px ${16+indent}px;color:${color};text-decoration:none;font-size:${size};font-weight:${weight};line-height:1.4;border-left:2px solid transparent;transition:all 0.15s" onmouseover="this.style.background='var(--bg3)';this.style.borderLeftColor='var(--teal)'" onmouseout="this.style.background='none';this.style.borderLeftColor='transparent'">${h.text}</a>`;
+  }).join('') + '</div>';
+}
+
+async function clientViewContent(wsId, delId) {
+  try {
+    const ws = await api('/api/client-workspaces/' + wsId);
+    const d = (ws.deliverables||[]).find(x => x.id === delId);
+    if (!d || !d.content) { toast('No content found'); return; }
+    _dvWsId = wsId; _dvDelId = delId;
+    const clientName = ws.client_profile?.name || 'Client';
+    // Set top bar
+    document.getElementById('dv-title').textContent = d.title;
+    document.getElementById('dv-meta').textContent = `${clientName} · ${(d.content||'').length.toLocaleString()} chars · v${d.version||1} · ${typeLabels[d.type]||d.type}`;
+    const statusEl = document.getElementById('dv-status');
+    const sc = {draft:'var(--muted)',in_progress:'var(--amber)',in_review:'var(--teal)',review:'var(--teal)',approved:'var(--green)',delivered:'#64b5f6'};
+    const sb = {draft:'rgba(110,118,129,0.15)',in_progress:'rgba(245,158,11,0.15)',in_review:'rgba(45,212,191,0.15)',review:'rgba(45,212,191,0.15)',approved:'rgba(52,211,153,0.15)',delivered:'rgba(100,181,246,0.15)'};
+    statusEl.textContent = (d.status||'draft').replace('_',' ').toUpperCase();
+    statusEl.style.color = sc[d.status]||'var(--text)';
+    statusEl.style.background = sb[d.status]||'var(--bg3)';
+    // Build TOC
+    document.getElementById('dv-toc').innerHTML = '<div style="padding:12px 16px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--line);margin-bottom:4px">Table of Contents</div>' + _buildTOC(d.content);
+    // Render content
+    document.getElementById('dv-content').innerHTML = '<div style="font-size:14px;color:var(--soft);font-family:var(--sans);max-width:760px">' + _renderMarkdown(d.content) + '</div>';
+    // Show viewer
+    document.getElementById('deliverable-viewer').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    // Scroll progress — scrolling happens on the wrapper div
+    const scrollEl = document.getElementById('dv-content-scroll');
+    const progressEl = document.getElementById('dv-progress');
+    scrollEl.onscroll = () => {
+      const pct = scrollEl.scrollTop / (scrollEl.scrollHeight - scrollEl.clientHeight) * 100;
+      progressEl.style.width = Math.min(pct, 100) + '%';
+    };
+    scrollEl.scrollTop = 0;
+  } catch(e) { toast('Error loading content: ' + e.message); }
+}
+
+function closeDeliverableViewer() {
+  document.getElementById('deliverable-viewer').style.display = 'none';
+  document.body.style.overflow = '';
+}
+// Close export menu on click outside
+document.addEventListener('click', e => {
+  const m = document.getElementById('dv-export-menu');
+  if (m && m.style.display === 'block' && !e.target.closest('#dv-export-wrap')) m.style.display = 'none';
+});
+// Close viewer on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('deliverable-viewer').style.display === 'block') closeDeliverableViewer();
+});
+
+function dvPrint() {
+  const content = document.getElementById('dv-content').innerHTML;
+  const title = document.getElementById('dv-title').textContent;
+  const w = window.open('','_blank');
+  w.document.write(`<html><head><title>${title}</title><style>body{font-family:Georgia,serif;max-width:800px;margin:40px auto;padding:0 20px;color:#222;line-height:1.7;font-size:14px}h1{font-size:22px}h2{font-size:18px;border-bottom:1px solid #ddd;padding-bottom:6px}h3{font-size:15px;color:#555}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:6px 10px}pre{background:#f5f5f5;padding:12px;border-radius:4px;overflow-x:auto}blockquote{border-left:3px solid #2dd4bf;padding:8px 16px;margin:12px 0;background:#f0fdf4}</style></head><body>${content}</body></html>`);
+  w.document.close();
+  setTimeout(() => w.print(), 300);
+}
+
+function dvCopy() {
+  api('/api/client-workspaces/' + _dvWsId).then(ws => {
+    const d = (ws.deliverables||[]).find(x => x.id === _dvDelId);
+    if (d?.content) navigator.clipboard.writeText(d.content).then(() => toast('Copied to clipboard!'));
+  });
+  _closeExportMenu();
+}
+
+function _closeExportMenu() {
+  const m = document.getElementById('dv-export-menu');
+  if (m) m.style.display = 'none';
+}
+
+function _downloadFile(filename, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function dvExportMd() {
+  _closeExportMenu();
+  api('/api/client-workspaces/' + _dvWsId).then(ws => {
+    const d = (ws.deliverables||[]).find(x => x.id === _dvDelId);
+    if (!d?.content) { toast('No content'); return; }
+    const filename = d.title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/ +/g,'_') + '.md';
+    _downloadFile(filename, d.content, 'text/markdown');
+    toast('Downloaded ' + filename);
+  });
+}
+
+function dvExportHtml() {
+  _closeExportMenu();
+  const content = document.getElementById('dv-content').innerHTML;
+  const title = document.getElementById('dv-title').textContent;
+  const meta = document.getElementById('dv-meta').textContent;
+  const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>${title}</title>
+<style>
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;max-width:820px;margin:0 auto;padding:40px 30px;color:#1a1a2e;line-height:1.7;font-size:14px;background:#fff}
+  h1{font-size:24px;color:#0f172a;margin:32px 0 12px}
+  h2{font-size:19px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:8px;margin:28px 0 14px}
+  h3{font-size:15px;color:#334155;margin:20px 0 8px}
+  table{border-collapse:collapse;width:100%;margin:14px 0}
+  td,th{border:1px solid #e2e8f0;padding:8px 12px;font-size:13px}
+  th{background:#f8fafc;font-weight:600}
+  pre{background:#f1f5f9;padding:14px;border-radius:6px;overflow-x:auto;font-size:12px;border:1px solid #e2e8f0}
+  code{background:#f1f5f9;padding:1px 4px;border-radius:3px;font-size:12px}
+  blockquote{border-left:3px solid #2dd4bf;padding:10px 18px;margin:14px 0;background:#f0fdfa;border-radius:0 6px 6px 0}
+  li{margin:3px 0}
+  .header{border-bottom:2px solid #0f172a;padding-bottom:16px;margin-bottom:30px}
+  .header h1{margin:0 0 4px;font-size:22px}
+  .header .meta{color:#64748b;font-size:12px}
+  .footer{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}
+  @media print{body{padding:20px}h2{page-break-before:auto}}
+</style></head><body>
+<div class="header"><h1>${title}</h1><div class="meta">${meta} | Generated by ClearOps AI</div></div>
+${content}
+<div class="footer">Confidential — Prepared by ClearOps AI | clearopsai.io</div>
+</body></html>`;
+  const filename = title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/ +/g,'_') + '.html';
+  _downloadFile(filename, html, 'text/html');
+  toast('Downloaded ' + filename);
+}
+
+async function dvBulkExport(wsId, format) {
+  toast('Exporting all deliverables...');
+  try {
+    const ws = await api('/api/client-workspaces/' + wsId);
+    const clientName = (ws.client_profile?.name || 'Client').replace(/[^a-zA-Z0-9 ]/g,'').replace(/ +/g,'_');
+    const dels = (ws.deliverables||[]).filter(d => (d.content||'').length > 0);
+    if (!dels.length) { toast('No deliverables with content to export'); return; }
+    if (format === 'md') {
+      // Combined markdown file
+      let combined = `# ${ws.client_profile?.name || 'Client'} — Deliverables Package\n\nGenerated by ClearOps AI | ${new Date().toLocaleDateString()}\n\n---\n\n`;
+      dels.forEach((d, i) => {
+        combined += d.content + '\n\n';
+        if (i < dels.length - 1) combined += '---\n\n';
+      });
+      _downloadFile(clientName + '_All_Deliverables.md', combined, 'text/markdown');
+      toast(`Exported ${dels.length} deliverables as markdown`);
+    } else {
+      // Individual HTML files — download as combined HTML with page breaks
+      let combined = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${ws.client_profile?.name} — Deliverables</title>
+<style>body{font-family:'Segoe UI',system-ui,sans-serif;max-width:820px;margin:0 auto;padding:40px 30px;color:#1a1a2e;line-height:1.7;font-size:14px}h1{font-size:24px;color:#0f172a}h2{font-size:19px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:8px}h3{font-size:15px;color:#334155}table{border-collapse:collapse;width:100%}td,th{border:1px solid #e2e8f0;padding:8px 12px;font-size:13px}th{background:#f8fafc}pre{background:#f1f5f9;padding:14px;border-radius:6px}blockquote{border-left:3px solid #2dd4bf;padding:10px 18px;background:#f0fdfa}.page-break{page-break-before:always;border-top:3px solid #0f172a;margin:40px 0;padding-top:30px}.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}@media print{.page-break{page-break-before:always}}</style></head><body>`;
+      dels.forEach((d, i) => {
+        if (i > 0) combined += '<div class="page-break"></div>';
+        combined += _renderMarkdown(d.content);
+      });
+      combined += '<div class="footer">Confidential — Prepared by ClearOps AI | clearopsai.io</div></body></html>';
+      _downloadFile(clientName + '_All_Deliverables.html', combined, 'text/html');
+      toast(`Exported ${dels.length} deliverables as HTML (print to save as PDF)`);
+    }
+  } catch(e) { toast('Export error: ' + e.message); }
+}
+
+function dvRegenerate() {
+  if (!confirm('Regenerate this deliverable content? Current content will be replaced.')) return;
+  const brief = prompt('Optional context/brief:') || '';
+  toast('Regenerating... this takes 30-60 seconds');
+  api('/api/client-workspaces/' + _dvWsId + '/deliverables/' + _dvDelId + '/generate-content', {
+    method:'POST', body:JSON.stringify({brief})
+  }).then(() => { toast('Regenerated!'); clientViewContent(_dvWsId, _dvDelId); }).catch(e => toast('Error: '+e.message));
+}
+
+const typeLabels = {vulnerability_assessment:'Vuln Assessment',pentest_report:'Pentest Report',security_architecture_review:'Security Architecture',compliance_gap_analysis:'Compliance Gap',incident_response_plan:'IR Plan',risk_register:'Risk Register',security_awareness_training:'Security Training',remediation_plan:'Remediation Plan',sow:'SOW',status_report:'Status Report',other:'Other'};
+
+async function clientGenerateContent(wsId, delId) {
+  const brief = prompt('Optional brief/context for generation (or leave empty):') || '';
+  toast('Generating content... this may take 30-60 seconds');
+  try {
+    await api('/api/client-workspaces/' + wsId + '/deliverables/' + delId + '/generate-content', {
+      method: 'POST',
+      body: JSON.stringify({ brief })
+    });
+    toast('Content generated! Opening...');
+    openClientWorkspace(wsId);
+    setTimeout(() => clientViewContent(wsId, delId), 500);
+  } catch(e) { toast('Generation failed: ' + e.message); }
+}
+
+async function clientDeleteDel(wsId, delId) {
+  if (!confirm('Delete this deliverable?')) return;
+  try {
+    await api('/api/client-workspaces/' + wsId + '/deliverables/' + delId, {method:'DELETE'});
+    toast('Deleted');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+function clientAddDocument(wsId) {
+  const opsInputStyle = 'width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:4px;font-size:13px;font-family:var(--sans);box-sizing:border-box';
+  const opsBtnStyle = 'width:100%;padding:8px;background:var(--teal-dim);color:var(--teal);border:none;border-radius:4px;cursor:pointer;font-size:13px;font-family:var(--sans)';
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">Add Document</h3>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Title *</label><input type="text" id="doc-new-title" style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Category</label><select id="doc-new-cat" style="${opsInputStyle}"><option>report</option><option>proposal</option><option>sow</option><option>policy</option><option>procedure</option><option>evidence</option><option>general</option></select></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">URL (optional)</label><input type="url" id="doc-new-url" placeholder="https://..." style="${opsInputStyle}"></div>
+    <div style="margin-bottom:10px"><label style="font-size:11px;color:var(--soft)">Content/Notes</label><textarea id="doc-new-content" rows="4" style="${opsInputStyle}"></textarea></div>
+    <button onclick="createDocument('${wsId}')" style="${opsBtnStyle}">Add Document</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+async function createDocument(wsId) {
+  const title = document.getElementById('doc-new-title').value.trim();
+  if (!title) { toast('Title required'); return; }
+  try {
+    await api('/api/client-workspaces/' + wsId + '/documents', {method:'POST', body:JSON.stringify({
+      title, category: document.getElementById('doc-new-cat').value,
+      url: document.getElementById('doc-new-url').value.trim(),
+      content: document.getElementById('doc-new-content').value.trim(),
+    })});
+    toast('Document added');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+async function clientDeleteDoc(wsId, docId) {
+  if (!confirm('Delete this document?')) return;
+  try {
+    await api('/api/client-workspaces/' + wsId + '/documents/' + docId, {method:'DELETE'});
+    toast('Deleted');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+function clientEditProfile(wsId) {
+  const ws = _clientsCache.find(w => w.workspace_id === wsId);
+  toast('Use the API or ask Claude to update profile');
+}
+
+function clientEditNotes(wsId) {
+  const opsInputStyle = 'width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:4px;font-size:13px;font-family:var(--sans);box-sizing:border-box';
+  const opsBtnStyle = 'width:100%;padding:8px;background:var(--teal-dim);color:var(--teal);border:none;border-radius:4px;cursor:pointer;font-size:13px;font-family:var(--sans)';
+  document.getElementById('drawer-content').innerHTML = `
+    <h3 style="margin-bottom:16px">Edit Strategy Notes</h3>
+    <textarea id="ws-edit-notes" rows="12" style="${opsInputStyle}"></textarea>
+    <button onclick="saveStrategyNotes('${wsId}')" style="${opsBtnStyle};margin-top:10px">Save Notes</button>`;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  // Load current notes
+  api('/api/client-workspaces/' + wsId).then(ws => {
+    document.getElementById('ws-edit-notes').value = ws.strategy_notes || '';
+  });
+}
+
+async function saveStrategyNotes(wsId) {
+  try {
+    await api('/api/client-workspaces/' + wsId, {method:'PUT', body:JSON.stringify({
+      strategy_notes: document.getElementById('ws-edit-notes').value
+    })});
+    toast('Notes saved');
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    openClientWorkspace(wsId);
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+async function clientDeleteWorkspace(wsId) {
+  if (!confirm('Delete this entire workspace? This cannot be undone.')) return;
+  try {
+    await api('/api/client-workspaces/' + wsId, {method:'DELETE'});
+    toast('Workspace deleted');
+    clientsBackToList();
   } catch(e) { toast('Error: ' + e.message); }
 }
 
