@@ -5560,7 +5560,6 @@ document.addEventListener('keydown', function(e) {
 
 // ─── DATA FRESHNESS TRACKER ───
 let _lastDataLoad = Date.now();
-const _origSwitchToTab = switchToTab;
 function _updateFreshness() {
   const badge = document.getElementById('freshnessBadge');
   if (!badge) return;
@@ -5576,11 +5575,11 @@ function _updateFreshness() {
 setInterval(_updateFreshness, 15000);
 
 // Patch switchToTab to track freshness
-const _switchOrig = switchToTab;
+const _switchTabOrig = switchToTab;
 switchToTab = function(tabName) {
   _lastDataLoad = Date.now();
   _updateFreshness();
-  return _switchOrig(tabName);
+  return _switchTabOrig(tabName);
 };
 </script>
 </body>
