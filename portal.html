@@ -482,7 +482,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .sidebar { display: none; }
   .dashboard { margin-left: 0; }
   .stats-row { grid-template-columns: repeat(3, 1fr); }
-  .pipeline-table { font-size: 12px; }
+  .pipeline-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .pipeline-table { font-size: 12px; min-width: 600px; }
   .pipeline-table .col-notes, .pipeline-table .col-batch { display: none; }
   .followup-grid { grid-template-columns: 1fr; }
   .links-grid { grid-template-columns: repeat(2, 1fr); }
@@ -976,8 +977,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 
 <div class="dashboard">
 
-  <!-- Stats Row -->
-  <div class="stats-row">
+  <!-- Stats Row (pipeline/analytics/followups/crm only) -->
+  <div class="stats-row" id="global-stats-row">
     <div class="viz-metric-card"><div class="metric-label">Total Sent</div><div class="metric-value" id="s-total" style="color:var(--teal)">—</div><div id="s-total-spark"></div></div>
     <div class="viz-metric-card"><div class="metric-label">Awaiting Reply</div><div class="metric-value" id="s-active" style="color:var(--amber)">—</div></div>
     <div class="viz-metric-card"><div class="metric-label">Replied</div><div class="metric-value" id="s-replied" style="color:var(--green)">—</div></div>
@@ -990,7 +991,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   <div class="niche-bar" id="niche-bar"></div>
 
   <!-- Quick Action CTAs -->
-  <div class="cta-bar">
+  <div class="cta-bar" id="global-cta-bar">
     <button class="cta-btn cta-primary" onclick="trackClick('Research Prospects');switchToTab('batches');triggerResearch()">Research Prospects</button>
     <button class="cta-btn cta-secondary" onclick="trackClick('Gmail Sync');cmdGmailSync()">Sync Gmail</button>
     <button class="cta-btn cta-warn" onclick="trackClick('Follow-up Check');cmdFollowupCheck()">Check Follow-ups</button>
@@ -1486,7 +1487,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <div id="rc-profiles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
       <div id="rc-profiles-empty" style="display:none" class="empty-state">
-        <div class="emoji">🔬</div>
+        <div style="margin-bottom:12px;opacity:.5"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <div class="msg">No research profiles yet. Enter a company name above to start deep intelligence gathering.</div>
       </div>
     </div>
@@ -1768,6 +1769,14 @@ function switchToTab(tabName) {
     links: () => typeof renderLinks === 'function' && renderLinks(),
   };
   if (loaders[tabName]) loaders[tabName]();
+  // Show/hide global stats & CTA for relevant tabs only
+  const showGlobal = ['pipeline','analytics','followups','batches','crm','links'].includes(tabName);
+  const statsRow = $('#global-stats-row');
+  const nicheBar = $('#niche-bar');
+  const ctaBar = $('#global-cta-bar');
+  if (statsRow) statsRow.style.display = showGlobal ? '' : 'none';
+  if (nicheBar) nicheBar.style.display = showGlobal ? '' : 'none';
+  if (ctaBar) ctaBar.style.display = showGlobal ? '' : 'none';
   // Sync sidebar highlight
   syncSidebarActive(tabName);
   if (location.hash.slice(1) !== tabName) history.replaceState(null, '', '#' + tabName);
@@ -2115,7 +2124,7 @@ async function loadFollowups() {
   const container = $('#followups-container');
   if (!overdue.length && !upcoming.length) {
     container.innerHTML = `<div class="panel"><div class="empty-state">
-      <div class="emoji">&#10003;</div>
+      <div style="margin-bottom:12px;opacity:.5"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
       <div class="msg">No follow-ups due or upcoming. You're caught up.</div>
       <div style="margin-top:12px"><button class="cta-btn cta-secondary" onclick="switchToTab('batches')">Create a Batch</button> <button class="cta-btn cta-secondary" onclick="switchToTab('pipeline')" style="margin-left:6px">View Pipeline</button></div>
     </div></div>`;
