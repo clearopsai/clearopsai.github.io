@@ -7,6 +7,7 @@
 <title>ClearOps Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -486,7 +487,32 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
   .followup-grid { grid-template-columns: 1fr; }
   .links-grid { grid-template-columns: repeat(2, 1fr); }
   .drawer { width: 100%; right: -100%; }
+  .topbar { padding: 0 12px; }
+  .topbar-right { gap: 8px; }
+  .freshness-badge, .last-send-indicator, #clock { display: none !important; }
+  .cta-bar { flex-wrap: wrap; gap: 6px; }
+  .cta-btn { font-size: 11px; padding: 6px 10px; }
+  .niche-bar { gap: 6px; flex-wrap: wrap; }
+  .niche-chip { font-size: 11px; padding: 3px 8px; }
+  .bulk-bar { flex-wrap: wrap; }
+  .chart-container { max-height: 200px; }
+  .dashboard { padding-bottom: 64px; }
+  .mob-nav { display: flex !important; }
 }
+.mob-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  height: 56px; background: rgba(2,6,23,.95); backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(45,212,191,.1);
+  align-items: center; justify-content: space-around; padding: 0 4px;
+}
+.mob-nav button {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: none; border: none; color: var(--muted); font-size: 9px;
+  font-family: var(--sans); padding: 6px 0; cursor: pointer; min-width: 52px;
+  transition: color .15s;
+}
+.mob-nav button.active, .mob-nav button:hover { color: var(--teal); }
+.mob-nav button svg { width: 20px; height: 20px; }
 @media (max-width: 480px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .links-grid { grid-template-columns: 1fr; }
@@ -540,6 +566,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .an-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:2px}
 .an-bar-fill{height:100%;border-radius:3px}
 .an-intent-row{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--line)}
+.chart-container{position:relative;width:100%;max-height:260px;margin-bottom:16px}
+.chart-container canvas{width:100%!important;max-height:260px}
+.an-funnel-step{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:2px;border-radius:6px;font-size:13px;transition:background .2s}
+.an-funnel-step:hover{background:rgba(255,255,255,.04)}
+.an-funnel-bar{height:28px;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:600;color:#fff;min-width:32px;transition:width .6s ease}
+.bulk-bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg2);border:1px solid var(--teal);border-radius:6px;margin-bottom:10px;font-size:12px;animation:fadeIn .2s}
+.bulk-bar select,.bulk-bar button{font-size:12px;padding:3px 8px;border-radius:4px;border:1px solid var(--line);background:var(--bg3);color:var(--fg);cursor:pointer}
+.bulk-bar button:hover{background:var(--teal);color:#000}
+.bulk-bar .bulk-count{font-weight:600;color:var(--teal)}
+.pipe-check{width:16px;height:16px;accent-color:var(--teal);cursor:pointer}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 /* Command */
 .cmd-person-card{background:rgba(15,23,42,.5);backdrop-filter:blur(6px);border:1px solid rgba(45,212,191,.06);border-radius:8px;padding:10px;transition:border-color .2s}
 .cmd-person-card:hover{border-color:rgba(45,212,191,.12)}
@@ -973,10 +1010,25 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
         <select id="filter-niche"><option value="">All Niches</option></select>
         <span class="filter-count" id="pipeline-count"></span>
       </div>
+      <div id="bulk-bar" class="bulk-bar" style="display:none">
+        <span class="bulk-count" id="bulk-count">0</span> selected
+        <select id="bulk-status-sel">
+          <option value="">Change Status</option>
+          <option value="replied">Replied</option>
+          <option value="meeting">Meeting</option>
+          <option value="bounced">Bounced</option>
+          <option value="not_interested">Not Interested</option>
+          <option value="queued">Queued</option>
+        </select>
+        <button onclick="bulkApplyStatus()">Apply</button>
+        <button onclick="bulkExportCSV()">Export CSV</button>
+        <button onclick="bulkClearSelection()" style="background:transparent;border-color:var(--muted);color:var(--muted)">Clear</button>
+      </div>
       <div style="overflow-x:auto">
         <table class="pipeline-table">
           <thead>
             <tr>
+              <th style="width:32px"><input type="checkbox" class="pipe-check" id="select-all-check" onchange="bulkToggleAll(this.checked)"></th>
               <th>Company</th>
               <th>Contact</th>
               <th>Status</th>
@@ -1033,6 +1085,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
           <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">Hot Leads</div><div class="metric-value" id="an-hot" style="color:var(--amber)">—</div></div>
           <div class="viz-metric-card" style="flex:1;min-width:80px"><div class="metric-label">A/B Winner</div><div class="metric-value" id="an-ab-winner" style="color:var(--teal);font-size:18px">—</div></div>
         </div>
+        <!-- Outreach Funnel -->
+        <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Outreach Funnel</h4>
+        <div id="an-funnel" style="margin-bottom:16px"></div>
         <!-- Intent scores -->
         <div style="margin-bottom:16px"><h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Intent Signals</h4><div id="an-intent-list"></div></div>
         <!-- Top openers -->
@@ -1040,6 +1095,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <div id="analytics-niches" style="display:none">
         <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Performance by Niche</h4>
+        <div class="chart-container"><canvas id="an-niche-chart"></canvas></div>
         <div id="an-niche-table"></div>
       </div>
       <div id="analytics-engagement" style="display:none">
@@ -1055,10 +1111,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
       </div>
       <div id="analytics-velocity" style="display:none">
         <h4 style="font-size:13px;margin-bottom:8px;color:var(--soft)">Ops Velocity (Weekly)</h4>
+        <div class="chart-container"><canvas id="an-velocity-canvas"></canvas></div>
         <div id="an-velocity-chart"></div>
         <h4 style="font-size:13px;margin-top:16px;margin-bottom:8px;color:var(--soft)">Throughput (30 days)</h4>
         <div id="an-throughput"></div>
         <h4 style="font-size:13px;margin-top:16px;margin-bottom:8px;color:var(--soft)">Type Distribution</h4>
+        <div class="chart-container"><canvas id="an-type-canvas"></canvas></div>
         <div id="an-type-dist"></div>
       </div>
     </div>
@@ -1662,6 +1720,10 @@ function niceName(batch) {
   if (!batch) return '—';
   return batch.replace(/^batch_\d+_/, '').replace(/_/g, ' ');
 }
+function niceNiche(n) {
+  if (!n) return '—';
+  return n.replace(/^dc_/, '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
 
 // ─── Tab title badge ───
 function updateTabTitle() {
@@ -1802,7 +1864,7 @@ async function loadStats() {
   // Reply rate as progress ring
   const rate = parseFloat(stats.reply_rate) || 0;
   const ringColor = rate >= 20 ? 'var(--green)' : rate >= 10 ? 'var(--amber)' : 'var(--red)';
-  $('#s-rate-ring').innerHTML = vizProgressRing(rate, 44, 4, ringColor) + `<span style="font-size:10px;color:var(--soft)">Reply<br>Rate</span>`;
+  $('#s-rate-ring').innerHTML = vizProgressRing(rate, 44, 4, ringColor);
 
   // Last send indicator
   const ls = $('#last-send');
@@ -1831,7 +1893,7 @@ async function loadStats() {
   bar.innerHTML = `<span class="niche-label">By niche:</span>` +
     Object.entries(niches).sort((a,b) => b[1]-a[1]).map(([n,c]) => {
       const pct = Math.max(8, c/maxNiche*100);
-      return `<span class="niche-chip" style="position:relative;overflow:hidden">${esc(n)}<span class="ct">${c}</span><span style="position:absolute;bottom:0;left:0;height:2px;width:${pct}%;background:var(--teal);border-radius:1px"></span></span>`;
+      return `<span class="niche-chip" style="position:relative;overflow:hidden">${niceNiche(n)}<span class="ct">${c}</span><span style="position:absolute;bottom:0;left:0;height:2px;width:${pct}%;background:var(--teal);border-radius:1px"></span></span>`;
     }).join('');
 
   updateTabTitle();
@@ -1885,16 +1947,18 @@ function renderPipeline() {
       dueText = '—';
     }
     const contactLine = esc(c.contact_name) + (c.contact_title ? `<br><span style="font-size:11px;color:var(--muted)">${esc(c.contact_title)}</span>` : '');
+    const checked = _bulkSelected.has(c.contact_email) ? 'checked' : '';
 
     return `<tr class="${rowClass}" onclick="openDrawer('${esc(c.contact_email)}')">
+      <td onclick="event.stopPropagation()"><input type="checkbox" class="pipe-check" data-email="${esc(c.contact_email)}" ${checked} onchange="bulkToggleRow(this)"></td>
       <td><strong>${esc(c.company)}</strong></td>
       <td>${contactLine}</td>
       <td><span class="status-badge ${c.status}">${statusLabel(c.status)}</span></td>
-      <td style="font-size:12px">${esc(c.niche)}</td>
+      <td style="font-size:12px">${niceNiche(c.niche)}</td>
       <td class="col-batch" style="font-size:12px">${esc(niceName(c.batch))}</td>
       <td style="font-size:12px">${c.date_sent || '—'}</td>
       <td style="font-size:12px;${dueClass}">${dueText}</td>
-      <td class="col-notes notes-cell" title="${esc(c.notes)}">${esc(c.notes)}</td>
+      <td class="col-notes notes-cell" title="${esc(c.notes)}">${esc((c.notes||'').replace(/^subject:/i,''))}</td>
       <td onclick="event.stopPropagation()">
         <div class="action-dropdown">
           <button class="action-btn" onclick="toggleMenu(this)">...</button>
@@ -1908,6 +1972,7 @@ function renderPipeline() {
       </td>
     </tr>`;
   }).join('');
+  bulkUpdateBar();
 }
 
 function toggleMenu(btn) {
@@ -1926,6 +1991,57 @@ async function markStatus(email, status) {
 }
 
 function refresh() { loadPipeline(); loadStats(); loadFollowups(); }
+
+// ─── Bulk Actions ───
+const _bulkSelected = new Set();
+function bulkToggleRow(cb) {
+  const email = cb.dataset.email;
+  if (cb.checked) _bulkSelected.add(email); else _bulkSelected.delete(email);
+  bulkUpdateBar();
+}
+function bulkToggleAll(checked) {
+  const cbs = $$('#pipeline-body .pipe-check');
+  cbs.forEach(cb => { cb.checked = checked; if (checked) _bulkSelected.add(cb.dataset.email); else _bulkSelected.delete(cb.dataset.email); });
+  bulkUpdateBar();
+}
+function bulkUpdateBar() {
+  const bar = $('#bulk-bar');
+  const count = _bulkSelected.size;
+  if (count > 0) { bar.style.display = 'flex'; $('#bulk-count').textContent = count; }
+  else { bar.style.display = 'none'; }
+  const allCheck = $('#select-all-check');
+  const visible = [...$$('#pipeline-body .pipe-check')];
+  allCheck.checked = visible.length > 0 && visible.every(cb => cb.checked);
+  allCheck.indeterminate = visible.some(cb => cb.checked) && !allCheck.checked;
+}
+function bulkClearSelection() { _bulkSelected.clear(); $$('.pipe-check').forEach(cb => cb.checked = false); bulkUpdateBar(); }
+async function bulkApplyStatus() {
+  const status = $('#bulk-status-sel').value;
+  if (!status) { toast('Select a status first'); return; }
+  if (!confirm(`Change ${_bulkSelected.size} contacts to "${statusLabel(status)}"?`)) return;
+  let ok = 0, fail = 0;
+  for (const email of _bulkSelected) {
+    try { await api('/api/outreach/mark', { method: 'POST', body: JSON.stringify({ email, status }) }); ok++; } catch(e) { fail++; }
+  }
+  toast(`Updated ${ok} contacts` + (fail ? `, ${fail} failed` : ''));
+  _bulkSelected.clear();
+  $('#bulk-status-sel').value = '';
+  refresh();
+}
+function bulkExportCSV() {
+  const selected = allContacts.filter(c => _bulkSelected.has(c.contact_email));
+  if (!selected.length) { toast('No contacts selected'); return; }
+  const headers = ['Company','Contact','Email','Title','Status','Niche','Batch','Date Sent','Notes'];
+  const rows = selected.map(c => [c.company, c.contact_name, c.contact_email, c.contact_title||'', c.status, c.niche, c.batch||'', c.date_sent||'', (c.notes||'').replace(/"/g,'""')]);
+  const csv = [headers.join(','), ...rows.map(r => r.map(v => `"${v}"`).join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `pipeline-export-${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast(`Exported ${selected.length} contacts to CSV`);
+}
 
 // ─── Filters ───
 $('#filter-status').addEventListener('change', renderPipeline);
@@ -1948,7 +2064,7 @@ function openDrawer(email) {
     <div style="margin-bottom:8px"><span class="status-badge ${c.status}">${statusLabel(c.status)}</span></div>
 
     <div class="d-section">Details</div>
-    <div class="d-row"><span class="d-label">Niche</span><span>${esc(c.niche)}</span></div>
+    <div class="d-row"><span class="d-label">Niche</span><span>${niceNiche(c.niche)}</span></div>
     <div class="d-row"><span class="d-label">Batch</span><span>${esc(niceName(c.batch))}</span></div>
     <div class="d-row"><span class="d-label">Sent</span><span>${c.date_sent || '—'}</span></div>
     <div class="d-row"><span class="d-label">Follow-up 1</span><span>${c.followup_1_date || '—'}</span></div>
@@ -2037,7 +2153,7 @@ function renderFollowupCard(c, type) {
       <span class="overdue-badge ${badgeClass}">${badgeText}</span>
     </div>
     <div class="fc-meta">
-      <span>${esc(c.niche)}</span>
+      <span>${niceNiche(c.niche)}</span>
       <span>Sent: ${c.date_sent || '—'}</span>
       <span>Follow-up #${fuNum}</span>
     </div>
@@ -2103,8 +2219,8 @@ function renderStructuredBatchItem(b) {
   return `<div class="sbatch-item" id="sbatch-${esc(b.id)}">
     <div class="sbatch-header" onclick="toggleStructuredBatch('${esc(b.id)}', this)">
       <div>
-        <div class="sbatch-title">${esc(b.niche.toUpperCase())} · ${esc(b.region)}</div>
-        <div class="sbatch-sub">${esc(b.id)} · ${date} · ${stats}</div>
+        <div class="sbatch-title">${esc((b.niche||'').replace(/_/g,' ').toUpperCase())}${b.region ? ' · ' + esc(b.region) : ''}</div>
+        <div class="sbatch-sub">${niceName(b.id)} · ${date} · ${stats}</div>
       </div>
       <div class="sbatch-right">
         <span class="status-chip ${statusCls}">${statusLabel}</span>
@@ -2725,7 +2841,15 @@ function wrRenderMessages() {
   const msgs = wrGetFilteredMessages();
   const container = $('#wr-messages');
   if (!msgs.length) {
-    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px;font-size:13px">No messages in this channel yet.<br><button class="cta-btn cta-primary" onclick="wrStartDiscussion()" style="margin-top:12px;font-size:11px">Start a Discussion</button></div>';
+    container.innerHTML = `<div style="color:var(--muted);text-align:center;padding:60px 20px;font-size:13px">
+      <div style="font-size:32px;margin-bottom:12px;opacity:.3">&#128172;</div>
+      <div style="font-size:15px;font-weight:500;color:var(--soft);margin-bottom:6px">No messages yet</div>
+      <div style="max-width:320px;margin:0 auto 16px;line-height:1.6">Start a conversation with your AI team. Ask a question, delegate a task, or kick off a standup.</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="cta-btn cta-primary" onclick="wrStartDiscussion()" style="font-size:11px;padding:6px 14px">Start a Discussion</button>
+        <button class="cta-btn cta-secondary" onclick="wrSetChannel('standup');wrLoadMessages()" style="font-size:11px;padding:6px 14px">View Standup</button>
+      </div>
+    </div>`;
     return;
   }
   let html = '';
@@ -4273,10 +4397,12 @@ async function loadCRM() {
     // Funnel
     const byStage = d.by_stage || {};
     const maxStage = Math.max(...Object.values(byStage), 1);
+    const totalDeals = stages.reduce((a, s) => a + (byStage[s]||0), 0) || 1;
     $('#crm-funnel').innerHTML = stages.map(s => {
       const cnt = byStage[s] || 0;
-      const pct = Math.max(20, cnt/maxStage*100);
-      return `<div class="crm-funnel-seg" style="background:${stageColors[s]}22;color:${stageColors[s]};flex:${pct/100}">${stageLabels[s]}<br><strong>${cnt}</strong></div>`;
+      const pct = cnt > 0 ? Math.max(15, cnt/totalDeals*100) : 8;
+      const opacity = cnt > 0 ? 1 : 0.4;
+      return `<div class="crm-funnel-seg" style="background:${stageColors[s]}22;color:${stageColors[s]};flex:${pct/100};opacity:${opacity}">${stageLabels[s]}<br><strong>${cnt}</strong></div>`;
     }).join('');
 
     // Kanban
@@ -5063,6 +5189,41 @@ async function loadAnalytics() {
         const winner = (vars.A.reply_rate||0) >= (vars.B.reply_rate||0) ? 'A' : 'B';
         $('#an-ab-winner').textContent = winner + ' (' + (vars[winner].reply_rate||0).toFixed(1) + '%)';
       }
+      // Outreach funnel
+      try {
+        const pipeline = await api('/api/outreach/pipeline').catch(()=>[]);
+        if (Array.isArray(pipeline) && pipeline.length) {
+          const statusCounts = {};
+          pipeline.forEach(c => { statusCounts[c.status] = (statusCounts[c.status]||0) + 1; });
+          const funnelSteps = [
+            { label: 'Total Sent', key: null, color: '#38bdf8' },
+            { label: 'Delivered', key: '_delivered', color: '#2dd4bf' },
+            { label: 'Opened', key: 'opened', color: '#a78bfa' },
+            { label: 'Replied', key: 'replied', color: '#34d399' },
+            { label: 'Meeting', key: 'meeting', color: '#fbbf24' },
+          ];
+          const total = pipeline.length;
+          const bounced = statusCounts['bounced'] || 0;
+          const delivered = total - bounced;
+          const opened = (statusCounts['opened']||0) + (statusCounts['replied']||0) + (statusCounts['meeting']||0);
+          const replied = (statusCounts['replied']||0) + (statusCounts['meeting']||0);
+          const meeting = statusCounts['meeting']||0;
+          const funnelVals = [total, delivered, opened, replied, meeting];
+          const maxVal = Math.max(total, 1);
+          $('#an-funnel').innerHTML = funnelSteps.map((s, i) => {
+            const val = funnelVals[i];
+            const pct = Math.max(8, val / maxVal * 100);
+            const convRate = i > 0 ? (funnelVals[i-1] > 0 ? (val/funnelVals[i-1]*100).toFixed(0) : 0) : 100;
+            return `<div class="an-funnel-step">
+              <span style="width:80px;color:var(--soft);font-size:12px">${s.label}</span>
+              <div class="an-funnel-bar" style="width:${pct}%;background:${s.color}">${val}</div>
+              ${i > 0 ? `<span style="font-size:11px;color:var(--muted)">${convRate}%</span>` : ''}
+            </div>`;
+          }).join('');
+        } else {
+          $('#an-funnel').innerHTML = '<div style="color:var(--muted);font-size:12px">No pipeline data for funnel</div>';
+        }
+      } catch(e) { $('#an-funnel').innerHTML = ''; }
       // Intent list
       const intents = Array.isArray(intent) ? intent.sort((a,b) => (b.score||0)-(a.score||0)).slice(0,15) : [];
       $('#an-intent-list').innerHTML = intents.map(i => {
@@ -5115,9 +5276,39 @@ async function loadAnalytics() {
       const niches = ns.niches || {};
       let html = '<div class="an-niche-row" style="font-weight:600;color:var(--muted)"><div>Niche</div><div>Sent</div><div>Replied</div><div>Bounced</div><div>Reply %</div><div>Bounce %</div></div>';
       for (const [name, data] of Object.entries(niches)) {
-        html += `<div class="an-niche-row"><div style="font-weight:500">${esc(name)}</div><div>${data.sent||0}</div><div style="color:var(--green)">${data.replied||0}</div><div style="color:var(--red)">${data.bounced||0}</div><div>${(data.reply_rate||0).toFixed(1)}%</div><div>${(data.bounce_rate||0).toFixed(1)}%</div></div>`;
+        html += `<div class="an-niche-row"><div style="font-weight:500">${niceNiche(name)}</div><div>${data.sent||0}</div><div style="color:var(--green)">${data.replied||0}</div><div style="color:var(--red)">${data.bounced||0}</div><div>${(data.reply_rate||0).toFixed(1)}%</div><div>${(data.bounce_rate||0).toFixed(1)}%</div></div>`;
       }
       $('#an-niche-table').innerHTML = html || '<div style="color:var(--muted)">No niche data</div>';
+      // Chart.js horizontal bar for niches
+      if (typeof Chart !== 'undefined' && Object.keys(niches).length) {
+        if (window._nicheChart) window._nicheChart.destroy();
+        const nicheNames = Object.keys(niches);
+        const nicheLabels = nicheNames.map(n => niceNiche(n));
+        const nicheCtx = document.getElementById('an-niche-chart');
+        if (nicheCtx) {
+          window._nicheChart = new Chart(nicheCtx, {
+            type: 'bar',
+            data: {
+              labels: nicheLabels,
+              datasets: [
+                { label: 'Sent', data: nicheNames.map(n => niches[n].sent||0), backgroundColor: '#38bdf8' },
+                { label: 'Replied', data: nicheNames.map(n => niches[n].replied||0), backgroundColor: '#34d399' },
+                { label: 'Bounced', data: nicheNames.map(n => niches[n].bounced||0), backgroundColor: '#f87171' },
+              ]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { labels: { color: '#a8b5c8', font: { size: 11 } } } },
+              scales: {
+                x: { grid: { color: 'rgba(255,255,255,.06)' }, ticks: { color: '#a8b5c8', font: { size: 11 } } },
+                y: { grid: { display: false }, ticks: { color: '#e2e8f0', font: { size: 11 } } }
+              }
+            }
+          });
+        }
+      }
     }
     if (analyticsView === 'velocity') {
       const m = await api('/api/ops/metrics').catch(()=>({}));
@@ -5132,6 +5323,36 @@ async function loadAnalytics() {
           <span style="width:30px;text-align:right;font-weight:600">${v.done}</span>
         </div>`;
       }).join('') || '<div style="color:var(--muted);font-size:12px">No data yet</div>';
+      // Chart.js velocity bar chart
+      if (typeof Chart !== 'undefined' && vel.length) {
+        if (window._velChart) window._velChart.destroy();
+        const velCtx = document.getElementById('an-velocity-canvas');
+        if (velCtx) {
+          window._velChart = new Chart(velCtx, {
+            type: 'bar',
+            data: {
+              labels: vel.map(v => v.week),
+              datasets: [{
+                label: 'Tasks Completed',
+                data: vel.map(v => v.done),
+                backgroundColor: 'rgba(45,212,191,.7)',
+                borderColor: '#2dd4bf',
+                borderWidth: 1,
+                borderRadius: 4,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#a8b5c8', font: { size: 10 } } },
+                y: { grid: { color: 'rgba(255,255,255,.06)' }, ticks: { color: '#a8b5c8', font: { size: 10 }, maxTicksLimit: 6 }, beginAtZero: true }
+              }
+            }
+          });
+        }
+      }
       // Throughput
       const tp = m.throughput_30d || {};
       $('#an-throughput').innerHTML = Object.entries(tp).map(([person, data]) => `<div style="display:flex;gap:8px;align-items:center;padding:6px 0;font-size:12px;border-bottom:1px solid var(--line)">
@@ -5142,7 +5363,8 @@ async function loadAnalytics() {
       </div>`).join('') || '<div style="color:var(--muted);font-size:12px">No data</div>';
       // Type dist
       const td = m.type_distribution || {};
-      $('#an-type-dist').innerHTML = Object.entries(td).map(([type, data]) => {
+      const tdEntries = Object.entries(td);
+      $('#an-type-dist').innerHTML = tdEntries.map(([type, data]) => {
         const pct = data.total ? Math.round(data.done / data.total * 100) : 0;
         return `<div style="display:flex;gap:8px;align-items:center;padding:4px 0;font-size:12px">
           <span class="ops-type ops-type-${type}" style="width:80px;text-align:center">${type}</span>
@@ -5150,6 +5372,27 @@ async function loadAnalytics() {
           <span style="width:80px;text-align:right;color:var(--soft)">${data.done}/${data.total} (${pct}%)</span>
         </div>`;
       }).join('');
+      // Doughnut chart for type distribution
+      if (typeof Chart !== 'undefined' && tdEntries.length) {
+        if (window._typeChart) window._typeChart.destroy();
+        const typeCtx = document.getElementById('an-type-canvas');
+        const typeColors = ['#38bdf8','#34d399','#a78bfa','#fbbf24','#f87171','#fb923c','#e879f9','#22d3ee'];
+        if (typeCtx) {
+          window._typeChart = new Chart(typeCtx, {
+            type: 'doughnut',
+            data: {
+              labels: tdEntries.map(([t]) => t),
+              datasets: [{ data: tdEntries.map(([,d]) => d.total), backgroundColor: typeColors.slice(0, tdEntries.length), borderWidth: 0 }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '55%',
+              plugins: { legend: { position: 'right', labels: { color: '#a8b5c8', font: { size: 11 }, padding: 8 } } }
+            }
+          });
+        }
+      }
     }
   } catch(e) { console.error('Analytics error:', e); }
 }
@@ -5652,6 +5895,35 @@ switchToTab = function(tabName) {
   _updateFreshness();
   return _switchTabOrig(tabName);
 };
+// Mobile nav active state
+function mobNavTo(tab, btn) {
+  switchToTab(tab);
+  document.querySelectorAll('.mob-nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 </script>
+
+<nav class="mob-nav">
+  <button class="active" onclick="mobNavTo('pipeline',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    Pipeline
+  </button>
+  <button onclick="mobNavTo('warroom',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    War Room
+  </button>
+  <button onclick="mobNavTo('ops',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Ops
+  </button>
+  <button onclick="mobNavTo('analytics',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    Analytics
+  </button>
+  <button onclick="mobNavTo('crm',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    CRM
+  </button>
+</nav>
 </body>
 </html>
