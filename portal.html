@@ -736,6 +736,34 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .cta-btn.cta-warn{background:rgba(245,158,11,.08);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
 .cta-btn.cta-warn:hover{background:rgba(245,158,11,.18)}
 
+/* === WAR ROOM DROPDOWN GROUPS === */
+.wr-dropdown { position:relative; }
+.wr-dropdown-trigger {
+  display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;
+  font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--soft);
+  transition:all .15s;
+}
+.wr-dropdown-trigger:hover { border-color:rgba(45,212,191,.25);color:var(--text); }
+.wr-dropdown-trigger svg { width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .15s; }
+.wr-dropdown.open .wr-dropdown-trigger svg { transform:rotate(180deg); }
+.wr-dropdown-trigger .wr-dd-icon { width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5; }
+.wr-dropdown-menu {
+  display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:50;
+  background:rgba(15,23,42,.95);backdrop-filter:blur(12px);border:1px solid rgba(45,212,191,.15);
+  border-radius:10px;padding:4px;min-width:180px;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);animation:fadeSlideUp .12s ease;
+}
+.wr-dropdown.open .wr-dropdown-menu { display:block; }
+.wr-dropdown-menu button {
+  display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;border:none;
+  background:none;color:var(--soft);font-size:12px;font-family:var(--sans);
+  cursor:pointer;border-radius:6px;transition:all .1s;text-align:left;
+}
+.wr-dropdown-menu button:hover { background:rgba(45,212,191,.06);color:var(--text); }
+.wr-dropdown-menu button svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0; }
+.wr-dropdown-sep { height:1px;background:rgba(255,255,255,.06);margin:3px 8px; }
+
 /* === CMD+K COMMAND PALETTE === */
 .cmd-overlay {
   position:fixed;inset:0;background:rgba(2,6,23,.7);backdrop-filter:blur(4px);z-index:9999;
@@ -1151,17 +1179,43 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
           </select>
           <button onclick="wrShowChannelSettings()" style="background:none;border:none;color:var(--soft);cursor:pointer;font-size:12px;margin-left:auto;padding:2px 6px" title="Channel settings">&#9881;</button>
           <div class="wr-header-actions">
-            <button class="wr-pin-btn" onclick="wrStartDiscussion()" title="Agents start a live discussion" style="background:#22c55e33;border-color:#22c55e88">Start Discussion</button>
-            <button class="wr-pin-btn" onclick="wrAgentPulse()" title="All agents post updates">Team Pulse</button>
-            <button class="wr-pin-btn" onclick="wrShowPinned()">Pins</button>
-            <button class="wr-pin-btn" onclick="wrShowAgentPicker()" title="Summon a specific agent">@ Agent</button>
-            <button class="wr-pin-btn" onclick="wrScanActions()" title="Extract action items → create tickets" style="background:#f59e0b22;border-color:#f59e0b88">Actions</button>
-            <button class="wr-pin-btn" onclick="wrScanCommitments()" title="Track deadline commitments" style="background:#ef444422;border-color:#ef444488">Deadlines</button>
-            <button class="wr-pin-btn" onclick="wrSummarizeChannel()" title="AI summary of conversation" style="background:#a78bfa22;border-color:#a78bfa88">Summarize</button>
-            <button class="wr-pin-btn" onclick="wrScanDecisions()" title="Extract decisions from chat" style="background:#60a5fa22;border-color:#60a5fa88">Decisions</button>
-            <button class="wr-pin-btn" onclick="wrShowStatusBoard()" title="Who's working on what" style="background:#22c55e22;border-color:#22c55e88">Status Board</button>
-            <button class="wr-pin-btn" onclick="wrDailyStandup()" title="Generate standup report">Standup</button>
-            <button class="wr-pin-btn" onclick="wrAutoLog()" title="Auto-summarize recent conversation">Save Context</button>
+            <button class="wr-pin-btn" onclick="wrStartDiscussion()" title="Start a live discussion" style="background:#22c55e33;border-color:#22c55e88">
+              <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Discussion
+            </button>
+            <div class="wr-dropdown" id="wrDdAgents">
+              <button class="wr-dropdown-trigger" onclick="toggleWrDropdown('wrDdAgents')">
+                <svg class="wr-dd-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Agents <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="wr-dropdown-menu">
+                <button onclick="wrAgentPulse();closeWrDropdowns()"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Team Pulse</button>
+                <button onclick="wrShowAgentPicker();closeWrDropdowns()"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>@ Mention Agent</button>
+                <button onclick="wrShowStatusBoard();closeWrDropdowns()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Status Board</button>
+                <button onclick="wrDailyStandup();closeWrDropdowns()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Daily Standup</button>
+              </div>
+            </div>
+            <div class="wr-dropdown" id="wrDdIntel">
+              <button class="wr-dropdown-trigger" onclick="toggleWrDropdown('wrDdIntel')">
+                <svg class="wr-dd-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Intelligence <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="wr-dropdown-menu">
+                <button onclick="wrSummarizeChannel();closeWrDropdowns()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Summarize Chat</button>
+                <button onclick="wrScanDecisions();closeWrDropdowns()"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Extract Decisions</button>
+                <button onclick="wrScanActions();closeWrDropdowns()"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Scan Actions</button>
+                <button onclick="wrScanCommitments();closeWrDropdowns()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Track Deadlines</button>
+              </div>
+            </div>
+            <div class="wr-dropdown" id="wrDdManage">
+              <button class="wr-dropdown-trigger" onclick="toggleWrDropdown('wrDdManage')">
+                <svg class="wr-dd-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                More <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="wr-dropdown-menu">
+                <button onclick="wrShowPinned();closeWrDropdowns()"><svg viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 00-1.11-1.79l-1.78-.9A2 2 0 0115 10.76V6h1a2 2 0 000-4H8a2 2 0 000 4h1v4.76a2 2 0 01-1.11 1.79l-1.78.9A2 2 0 005 15.24z"/></svg>Pinned Messages</button>
+                <button onclick="wrAutoLog();closeWrDropdowns()"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Context</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="wr-messages" id="wr-messages"></div>
@@ -1941,6 +1995,7 @@ async function loadFollowups() {
     container.innerHTML = `<div class="panel"><div class="empty-state">
       <div class="emoji">&#10003;</div>
       <div class="msg">No follow-ups due or upcoming. You're caught up.</div>
+      <div style="margin-top:12px"><button class="cta-btn cta-secondary" onclick="switchToTab('batches')">Create a Batch</button> <button class="cta-btn cta-secondary" onclick="switchToTab('pipeline')" style="margin-left:6px">View Pipeline</button></div>
     </div></div>`;
     return;
   }
@@ -2670,7 +2725,7 @@ function wrRenderMessages() {
   const msgs = wrGetFilteredMessages();
   const container = $('#wr-messages');
   if (!msgs.length) {
-    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px;font-size:13px">No messages in this channel yet</div>';
+    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px;font-size:13px">No messages in this channel yet.<br><button class="cta-btn cta-primary" onclick="wrStartDiscussion()" style="margin-top:12px;font-size:11px">Start a Discussion</button></div>';
     return;
   }
   let html = '';
@@ -5558,6 +5613,20 @@ document.getElementById('cmdPalette').addEventListener('click', function(e) { if
 document.addEventListener('keydown', function(e) {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCmdPalette(); }
   if (e.key === 'Escape' && document.getElementById('cmdPalette').classList.contains('open')) closeCmdPalette();
+});
+
+// ─── WAR ROOM DROPDOWN GROUPS ───
+function toggleWrDropdown(id) {
+  const dd = document.getElementById(id);
+  const wasOpen = dd.classList.contains('open');
+  closeWrDropdowns();
+  if (!wasOpen) dd.classList.add('open');
+}
+function closeWrDropdowns() {
+  document.querySelectorAll('.wr-dropdown.open').forEach(d => d.classList.remove('open'));
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.wr-dropdown')) closeWrDropdowns();
 });
 
 // ─── DATA FRESHNESS TRACKER ───
