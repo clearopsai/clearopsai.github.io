@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sample Report: Solo Agent, Herndon VA | ClearOps AI</title>
+<meta name="description" content="Sample market position analysis for a solo real estate agent in Herndon, VA.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1D32;--navy2:#12304D;--teal:#1D9E75;--teal-light:#5DCAA5;--teal-bg:#EAF6F1;--mint:#9FE1CB;--cream:#F6FAF8;--border:#E4EDE8;--text:#1a1a1a;--muted:#6B6A66;--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--purple:#7C3AED;--font:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}.reveal.visible{opacity:1;transform:translateY(0);}
+.container{max-width:900px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2) 50%,#1A4068);color:#fff;padding:80px 0 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(93,202,165,.1),transparent 70%);}
+.hero-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-light);font-weight:600;margin-bottom:12px;}
+.hero-title{font-size:clamp(28px,5vw,42px);font-weight:700;line-height:1.1;margin-bottom:10px;}
+.hero-sub{font-size:16px;color:var(--mint);max-width:500px;line-height:1.55;margin-bottom:28px;}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 16px;font-size:13px;color:#E1F5EE;font-weight:500;}
+.sample-banner{background:var(--amber);color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:600;}
+.sample-banner a{color:#fff;text-decoration:underline;}
+.section{padding:56px 0;}.section-alt{background:var(--cream);}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.sec-title{font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.2;}
+.sec-intro{font-size:15px;color:var(--muted);margin-bottom:28px;max-width:650px;line-height:1.6;}
+.persona{display:flex;gap:24px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 32px;box-shadow:0 4px 24px rgba(0,0,0,.04);margin-bottom:8px;}
+.persona-info{flex:1;}.persona-name{font-size:22px;font-weight:700;color:var(--navy);}
+.persona-detail{font-size:14px;color:var(--muted);line-height:1.55;margin-top:4px;}
+.persona-badges{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.pb{font-size:11px;padding:4px 10px;border-radius:6px;font-weight:600;}
+.pb-g{background:#D1FAE5;color:#065F46;}.pb-b{background:#DBEAFE;color:#1E40AF;}.pb-p{background:#EDE9FE;color:#5B21B6;}
+.gauge-wrap{text-align:center;flex-shrink:0;}
+.gauge-val{font-size:36px;font-weight:700;color:var(--teal);font-family:var(--mono);margin-top:-4px;}
+.gauge-lbl{font-size:12px;color:var(--muted);margin-top:2px;}
+.comp-table-wrap{display:flex;gap:28px;align-items:flex-start;}
+.comp-table{flex:1;}
+.comp-table table{width:100%;border-collapse:collapse;font-size:14px;}
+.comp-table th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;}
+.comp-table th:first-child{border-radius:10px 0 0 0;}.comp-table th:last-child{border-radius:0 10px 0 0;}
+.comp-table td{padding:12px 14px;border-bottom:1px solid var(--border);}
+.comp-table .you-row td{background:#FEF3C7;font-weight:600;}
+.badge{font-size:11px;padding:3px 8px;border-radius:5px;font-weight:600;}.badge-y{background:#D1FAE5;color:#065F46;}.badge-n{background:#FEE2E2;color:#991B1B;}
+.you-tag{font-size:10px;background:var(--amber);color:#fff;padding:2px 8px;border-radius:4px;font-weight:700;margin-left:6px;}
+.callout{background:var(--teal-bg);border-radius:12px;padding:18px 22px;font-size:15px;color:#085041;line-height:1.6;margin-top:20px;}
+.callout strong{font-weight:600;}
+.opp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.opp-card{border-radius:16px;padding:24px;border:1px solid var(--border);background:#fff;transition:transform .3s,box-shadow .3s;}
+.opp-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08);}
+.opp-num{font-size:36px;font-weight:700;font-family:var(--mono);line-height:1;}
+.opp-title{font-size:17px;font-weight:600;color:var(--navy);margin:6px 0 4px;}
+.opp-desc{font-size:14px;color:var(--muted);line-height:1.5;}
+.opp-effort{font-size:12px;font-weight:600;margin-top:10px;padding:4px 10px;border-radius:6px;display:inline-block;}
+.highlight{display:flex;gap:20px;align-items:center;background:#FEF7E8;border-radius:16px;padding:22px 28px;}
+.hl-num{font-size:48px;font-weight:700;color:#854F0B;font-family:var(--mono);line-height:1;flex-shrink:0;}
+.hl-text{font-size:15px;color:#6B4A0A;line-height:1.55;}.hl-text strong{font-weight:600;color:#854F0B;}
+.cta-section{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:56px 0;text-align:center;color:#fff;}
+.cta-section h2{font-size:clamp(22px,4vw,32px);font-weight:700;margin-bottom:8px;}
+.cta-section p{font-size:16px;color:var(--mint);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0F6E56);color:#fff;font-size:17px;font-weight:600;padding:16px 40px;border-radius:12px;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(29,158,117,.3);}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(29,158,117,.45);}
+.footer{background:var(--navy);padding:28px 0;text-align:center;}
+.footer-brand{font-size:14px;color:var(--mint);font-weight:600;}
+.footer a{color:var(--teal-light);text-decoration:none;font-size:13px;}
+@media(max-width:700px){.persona{flex-direction:column;text-align:center;padding:20px;}.persona-badges{justify-content:center;}.comp-table-wrap{flex-direction:column;}.opp-grid{grid-template-columns:1fr;}.highlight{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="sample-banner">This is an anonymized sample report. <a href="/agents.html">Want one for your market? Get your free audit.</a></div>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">ClearOps AI · Sample Market Intelligence Report</div>
+    <h1 class="hero-title">Solo Agent<br>Herndon, VA</h1>
+    <p class="hero-sub">A market position analysis showing digital presence, competitive gaps, and growth opportunities for a solo agent in the Herndon real estate market.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">Anonymized Example</span>
+      <span class="hero-chip">Herndon, VA · 2026</span>
+      <span class="hero-chip">Solo Agent Profile</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="persona reveal">
+      <div class="persona-info">
+        <div class="persona-name">Solo Agent, Herndon</div>
+        <div class="persona-detail">Independent brokerage · Herndon / Reston, VA<br>"Helping families find their dream home in Northern Virginia"</div>
+        <div class="persona-badges">
+          <span class="pb pb-g">8 Year Veteran</span>
+          <span class="pb pb-b">Residential Specialist</span>
+          <span class="pb pb-g">$30M+ Career Volume</span>
+        </div>
+      </div>
+      <div class="gauge-wrap">
+        <svg width="130" height="75" viewBox="0 0 160 90"><defs><linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#gg)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="95" stroke-linecap="round"/></svg>
+        <div class="gauge-val">62</div>
+        <div class="gauge-lbl">Opportunity Score</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="sec-label reveal">Digital Footprint</div>
+    <h2 class="sec-title reveal">Online presence vs. top local agents</h2>
+    <p class="sec-intro reveal">Every platform where this agent appears publicly, compared to the top performers in Herndon.</p>
+    <div class="comp-table-wrap reveal">
+      <div class="comp-table">
+        <table>
+          <tr><th></th><th>Followers</th><th>Google Reviews</th><th>Video</th><th>Reviews (All)</th></tr>
+          <tr><td><strong>Top Agent A</strong></td><td>20,000+</td><td>1,800+</td><td><span class="badge badge-y">YT + Reels</span></td><td>2,000+</td></tr>
+          <tr><td><strong>Top Agent B</strong></td><td>85,000+</td><td>200+</td><td><span class="badge badge-y">Reels</span></td><td>500+</td></tr>
+          <tr><td><strong>Top Agent C</strong></td><td>5,000+</td><td>50+</td><td><span class="badge badge-y">Reels</span></td><td>80+</td></tr>
+          <tr class="you-row"><td><strong>This Agent</strong><span class="you-tag">AUDIT</span></td><td>1,500</td><td style="color:var(--red);font-weight:700">0</td><td><span class="badge badge-n">None</span></td><td>22</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="callout reveal"><strong>Key finding:</strong> 22 reviews scattered across 3 platforms with zero on Google. Competitors have 50 to 1,800+ Google reviews. This is the single largest gap in discoverability.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sec-label reveal">Opportunities</div>
+    <h2 class="sec-title reveal">Top growth levers identified</h2>
+    <p class="sec-intro reveal">Ranked by impact and effort. The first two can be done this week.</p>
+    <div class="opp-grid">
+      <div class="opp-card reveal" style="background:#F0FDF4;">
+        <div class="opp-num" style="color:var(--teal);">#1</div>
+        <div class="opp-title">Claim Google Business Profile</div>
+        <div class="opp-desc">Zero Google reviews means invisible to 90% of local searches. Claiming a profile and requesting 10 reviews takes one afternoon.</div>
+        <div class="opp-effort" style="background:#D1FAE5;color:#065F46;">1 hour · High impact</div>
+      </div>
+      <div class="opp-card reveal" style="background:#EFF6FF;">
+        <div class="opp-num" style="color:var(--blue);">#2</div>
+        <div class="opp-title">Consolidate brand presence</div>
+        <div class="opp-desc">Multiple platforms showing outdated brokerage info. Fixing 3 profiles eliminates the top source of audience confusion.</div>
+        <div class="opp-effort" style="background:#D1FAE5;color:#065F46;">1 hour · High impact</div>
+      </div>
+      <div class="opp-card reveal" style="background:#FDF4FF;">
+        <div class="opp-num" style="color:var(--purple);">#3</div>
+        <div class="opp-title">Start short-form video</div>
+        <div class="opp-desc">All top competitors use video. One Reel per week on local neighborhoods would fill a major content gap.</div>
+        <div class="opp-effort" style="background:#FEF3C7;color:#92400E;">2 hrs/week · Medium effort</div>
+      </div>
+      <div class="opp-card reveal" style="background:#FEF7E8;">
+        <div class="opp-num" style="color:#92400E;">#4</div>
+        <div class="opp-title">Leverage unique expertise</div>
+        <div class="opp-desc">This agent has niche knowledge that no local competitor showcases. Building content around it attracts high-value clients.</div>
+        <div class="opp-effort" style="background:#FEF3C7;color:#92400E;">Ongoing · Unique edge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Want a report like this for your market?</h2>
+    <p>We build personalized market position analyses for solo agents and small teams across Northern Virginia. Free, no obligation.</p>
+    <a href="/agents.html" class="cta-btn">Get your free audit</a>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-brand">ClearOps AI</div><a href="https://clearopsai.io">clearopsai.io</a></div></footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

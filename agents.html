@@ -55,6 +55,17 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
 .step-desc{font-size:14px;color:var(--muted);line-height:1.55;}
 .step-tag{font-size:11px;font-weight:600;color:var(--teal);margin-top:10px;text-transform:uppercase;letter-spacing:.05em;}
 
+/* Sample report cards */
+.sample-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.sample-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 24px;text-align:center;text-decoration:none;color:var(--text);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;display:block;}
+.sample-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:var(--teal);}
+.sample-type{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+.sample-market{font-size:20px;font-weight:700;color:var(--navy);margin-bottom:12px;}
+.sample-score{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
+.sample-score span{font-size:28px;font-weight:700;color:var(--teal);font-family:var(--mono);}
+.sample-detail{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.4;}
+.sample-link{font-size:13px;font-weight:600;color:var(--teal);}
+
 /* What you get */
 .features{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .feature{display:flex;gap:16px;align-items:flex-start;}
@@ -104,6 +115,7 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
 .cta-section p{font-size:16px;color:var(--mint);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;}
 
 @media(max-width:700px){
+  .sample-grid{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr;}
   .features{grid-template-columns:1fr;}
   .pricing-grid{grid-template-columns:1fr;}
@@ -137,7 +149,7 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
       <div class="step-card reveal">
         <div class="step-num">1</div>
         <div class="step-title">We audit your position</div>
-        <div class="step-desc">We analyze your digital presence, competitor landscape, review distribution, and content gaps. You get a personalized market position report like <a href="/report/leanne.html" style="color:var(--teal);font-weight:600;">this one</a>.</div>
+        <div class="step-desc">We analyze your digital presence, competitor landscape, review distribution, and content gaps. You get a personalized market position report built just for you.</div>
         <div class="step-tag">Free</div>
       </div>
       <div class="step-card reveal">
@@ -152,6 +164,48 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
         <div class="step-desc">We run the system, track results, and adjust weekly. You get warm leads delivered to your inbox. No cold calling. No ad spend required.</div>
         <div class="step-tag">Ongoing</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SAMPLE REPORTS ════════ -->
+<section class="section section-alt centered">
+  <div class="container">
+    <div class="sec-label reveal">Sample Reports</div>
+    <h2 class="sec-title reveal" style="text-align:center;">Here is what we build for agents like you</h2>
+    <p class="sec-intro reveal" style="text-align:center;margin-left:auto;margin-right:auto;">Each report is personalized to the agent's market, competitors, and online presence. These are anonymized examples from recent audits.</p>
+
+    <div class="sample-grid">
+      <a href="/report/sample-herndon-solo.html" class="sample-card reveal">
+        <div class="sample-type">Solo Agent</div>
+        <div class="sample-market">Herndon, VA</div>
+        <div class="sample-score">
+          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg1)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="95"/></svg>
+          <span>62</span>
+        </div>
+        <div class="sample-detail">1,500 followers · 0 Google reviews · No video presence</div>
+        <div class="sample-link">View report &#x2192;</div>
+      </a>
+      <a href="/report/sample-arlington-team.html" class="sample-card reveal">
+        <div class="sample-type">Small Team</div>
+        <div class="sample-market">Arlington, VA</div>
+        <div class="sample-score">
+          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg2)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="120"/></svg>
+          <span>53</span>
+        </div>
+        <div class="sample-detail">3,200 followers · 12 Google reviews · Reels only</div>
+        <div class="sample-link">View report &#x2192;</div>
+      </a>
+      <a href="/report/sample-fairfax-luxury.html" class="sample-card reveal">
+        <div class="sample-type">Luxury Specialist</div>
+        <div class="sample-market">McLean / Great Falls, VA</div>
+        <div class="sample-score">
+          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg3)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="75"/></svg>
+          <span>70</span>
+        </div>
+        <div class="sample-detail">8,400 followers · 45 Google reviews · YouTube + Reels</div>
+        <div class="sample-link">View report &#x2192;</div>
+      </a>
     </div>
   </div>
 </section>
