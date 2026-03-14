@@ -169,6 +169,13 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
 .footer a{color:var(--teal-light);text-decoration:none;}
 .footer a:hover{text-decoration:underline;}
 
+/* CTA Button */
+.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0F6E56);color:#fff;font-size:17px;font-weight:600;padding:16px 40px;border-radius:12px;text-decoration:none;transition:all .3s ease;box-shadow:0 4px 20px rgba(29,158,117,.3);}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(29,158,117,.45);}
+
+/* Scroll Progress */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-light));z-index:9999;width:0;transition:width .1s linear;}
+
 /* Mobile */
 @media(max-width:700px){
   .hero{padding:50px 0 40px;}
@@ -186,6 +193,8 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ════════ HERO ════════ -->
 <section class="hero">
@@ -429,7 +438,13 @@ body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-
       </div>
     </div>
 
-    <div class="callout-dark reveal" style="margin-top:24px;"><strong>This report is the sample.</strong> Everything above works if you execute it consistently. But if you want someone to do the research, build the systems, and hand you the leads ready to close, that is exactly what we do. No pressure. Just know the option exists.</div>
+    <div class="callout-dark reveal" style="margin-top:24px;"><strong>This report is the sample.</strong> Everything above works if you execute it consistently. But if you want someone to do the research, build the systems, and hand you the leads ready to close, that is exactly what we do.</div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center;margin-top:32px;">
+      <a href="/agents" class="cta-btn">See what a full strategy looks like</a>
+      <div style="font-size:13px;color:rgba(255,255,255,.45);margin-top:12px;">Or just DM me on Instagram <a href="https://instagram.com/clearopsai" style="color:var(--teal-light);text-decoration:none;">@clearopsai</a>. Happy to chat.</div>
+    </div>
   </div>
 </section>
 
@@ -482,6 +497,13 @@ const gaugeObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 const gw = document.querySelector('.gauge-wrap');
 if (gw) gaugeObs.observe(gw);
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / h) * 100;
+  document.getElementById('scrollProgress').style.width = pct + '%';
+});
 </script>
 </body>
 </html>
