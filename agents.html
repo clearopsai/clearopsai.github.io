@@ -33,9 +33,37 @@ html { scroll-behavior: smooth; }
 body { font-family: var(--sans); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 800px; margin: 0 auto; padding: 0 24px; }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+/* Hero entrance animation */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero-eyebrow { opacity: 0; animation: fadeUp .6s ease-out .0s forwards; }
+.hero h1 { opacity: 0; animation: fadeUp .6s ease-out .15s forwards; }
+.hero-sub { opacity: 0; animation: fadeUp .6s ease-out .3s forwards; }
+.hero-cta { opacity: 0; animation: fadeUp .6s ease-out .45s forwards; }
+.hero-cta-sub { opacity: 0; animation: fadeUp .6s ease-out .55s forwards; }
+
+/* Hero glow breathing */
+@keyframes glowBreathe { 0%,100% { transform: translateX(-50%) scale(1); opacity: .06; } 50% { transform: translateX(-50%) scale(1.15); opacity: .1; } }
+.hero-glow { animation: glowBreathe 8s ease-in-out infinite; }
+
+/* CTA button pulse */
+@keyframes ctaPulse { 0%,100% { box-shadow: 0 4px 24px rgba(45,212,191,.25); } 50% { box-shadow: 0 4px 32px rgba(45,212,191,.45); } }
+.hero-cta { animation: fadeUp .6s ease-out .45s forwards, ctaPulse 4s ease-in-out 1.2s infinite; }
+.bottom-cta .hero-cta { animation: ctaPulse 4s ease-in-out infinite; }
+
+/* Scroll reveal with JS fallback */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .5s ease, transform .5s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+/* Fallback: if JS hasn't run after 2s, show everything */
+@keyframes revealFallback { to { opacity: 1; transform: translateY(0); } }
+body.no-js .reveal { animation: revealFallback .5s 2s forwards; }
+/* Noscript safety */
+@media (scripting: none) { .reveal { opacity: 1 !important; transform: none !important; } }
+
+/* Finding card hover glow */
+.finding { transition: all .25s ease; }
+.finding.high:hover { box-shadow: 0 0 20px rgba(248,113,113,.12); transform: translateY(-2px); }
+.finding.medium:hover { box-shadow: 0 0 20px rgba(251,191,36,.12); transform: translateY(-2px); }
+.finding.good:hover { box-shadow: 0 0 20px rgba(52,211,153,.12); transform: translateY(-2px); }
 
 .nav { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
 .nav-brand { font-family: var(--sans); font-size: 15px; font-weight: 600; color: rgba(255,255,255,.3); letter-spacing: .02em; }
@@ -137,7 +165,7 @@ body { font-family: var(--sans); color: var(--text); background: var(--bg); line
 }
 </style>
 </head>
-<body>
+<body class="no-js">
 
 <div class="wrap">
   <nav class="nav">
@@ -149,14 +177,14 @@ body { font-family: var(--sans); color: var(--text); background: var(--bg); line
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="wrap">
-    <div class="hero-eyebrow reveal">Free for NoVA real estate agents</div>
-    <h1 class="reveal">Find out what buyers see <em>before they call you.</em></h1>
-    <p class="hero-sub reveal">We audit your online presence using only public data. Zillow, Google, social media, review sites. You get a score, a breakdown, and a list of what to fix.</p>
-    <a href="https://instagram.com/clearopsai" class="hero-cta reveal" target="_blank">
+    <div class="hero-eyebrow">Free for NoVA real estate agents</div>
+    <h1 class="">Find out what buyers see <em>before they call you.</em></h1>
+    <p class="hero-sub">We audit your online presence using only public data. Zillow, Google, social media, review sites. You get a score, a breakdown, and a list of what to fix.</p>
+    <a href="https://instagram.com/clearopsai" class="hero-cta" target="_blank">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
       DM "AUDIT" + your zip code
     </a>
-    <div class="hero-cta-sub reveal">Or <a href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">book a 30-minute call</a> if you prefer.</div>
+    <div class="hero-cta-sub">Or <a href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">book a 30-minute call</a> if you prefer.</div>
   </div>
 </section>
 
@@ -324,8 +352,8 @@ body { font-family: var(--sans); color: var(--text); background: var(--bg); line
   <div class="bottom-cta-glow"></div>
   <div class="wrap">
     <h2 class="reveal">Your buyers are Googling you right now.</h2>
-    <p class="reveal">Find out what they see. Free audit, no pitch, no commitment. Just a report you can act on.</p>
-    <a href="https://instagram.com/clearopsai" class="hero-cta reveal" target="_blank">
+    <p class="">Find out what they see. Free audit, no pitch, no commitment. Just a report you can act on.</p>
+    <a href="https://instagram.com/clearopsai" class="hero-cta" target="_blank">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
       DM "AUDIT" + your zip code
     </a>
@@ -340,10 +368,37 @@ body { font-family: var(--sans); color: var(--text); background: var(--bg); line
 </footer>
 
 <script>
+// Remove no-js fallback class
+document.body.classList.remove('no-js');
+
+// Scroll reveal with IntersectionObserver
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Only observe below-fold reveals (hero elements animate via CSS)
+document.querySelectorAll('.reveal').forEach(el => {
+  if (!el.closest('.hero')) observer.observe(el);
+});
+
+// Score arc animation on scroll
+const scoreCircle = document.querySelector('.score-circle');
+if (scoreCircle) {
+  const scoreObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-score');
+        scoreObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  scoreObs.observe(scoreCircle);
+}
 </script>
 </body>
 </html>
