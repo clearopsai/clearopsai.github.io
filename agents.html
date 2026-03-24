@@ -3,385 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearOps AI for Real Estate Agents | Northern Virginia</title>
-<meta name="description" content="AI-powered market intelligence and lead generation systems for solo real estate agents in Northern Virginia.">
+<title>ClearOps AI | Free Online Presence Audit for NoVA Real Estate Agents</title>
+<meta name="description" content="Find out what buyers see when they search for you. Free online presence audit for real estate agents in Northern Virginia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0B1D32;--navy2:#12304D;--teal:#1D9E75;--teal-light:#5DCAA5;--teal-bg:#EAF6F1;
-  --mint:#9FE1CB;--cream:#F6FAF8;--border:#E4EDE8;--text:#1a1a1a;--muted:#6B6A66;
-  --font:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+:root {
+  --bg: #08090d;
+  --bg-card: #0e1117;
+  --bg-elevated: #141820;
+  --border: rgba(255,255,255,.06);
+  --border-accent: rgba(45,212,191,.15);
+  --teal: #2DD4BF;
+  --teal-dim: rgba(45,212,191,.12);
+  --teal-glow: rgba(45,212,191,.08);
+  --purple: #A78BFA;
+  --red: #F87171;
+  --green: #34D399;
+  --amber: #FBBF24;
+  --text: #E2E8F0;
+  --text-muted: rgba(255,255,255,.4);
+  --text-dim: rgba(255,255,255,.25);
+  --serif: 'DM Serif Display', serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;}
-.container{max-width:900px;margin:0 auto;padding:0 28px;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 800px; margin: 0 auto; padding: 0 24px; }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* Hero */
-.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#1A4068 100%);color:#fff;padding:100px 0 80px;position:relative;overflow:hidden;text-align:center;}
-.hero::before{content:'';position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(93,202,165,.1),transparent 70%);}
-.hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.06),transparent 70%);}
-.hero-eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-light);font-weight:600;margin-bottom:16px;}
-.hero h1{font-size:clamp(30px,5.5vw,48px);font-weight:700;line-height:1.1;margin-bottom:16px;max-width:700px;margin-left:auto;margin-right:auto;}
-.hero p{font-size:18px;color:var(--mint);max-width:550px;margin:0 auto 36px;line-height:1.55;}
-.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0F6E56);color:#fff;font-size:17px;font-weight:600;padding:16px 40px;border-radius:12px;text-decoration:none;transition:all .3s ease;box-shadow:0 4px 20px rgba(29,158,117,.3);}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(29,158,117,.45);}
-.cta-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:12px;}
+.nav { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.nav-brand { font-family: var(--sans); font-size: 15px; font-weight: 600; color: rgba(255,255,255,.3); letter-spacing: .02em; }
+.nav-brand span { color: var(--teal); }
+.nav-link { font-size: 13px; font-weight: 600; color: var(--teal); text-decoration: none; padding: 8px 20px; border: 1px solid var(--border-accent); border-radius: 8px; transition: all .3s ease; }
+.nav-link:hover { background: var(--teal-dim); }
 
-/* Section */
-.section{padding:64px 0;}
-.section-alt{background:var(--cream);}
-.section-dark{background:var(--navy);color:#fff;}
-.sec-label{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
-.section-dark .sec-label{color:var(--teal-light);}
-.sec-title{font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.15;}
-.section-dark .sec-title{color:#fff;}
-.sec-intro{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:600px;line-height:1.6;}
-.section-dark .sec-intro{color:var(--mint);}
-.centered{text-align:center;}
-.centered .sec-intro{margin-left:auto;margin-right:auto;}
+.hero { padding: 80px 0 60px; text-align: center; position: relative; }
+.hero-glow { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(circle, var(--teal-glow), transparent 60%); pointer-events: none; }
+.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; position: relative; }
+.hero h1 { font-family: var(--serif); font-size: clamp(32px, 6vw, 52px); color: #fff; line-height: 1.12; margin-bottom: 20px; max-width: 650px; margin-left: auto; margin-right: auto; position: relative; }
+.hero h1 em { font-style: normal; color: var(--teal); }
+.hero-sub { font-size: 18px; color: var(--text-muted); max-width: 500px; margin: 0 auto 36px; line-height: 1.55; position: relative; }
+.hero-cta { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--teal), #0d9488); color: #fff; font-size: 17px; font-weight: 600; padding: 16px 36px; border-radius: 12px; text-decoration: none; transition: all .3s ease; box-shadow: 0 4px 24px rgba(45,212,191,.25); position: relative; }
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(45,212,191,.35); }
+.hero-cta-sub { font-size: 13px; color: var(--text-dim); margin-top: 14px; position: relative; }
+.hero-cta-sub a { color: var(--teal); text-decoration: none; }
+.hero-cta-sub a:hover { text-decoration: underline; }
 
-/* How it works */
-.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px;}
-.step-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:32px 24px;text-align:center;transition:transform .3s ease,box-shadow .3s ease;}
-.step-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.06);}
-.step-num{width:44px;height:44px;border-radius:50%;background:var(--teal-bg);color:var(--teal);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
-.step-title{font-size:18px;font-weight:600;color:var(--navy);margin-bottom:8px;}
-.step-desc{font-size:14px;color:var(--muted);line-height:1.55;}
-.step-tag{font-size:11px;font-weight:600;color:var(--teal);margin-top:10px;text-transform:uppercase;letter-spacing:.05em;}
+.steps-section { padding: 48px 0 56px; }
+.sec-label { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.sec-title { font-family: var(--serif); font-size: clamp(24px, 4vw, 34px); color: #fff; margin-bottom: 32px; line-height: 1.15; }
+.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: border-color .3s ease; }
+.step:hover { border-color: var(--border-accent); }
+.step-num { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--teal); margin-bottom: 12px; }
+.step-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+.step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+.step-time { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: .08em; margin-top: 10px; }
 
-/* Sample report cards */
-.sample-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-.sample-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 24px;text-align:center;text-decoration:none;color:var(--text);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;display:block;}
-.sample-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:var(--teal);}
-.sample-type{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
-.sample-market{font-size:20px;font-weight:700;color:var(--navy);margin-bottom:12px;}
-.sample-score{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
-.sample-score span{font-size:28px;font-weight:700;color:var(--teal);font-family:var(--mono);}
-.sample-detail{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.4;}
-.sample-link{font-size:13px;font-weight:600;color:var(--teal);}
+.preview-section { padding: 56px 0; }
+.preview-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px 36px; position: relative; overflow: hidden; }
+.preview-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--purple), var(--red)); }
+.preview-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+.preview-label { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--teal); }
+.preview-badge { font-size: 11px; font-weight: 600; color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.15); padding: 4px 14px; border-radius: 20px; }
+.preview-title { font-family: var(--serif); font-size: 28px; color: #fff; margin-bottom: 8px; }
+.preview-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 28px; }
 
-/* What you get */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.feature{display:flex;gap:16px;align-items:flex-start;}
-.feature-icon{width:44px;height:44px;border-radius:12px;background:var(--teal-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.feature-title{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:4px;}
-.feature-desc{font-size:14px;color:var(--muted);line-height:1.5;}
+.score-row { display: flex; align-items: center; gap: 24px; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.score-circle { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.score-num { font-family: var(--mono); font-size: 32px; font-weight: 600; color: var(--amber); }
+.score-breakdown { flex: 1; min-width: 200px; }
+.score-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.score-bar-label { font-size: 12px; color: var(--text-muted); width: 100px; flex-shrink: 0; }
+.score-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 3px; }
 
-/* Pricing */
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-.price-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:32px 24px;transition:transform .3s ease,box-shadow .3s ease;}
-.price-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.06);}
-.price-card.featured{border:2px solid var(--teal);position:relative;}
-.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:.1em;}
-.price-name{font-size:14px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
-.price-amount{font-size:36px;font-weight:700;color:var(--navy);font-family:var(--mono);line-height:1;}
-.price-period{font-size:13px;color:var(--muted);margin-bottom:16px;}
-.price-desc{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:20px;min-height:60px;}
-.price-features{list-style:none;margin-bottom:24px;}
-.price-features li{font-size:13px;color:var(--text);padding:6px 0;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;align-items:center;}
-.price-features li::before{content:"✓";color:var(--teal);font-weight:700;flex-shrink:0;}
-.price-cta{display:block;text-align:center;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:all .3s ease;}
-.price-cta-primary{background:var(--teal);color:#fff;}
-.price-cta-primary:hover{background:#0F6E56;transform:translateY(-1px);}
-.price-cta-secondary{background:var(--cream);color:var(--teal);border:1px solid var(--border);}
-.price-cta-secondary:hover{background:var(--teal-bg);}
+.findings { display: grid; gap: 12px; }
+.finding { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; background: var(--bg-elevated); border-radius: 10px; border-left: 3px solid transparent; }
+.finding.high { border-left-color: var(--red); }
+.finding.medium { border-left-color: var(--amber); }
+.finding.good { border-left-color: var(--green); }
+.finding-severity { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; flex-shrink: 0; padding-top: 2px; width: 50px; }
+.finding.high .finding-severity { color: var(--red); }
+.finding.medium .finding-severity { color: var(--amber); }
+.finding.good .finding-severity { color: var(--green); }
+.finding-text { font-size: 14px; color: var(--text-muted); line-height: 1.45; }
+.finding-text strong { color: var(--text); font-weight: 600; }
 
-/* FAQ */
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.faq-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
-.faq-q{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;}
-.faq-a{font-size:14px;color:var(--muted);line-height:1.55;}
+.preview-cta { text-align: center; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+.preview-cta p { font-size: 15px; color: var(--text-muted); margin-bottom: 4px; }
+.preview-cta strong { color: var(--teal); font-size: 16px; }
 
-/* Social proof placeholder */
-.proof{text-align:center;padding:40px;background:var(--cream);border-radius:16px;border:1px dashed var(--border);}
-.proof-text{font-size:15px;color:var(--muted);font-style:italic;}
+.checks-section { padding: 48px 0 56px; }
+.checks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.check { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; transition: border-color .3s ease; }
+.check:hover { border-color: var(--border-accent); }
+.check-icon { font-size: 18px; flex-shrink: 0; padding-top: 1px; }
+.check-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+.check-desc { font-size: 13px; color: var(--text-muted); line-height: 1.45; }
 
-/* Footer */
-.footer{background:var(--navy);padding:36px 0;text-align:center;}
-.footer-brand{font-size:14px;color:var(--mint);font-weight:600;}
-.footer-links{font-size:13px;color:var(--teal-light);margin-top:6px;}
-.footer a{color:var(--teal-light);text-decoration:none;}
-.footer a:hover{text-decoration:underline;}
+.numbers-section { padding: 48px 0; text-align: center; }
+.numbers-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.number-card { padding: 28px 20px; }
+.number-big { font-family: var(--mono); font-size: 36px; font-weight: 600; color: var(--teal); margin-bottom: 4px; }
+.number-label { font-size: 13px; color: var(--text-muted); }
 
-/* CTA Section */
-.cta-section{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:64px 0;text-align:center;color:#fff;}
-.cta-section h2{font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:8px;}
-.cta-section p{font-size:16px;color:var(--mint);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;}
+.bottom-cta { padding: 64px 0; text-align: center; position: relative; }
+.bottom-cta-glow { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 500px; height: 300px; background: radial-gradient(circle, var(--teal-glow), transparent 60%); pointer-events: none; }
+.bottom-cta h2 { font-family: var(--serif); font-size: clamp(24px, 4vw, 36px); color: #fff; margin-bottom: 12px; position: relative; }
+.bottom-cta p { font-size: 16px; color: var(--text-muted); margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; position: relative; }
+.bottom-cta .hero-cta { position: relative; }
+.alt-option { font-size: 13px; color: var(--text-dim); margin-top: 16px; position: relative; }
+.alt-option a { color: var(--teal); text-decoration: none; }
+.alt-option a:hover { text-decoration: underline; }
 
-@media(max-width:700px){
-  .sample-grid{grid-template-columns:1fr;}
-  .steps{grid-template-columns:1fr;}
-  .features{grid-template-columns:1fr;}
-  .pricing-grid{grid-template-columns:1fr;}
-  .faq-grid{grid-template-columns:1fr;}
-  .hero{padding:60px 0 50px;}
-  .section{padding:48px 0;}
+.footer { padding: 28px 0; text-align: center; border-top: 1px solid var(--border); }
+.footer-brand { font-size: 13px; color: var(--text-dim); }
+.footer-brand a { color: var(--teal); text-decoration: none; }
+
+@media (max-width: 700px) {
+  .steps { grid-template-columns: 1fr; }
+  .checks-grid { grid-template-columns: 1fr; }
+  .numbers-grid { grid-template-columns: 1fr; }
+  .hero { padding: 60px 0 40px; }
+  .preview-card { padding: 28px 20px; }
+  .score-row { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
 <body>
 
-<!-- ════════ HERO ════════ -->
+<div class="wrap">
+  <nav class="nav">
+    <div class="nav-brand">Clear<span>Ops</span> AI</div>
+    <a href="https://instagram.com/clearopsai" class="nav-link" target="_blank">@clearopsai</a>
+  </nav>
+</div>
+
 <section class="hero">
-  <div class="container">
-    <div class="hero-eyebrow">ClearOps AI for Real Estate</div>
-    <h1>Stop guessing.<br>Start growing.</h1>
-    <p>AI-powered market intelligence and lead systems built specifically for solo agents and small teams in Northern Virginia.</p>
-    <a href="https://calendly.com/haseeb-clearopsai/30min" class="cta-btn" target="_blank">Book your free strategy call</a>
-    <div class="cta-sub">30 minutes. No pitch. Just strategy.</div>
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <div class="hero-eyebrow reveal">Free for NoVA real estate agents</div>
+    <h1 class="reveal">Find out what buyers see <em>before they call you.</em></h1>
+    <p class="hero-sub reveal">We audit your online presence using only public data. Zillow, Google, social media, review sites. You get a score, a breakdown, and a list of what to fix.</p>
+    <a href="https://instagram.com/clearopsai" class="hero-cta reveal" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      DM "AUDIT" + your zip code
+    </a>
+    <div class="hero-cta-sub reveal">Or <a href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">book a 30-minute call</a> if you prefer.</div>
   </div>
 </section>
 
-<!-- ════════ HOW IT WORKS ════════ -->
-<section class="section centered">
-  <div class="container">
-    <div class="sec-label reveal">How It Works</div>
-    <h2 class="sec-title reveal">Three steps. No complexity.</h2>
-    <p class="sec-intro reveal">We handle the research, the systems, and the analysis. You focus on what you do best: closing deals.</p>
-
+<section class="steps-section">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="sec-title reveal">Three steps. Nothing to install.</h2>
     <div class="steps">
-      <div class="step-card reveal">
-        <div class="step-num">1</div>
-        <div class="step-title">We audit your position</div>
-        <div class="step-desc">We analyze your digital presence, competitor landscape, review distribution, and content gaps. You get a personalized market position report built just for you.</div>
-        <div class="step-tag">Free</div>
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">DM us your zip code</div>
+        <div class="step-desc">Send "AUDIT" and your zip to @clearopsai on Instagram. That is all we need to start.</div>
+        <div class="step-time">Takes 10 seconds</div>
       </div>
-      <div class="step-card reveal">
-        <div class="step-num">2</div>
-        <div class="step-title">We build your system</div>
-        <div class="step-desc">Based on the audit, we set up your lead gen infrastructure: Google Business optimization, content calendar, engagement strategy, and follow-up automation.</div>
-        <div class="step-tag">Week 1 to 2</div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">We research your market</div>
+        <div class="step-desc">We pull your Zillow, Google, social profiles, and review sites. We check your competitors in the same zip. All public data.</div>
+        <div class="step-time">We do the work (24-48 hours)</div>
       </div>
-      <div class="step-card reveal">
-        <div class="step-num">3</div>
-        <div class="step-title">You start getting leads</div>
-        <div class="step-desc">We run the system, track results, and adjust weekly. You get warm leads delivered to your inbox. No cold calling. No ad spend required.</div>
-        <div class="step-tag">Ongoing</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════ SAMPLE REPORTS ════════ -->
-<section class="section section-alt centered">
-  <div class="container">
-    <div class="sec-label reveal">Sample Reports</div>
-    <h2 class="sec-title reveal" style="text-align:center;">Here is what we build for agents like you</h2>
-    <p class="sec-intro reveal" style="text-align:center;margin-left:auto;margin-right:auto;">Each report is personalized to the agent's market, competitors, and online presence. These are anonymized examples from recent audits.</p>
-
-    <div class="sample-grid">
-      <a href="/report/sample-herndon-solo.html" class="sample-card reveal">
-        <div class="sample-type">Solo Agent</div>
-        <div class="sample-market">Herndon, VA</div>
-        <div class="sample-score">
-          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg1)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="95"/></svg>
-          <span>62</span>
-        </div>
-        <div class="sample-detail">1,500 followers · 0 Google reviews · No video presence</div>
-        <div class="sample-link">View report &#x2192;</div>
-      </a>
-      <a href="/report/sample-arlington-team.html" class="sample-card reveal">
-        <div class="sample-type">Small Team</div>
-        <div class="sample-market">Arlington, VA</div>
-        <div class="sample-score">
-          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg2)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="120"/></svg>
-          <span>53</span>
-        </div>
-        <div class="sample-detail">3,200 followers · 12 Google reviews · Reels only</div>
-        <div class="sample-link">View report &#x2192;</div>
-      </a>
-      <a href="/report/sample-fairfax-luxury.html" class="sample-card reveal">
-        <div class="sample-type">Luxury Specialist</div>
-        <div class="sample-market">McLean / Great Falls, VA</div>
-        <div class="sample-score">
-          <svg width="48" height="28" viewBox="0 0 160 90"><defs><linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="40%" style="stop-color:#f59e0b"/><stop offset="75%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#0F6E56"/></linearGradient></defs><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E4EDE8" stroke-width="10"/><path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#sg3)" stroke-width="10" stroke-dasharray="251" stroke-dashoffset="75"/></svg>
-          <span>70</span>
-        </div>
-        <div class="sample-detail">8,400 followers · 45 Google reviews · YouTube + Reels</div>
-        <div class="sample-link">View report &#x2192;</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ════════ WHAT YOU GET ════════ -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="sec-label reveal">What You Get</div>
-    <h2 class="sec-title reveal">Everything a marketing team would do.<br>Without hiring a marketing team.</h2>
-    <p class="sec-intro reveal">Each capability is powered by AI and tailored to your specific market.</p>
-
-    <div class="features">
-      <div class="feature reveal">
-        <div class="feature-icon">&#x1F50D;</div>
-        <div>
-          <div class="feature-title">Lead Research</div>
-          <div class="feature-desc">AI identifies homeowners most likely to sell in your zip code based on public records, market trends, and behavioral signals.</div>
-        </div>
-      </div>
-      <div class="feature reveal">
-        <div class="feature-icon">&#x1F4CA;</div>
-        <div>
-          <div class="feature-title">Competitor Intelligence</div>
-          <div class="feature-desc">Weekly reports on what your top competitors post, their engagement rates, and which content formats drive the most saves.</div>
-        </div>
-      </div>
-      <div class="feature reveal">
-        <div class="feature-icon">&#x1F4AC;</div>
-        <div>
-          <div class="feature-title">Smart Follow-Up</div>
-          <div class="feature-desc">AI drafts personalized follow-up messages for every lead based on their activity and optimal timing. You review and send.</div>
-        </div>
-      </div>
-      <div class="feature reveal">
-        <div class="feature-icon">&#x1F4F1;</div>
-        <div>
-          <div class="feature-title">Content Strategy</div>
-          <div class="feature-desc">Monthly content calendars with Reel ideas, carousel templates, and Story poll strategies tailored to your market and niche.</div>
-        </div>
-      </div>
-      <div class="feature reveal">
-        <div class="feature-icon">&#x2B50;</div>
-        <div>
-          <div class="feature-title">Review Amplification</div>
-          <div class="feature-desc">Automated review request campaigns sent to past clients at the right time. We help you build a Google presence that converts.</div>
-        </div>
-      </div>
-      <div class="feature reveal">
-        <div class="feature-icon">&#x1F4CD;</div>
-        <div>
-          <div class="feature-title">Local SEO</div>
-          <div class="feature-desc">Google Business Profile optimization, Nextdoor strategy, and local content that ranks for "[your neighborhood] realtor" searches.</div>
-        </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">You get your report</div>
+        <div class="step-desc">A score out of 100, a breakdown of what is strong and what is weak, and a prioritized list of what to fix first.</div>
+        <div class="step-time">Free. No strings attached.</div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="preview-section">
+  <div class="wrap">
+    <div class="sec-label reveal">What you will get</div>
+    <h2 class="sec-title reveal">A real audit looks like this.</h2>
+    <div class="preview-card reveal">
+      <div class="preview-header">
+        <div class="preview-label">Sample Audit Preview</div>
+        <div class="preview-badge">Anonymized Agent Data</div>
+      </div>
+      <div class="preview-title">Fairfax County Solo Agent</div>
+      <div class="preview-subtitle">$60M career sales. Top 2% in office. 10+ years experience.</div>
 
-<!-- ════════ PRICING ════════ -->
-<section class="section section-alt" id="pricing">
-  <div class="container">
-    <div class="sec-label reveal centered">Pricing</div>
-    <h2 class="sec-title reveal centered" style="text-align:center;">Simple pricing. No surprises.</h2>
-    <p class="sec-intro reveal centered" style="text-align:center;margin-left:auto;margin-right:auto;">Start with a free audit. Upgrade when you are ready.</p>
-
-    <div class="pricing-grid">
-      <div class="price-card reveal">
-        <div class="price-name">Market Audit</div>
-        <div class="price-amount">Free</div>
-        <div class="price-period">One-time, no obligation</div>
-        <div class="price-desc">See exactly where you stand in your market and what opportunities you are missing.</div>
-        <ul class="price-features">
-          <li>Personalized market position report</li>
-          <li>Competitor analysis (top 4 agents)</li>
-          <li>Review distribution audit</li>
-          <li>Brand fragmentation check</li>
-          <li>Top 4 growth opportunities ranked</li>
-        </ul>
-        <a href="https://calendly.com/haseeb-clearopsai/30min" class="price-cta price-cta-secondary" target="_blank">Get your free audit</a>
+      <div class="score-row">
+        <div class="score-circle">
+          <div class="score-num">60</div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-bar">
+            <div class="score-bar-label">Zillow</div>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:45%;background:var(--amber);"></div></div>
+          </div>
+          <div class="score-bar">
+            <div class="score-bar-label">Google</div>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:30%;background:var(--red);"></div></div>
+          </div>
+          <div class="score-bar">
+            <div class="score-bar-label">Social</div>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:55%;background:var(--amber);"></div></div>
+          </div>
+          <div class="score-bar">
+            <div class="score-bar-label">Reviews</div>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:25%;background:var(--red);"></div></div>
+          </div>
+        </div>
       </div>
 
-      <div class="price-card featured reveal">
-        <div class="price-name">90-Day Growth Sprint</div>
-        <div class="price-amount" style="font-size:28px;">$2,500<span style="font-size:16px;color:var(--muted);font-weight:400;"> - $3,500</span></div>
-        <div class="price-period">One-time, based on your market</div>
-        <div class="price-desc">We build and run your lead gen system for 90 days. You focus on closing.</div>
-        <ul class="price-features">
-          <li>Everything in Market Audit</li>
-          <li>Google Business Profile setup</li>
-          <li>Weekly content calendar</li>
-          <li>AI lead research (your zip codes)</li>
-          <li>Competitor tracking dashboard</li>
-          <li>Weekly strategy check-ins</li>
-          <li>Follow-up message drafting</li>
-        </ul>
-        <a href="https://calendly.com/haseeb-clearopsai/30min" class="price-cta price-cta-primary" target="_blank">Book a strategy call</a>
+      <div class="findings">
+        <div class="finding high">
+          <div class="finding-severity">High</div>
+          <div class="finding-text"><strong>12 Zillow reviews for $60M in sales.</strong> Agents with comparable production in this market have 40 to 80+ reviews. Buyers filter by review count.</div>
+        </div>
+        <div class="finding high">
+          <div class="finding-severity">High</div>
+          <div class="finding-text"><strong>Google Business Profile has minimal presence.</strong> Searching "real estate agent Fairfax VA" does not surface this agent in the top results.</div>
+        </div>
+        <div class="finding medium">
+          <div class="finding-severity">Medium</div>
+          <div class="finding-text"><strong>No video content on any platform.</strong> Competitors in the same zip have active YouTube and Instagram Reels. This agent has zero video presence.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-severity">Good</div>
+          <div class="finding-text"><strong>Strong Zillow sales history.</strong> Career volume and recent transactions are well documented. This is a foundation to build on.</div>
+        </div>
       </div>
 
-      <div class="price-card reveal">
-        <div class="price-name">Monthly Retainer</div>
-        <div class="price-amount" style="font-size:28px;">$1,000<span style="font-size:16px;color:var(--muted);font-weight:400;"> - $2,000/mo</span></div>
-        <div class="price-period">Month-to-month, cancel anytime</div>
-        <div class="price-desc">Continuous lead gen, content strategy, and market intelligence on autopilot.</div>
-        <ul class="price-features">
-          <li>Everything in Growth Sprint</li>
-          <li>Ongoing lead research</li>
-          <li>Monthly competitor reports</li>
-          <li>Content creation support</li>
-          <li>Review management</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://calendly.com/haseeb-clearopsai/30min" class="price-cta price-cta-secondary" target="_blank">Let's talk</a>
+      <div class="preview-cta">
+        <p>This is a real agent in Fairfax County. Anonymized, but real data.</p>
+        <strong>Want yours? DM "AUDIT" + your zip.</strong>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ FAQ ════════ -->
-<section class="section">
-  <div class="container">
-    <div class="sec-label reveal centered" style="text-align:center;">Questions</div>
-    <h2 class="sec-title reveal centered" style="text-align:center;">Frequently asked</h2>
-    <p class="sec-intro reveal centered" style="text-align:center;margin:0 auto 36px;"></p>
-
-    <div class="faq-grid">
-      <div class="faq-item reveal">
-        <div class="faq-q">Do I need to be tech-savvy?</div>
-        <div class="faq-a">Not at all. We handle all the technical setup. You just need a phone and an Instagram account. Everything else is on us.</div>
+<section class="checks-section">
+  <div class="wrap">
+    <div class="sec-label reveal">What we audit</div>
+    <h2 class="sec-title reveal">Every place a buyer checks before calling you.</h2>
+    <div class="checks-grid">
+      <div class="check reveal">
+        <div class="check-icon">&#x1F50D;</div>
+        <div>
+          <div class="check-title">Google Search Presence</div>
+          <div class="check-desc">What shows when someone Googles your name + your city. First page results, Business Profile, reviews.</div>
+        </div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q">How fast will I see results?</div>
-        <div class="faq-a">Most agents see increased engagement within 2 weeks and qualified leads within 30 to 60 days. Speed depends on your market and starting position.</div>
+      <div class="check reveal">
+        <div class="check-icon">&#x2B50;</div>
+        <div>
+          <div class="check-title">Review Distribution</div>
+          <div class="check-desc">Zillow, Google, Realtor.com, RateMyAgent. How many reviews, where they are, and where you have gaps.</div>
+        </div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q">Do you manage my Instagram?</div>
-        <div class="faq-a">We provide strategy, content calendars, and analytics. You stay in control of your accounts and voice. We make sure you always know what to post and when.</div>
+      <div class="check reveal">
+        <div class="check-icon">&#x1F3E2;</div>
+        <div>
+          <div class="check-title">Brokerage Consistency</div>
+          <div class="check-desc">Whether your current brokerage shows everywhere or if old listings are still live and confusing buyers.</div>
+        </div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q">Is this only for Northern Virginia?</div>
-        <div class="faq-a">We are starting with NoVA because we know the market deeply. We plan to expand to other regions as we build more case studies.</div>
+      <div class="check reveal">
+        <div class="check-icon">&#x1F4F1;</div>
+        <div>
+          <div class="check-title">Social Media Presence</div>
+          <div class="check-desc">Instagram, Facebook, YouTube. Are you posting? Is anyone finding it? Is it connected to your other profiles?</div>
+        </div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q">What makes this different from hiring a social media manager?</div>
-        <div class="faq-a">We do not just post for you. We research your competitors, find your leads, optimize your review presence, and build systems that compound over time.</div>
+      <div class="check reveal">
+        <div class="check-icon">&#x1F4CA;</div>
+        <div>
+          <div class="check-title">Competitor Comparison</div>
+          <div class="check-desc">We check the top 3 to 4 agents in your zip and show you exactly where you stand relative to them.</div>
+        </div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q">Can I cancel anytime?</div>
-        <div class="faq-a">Yes. No long-term contracts. The 90-day sprint has a defined scope. Monthly retainers are month-to-month with 30 days notice.</div>
+      <div class="check reveal">
+        <div class="check-icon">&#x1F3AF;</div>
+        <div>
+          <div class="check-title">Prioritized Fix List</div>
+          <div class="check-desc">Not just problems. A ranked list of what to fix first, based on what will move the needle fastest in your market.</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ FINAL CTA ════════ -->
-<section class="cta-section" id="book">
-  <div class="container">
-    <h2>Ready to own your market?</h2>
-    <p>Book a free 45-minute strategy call. No pitch. Just an honest conversation about your goals and how to get there.</p>
-    <a href="https://calendly.com/haseeb-clearopsai/30min" class="cta-btn" target="_blank">Book your free strategy call</a>
-    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:12px;">Or DM us on <a href="https://instagram.com/clearopsai" style="color:var(--teal-light);text-decoration:none;">Instagram</a> · haseeb@clearopsai.io</div>
+<section class="numbers-section">
+  <div class="wrap">
+    <div class="numbers-grid reveal">
+      <div class="number-card">
+        <div class="number-big">5</div>
+        <div class="number-label">NoVA agents audited so far</div>
+      </div>
+      <div class="number-card">
+        <div class="number-big">60</div>
+        <div class="number-label">Average audit score (out of 100)</div>
+      </div>
+      <div class="number-card">
+        <div class="number-big">100%</div>
+        <div class="number-label">Had at least one critical gap</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ════════ FOOTER ════════ -->
+<section class="bottom-cta">
+  <div class="bottom-cta-glow"></div>
+  <div class="wrap">
+    <h2 class="reveal">Your buyers are Googling you right now.</h2>
+    <p class="reveal">Find out what they see. Free audit, no pitch, no commitment. Just a report you can act on.</p>
+    <a href="https://instagram.com/clearopsai" class="hero-cta reveal" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      DM "AUDIT" + your zip code
+    </a>
+    <div class="alt-option reveal">Prefer to talk first? <a href="https://calendly.com/haseeb-clearopsai/30min" target="_blank">Book a free 30-minute call</a></div>
+  </div>
+</section>
+
 <footer class="footer">
-  <div class="container">
-    <div class="footer-brand">ClearOps AI</div>
-    <div class="footer-links"><a href="https://clearopsai.io">clearopsai.io</a> · <a href="https://instagram.com/clearopsai">@clearopsai</a></div>
+  <div class="wrap">
+    <div class="footer-brand">ClearOps AI &middot; <a href="https://clearopsai.io">clearopsai.io</a> &middot; <a href="https://instagram.com/clearopsai">@clearopsai</a></div>
   </div>
 </footer>
 
 <script>
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
-}, { threshold: 0.1 });
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
