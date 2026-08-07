@@ -70,7 +70,7 @@ footer a{color:var(--teal);text-decoration:none}
     same assessment run at full depth on my own estate, published whole, including the parts
     that make me look bad. Judge the work rather than the reference list.
   </div>
-  <h1>What a two-server estate was hiding</h1>
+<h1>What a two-server estate was hiding</h1>
 <p><em>An infrastructure assessment, run on my own systems. 28 July 2026.</em></p>
 <hr>
 <p>I run two Linux servers: a workstation at home that does heavy processing, and a cloud box that hosts the public-facing services. Both are mine. I built them, I maintain them, and I look at them most days.</p>
@@ -180,6 +180,15 @@ footer a{color:var(--teal);text-decoration:none}
 <p><strong>Re-run the audit.</strong> Not because the first one was careless, but because an estate that regenerates itself will undo anything that has to be re-won every hour. The value is not in the finding. It is in the second look.</p>
 <p>I do this work. The uncomfortable version, which is the one worth publishing, is that I did it on my own systems, wrote it up carefully, got a number wrong, and only caught it because I went back six days later and checked the machine instead of my own report.</p>
 <p>That is the argument for going back.</p>
+<hr>
+<h2>Correction, 7 August 2026</h2>
+<p>The first writeup says the paused fleet took scheduled jobs &quot;from 234 to 68.&quot; I cannot stand behind that number, so here it is corrected rather than quietly edited.</p>
+<p>Counted today: <strong>217 scheduled jobs are active on that workstation</strong>, 169 user timers and 48 system timers. Whatever 68 measured, it was not what was running.</p>
+<p>Two things went wrong, and both are ordinary.</p>
+<p>The count came from <code>systemctl</code> reporting units as <em>disabled</em>. Disabled is a statement about whether a unit starts at boot. It says nothing about whether the unit is running right now, and a service with <code>Restart=always</code> will sit there disabled and running forever. I read a field that answered a question I had not asked.</p>
+<p>And the fleet came back. Units that were stopped have restarted across reboots, because disabling a unit does not survive the thing that re-enables it. That is the resurgence the original writeup was written to prevent, happening to the person who wrote it, on the machine he audited, inside a week.</p>
+<p>I am leaving both writeups up unchanged above this line. The number was wrong, it was wrong in the flattering direction, and nothing alerted me. That is the entire argument of the first piece and I am not going to make an exception for myself.</p>
+<p><strong>Root disk today: 87% used, 33GB free.</strong> A 55MB database has generated 48GB of write-ahead log through a replication tool that reports healthy, because the retention window is thirty days and it snapshots hourly against a file written every ten seconds. At the current rate that volume fills in about ten days. It is the same class of finding as the backup that ran 1,778 times and copied nothing: the tool is working exactly as configured, and the configuration is the defect.</p>
 </div></main>
 <footer><div class="w">
   <p>Haseeb Bassam &middot; ClearOps &middot; Reston, Virginia<br>
