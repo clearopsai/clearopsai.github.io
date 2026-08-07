@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An assessment I ran on my own systems | ClearOps</title>
+<meta name="description" content="A two-week infrastructure assessment, run on my own two-server estate. Eleven findings, two live security exposures, one backup that had silently failed 1,778 times.">
+<meta property="og:title" content="What a two-server estate was hiding | ClearOps">
+<meta property="og:description" content="An infrastructure assessment run on my own systems, published in full.">
+<meta property="og:type" content="article">
+<style>
+:root{
+ --bg:#080b12; --bg2:#0d1120; --bg3:#111828; --line:#1e2840; --line2:#263044;
+ --teal:#00c9a0; --teal-dim:rgba(0,201,160,.12); --blue:#3d7eff;
+ --text:#dde3f0; --soft:#7e8ea8; --muted:#6b7a94;
+ --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+ --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+     font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.bar{border-bottom:1px solid var(--line);background:rgba(8,11,18,.9);position:sticky;top:0;z-index:5;
+     backdrop-filter:blur(10px)}
+.bar .w{max-width:720px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;
+        justify-content:space-between;gap:16px}
+.brand{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:-.02em;
+       color:var(--text);text-decoration:none}
+.brand b{color:var(--teal);font-weight:600}
+.back{color:var(--soft);font-size:13.5px;text-decoration:none}
+.back:hover{color:var(--teal)}
+.w{max-width:720px;margin:0 auto;padding:0 24px}
+main{padding:52px 0 40px}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);
+        margin-bottom:22px;font-weight:500}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(29px,5.2vw,42px);line-height:1.16;
+   letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(21px,3.4vw,27px);line-height:1.25;
+   letter-spacing:-.015em;margin:52px 0 14px;text-wrap:balance}
+h3{font-family:var(--serif);font-weight:600;font-size:19px;margin:34px 0 10px;letter-spacing:-.01em}
+p{margin:0 0 20px;color:#c3cddf}
+strong{color:var(--text);font-weight:600}
+em{color:var(--soft)}
+code{font-family:var(--mono);font-size:.88em;background:var(--bg3);border:1px solid var(--line);
+     border-radius:4px;padding:1px 5px;color:var(--teal)}
+ul{margin:0 0 20px;padding-left:20px;color:#c3cddf}
+li{margin-bottom:9px}
+hr{border:none;border-top:1px solid var(--line);margin:38px 0}
+hr.big{border-top:1px solid var(--line2);margin:64px 0}
+.note{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--teal);
+      border-radius:0 10px 10px 0;padding:20px 22px;margin:0 0 40px;font-size:14.5px;color:var(--soft)}
+.note strong{color:var(--text)}
+footer{border-top:1px solid var(--line);margin-top:64px;padding:34px 0 70px;
+       color:var(--muted);font-size:13.5px}
+footer a{color:var(--teal);text-decoration:none}
+.cta{display:inline-block;margin-top:16px;background:var(--teal);color:var(--bg);
+     font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="w">
+  <a class="brand" href="/">Clear<b>Ops</b></a>
+  <a class="back" href="/">Back to ClearOps &rarr;</a>
+</div></div>
+<main><div class="w">
+  <div class="kicker">A worked example</div>
+  <div class="note">
+    <strong>Why this is here.</strong> The honest answer to "who else have you done this for" is
+    that ClearOps has no clients yet. So instead of a case study I cannot produce, here is the
+    same assessment run at full depth on my own estate, published whole, including the parts
+    that make me look bad. Judge the work rather than the reference list.
+  </div>
+  <h1>What a two-server estate was hiding</h1>
+<p><em>An infrastructure assessment, run on my own systems. 28 July 2026.</em></p>
+<hr>
+<p>I run two Linux servers: a workstation at home that does heavy processing, and a cloud box that hosts the public-facing services. Both are mine. I built them, I maintain them, and I look at them most days.</p>
+<p>Yesterday one of them ran out of disk in the middle of a task. That&#x27;s a boring failure with a boring fix, so I did what I&#x27;d do for a client instead: I stopped, and I audited the whole estate properly.</p>
+<p>I found eleven problems. Two were security exposures serious enough to fix that night. One had been silently failing 1,778 times. None of them were alerting anybody.</p>
+<p>This is what turned up, and why I think the pattern matters more than any individual finding.</p>
+<hr>
+<h2>The disk wasn&#x27;t full</h2>
+<p>That was the presenting symptom, and it was wrong.</p>
+<p>The root volume was at 100% with writes failing. But the machine had <strong>311GB free</strong>. It was sitting on three separate logical volumes: root was suffocating at 100%, while a second volume had 221GB free and a third had 90GB free. There was also a 4.6TB network storage box, already configured and working, holding almost nothing.</p>
+<p>Nobody had noticed because the obvious command lies. <code>du</code> on the root filesystem doesn&#x27;t cross mount boundaries, so it reports the root volume&#x27;s contents and silently omits the other two. If you&#x27;re used to trusting that number, you conclude you need to buy more disk.</p>
+<p><strong>The finding wasn&#x27;t &quot;you&#x27;re out of space.&quot; It was &quot;you already own 311GB you aren&#x27;t using, and here&#x27;s why it&#x27;s stranded.&quot;</strong></p>
+<p>Cause of the pressure: a 46GB backup mirror living on the volume with no room, backing up data that mostly lived on the volume with 221GB free. Moving it wasn&#x27;t the fix either. A timer regenerates that directory hourly, so deleting it just means it returns before lunch. The fix was one variable on line 6 of the script.</p>
+<hr>
+<h2>The backup had never backed up the file it was told to</h2>
+<p>While I was in that script, I checked whether it did what it claimed.</p>
+<p>A specific file was listed as a backup source. The script appends a trailing slash to every source path, which is correct for directories and invalid for files. So every run produced a path like <code>notes.md/</code> and rsync answered, accurately, <em>&quot;Not a directory.&quot;</em></p>
+<p>The error was caught by a handler that prints a warning and continues. The job carried on, reported success in the ways anyone would check, and never once copied that file.</p>
+<p>I counted the log entries. <strong>1,778.</strong> Once an hour, for about two and a half months. Every line said exactly what was wrong.</p>
+<p>Two more problems in the same script:</p>
+<p><strong>A database was being stored three times.</strong> The SQLite hot-backup stage walked into the backup directory itself and captured copies of copies. One 5GB database occupied roughly 15GB. That alone explained a third of the pressure on the volume that was full.</p>
+<p><strong>The job exited non-zero on every run.</strong> A <code>sort | head</code> pipeline under <code>set -o pipefail</code>: <code>head</code> closes the pipe after ten lines, <code>sort</code> dies on the broken pipe, <code>set -e</code> terminates the script there, and the final stage that writes the success timestamp never executes. The backup completed. The reporting didn&#x27;t. Anyone watching exit codes would have concluded, wrongly, that backups were failing, and would eventually have stopped watching.</p>
+<hr>
+<h2>Two live security exposures</h2>
+<p><strong>An unauthenticated public API.</strong> A containerised media-downloader service was bound to all interfaces, reachable from the open internet, three days up, with no authentication. Nothing in my current work used it. Anyone who found it could run traffic through my server and my bandwidth.</p>
+<p>There was no firewall on the cloud box at all: <code>ufw</code> inactive, iptables default policy ACCEPT. That&#x27;s why the above was reachable, along with several other services that had no business being exposed. The workstation was never the problem here; it has run a default-deny host firewall throughout.</p>
+<p><strong>And the worst one: a web portal with no authentication and 43 writable endpoints.</strong> I had assumed it was obscure enough not to matter. Obscurity isn&#x27;t a control. Anyone with the URL could change application state, and several of those endpoints did more than write a record. One spawned a subprocess. One consumed a paid third-party API quota. Four launched video encoding jobs with multi-minute timeouts, which is a denial-of-service primitive handed to the internet for free.</p>
+<p>The fix was a token gate. The part that took actual thought was the exception list: client-facing share links had to keep working without a login, because that&#x27;s the entire point of them. Locking everything would have been faster and would have broken the one function that faces customers.</p>
+<hr>
+<h2>Work that was ordered stopped, and didn&#x27;t</h2>
+<p>I&#x27;d paused a whole product line five days earlier and written a manifest recording exactly what to stop.</p>
+<p><strong>It stopped on neither machine.</strong> The cloud box still ran six services and fourteen scheduled jobs: transcription, encoding, caption generation, media prefetching. On the workstation, one downloader named explicitly in my own manifest was still running, and had accumulated <strong>101 CPU-hours</strong>. It was still downloading, into a 215GB tree that nothing reads, for a product with no users.</p>
+<p>The workstation was running <strong>234 scheduled jobs</strong>, of which 169 belonged to the paused product. Thirty-one were duplicate twins running the same work twice.</p>
+<hr>
+<h2>Four failures nobody could see</h2>
+<p><strong>A service was <code>disabled</code> while running.</strong> It would survive until the next reboot and then quietly not come back, taking a public endpoint with it. Everything looks healthy right up until an unrelated restart.</p>
+<p><strong>A protective job was failing 1,427 times a day.</strong> Its purpose was to cut network access if a privacy tunnel dropped. It hadn&#x27;t executed successfully in a long time, so the protection simply wasn&#x27;t there. It had written about 500MB of journal saying so.</p>
+<p><strong>Another job failed every four minutes</strong> and never appeared in the failed-units list, because its own timer restarted it before anyone looked. A unit that fails and is immediately reset is invisible to every check that asks &quot;what&#x27;s failing right now.&quot;</p>
+<p><strong>A VPN was logged out</strong>, so three monitoring services were bound to an IP address that no longer exists. Monitoring was, in the most literal sense, not.</p>
+<hr>
+<h2>What I did</h2>
+<p>Firewall on the cloud box, allowing only SSH and the private network. Container stopped. Token authentication on the portal, with client share links deliberately left public. The paused fleet actually stopped on both machines: twenty units on one, 166 on the other, taking scheduled jobs from 234 to 68 and failed units from 22 to zero. The disabled-but-running service enabled so it survives a reboot. Three backup script bugs fixed.</p>
+<p>Two numbers moved: the cloud box&#x27;s load average went from 1.46 to <strong>0.16</strong>. The workstation&#x27;s root volume went from 4GB free to <strong>80GB</strong>, without deleting anything that wasn&#x27;t either regenerable or verified on the storage box first.</p>
+<p>Every change was written to a reversal script before it was made. Every deletion was verified before it happened: the backup was checked with an integrity check and a row count against the live database, and the archived directory was streamed back and its file count compared against the original, 23,353 against 23,353, before a single local byte was removed.</p>
+<p>One remote-firewall habit worth stealing: <strong>arm the rollback before you enable the rule.</strong> A timer set to disable the firewall in ten minutes, cancelled only after a fresh connection proves the rule didn&#x27;t lock you out.</p>
+<hr>
+<h2>The pattern</h2>
+<p>Not one of these was hard. There&#x27;s no clever diagnosis here, no exotic failure. Every single one announced itself in a log, a status field, or an exit code.</p>
+<p><strong>The problem was never that these systems were broken. It&#x27;s that they were broken quietly.</strong></p>
+<p>Loud failures get fixed, because someone is standing there. Quiet failures accumulate: the backup that reports success, the alert that fires so often it&#x27;s furniture, the job that fails and restarts before anyone looks, the service that runs today and won&#x27;t survive a reboot in March. They cost nothing until the day they cost everything, and by then the log that would have explained it is 1,778 entries deep.</p>
+<p>I do this work. If you have infrastructure and nobody whose actual job is to go looking, I&#x27;d guess your estate has its own version of these. It takes about two weeks to find them and the report is yours either way.</p>
+<p>The uncomfortable part, for me, is that this is my own estate. I look at it most days. It still took a deliberate audit to see any of it, because none of it was on fire.</p>
+<p>That&#x27;s exactly the point.</p>
+<hr class='big'>
+<h1>Six days later</h1>
+<p><em>A follow-up to &quot;What a two-server estate was hiding.&quot; 4 August 2026.</em></p>
+<hr>
+<p>Last week I audited my own infrastructure and published what I found. Eleven problems, none of them hard, all of them quiet. The argument was that quiet failures accumulate while loud ones get fixed, because nobody is standing there when a log line is the only thing complaining.</p>
+<p>Six days later I ran the same audit again.</p>
+<p>I expected to write a short note saying it held. Instead I found that one of my own numbers was false when I published it, and I watched the estate erase a failure while I was looking at it.</p>
+<hr>
+<h2>The number I got wrong</h2>
+<p>I wrote that the cleanup took the workstation from 234 scheduled jobs to 68, and failed units from 22 to zero.</p>
+<p>It did not.</p>
+<p>There are <strong>165 active scheduled jobs</strong> on that machine tonight. And the reason is more embarrassing than drift, because they did not creep back. <strong>98 of the jobs I reported stopping have been running continuously since the minute I stopped them.</strong></p>
+<p>They show a state I should have recognised, because it is the same shape as everything else in the original piece:</p>
+<p>``<code> UnitFileState=disabled ActiveState=active </code>``</p>
+<p>Disabled means it will not start after a reboot. Active means it is running right now. I disabled them, confirmed they were disabled, and wrote down the number that command gave me. The command was answering a different question than the one I thought I was asking.</p>
+<p>I checked what the system said about itself instead of checking what the system was doing. That is the exact error the article was about, made by the person writing the article, in the paragraph reporting the fix.</p>
+<p>Failed units are not zero either. I sampled four times across one night: 14, 14, 15, 14.</p>
+<h2>Then it happened in front of me</h2>
+<p>At <strong>00:30:19</strong> a unit failed. At <strong>00:31:25</strong> it appeared in the failed list, where I saw it. At <strong>00:34:51</strong> it was gone from that list, and it had not run again in between.</p>
+<p>Something on the box clears failure state on a schedule. So a unit can fail every few minutes forever and never appear in the one check most people run, which is <code>systemctl --state=failed</code>. There are two of these on my workstation right now. Together they generate more than six times the failure volume of the killswitch I led with last week.</p>
+<p>Last week I described this failure mode in the abstract, as one of four things nobody could see. This week I have the timestamps.</p>
+<h2>The fix that removed the alarm and not the risk</h2>
+<p>Last week I found a protective job failing 1,427 times a day. Its purpose was to cut network access if a privacy tunnel dropped.</p>
+<p>I stopped the noise. I did not restore the protection. Six days on, the protection is still absent, and the containers it existed to protect are still running.</p>
+<p>That is worse than the original state, and it is worse in a specific way: before, something was screaming into a log every minute. Now it is quiet. If I had walked away after publishing, the only signal that this was broken is the one I personally switched off.</p>
+<h2>What actually held</h2>
+<p>Not everything drifted, and the split is the interesting part.</p>
+<p><strong>The security fixes held completely.</strong> The portal token gate still rejects every dangerous endpoint from the public internet, six days on, including the one that could have launched video encoding jobs on demand and the one that burned a paid API quota. The exception list for client share links has not grown by a single entry. The container is still stopped. It has not restarted once.</p>
+<p><strong>One backup fix held and I can prove it.</strong> The file that had never once been copied, in 1,778 attempts, is now in the backup with the same size, the same checksum and the same modification time as the live file. It is not merely fixed in the code. It is doing work every hour.</p>
+<p><strong>The hygiene fixes did not hold.</strong> Timers, failed units, disk hygiene, and the protection I silenced.</p>
+<p>Then I noticed the split runs along a cleaner line than security versus hygiene.</p>
+<p><strong>Every single regression is on one machine.</strong> The cloud box held on every axis I could test: firewall still up, still nothing but SSH reachable from the internet, zero failed units, and not one of the paused product&#x27;s jobs running. The workstation is where all of it came back.</p>
+<p>The difference is not that I was more careful with one box. It is that the workstation runs a system that regenerates itself, and the cloud box does not. The paused jobs there are configured to restart. Disabling them was an instruction the machine was free to disregard, and did.</p>
+<p>A fix that has to win an argument with a running system every hour is not a fix. It is a preference.</p>
+<h2>The original failure, recurring on schedule</h2>
+<p>The piece opened with a root volume at 100% while 311GB sat unused on other volumes.</p>
+<p>Tonight root has <strong>51GB free</strong>. Six days ago I left it with 80. That is about 29GB in six days, and at that rate it is full again around the middle of the month.</p>
+<p>Meanwhile there is <strong>208GB free</strong> on the other two volumes on the same machine. The identical stranding, in the identical place, five weeks after I wrote it up.</p>
+<p>With one difference that makes it worse. Last time I could have grown the volume, because the group had room. It does not now. It is fully allocated. So the escape hatch I used the first time is closed, and the deadline is real rather than notional.</p>
+<p>I have known about the 191GB directory this is competing with since I wrote the first piece. It is still there. I have not decided what to do with it, and not deciding is itself the thing filling the disk.</p>
+<h2>While I was writing this</h2>
+<p>The console I use to run this business raised the highest-priority alert it has: a reply from a prospect. Then it raised it again. <strong>It raised the same two alerts 130 times in sixteen hours.</strong></p>
+<p>Neither was a reply. Both were out-of-office autoresponders. The watcher treated any message from a tracked address as an answer, and it re-raised the alert on every run instead of only when something changed.</p>
+<p>So the system I built to stop quiet failures spent a night burying my actual task list under 130 copies of a false alarm, and marking two people as having answered me when they were on holiday. That second part is the expensive half: marking them answered took them out of the follow-up queue, so the two people who wrote to me with the exact date they would be back were the two I would never have chased.</p>
+<p>The part I like least is that I was warned. Two days earlier, the review I run over my own console reported that four of the thirteen items on my list were the system filing tickets about itself, and it spelled out where that ends: <em>&quot;dedup is per head, so all nine departments can each hold one open ticket at once. That would be nine invented items against eight real ones.&quot;</em></p>
+<p>I read that, agreed with it, and fixed it by hiding tickets of that one type from that one list. The warning was about a mechanism that invents work. My fix was about a category name. Two days later the same mechanism came back through a door the fix did not cover, and the score was not nine invented against eight real. It was a hundred and thirty against nine.</p>
+<p>I found it because I went looking. Nothing was on fire.</p>
+<hr>
+<h2>What I would tell a client</h2>
+<p>Three things, and I would have said the first two last week with more confidence than I had earned.</p>
+<p><strong>Check the effect, not the report.</strong> Disabled is not stopped. Active is not working. Exit zero is not success. Every wrong number in my own audit came from reading a status field instead of observing a behaviour.</p>
+<p><strong>A silenced alarm is a worse state than a loud one.</strong> If you turn off a check, write down what it was protecting and when you will restore it, or you have converted a visible problem into an invisible one and called it progress.</p>
+<p><strong>Fix the mechanism, not the symptom you can see.</strong> Twice in one week I was handed an accurate warning and closed it by making the visible instance go away. Both times the underlying thing came back somewhere the fix did not reach. If a finding names a mechanism, the fix has to name the same mechanism.</p>
+<p><strong>Re-run the audit.</strong> Not because the first one was careless, but because an estate that regenerates itself will undo anything that has to be re-won every hour. The value is not in the finding. It is in the second look.</p>
+<p>I do this work. The uncomfortable version, which is the one worth publishing, is that I did it on my own systems, wrote it up carefully, got a number wrong, and only caught it because I went back six days later and checked the machine instead of my own report.</p>
+<p>That is the argument for going back.</p>
+</div></main>
+<footer><div class="w">
+  <p>Haseeb Bassam &middot; ClearOps &middot; Reston, Virginia<br>
+  <a href="mailto:haseeb@clearopsai.io">haseeb@clearopsai.io</a></p>
+  <a class="cta" href="/#get-started">Request a briefing &rarr;</a>
+</div></footer>
+</body>
+</html>
