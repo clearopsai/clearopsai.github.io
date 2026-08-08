@@ -66,12 +66,25 @@ ol.docs b{font-weight:600}
 .who{border-top:1px solid var(--rule);margin-top:28px;padding-top:16px;font-size:14.5px;color:var(--soft)}
 .who b{color:var(--ink)}
 a{color:var(--teal)}
-footer{margin-top:26px;padding-top:14px;border-top:2px solid var(--ink);
-  font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--muted);line-height:1.8}
+.sig{margin:12px 0 0;font-family:ui-monospace,Menlo,monospace;font-size:11px;
+  color:var(--muted);letter-spacing:.02em}
 
 @media print{
-  body{background:#fff} .sheet{margin:0;padding:0;box-shadow:none;max-width:100%}
-  h2{margin-top:16px} .stand{margin-bottom:16px} @page{margin:16mm}
+  html,body{height:auto;overflow:hidden}
+  body{background:#fff;font-size:11pt;line-height:1.38}
+  .sheet{break-inside:avoid;page-break-inside:avoid}
+  .sheet{margin:0;padding:0;box-shadow:none;max-width:100%}
+  h1{font-size:18pt;margin-bottom:5px}
+  .stand{margin-bottom:12px;font-size:11.6pt}
+  h2{margin:10px 0 5px;font-size:8.6pt;padding-bottom:3px}
+  p{margin-bottom:6px} .tiny{font-size:9.3pt;margin-bottom:7px}
+  ol.docs li{margin-bottom:3px;font-size:10.6pt}
+  .two li{margin-bottom:2px;font-size:10.2pt}
+  .price div{padding:8px 12px} .price dd{font-size:14pt}
+  .paste{padding:9px 12px;font-size:9.4pt;line-height:1.5;margin:6px 0 4px}
+  .who{margin-top:11px;padding-top:8px;font-size:9.8pt}
+  .sig{margin-top:8px;font-size:8.4pt}
+  @page{margin:14mm}
 }
 </style>
 </head>
@@ -94,8 +107,8 @@ footer{margin-top:26px;padding-top:14px;border-top:2px solid var(--ink);
     <div><dt>Recurring cost</dt><dd>None</dd></div>
     <div><dt>Payment</dt><dd>Half, then half</dd></div>
   </div>
-  <p class="tiny">Fixed price. No hourly billing, no change orders, no second invoice. Half on
-  signature, half when the report is delivered, each payable within fourteen days.</p>
+  <p class="tiny">No hourly billing, no change orders, no second invoice. Half on signature, half
+  on delivery, each payable within fourteen days.</p>
 
   <h2>What arrives, before the final meeting rather than after it</h2>
   <ol class="docs">
@@ -110,8 +123,8 @@ footer{margin-top:26px;padding-top:14px;border-top:2px solid var(--ink);
     <li><b>The expiry calendar.</b> Every licence, contract and certificate that lapses, dated,
       with a named person beside each one.</li>
   </ol>
-  <p class="tiny">All of it is yours. Forward it, act on it, or hand it to another vendor. There
-  is no restriction on any of it.</p>
+  <p class="tiny">All of it is yours, with no restriction. Forward it, act on it, or hand it to
+  another vendor.</p>
 
   <h2>Why it is not a sales visit</h2>
   <div class="two">
@@ -124,46 +137,41 @@ footer{margin-top:26px;padding-top:14px;border-top:2px solid var(--ink);
       <li><b>There is no phase two.</b> Nothing follows unless you ask for it.</li>
     </ul>
   </div>
-  <p class="tiny">Access is read-only wherever read-only exists. Configuration and contracts
-  only: no student records, no donor data, no employee files. Every credential is revoked on
-  the last day.</p>
+  <p class="tiny">Read-only access, configuration and contracts only. No student records, donor
+  data or employee files. Every credential revoked on the last day.</p>
 
   <h2>The budget line, to copy</h2>
-  <div class="paste">Infrastructure assessment, external, fixed price          $5,000.00
-  Two weeks. Vendor-neutral. Implementation excluded.
-  One-time. No licence, subscription or renewal attached.
-  Deliverable: written report, system inventory, dependency
-  map, ranked remediation list, contract expiry calendar.</div>
-  <p class="tiny">If your finance system wants a category: professional services, non-recurring.
-  It is not a technology purchase and it creates no ongoing obligation.</p>
+  <div class="paste">Infrastructure assessment, external, fixed price     $5,000.00
+  Two weeks, vendor-neutral, implementation excluded. One-time,
+  with no licence, subscription or renewal attached. Deliverable:
+  written report, estate inventory, dependency map, ranked fix
+  list, contract expiry calendar.</div>
+  <p class="tiny">Category, if your system wants one: professional services, non-recurring.</p>
 
-  <h2>The questions a business officer usually asks</h2>
+  <h2>The usual four questions</h2>
   <div class="two">
     <ul>
-      <li><b>Does this commit us to anything?</b> No. One document, one price, and it ends.</li>
-      <li><b>Will it disrupt anything?</b> No. Two scheduled calls, and read-only access.</li>
+      <li><b>Does it commit us to anything?</b> No. One document, one price, and it ends.</li>
+      <li><b>Will it disrupt anything?</b> Two scheduled calls, read-only access.</li>
     </ul>
     <ul>
-      <li><b>Can we stop it?</b> Either side, any time, in writing. You pay for days worked at
-        $500 and nothing else.</li>
-      <li><b>Who sees our information?</b> One person. Nothing is subcontracted.</li>
+      <li><b>Can we stop it?</b> Either side, in writing. You pay $500 a day for days worked.</li>
+      <li><b>Who sees our data?</b> One person. Nothing is subcontracted.</li>
     </ul>
   </div>
 
   <div class="who">
-    <p><b>Haseeb Bassam</b> has spent twelve years in operations and infrastructure at eBay,
-    Splunk, Cadence Design Systems, CoreSite Data Centers and Axoni, and works on shift at a
+    <p style="margin:0 0 8px"><b>Haseeb Bassam</b>, thirteen years in infrastructure operations.
+    He built the monitoring at <b>Axoni</b> on Splunk, Grafana and Prometheus. Before that, Cloud
+    Operations Engineer at <b>Splunk</b> on AWS; Systems Engineer at <b>Cadence Design Systems</b>
+    across 500 KVM hosts and more than 15,000 virtual machines in OpenStack; and L3 system
+    administrator at <b>eBay</b> over 18,000 users and 10,000 Windows servers. He is on shift at a
     data center operator in Northern Virginia now. ClearOps is one person, deliberately.</p>
     <p style="margin:0">The same assessment, run at full depth on his own systems and published
-    whole including the parts that went wrong, is at
-    <a href="https://clearopsai.io/assessment.html">clearopsai.io/assessment.html</a>. It is
-    the fastest way to judge the work before spending anything on it.</p>
+    whole including the part where he got a number wrong, is at
+    <a href="https://clearopsai.io/assessment.html">clearopsai.io/assessment.html</a>.</p>
+    <p class="sig">Reston, Virginia &middot; haseeb@clearopsai.io &middot; clearopsai.io</p>
   </div>
-
-  <footer>
-    ClearOps &middot; Haseeb Bassam &middot; Reston, Virginia<br>
-    haseeb@clearopsai.io &middot; clearopsai.io
-  </footer>
 
 </div>
 </body>
