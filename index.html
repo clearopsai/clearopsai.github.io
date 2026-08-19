@@ -72,10 +72,16 @@ gtag('config', 'G-D3V52Q2K1Q');
 
 /* ─── Reset ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%;
+       /* the header is fixed, so an anchored heading would land underneath it.
+          Offset by exactly what the header occupies: its height plus its own
+          1px border-bottom. Every anchor target is a section with 80px of top
+          padding, which supplies the breathing room. */
+       scroll-padding-top: calc(var(--nav-h) + 1px); }
 
 /* ─── Tokens ─── */
 :root {
+ --nav-h:    64px;
  --bg:       #080b12;
  --bg2:      #0d1120;
  --bg3:      #111828;
@@ -137,7 +143,7 @@ header.scrolled {
 .nav {
   max-width: 1100px; margin: 0 auto; padding: 0 32px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+  height: var(--nav-h);
 }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
@@ -946,7 +952,7 @@ footer {
 <div class="wrap">
   <div class="sec-label">What lands in your hands</div>
   <h2>Three things. <i>Yours to keep, forward, or hand to the partner.</i></h2>
-  <p class="lead">I place no restriction on what you do with any of it. That is the point of not implementing. If you want to see how I write before you buy it, <a href="/assessment.html" style="color:var(--teal);text-decoration:none;font-weight:500">here is an assessment I ran on my own systems</a>.</p>
+  <p class="lead">I place no restriction on what you do with any of it. That is the point of not implementing. If you want to see what the report looks like before you buy it, <a href="/example.html" style="color:var(--teal);text-decoration:none;font-weight:500">here is a full sample review, written for a fictional client</a>.</p>
   <div class="svc-grid">
     <div class="svc"><h3>The report</h3><p>Where the evidence stops proving the transaction continued, with the evidence attached. If you named an incident, a reconstruction of it from what was actually recorded.</p></div>
     <div class="svc"><h3>The path as a grid</h3><p>Every handoff, what should prove it, what actually proves it, where that record lives, and one word for each. Proven, partial, or absent.</p></div>

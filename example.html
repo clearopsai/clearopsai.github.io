@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample report: a fictional partner workflow evidence review | ClearOps</title>
+<meta name="description" content="A sample deliverable for a company that does not exist. Northwind Pay is invented, the incident is invented, and no such engagement took place. Published to show what the report looks like.">
+<meta property="og:title" content="Sample report (fictional client) | ClearOps">
+<meta property="og:description" content="What a partner workflow evidence review looks like. The client, the incident and the logs are invented. No engagement took place.">
+<meta property="og:type" content="article">
+<meta name="robots" content="index, follow">
+<style>
+:root{
+ --bg:#080b12; --bg2:#0d1120; --bg3:#111828; --line:#1e2840; --line2:#263044;
+ --teal:#00c9a0; --teal-dim:rgba(0,201,160,.12); --blue:#3d7eff;
+ --amber:#e0a33e; --rose:#e0685f;
+ --text:#dde3f0; --soft:#7e8ea8; --muted:#6b7a94;
+ --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+ --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+     font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.bar{border-bottom:1px solid var(--line);background:rgba(8,11,18,.9);position:sticky;top:0;z-index:5;
+     backdrop-filter:blur(10px)}
+.bar .w{max-width:720px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;
+        justify-content:space-between;gap:16px}
+.brand{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:-.02em;
+       color:var(--text);text-decoration:none}
+.brand b{color:var(--teal);font-weight:600}
+.back{color:var(--soft);font-size:13.5px;text-decoration:none}
+.back:hover{color:var(--teal)}
+.w{max-width:720px;margin:0 auto;padding:0 24px}
+main{padding:52px 0 40px}
+.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);
+        margin-bottom:22px;font-weight:500}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(29px,5.2vw,42px);line-height:1.16;
+   letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(21px,3.4vw,27px);line-height:1.25;
+   letter-spacing:-.015em;margin:52px 0 14px;text-wrap:balance}
+h3{font-family:var(--serif);font-weight:600;font-size:19px;margin:34px 0 10px;letter-spacing:-.01em}
+p{margin:0 0 20px;color:#c3cddf}
+strong{color:var(--text);font-weight:600}
+em{color:var(--soft)}
+code{font-family:var(--mono);font-size:.88em;background:var(--bg3);border:1px solid var(--line);
+     border-radius:4px;padding:1px 5px;color:var(--teal)}
+ul,ol{margin:0 0 20px;padding-left:20px;color:#c3cddf}
+li{margin-bottom:9px}
+hr{border:none;border-top:1px solid var(--line);margin:38px 0}
+hr.big{border-top:1px solid var(--line2);margin:64px 0}
+.note{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--teal);
+      border-radius:0 10px 10px 0;padding:20px 22px;margin:0 0 40px;font-size:14.5px;color:var(--soft)}
+.note strong{color:var(--text)}
+.note.warn{border-left-color:var(--amber);background:rgba(224,163,62,.05);
+           border-color:rgba(224,163,62,.22)}
+.stamp{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;
+       letter-spacing:.13em;text-transform:uppercase;color:var(--amber);
+       border:1px solid rgba(224,163,62,.34);background:rgba(224,163,62,.07);
+       border-radius:5px;padding:4px 9px;vertical-align:middle}
+.doc{border:1px solid var(--line2);border-radius:12px;background:var(--bg2);
+     padding:26px 24px;margin:0 0 40px}
+.doc-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:6px}
+.doc-title{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em}
+.doc-meta{font-size:13px;color:var(--muted);margin:0}
+.scroll{overflow-x:auto;margin:0 0 22px;border:1px solid var(--line);border-radius:10px}
+/* The matrix is the one thing on this page that does not fit a 720px reading column.
+   Above the card breakpoint it breaks out of .w so the Status column is never clipped. */
+@media(min-width:701px){
+ .scroll{width:min(94vw,1020px);margin-left:50%;transform:translateX(-50%)}
+}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--soft);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+   background:var(--bg3);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{color:var(--text);font-weight:500;white-space:nowrap}
+.st{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    border-radius:4px;padding:3px 7px;white-space:nowrap}
+.st.p{color:var(--teal);background:var(--teal-dim);border:1px solid rgba(0,201,160,.3)}
+.st.h{color:var(--amber);background:rgba(224,163,62,.1);border:1px solid rgba(224,163,62,.3)}
+.st.a{color:var(--rose);background:rgba(224,104,95,.1);border:1px solid rgba(224,104,95,.3)}
+footer{border-top:1px solid var(--line);margin-top:64px;padding:34px 0 70px;
+       color:var(--muted);font-size:13.5px}
+footer a{color:var(--teal);text-decoration:none}
+.cta{display:inline-block;margin-top:16px;background:var(--teal);color:var(--bg);
+     font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none}
+@media(max-width:700px){
+ .bar .w{padding:14px 20px} .w{padding:0 20px}
+ /* the status column is the point of this table, and it was off-screen behind a
+    horizontal scroll. Below 600px each row becomes its own card with the status
+    directly under the handoff name. */
+ .scroll{overflow-x:visible;border:none;border-radius:0}
+ table{min-width:0}
+ thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ tbody tr{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);
+          border-radius:10px;background:var(--bg2);padding:14px 15px;margin-bottom:10px}
+ tbody td{display:block;border:none;padding:2px 0}
+ tbody td[data-label="Handoff"]{order:1;font-size:15px;margin-bottom:2px}
+ tbody td[data-label="Status"]{order:2;margin-bottom:8px}
+ tbody td:not([data-label="Handoff"]):not([data-label="Status"]){order:3;
+   display:flex;gap:10px;font-size:13px;color:#c3cddf}
+ tbody td:not([data-label="Handoff"]):not([data-label="Status"])::before{
+   content:attr(data-label);color:var(--muted);flex:0 0 8.4em;font-size:11px;
+   letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="w">
+  <a class="brand" href="/">Clear<b>Ops</b></a>
+  <a class="back" href="/">Back to ClearOps &rarr;</a>
+</div></div>
+<main><div class="w">
+
+  <div class="kicker">A sample deliverable &middot; not a client</div>
+
+  <div class="note warn">
+    <strong>Northwind Pay does not exist.</strong> The company is invented, the 14 March
+    incident is invented, and the logs described here were never read, because there was
+    nothing to read. No such engagement took place.
+    <br><br>
+    This is a report written the way a real one would be written, for a company made up for the
+    purpose. Judge the shape of the work. The only real thing on this page is the writing.
+  </div>
+
+<h1>What a partner workflow evidence review produces</h1>
+<p><em>A sample report for a fictional payments company.</em></p>
+
+<hr>
+
+<div class="doc">
+  <div class="doc-head">
+    <span class="doc-title">Issuer authorisation path</span>
+    <span class="stamp">Sample &middot; fictional client</span>
+  </div>
+  <p class="doc-meta">Prepared for Northwind Pay (invented) &middot; Confidential in a real engagement</p>
+</div>
+
+<h2>Summary</h2>
+<p>The issuer authorisation path has one known evidence gap and one that was not known.</p>
+<p>The known gap is the absence of an independent record on the return path, already tracked
+internally. The gap that matters more is in the response log itself. The response log records a
+decline when the issuer declines, and also when the gateway times out waiting and synthesises
+one. Both are written in the same format. Nothing in the record distinguishes them.</p>
+<p><strong>A decline in that log therefore does not establish that the issuer answered.</strong>
+This is the mechanism that made the 14 March investigation take six hours, and it is not
+addressed by the return-path logging change currently in the backlog.</p>
+
+<h2>1. What was reviewed</h2>
+<p>One workflow: the issuer authorisation path between the Northwind gateway and the partner,
+from inbound merchant request through to the response returned to the merchant.</p>
+<p><strong>Method.</strong> One working session with the engineer who owns the integration,
+conducted by screen share, followed by review of the architecture diagram and alert definitions
+provided afterwards. No production credentials were used and no transaction payload contents
+were reviewed.</p>
+<p>The question this review answers is narrow: <em>at each point where the transaction changes
+hands, what record exists that establishes it continued past that point?</em></p>
+
+<h2>2. The path</h2>
+<p>Five handoffs, with the ownership boundary between Northwind and the partner falling at
+handoffs three and four.</p>
+<ol>
+  <li>Merchant submits an authorisation request to the Northwind gateway.</li>
+  <li>Gateway passes the request to the internal authorisation service.</li>
+  <li>Authorisation service sends the request to the issuer. <em>Ownership boundary.</em></li>
+  <li>Issuer returns a response to the gateway. <em>Ownership boundary.</em></li>
+  <li>Gateway returns a result to the merchant.</li>
+</ol>
+
+<h2>3. Evidence matrix</h2>
+<p>Status is one of three values. <strong>Proven</strong> means a record exists that establishes
+the transaction continued past that handoff. <strong>Partial</strong> means a record exists but
+does not establish it unambiguously. <strong>Absent</strong> means no such record exists.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Handoff</th><th>Should prove it</th><th>Actually proves it</th><th>Where it lives</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Handoff">1. Merchant &rarr; gateway</td><td data-label="Should prove it">Inbound request recorded</td><td data-label="Actually proves it">Request ID and timestamp</td><td data-label="Where it lives">Gateway access log</td><td data-label="Status"><span class="st p">Proven</span></td></tr>
+    <tr><td data-label="Handoff">2. Gateway &rarr; auth service</td><td data-label="Should prove it">Handoff recorded</td><td data-label="Actually proves it">Correlation ID propagated</td><td data-label="Where it lives">Internal trace</td><td data-label="Status"><span class="st p">Proven</span></td></tr>
+    <tr><td data-label="Handoff">3. Auth service &rarr; issuer</td><td data-label="Should prove it">Outbound send recorded</td><td data-label="Actually proves it">Request logged with issuer reference</td><td data-label="Where it lives">Auth service log</td><td data-label="Status"><span class="st p">Proven</span></td></tr>
+    <tr><td data-label="Handoff">4. Issuer &rarr; gateway</td><td data-label="Should prove it">Response receipt recorded</td><td data-label="Actually proves it">Nothing until parsing succeeds</td><td data-label="Where it lives">&mdash;</td><td data-label="Status"><span class="st a">Absent</span></td></tr>
+    <tr><td data-label="Handoff">5. Gateway &rarr; merchant</td><td data-label="Should prove it">Result returned and identifiable</td><td data-label="Actually proves it">Decline written, source not recorded</td><td data-label="Where it lives">Gateway response log</td><td data-label="Status"><span class="st h">Partial</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p>Evidence establishes continuation through handoff three. <strong>It does not establish
+continuation past handoff four.</strong></p>
+
+<h2>4. The finding</h2>
+<h3>A decline does not establish that the issuer answered</h3>
+<p>When the gateway receives a response it cannot parse, or times out waiting for one, it
+synthesises a decline and writes it to the response log in the same format used for a decline
+returned by the issuer. The log records the outcome. It does not record which of the two
+produced it.</p>
+<p>The consequence is that the response log reports a completed transaction with a negative
+outcome in both cases. A transaction for which no response was ever received is
+indistinguishable, in the record, from one the issuer explicitly declined.</p>
+<h3>This is what made the March investigation take six hours</h3>
+<p>Four of the six hours were spent establishing that the responses had in fact arrived. That
+question was only settled by obtaining the partner's own logs. The working assumption at the
+start of the investigation was that the partner had not sent the responses, because the
+Northwind record showed declines, and declines indicate the issuer answered.</p>
+<p><strong>Nothing appeared missing. The absence was recorded as an outcome.</strong></p>
+<h3>The change already planned does not address it</h3>
+<p>Return-path logging, currently in the backlog, would create a record at handoff four and
+close the Absent row above. That is worthwhile and should proceed. It does not change the
+behaviour at handoff five: the gateway will continue to synthesise declines that are
+indistinguishable from issuer declines in the response log.</p>
+
+<h2>5. What this establishes, and what it does not</h2>
+<p><strong>Establishes.</strong> The response log cannot distinguish an issuer decline from a
+synthesised decline. Any figure derived from that log which counts declines includes an unknown
+number of transactions for which no response was received. The same evidence structure is
+present on a second issuer integration reviewed during the session, so this is a property of the
+gateway rather than of one partner relationship.</p>
+<p><strong>Does not establish.</strong> How frequently this occurs; determining that requires
+correlating response-log declines against the outbound request record over a period, which was
+outside the evidence available in this review. Whether any specific historical transaction was
+affected. The correctness of message or payload contents, which was out of scope.</p>
+
+<h2>6. Evidence gaps, in priority order</h2>
+<ol>
+  <li><strong>Synthesised declines are written to the response log in the same format as issuer
+  declines,</strong> with no field recording which occurred. Highest priority: this gap produces
+  a record that reads as a definite outcome, so it is not visible as a gap and will not be found
+  by looking for missing data.</li>
+  <li><strong>No independent record is written when a response is received at the gateway,</strong>
+  before parsing. Already tracked internally. Closing this makes gap one detectable but does not
+  resolve it on its own.</li>
+  <li><strong>The same structure exists on at least one other issuer integration.</strong> Any
+  remediation applied to one path should be applied at the gateway rather than per integration.</li>
+</ol>
+
+<h2>7. A check that can be run without ClearOps</h2>
+<p>The check is a count of response-log declines that have no corresponding issuer response event
+recorded against the same correlation ID.</p>
+<p>Run today, that query returns <em>every</em> decline in the log, because no issuer response
+event exists to correlate against. That result is itself the confirmation of gap two. Once a
+receipt event is written at handoff four, the same query returns only those declines for which no
+response arrived, which is the number that cannot currently be produced.</p>
+<p>Suggested shape: <code>declines in response log, over a period, where no
+issuer_response_received event exists for the same correlation ID</code></p>
+<p>Running it monthly, and expecting zero, converts an invisible condition into a number that is
+either zero or is not.</p>
+
+<h2>8. What would have shortened the investigation</h2>
+<p>From the session, in the engineer's own assessment: if the return path had been independently
+visible on 14 March, roughly four of the six hours would not have been spent, because the question
+of whether the responses arrived would have been answerable from the Northwind record alone rather
+than by requesting the partner's logs. The remaining two hours were spent on the configuration
+push itself, which was correctly identified once the responses were confirmed received.</p>
+
+<hr class="big">
+
+<div class="note">
+  <strong>The limits, as they appear in a real report.</strong> This review establishes what the
+  available evidence does and does not prove about one workflow. It is not an audit, a security
+  assessment, or a determination of legal responsibility between the client and any third party.
+  Findings are limited to the evidence made available during the engagement. Recommendations are
+  advisory; evaluation, implementation and testing of any change remain with the client.
+</div>
+
+<div class="note warn">
+  <strong>Once more, because this page will be read out of order.</strong>
+  <span class="stamp">Sample &middot; fictional client</span> Northwind Pay is not a company.
+  The incident, the logs, the engineer and the six hours are all invented. ClearOps has never
+  run this engagement for anybody. What is real is <a href="/assessment.html">the assessment I
+  ran on my own systems</a>, which is a different shape of work but the same writing.
+</div>
+
+<h2>If your path has a handoff like number four</h2>
+<p>One partner-facing workflow, walked handoff by handoff. Fifteen business days, $5,000 fixed,
+no production access.</p>
+<a class="cta" href="/#get-started">Request a briefing &rarr;</a>
+
+</div></main>
+<footer><div class="w">
+  <p><strong>Sample document.</strong> Northwind Pay is fictional and no such engagement took
+  place. &middot; <a href="/">ClearOps</a> &middot; Haseeb Bassam, Fairfax, Virginia</p>
+</div></footer>
+</body>
+</html>
