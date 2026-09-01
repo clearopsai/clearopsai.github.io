@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClearOps | Partner workflow evidence review</title>
-<meta name="description" content="A partner workflow evidence review, fifteen business days, $5,000 fixed. One workflow walked handoff by handoff, and the point where your evidence stops proving the transaction continued. No production access. No hardware or software resold.">
+<title>ClearOps | Production monitoring and recovery assessment</title>
+<meta name="description" content="A production monitoring and recovery assessment. Two calendar weeks, $3,500 fixed for founding clients. Whether the failures that matter would actually be detected, and whether your recovery evidence is real. Read-only access you control and can revoke. No production access. No hardware or software resold.">
 <link rel="canonical" href="https://clearopsai.io/">
 
 <!-- Open Graph -->
-<meta property="og:title" content="ClearOps | Infrastructure assessment for DC, Maryland and Northern Virginia">
-<meta property="og:description" content="A two week infrastructure assessment, $5,000 fixed. A written map of what depends on what, and the three things most likely to break next.">
+<meta property="og:title" content="ClearOps | Production monitoring and recovery assessment">
+<meta property="og:description" content="Two weeks, $3,500 fixed for founding clients. Whether important failures would be detected, whether backups would restore, and which which gaps to address first.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://clearopsai.io/">
 <meta property="og:site_name" content="ClearOps">
@@ -19,8 +19,8 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ClearOps | Infrastructure assessment for DC, Maryland and Northern Virginia">
-<meta name="twitter:description" content="A two week infrastructure assessment, $5,000 fixed. A written map of what depends on what, and the three things most likely to break next.">
+<meta name="twitter:title" content="ClearOps | Production monitoring and recovery assessment">
+<meta name="twitter:description" content="Two weeks, $3,500 fixed for founding clients. Whether important failures would be detected, and which gaps to address first.">
 <meta name="twitter:image" content="https://clearopsai.io/og-image.png">
 
 <!-- Structured Data -->
@@ -30,7 +30,7 @@
   "@type": "Organization",
   "name": "ClearOps",
   "url": "https://clearopsai.io",
-  "description": "Independent infrastructure assessment for 50 to 250 person schools, associations and nonprofits in DC, Maryland and Northern Virginia.",
+  "description": "Independent production monitoring and recovery assessment for US private software companies. Read-only, fixed scope, no implementation and no on-call. Delivered remotely from Fairfax, Virginia.",
   "founder": {
     "@type": "Person",
     "name": "Haseeb Bassam",
@@ -50,11 +50,9 @@
   "@type": "Service",
   "serviceType": "Infrastructure Assessment",
   "provider": { "@type": "Organization", "name": "ClearOps" },
-  "areaServed": "US",
-  "areaServed": ["Washington DC", "Maryland", "Virginia"],
+  "areaServed": "United States",
   "offers": [
-    { "@type": "Offer", "name": "Partner workflow evidence review, fifteen business days", "price": "5000", "priceCurrency": "USD" },
-    { "@type": "Offer", "name": "Retainer, monthly", "price": "2000", "priceCurrency": "USD" }
+    { "@type": "Offer", "name": "Production monitoring and recovery assessment, two calendar weeks, founding-client price", "price": "3500", "priceCurrency": "USD" }
   ]
 }
 </script>
@@ -569,7 +567,8 @@ h2 i { font-style: italic; color: var(--teal); }
 
 /* ─── Pricing Cards ─── */
 .pricing-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 8px;
+  display: grid; grid-template-columns: minmax(0, 420px); justify-content: center;
+  gap: 14px; margin-top: 8px;
 }
 .price-card {
   background: rgba(13,17,32,.7); backdrop-filter: blur(6px);
@@ -818,24 +817,23 @@ footer {
 <div class="wrap">
   <div class="hero-grid">
     <div class="hero-text">
-      <div class="tag"><div class="tag-dot"></div><span class="tag-text">Vendor-neutral evidence review</span></div>
-      <h1>The partner says it is<br>on your side.<br><i>What settles it?</i></h1>
-      <p class="hero-body">One partner-facing workflow, walked handoff by handoff. I document which records prove the transaction continued, and where the evidence stops.</p>
+      <div class="tag"><div class="tag-dot"></div><span class="tag-text">Vendor-neutral, read-only, fixed scope</span></div>
+      <h1>Would you find out<br>from your monitoring,<br><i>or from a customer?</i></h1>
+      <p class="hero-body">One to three critical services, read-only. I check whether the failures that would actually hurt you are detected at all, whether the records left behind would let anyone investigate them afterwards, and whether your backups have ever been proven to restore.</p>
       <ul class="hero-facts">
-        <li>15 business days</li>
-        <li>$5,000 fixed</li>
-        <li>No production access</li>
+        <li>Two calendar weeks</li>
+        <li>$3,500 fixed, founding clients</li>
+        <li>Read-only access you control and revoke</li>
       </ul>
       <div>
         <a class="hero-cta" href="#get-started">Request a Briefing &rarr;</a>
         <a class="hero-cta-secondary" href="#how-it-works">See How It Works</a>
       </div>
       <div class="credbar">
-        <span class="credbar-label">Built by an engineer from</span>
+        <span class="credbar-label">Platforms and environments I have worked in</span>
         <div class="credbar-logos">
           <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M6.056 12.132v-4.92h1.2v3.026c.59-.703 1.402-.906 2.202-.906 1.34 0 2.828.904 2.828 2.855 0 .233-.01.457-.06.668.24-.953 1.274-1.305 2.896-1.344.51-.018 1.095-.018 1.56-.018v-.135c0-.885-.556-1.244-1.53-1.244-.72 0-1.245.3-1.305.81h-1.275c.136-1.29 1.5-1.62 2.686-1.62 1.064 0 1.995.27 2.415 1.02l-.436-.84h1.41l2.055 4.125 2.055-4.126H24l-3.72 7.305h-1.346l1.07-2.04-2.33-4.38c.13.255.2.555.2.93v2.46c0 .346.01.69.04 1.005H16.8a6.543 6.543 0 01-.046-.765c-.603.734-1.32.96-2.32.96-1.48 0-2.272-.78-2.272-1.695 0-.15.015-.284.037-.405-.3 1.246-1.36 2.086-2.767 2.086-.87 0-1.694-.315-2.2-.93 0 .24-.015.494-.04.734h-1.18c.02-.39.04-.855.04-1.245v-1.05h-4.83c.065 1.095.818 1.74 1.853 1.74.718 0 1.355-.3 1.568-.93h1.24c-.24 1.29-1.61 1.725-2.79 1.725C.95 15.009 0 13.822 0 12.232c0-1.754.982-2.91 3.116-2.91 1.688 0 2.93.886 2.94 2.806v.005zm9.137.183c-1.095.034-1.77.233-1.77.95 0 .465.36.97 1.305.97 1.26 0 1.935-.69 1.935-1.814v-.13c-.45 0-.99.006-1.484.022h.012zm-6.06 1.875c1.11 0 1.876-.806 1.876-2.02s-.768-2.02-1.893-2.02c-1.11 0-1.89.806-1.89 2.02s.765 2.02 1.875 2.02h.03zm-4.35-2.514c-.044-1.125-.854-1.546-1.725-1.546-.944 0-1.694.474-1.815 1.546z"/></svg>eBay</span>
           <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M23.348 11.911l-2.241-1.091v-.65L24 11.621v.593l-2.893 1.438v-.636zm-5.397 1.841h-.961v-5.31h.961v3.116h.102l1.28-1.481.723.31-1.23 1.316 1.453 1.809-.888.311-1.44-1.996zm-2.577-.002v-2.068a2.685 2.685 0 0 0-.026-.42.791.791 0 0 0-.09-.26c-.113-.202-.308-.304-.59-.304a.888.888 0 0 0-.461.113.673.673 0 0 0-.286.33 1.012 1.012 0 0 0-.07.263c-.012.13-.019.262-.017.395v1.95h-.961v-3.614h.961l.002.485c.185-.2.373-.348.566-.437.192-.089.418-.134.673-.134.286 0 .527.058.721.177a1.016 1.016 0 0 1 .475.665 1.972 1.972 0 0 1 .054.448c.002.1.004.22.004.358v2.053zm-4.115.002l-.002-.485a1.783 1.783 0 0 1-.565.437 1.597 1.597 0 0 1-.674.135c-.285 0-.524-.057-.72-.17a.972.972 0 0 1-.425-.504.75.75 0 0 1-.054-.167 1.918 1.918 0 0 1-.033-.199 2.033 2.033 0 0 1-.017-.258 15.516 15.516 0 0 1-.005-.355V10.13h.956v2.07c-.003.141.006.282.026.42.015.092.045.18.09.26.113.204.308.306.59.306.36 0 .606-.15.74-.449.035-.082.06-.168.074-.257.017-.134.024-.269.022-.403v-1.95h.955v3.624zM7.184 8.44h.955v5.31h-.955zM5.759 11.9c0-.396-.08-.708-.24-.937a.759.759 0 0 0-.657-.345.804.804 0 0 0-.693.366c-.171.245-.256.574-.253.99 0 .405.084.723.25.957a.796.796 0 0 0 .69.347.685.685 0 0 0 .433-.135.985.985 0 0 0 .277-.34c.071-.14.121-.292.147-.448.03-.151.043-.3.046-.455m1.01-.036c.003.266-.04.532-.129.786-.082.23-.204.441-.364.626-.31.361-.764.567-1.24.563a1.67 1.67 0 0 1-.313-.028 1.041 1.041 0 0 1-.275-.098 1.33 1.33 0 0 1-.257-.178 2.379 2.379 0 0 1-.265-.268v2.293h-.929v-5.425h.93l.004.529c.169-.212.353-.368.55-.468.197-.1.426-.15.688-.147a1.509 1.509 0 0 1 1.156.507c.148.166.259.361.33.571.08.236.12.485.115.737m-4.21.89a.946.946 0 0 1-.102.441 1.007 1.007 0 0 1-.282.345c-.13.1-.275.173-.43.22a1.8 1.8 0 0 1-.546.08 1.985 1.985 0 0 1-.637-.097 1.964 1.964 0 0 1-.563-.32l.312-.505c.15.126.284.217.405.275.115.057.24.087.368.087a.557.557 0 0 0 .373-.12.396.396 0 0 0 .14-.322.475.475 0 0 0-.12-.318 1.306 1.306 0 0 0-.187-.173 9.231 9.231 0 0 0-.308-.232 6.787 6.787 0 0 1-.281-.21 2.11 2.11 0 0 1-.252-.232 1.039 1.039 0 0 1-.18-.275.826.826 0 0 1-.069-.347.893.893 0 0 1 .094-.409.935.935 0 0 1 .255-.314 1.22 1.22 0 0 1 .39-.203c.16-.05.327-.074.494-.072.184 0 .368.026.545.076.174.05.338.123.488.219l-.282.454a1.05 1.05 0 0 0-.608-.201.504.504 0 0 0-.323.102.307.307 0 0 0-.126.253c0 .098.041.193.113.26.074.078.203.186.385.325.185.136.336.253.457.355.104.085.202.182.286.286.065.08.115.173.145.273a.808.808 0 0 1 .046.299Z"/></svg>Splunk</span>
-          <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7zm-9-9v3h3V5H5zm11 0v3h3V5h-3zM5 16v3h3v-3H5zm11 0v3h3v-3h-3z"/></svg>CoreSite</span>
           <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M12 1L2 6v2l10 5 10-5V6L12 1zm0 2.18L19.28 7 12 10.82 4.72 7 12 3.18zM2 10v2l10 5 10-5v-2l-10 5-10-5zm0 4v2l10 5 10-5v-2l-10 5-10-5z"/></svg>Cadence</span>
           <span class="credbar-logo"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c1.86 0 3.57.64 4.93 1.71L7.71 16.93A7.95 7.95 0 014 12c0-4.42 3.58-8 8-8zm0 16c-1.86 0-3.57-.64-4.93-1.71L16.29 7.07A7.95 7.95 0 0120 12c0 4.42-3.58 8-8 8z"/></svg>Axoni</span>
         </div>
@@ -845,13 +843,13 @@ footer {
       <div class="hero-orb"></div>
       <div class="deliverable-card">
         <div class="deliverable-head">Five questions I answer with evidence</div>
-        <div class="deliverable-sub">Most teams cannot answer these on the day a partner asks.</div>
+        <div class="deliverable-sub">Most teams cannot answer these on the day it matters.</div>
         <ol class="deliverable-list">
-          <li>At which handoff does the evidence <b>stop proving the transaction continued?</b></li>
-          <li>When your log records a failure, <b>what proves the other side actually answered?</b></li>
-          <li>If the partner says they never received it, <b>what can you show them the same day?</b></li>
-          <li>Which records live in your systems, and <b>which only exist in theirs?</b></li>
-          <li>The last time this took hours to settle, <b>which missing record cost you the hours?</b></li>
+          <li>Which failures in these services <b>would nothing detect at all?</b></li>
+          <li>Of the alerts that do fire, <b>which has anyone acted on this quarter?</b></li>
+          <li>When something failed last, <b>did the records let you investigate it a week later?</b></li>
+          <li>Your backups report success. <b>When was a restore last actually run?</b></li>
+          <li>How far back can you look, and <b>did anyone choose that number on purpose?</b></li>
         </ol>
         <div class="deliverable-foot">If you can answer all five today, you do not need me.</div>
       </div>
@@ -866,16 +864,16 @@ footer {
 <div class="wrap">
   <div class="proof-grid">
     <div class="proof-card reveal reveal-delay-1">
-      <div class="proof-val" data-count="15">0</div>
-      <div class="proof-desc">Business days, start to written report. One workflow, not your whole estate. There is no phase two.</div>
+      <div class="proof-val" data-count="10">0</div>
+      <div class="proof-desc">Business days, start to written report. One to three critical services, not your whole estate. There is no phase two.</div>
     </div>
     <div class="proof-card reveal reveal-delay-2">
       <div class="proof-val" data-count="3">0</div>
-      <div class="proof-desc">Things you get: the written report with the evidence attached, the path as a grid, and repeatable checks you can run without me.</div>
+      <div class="proof-desc">Things you get: the written report with the evidence attached, coverage as a grid, and repeatable checks you can run without me.</div>
     </div>
     <div class="proof-card reveal reveal-delay-3">
       <div class="proof-val" data-count="2">0</div>
-      <div class="proof-desc">Calls with you: a forty-five minute working session where we walk the path together, and a readout at the end. Everything else happens on my time, not yours.</div>
+      <div class="proof-desc">Calls with you: a forty-five minute working session where we walk the services together, and a readout at the end. Everything else happens on my time, not yours.</div>
     </div>
   </div>
 </div>
@@ -886,24 +884,24 @@ footer {
 <!-- ── How It Works ── -->
 <section class="section-glow reveal" id="how-it-works">
 <div class="wrap">
-  <div class="sec-label">The fifteen days</div>
+  <div class="sec-label">The two weeks</div>
   <h2>What actually happens, <i>day by day.</i></h2>
-  <p class="lead">Two scheduled calls, and no production credentials at any point. Everything else happens on my time, not yours.</p>
+  <p class="lead">Two scheduled calls, and no write or administrative access at any point. Everything else happens on my time, not yours.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">01</div>
-      <h3>Days 1 to 4</h3>
-      <p>We pick the one workflow and, if there is one, the incident worth reconstructing. Then a forty-five minute session with the engineer who owns the integration. We draw the path across the top of a grid: every point where the transaction changes hands, and who owns each side of it.</p>
+      <h3>Days 1 to 3</h3>
+      <p>We pick the one to three critical services, the monitoring scope and the one recovery path. Then a forty-five minute session with the engineer who owns the integration. We draw the path across the top of a grid: every point where the transaction changes hands, and who owns each side of it.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
-      <h3>Days 5 to 12</h3>
-      <p>The awkward part. At every handoff, the same three questions: what is supposed to happen here, what record exists that it did, and where does that record live. Then I go and look at the record itself. Status is one of three words. Proven, partial, absent.</p>
+      <h3>Days 4 to 8</h3>
+      <p>The awkward part. For each failure that would actually hurt: would anything detect it, would anyone be told, and would the records left behind let you investigate it a week later. The same three questions for the record live. Then I go and look at the record itself. Status is one of three words. Proven, partial, absent.</p>
     </div>
     <div class="step">
       <div class="step-num">03</div>
-      <h3>Days 13 to 15</h3>
-      <p>The report lands in your hands before the readout call, not after it. It names the handoff where the evidence stops proving continuation, and gives you checks you can run afterwards without me. Then a call to walk it.</p>
+      <h3>Days 9 to 10</h3>
+      <p>The report lands in your hands before the readout call, not after it. It names the failures nothing would catch and the recovery you cannot yet evidence, and gives you checks you can run afterwards without me. Then a call to walk it.</p>
     </div>
   </div>
 </div>
@@ -915,31 +913,31 @@ footer {
 <section class="reveal">
 <div class="wrap">
   <div class="sec-label">What I look for</div>
-  <h2>Six ways a record <i>stops proving what it looks like it proves.</i></h2>
+  <h2>Six ways a failure happens <i>and nothing tells you.</i></h2>
   <div class="patterns-grid">
     <div class="pattern-card">
-      <blockquote>A decline from the partner and a timeout your own gateway synthesised are written to the same log in the same format. <strong style="color:var(--teal)">When the log says declined, what proves the partner actually answered?</strong></blockquote>
-      <cite>The synthesised answer</cite>
+      <blockquote>A dependency times out and your own service writes the same log line it writes for a clean refusal. <strong style="color:var(--teal)">When the log says failed, what tells you which one it was?</strong></blockquote>
+      <cite>The indistinguishable failure</cite>
     </div>
     <div class="pattern-card">
-      <blockquote>The handoff is proven on the way out. Nothing independent proves it arrived. <strong style="color:var(--teal)">Who holds the record that it landed, you or them?</strong></blockquote>
-      <cite>The one-sided proof</cite>
+      <blockquote>A backup job reports success on the way out. Nothing independent proves it wrote what it was told to. <strong style="color:var(--teal)">When did anyone last confirm the backup holds the file it names?</strong></blockquote>
+      <cite>The backup that reported success</cite>
     </div>
     <div class="pattern-card">
-      <blockquote>A retry and a first attempt look identical once the day is over. <strong style="color:var(--teal)">If the same transaction appears twice, which one was real?</strong></blockquote>
-      <cite>The indistinguishable retry</cite>
+      <blockquote>An alert fired, somebody silenced it, and the risk it was watching stayed exactly where it was. <strong style="color:var(--teal)">Which of your alerts has anyone acted on this quarter?</strong></blockquote>
+      <cite>The alarm removed, not the risk</cite>
     </div>
     <div class="pattern-card">
-      <blockquote>The only record that a handoff happened lives in the other party's system. <strong style="color:var(--teal)">When they say they never got it, what can you show?</strong></blockquote>
-      <cite>The record you do not hold</cite>
+      <blockquote>A service arrived after the monitoring was set up, so nothing was ever pointed at it. <strong style="color:var(--teal)">Which of your services would fail tonight without telling anyone?</strong></blockquote>
+      <cite>The service nobody watches</cite>
     </div>
     <div class="pattern-card">
-      <blockquote>An incident took hours to settle and the finding was that nobody could prove where it stopped. <strong style="color:var(--teal)">What was the last thing you could prove, and how long did that take to establish?</strong></blockquote>
-      <cite>The six-hour investigation</cite>
+      <blockquote>An incident took hours to settle because the logs it needed had already rolled over. <strong style="color:var(--teal)">How far back can you actually look, and did anyone choose that number?</strong></blockquote>
+      <cite>The retention nobody checked</cite>
     </div>
     <div class="pattern-card">
-      <blockquote>The logging change that would fix it has been in the backlog since the last incident. <strong style="color:var(--teal)">What is in the backlog because an investigation was painful?</strong></blockquote>
-      <cite>The backlog item</cite>
+      <blockquote>The backup is tested every week. The restore has never been run end to end. <strong style="color:var(--teal)">What would you find out only on the day you needed it?</strong></blockquote>
+      <cite>The restore nobody has run</cite>
     </div>
   </div>
 </div>
@@ -951,11 +949,11 @@ footer {
 <section class="section-alt reveal" id="what-we-do">
 <div class="wrap">
   <div class="sec-label">What lands in your hands</div>
-  <h2>Three things. <i>Yours to keep, forward, or hand to the partner.</i></h2>
+  <h2>Three things. <i>Yours to keep, forward, or hand to whoever fixes them.</i></h2>
   <p class="lead">I place no restriction on what you do with any of it. That is the point of not implementing. If you want to see what the report looks like before you buy it, <a href="/example.html" style="color:var(--teal);text-decoration:none;font-weight:500">here is a full sample review, written for a fictional client</a>.</p>
   <div class="svc-grid">
-    <div class="svc"><h3>The report</h3><p>Where the evidence stops proving the transaction continued, with the evidence attached. If you named an incident, a reconstruction of it from what was actually recorded.</p></div>
-    <div class="svc"><h3>The path as a grid</h3><p>Every handoff, what should prove it, what actually proves it, where that record lives, and one word for each. Proven, partial, or absent.</p></div>
+    <div class="svc"><h3>The report</h3><p>What would go undetected, what could not be investigated afterwards, and what recovery you cannot yet evidence, with the evidence attached. If you named an incident, a reconstruction of it from what was actually recorded.</p></div>
+    <div class="svc"><h3>Coverage as a grid</h3><p>Every critical failure, what should detect it, what actually detects it, where that evidence lives, and one word for each. Covered, partial, or absent.</p></div>
     <div class="svc"><h3>The checks</h3><p>Repeatable, and written so somebody else can run them without me. This is the part that is still working for you a year later.</p></div>
   </div>
 </div>
@@ -971,20 +969,14 @@ footer {
   <p class="lead">There is no free tier, no phase two, and no second invoice. What I resell is nothing, which is exactly why the list is honest.</p>
   <div class="pricing-grid">
     <div class="price-card featured reveal reveal-delay-1">
-      <div class="price-amount">$5,000</div>
-      <div class="price-name">The evidence review</div>
-      <div class="price-desc">Fifteen business days, fixed. Half on signature, half when the report lands. No hourly billing of any kind, and no change orders.</div>
+      <div class="price-amount">$3,500</div>
+      <div class="price-name">The monitoring and recovery assessment</div>
+      <div class="price-desc">Two calendar weeks, fixed, at the founding-client price for the first three engagements. Half on signature, half when the report lands. No hourly billing of any kind, and no change orders.</div>
       <a class="price-cta price-cta-primary" href="#get-started">Ask about it</a>
-    </div>
-    <div class="price-card reveal reveal-delay-2">
-      <div class="price-amount">$2&ndash;3K<span style="font-size:15px">/mo</span></div>
-      <div class="price-name">Afterwards, only if you want it</div>
-      <div class="price-desc">Roughly five hours a month. A second opinion before you buy something, and somebody who already knows the path. Separate agreement.</div>
-      <a class="price-cta price-cta-outline" href="#get-started">Ask about it</a>
     </div>
   </div>
   <div class="pricing-note">
-    <p><strong>What is in the price:</strong> one workflow that runs between you and an outside party, walked handoff by handoff. What record should exist at each handoff, what record actually exists, and where it is kept. The point where the evidence stops proving the transaction continued. A reconstruction of the incident you name, from what was actually recorded. Checks you can run afterwards without me.<br><br>
+    <p><strong>What is in the price:</strong> one to three critical services and one recovery path, read-only. What should detect each important failure, what actually exists, and where it is kept. The point where the evidence stops proving the transaction continued. A reconstruction of the incident you name, from what was actually recorded. Checks you can run afterwards without me.<br><br>
     <strong>What is not:</strong> any workflow other than the one we name. The contents of your messages, including whether a value was right. I do not implement any of it, which is why the list is honest, and I take no commission from any vendor. I do not decide who is at fault. The review establishes what your evidence proves. It does not settle responsibility between you and anybody else.</p>
   </div>
 </div>
@@ -1007,17 +999,16 @@ footer {
 <section class="section-alt reveal" id="about">
 <div class="wrap-narrow">
   <div class="sec-label">About</div>
-  <h2>Twelve years on <i>both sides of the handoff.</i></h2>
+  <h2>Years spent on <i>the side that gets paged.</i></h2>
   <div class="bio-card">
     <div class="bio-name">Haseeb Bassam</div>
     <div class="bio-role">Founder and Principal, ClearOps</div>
-    <p class="bio-text">Twelve years in operations and infrastructure at <strong>eBay, Splunk, Cadence Design Systems, CoreSite Data Centers and Axoni</strong>. Monitoring systems, cloud and data center operations at scale, and the unglamorous work of finding out what actually depends on what.</p>
+    <p class="bio-text">A career in production operations and infrastructure, in and around <strong>eBay, Cadence Design Systems and Axoni</strong>, and years of work on Splunk as a platform. Monitoring systems, cloud and data center operations at scale, and the unglamorous work of finding out what actually depends on what.</p>
     <p class="bio-text">At Axoni I supported the technology behind DirectBooks, a corporate bond issuance platform backed by nine global banks. I built a message-level trace that showed the last verified handoff when a submission did not complete, so the boundary between our systems and a counterparty's became visible instead of arguable. That is the thing I kept seeing everywhere: two companies each certain the other dropped it, and no record that could settle it. It is not a tooling problem and it does not get fixed by buying anything.</p>
     <p class="bio-text">The honest answer to who else I have done this for is nobody yet. So rather than a case study I cannot produce, I ran a full review at depth on my own two servers and published it whole, including the parts that make me look bad: <a href="/assessment.html" style="color:var(--teal);text-decoration:none;font-weight:500">read it here &rarr;</a></p>
     <div class="bio-badges">
       <span class="badge">eBay</span>
       <span class="badge">Splunk</span>
-      <span class="badge">CoreSite Data Centers</span>
       <span class="badge">Cadence Design Systems</span>
       <span class="badge">Axoni</span>
     </div>
@@ -1039,16 +1030,16 @@ footer {
   <p class="lead">Including the ones most consultants leave for the contract.</p>
   <div class="faq-list">
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">What does the $5,000 actually buy?
+      <button class="faq-q" onclick="toggleFaq(this)">What does the $3,500 actually buy?
         <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div class="faq-a"><p>Fifteen business days and a written report in your hands before the readout call. One workflow that runs between you and an outside party, walked handoff by handoff. At every point where the transaction changes hands: what should prove it continued, what actually proves it, and where that record lives. The handoff where the evidence stops proving continuation, which is the finding. Where you name an incident, a reconstruction of it from what was actually recorded. And repeatable checks you can run afterwards without me.</p></div>
+      <div class="faq-a"><p>Two calendar weeks and a written report in your hands before the readout call. One to three critical services or workflows, one monitoring and alerting scope, and one recovery path. At every point where the transaction changes hands: what should prove it continued, what actually detects it, and where that evidence lives. The point where detection or recovery evidence runs out, which is the finding. Where you name an incident, a reconstruction of it from what was actually recorded. And repeatable checks you can run afterwards without me.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">What do you not do?
         <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div class="faq-a"><p>I do not implement any of it. That is exactly why the list is honest. I take no commission from any vendor and I resell no hardware and no software. I do not look at the contents of your messages, only at whether a record exists that proves they moved. And I do not decide who is at fault: the review establishes what your evidence does and does not prove, which is a different thing from settling responsibility between you and a partner.</p></div>
+      <div class="faq-a"><p>I do not implement any of it. That is exactly why the list is honest. I take no commission from any vendor and I resell no hardware and no software. I do not look at the contents of your messages, only at whether a record exists that proves they moved. And I do not decide who is at fault: the review establishes what your evidence does and does not prove, which is a different thing from settling responsibility for an outage.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">What access do you need?
@@ -1060,7 +1051,7 @@ footer {
       <button class="faq-q" onclick="toggleFaq(this)">Are you local?
         <svg class="faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div class="faq-a"><p>Fairfax, Virginia. The working session runs over a screenshare, so the engagement is the same wherever you are, and I say so up front rather than after you ask. If you are in DC, Maryland or Northern Virginia I can be in the building for it instead.</p></div>
+      <div class="faq-a"><p>Fairfax, Virginia. The working session runs over a screenshare, so the engagement is the same wherever you are, and I say so up front rather than after you ask.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">What happens if I say no, or say nothing?
@@ -1115,7 +1106,7 @@ footer {
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="brand-name" style="margin-bottom:8px">Clear<b>Ops</b></div>
-      <div class="footer-desc">Independent infrastructure assessment for 50 to 250 person schools, associations and nonprofits in DC, Maryland and Northern Virginia.</div>
+      <div class="footer-desc">Independent production monitoring and recovery assessment for US private software companies. Read-only, fixed scope, no implementation and no on-call. Based in Fairfax, Virginia; the work is remote.</div>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
